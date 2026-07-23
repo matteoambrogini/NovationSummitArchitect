@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Summit Patch Architect",
+  "version": "0.1.0",
+  "identifier": "com.summitpatcharchitect.desktop",
+  "build": {
+    "beforeDevCommand": "pnpm start:local",
+    "devUrl": "http://127.0.0.1:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Summit Patch Architect",
+        "width": 1440,
+        "height": 940,
+        "minWidth": 1060,
+        "minHeight": 720,
+        "resizable": true
+      }
+    ],
+    "security": { "csp": null }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "shortDescription": "Progetta patch approssimative per Novation Summit",
+    "longDescription": "Companion non ufficiale per analisi sonora e progettazione guidata di patch Novation Summit.",
+    "category": "Music"
+  }
+}

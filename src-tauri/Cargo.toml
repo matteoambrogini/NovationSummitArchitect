@@ -1,0 +1,22 @@
+[package]
+name = "summit-patch-architect"
+version = "0.1.0"
+description = "Uno strumento non ufficiale per progettare patch Novation Summit"
+authors = ["Summit Patch Architect contributors"]
+edition = "2021"
+
+[lib]
+name = "summit_patch_architect_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+midir = "0.10"
+
