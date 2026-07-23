@@ -1,0 +1,441 @@
+name: Build desktop installers
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-desktop-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: "true"
+  CARGO_TERM_COLOR: always
+  NODE_VERSION: "24"
+  PNPM_VERSION: "11.9.0"
+  RUST_TOOLCHAIN: "1.97.1"
+
+jobs:
+  quality:
+    name: Quality gates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Install Linux dependencies for Tauri tests
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes \
+            build-essential \
+            curl \
+            file \
+            libasound2-dev \
+            libayatana-appindicator3-dev \
+            libssl-dev \
+            librsvg2-dev \
+            libwebkit2gtk-4.1-dev \
+            libxdo-dev \
+            wget
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Install pnpm
+        run: npm install --global "pnpm@${PNPM_VERSION}"
+
+      - name: Locate pnpm store
+        id: pnpm-store
+        run: echo "store_path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-pnpm-
+
+      - name: Install Rust
+        run: |
+          rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal
+          rustup default "$RUST_TOOLCHAIN"
+
+      - name: Cache Cargo
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-quality-${{ env.RUST_TOOLCHAIN }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-cargo-quality-${{ env.RUST_TOOLCHAIN }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: TypeScript type checking
+        run: pnpm typecheck
+
+      - name: Frontend tests
+        run: pnpm test
+
+      - name: Rust tests
+        run: cargo test --locked --manifest-path src-tauri/Cargo.toml
+
+      - name: Validate Summit catalogs
+        run: pnpm validate:catalogs
+
+      - name: Build frontend
+        run: pnpm build
+
+      - name: Install Chromium for the vertical-slice test
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: End-to-end vertical-slice test
+        run: pnpm test:e2e
+
+  build-windows:
+    name: Windows x64
+    needs: quality
+    runs-on: windows-2025
+    timeout-minutes: 75
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Install pnpm
+        shell: pwsh
+        run: npm install --global "pnpm@$env:PNPM_VERSION"
+
+      - name: Locate pnpm store
+        id: pnpm-store
+        shell: pwsh
+        run: |
+          "store_path=$(pnpm store path --silent)" >> $env:GITHUB_OUTPUT
+
+      - name: Cache pnpm store
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-pnpm-
+
+      - name: Install Rust MSVC toolchain
+        shell: pwsh
+        run: |
+          $msvcToolchain = "${env:RUST_TOOLCHAIN}-x86_64-pc-windows-msvc"
+          rustup toolchain install $msvcToolchain --profile minimal
+          rustup default $msvcToolchain
+
+      - name: Cache Cargo
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-windows-x64-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-cargo-windows-x64-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build unsigned MSI and NSIS bundles
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts/windows/logs | Out-Null
+          pnpm tauri build --ci --no-sign --bundles msi,nsis *>&1 |
+            Tee-Object -FilePath artifacts/windows/logs/tauri-build-windows.log
+          $buildExitCode = $LASTEXITCODE
+          if ($buildExitCode -ne 0) {
+            exit $buildExitCode
+          }
+
+      - name: Stage Windows artifacts
+        shell: pwsh
+        run: |
+          $bundleRoot = "src-tauri/target/release/bundle"
+          $msiFiles = @(Get-ChildItem -Path "$bundleRoot/msi" -Filter "*.msi" -File -ErrorAction SilentlyContinue)
+          $nsisFiles = @(Get-ChildItem -Path "$bundleRoot/nsis" -Filter "*.exe" -File -ErrorAction SilentlyContinue)
+          $plainBinary = "src-tauri/target/release/summit-patch-architect.exe"
+
+          if ($msiFiles.Count -eq 0) {
+            throw "Tauri non ha prodotto alcun installer MSI in $bundleRoot/msi."
+          }
+          if ($nsisFiles.Count -eq 0) {
+            throw "Tauri non ha prodotto alcun installer NSIS in $bundleRoot/nsis."
+          }
+          if (-not (Test-Path -LiteralPath $plainBinary -PathType Leaf)) {
+            throw "Tauri non ha prodotto l'eseguibile non impacchettato $plainBinary."
+          }
+
+          New-Item -ItemType Directory -Force -Path artifacts/windows/installers | Out-Null
+          New-Item -ItemType Directory -Force -Path artifacts/windows/unbundled | Out-Null
+          Copy-Item -LiteralPath $msiFiles.FullName -Destination artifacts/windows/installers
+          Copy-Item -LiteralPath $nsisFiles.FullName -Destination artifacts/windows/installers
+          Copy-Item -LiteralPath $plainBinary `
+            -Destination artifacts/windows/unbundled/Summit-Patch-Architect-unsigned.exe
+
+      - name: Upload Windows installers
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: summit-patch-architect-windows
+          path: artifacts/windows
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+
+      - name: Upload Windows failure log
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: summit-patch-architect-windows-failed-log
+          path: artifacts/windows/logs
+          if-no-files-found: warn
+          retention-days: 14
+          overwrite: true
+
+  build-macos-arm64:
+    name: macOS Apple Silicon
+    needs: quality
+    runs-on: macos-15
+    timeout-minutes: 75
+    env:
+      APPLE_SIGNING_IDENTITY: "-"
+      TAURI_TARGET: aarch64-apple-darwin
+      ARTIFACT_DIR: artifacts/macos-arm64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Install pnpm
+        run: npm install --global "pnpm@${PNPM_VERSION}"
+
+      - name: Locate pnpm store
+        id: pnpm-store
+        run: echo "store_path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-pnpm-
+
+      - name: Install Rust target
+        run: |
+          rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal
+          rustup default "$RUST_TOOLCHAIN"
+          rustup target add "$TAURI_TARGET"
+
+      - name: Cache Cargo
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ env.TAURI_TARGET }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-cargo-${{ env.TAURI_TARGET }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build ad-hoc signed app and DMG
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$ARTIFACT_DIR/logs"
+          pnpm tauri build --ci --target "$TAURI_TARGET" --bundles app,dmg 2>&1 |
+            tee "$ARTIFACT_DIR/logs/tauri-build-macos-arm64.log"
+
+      - name: Stage macOS Apple Silicon artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          bundle_root="src-tauri/target/$TAURI_TARGET/release/bundle"
+          dmg_files=("$bundle_root"/dmg/*.dmg)
+          app_bundles=("$bundle_root"/macos/*.app)
+
+          if (( ${#dmg_files[@]} == 0 )); then
+            echo "Tauri non ha prodotto alcun DMG in $bundle_root/dmg." >&2
+            exit 1
+          fi
+          if (( ${#app_bundles[@]} == 0 )); then
+            echo "Tauri non ha prodotto alcun app bundle in $bundle_root/macos." >&2
+            exit 1
+          fi
+
+          cp "${dmg_files[@]}" "$ARTIFACT_DIR/"
+          for app_bundle in "${app_bundles[@]}"; do
+            app_name="$(basename "$app_bundle" .app)"
+            ditto -c -k --sequesterRsrc --keepParent "$app_bundle" \
+              "$ARTIFACT_DIR/${app_name}-macos-arm64-adhoc-signed.app.zip"
+          done
+
+      - name: Upload macOS Apple Silicon bundles
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: summit-patch-architect-macos-arm64
+          path: artifacts/macos-arm64
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+
+      - name: Upload macOS Apple Silicon failure log
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: summit-patch-architect-macos-arm64-failed-log
+          path: artifacts/macos-arm64/logs
+          if-no-files-found: warn
+          retention-days: 14
+          overwrite: true
+
+  build-macos-x64:
+    name: macOS Intel
+    needs: quality
+    runs-on: macos-15-intel
+    timeout-minutes: 75
+    env:
+      APPLE_SIGNING_IDENTITY: "-"
+      TAURI_TARGET: x86_64-apple-darwin
+      ARTIFACT_DIR: artifacts/macos-x64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Install pnpm
+        run: npm install --global "pnpm@${PNPM_VERSION}"
+
+      - name: Locate pnpm store
+        id: pnpm-store
+        run: echo "store_path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pnpm store
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.pnpm-store.outputs.store_path }}
+          key: ${{ runner.os }}-${{ runner.arch }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-pnpm-
+
+      - name: Install Rust target
+        run: |
+          rustup toolchain install "$RUST_TOOLCHAIN" --profile minimal
+          rustup default "$RUST_TOOLCHAIN"
+          rustup target add "$TAURI_TARGET"
+
+      - name: Cache Cargo
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            src-tauri/target
+          key: ${{ runner.os }}-${{ runner.arch }}-cargo-${{ env.TAURI_TARGET }}-${{ hashFiles('src-tauri/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-cargo-${{ env.TAURI_TARGET }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build ad-hoc signed app and DMG
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$ARTIFACT_DIR/logs"
+          pnpm tauri build --ci --target "$TAURI_TARGET" --bundles app,dmg 2>&1 |
+            tee "$ARTIFACT_DIR/logs/tauri-build-macos-x64.log"
+
+      - name: Stage macOS Intel artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          bundle_root="src-tauri/target/$TAURI_TARGET/release/bundle"
+          dmg_files=("$bundle_root"/dmg/*.dmg)
+          app_bundles=("$bundle_root"/macos/*.app)
+
+          if (( ${#dmg_files[@]} == 0 )); then
+            echo "Tauri non ha prodotto alcun DMG in $bundle_root/dmg." >&2
+            exit 1
+          fi
+          if (( ${#app_bundles[@]} == 0 )); then
+            echo "Tauri non ha prodotto alcun app bundle in $bundle_root/macos." >&2
+            exit 1
+          fi
+
+          cp "${dmg_files[@]}" "$ARTIFACT_DIR/"
+          for app_bundle in "${app_bundles[@]}"; do
+            app_name="$(basename "$app_bundle" .app)"
+            ditto -c -k --sequesterRsrc --keepParent "$app_bundle" \
+              "$ARTIFACT_DIR/${app_name}-macos-x64-adhoc-signed.app.zip"
+          done
+
+      - name: Upload macOS Intel bundles
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: summit-patch-architect-macos-x64
+          path: artifacts/macos-x64
+          if-no-files-found: error
+          retention-days: 14
+          overwrite: true
+
+      - name: Upload macOS Intel failure log
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: summit-patch-architect-macos-x64-failed-log
+          path: artifacts/macos-x64/logs
+          if-no-files-found: warn
+          retention-days: 14
+          overwrite: true
