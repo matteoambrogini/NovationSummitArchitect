@@ -170,7 +170,7 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path artifacts/windows/logs | Out-Null
-          pnpm tauri build --ci --no-sign --bundles msi,nsis *>&1 |
+          pnpm tauri build --ci --no-sign --bundles msi nsis *>&1 |
             Tee-Object -FilePath artifacts/windows/logs/tauri-build-windows.log
           $buildExitCode = $LASTEXITCODE
           if ($buildExitCode -ne 0) {
@@ -283,7 +283,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$ARTIFACT_DIR/logs"
-          pnpm tauri build --ci --target "$TAURI_TARGET" --bundles app,dmg 2>&1 |
+          pnpm tauri build --ci --target "$TAURI_TARGET" --bundles app dmg 2>&1 |
             tee "$ARTIFACT_DIR/logs/tauri-build-macos-arm64.log"
 
       - name: Stage macOS Apple Silicon artifacts
@@ -392,7 +392,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$ARTIFACT_DIR/logs"
-          pnpm tauri build --ci --target "$TAURI_TARGET" --bundles app,dmg 2>&1 |
+          pnpm tauri build --ci --target "$TAURI_TARGET" --bundles app dmg 2>&1 |
             tee "$ARTIFACT_DIR/logs/tauri-build-macos-x64.log"
 
       - name: Stage macOS Intel artifacts
