@@ -57,6 +57,29 @@
     "primarySourcesOnly": true,
     "requiredPasses": ["extraction", "independent-verification"],
     "aiExposureRule": "verificationStatus must be verified and aiExposed must be true",
+    "midiExposureRule": "mapping and translation must both be verified and aiUsable must be true",
+    "firmwareRule": "firmware-dependent entities require an explicit compatible firmware context",
+    "scopeRule": "part, multi and global settings are validated independently",
     "unsupportedEvidence": ["forums", "Reddit", "third-party editors", "reverse engineering"]
+  },
+  "knownOfficialConflicts": [
+    "Voice menu pagination and firmware 2.1 page moves",
+    "Mod destination count in prose versus MIDI raw values",
+    "Mod Matrix MIDI fields documented only for slot 1",
+    "Oscillator Coarse panel domain versus MIDI domain",
+    "Oscillator Manual Shape lower bound",
+    "Wavetable number/name association and ten user slots",
+    "Multi A/B level range",
+    "Arpeggiator Octaves 1–7 versus 1–6",
+    "Reverb Size default 64 versus 90",
+    "FX Mod Depth lower bound missing its minus sign",
+    "FX Mod slot count 16 versus 4",
+    "FX menu page count 8 versus firmware screens ending at 10"
+  ],
+  "detailDocuments": {
+    "methodology": "docs/summit-source-methodology.md",
+    "limitations": "docs/known-limitations.md",
+    "coverage": "docs/summit-catalog-coverage.md",
+    "firmwareOverrides": "src/data/summit-firmware-overrides.json"
   }
 }
