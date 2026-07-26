@@ -63,9 +63,14 @@
       "patchRelevant": true,
       "verifiedPages": [],
       "parameterIds": [
-        "mixer.patchLevel"
+        "mixer.patchLevel",
+        "filter.postDrive",
+        "filter.divergence",
+        "voice.audioInput",
+        "filter.dualShape",
+        "filter.frequencySeparation"
       ],
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "conflict",
       "documentation": {
         "document": "Summit User Guide v1.1",
         "section": "The Voice Menu",
@@ -78,7 +83,7 @@
           "locator": "The Voice menu",
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26",
-          "note": "Il conteggio pagine della guida online è internamente incoerente."
+          "note": "La guida online descrive cinque pagine ma dichiara ancora che il menu ne ha quattro."
         }
       }
     },
@@ -88,24 +93,96 @@
       "pageCount": 8,
       "patchRelevant": true,
       "verifiedPages": [
-        2
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
       ],
       "parameterIds": [
-        "amp.delay"
+        "amp.delay",
+        "amp.velocity",
+        "amp.monoTrigger",
+        "amp.hold",
+        "amp.repeats",
+        "modEnv1.velocity",
+        "modEnv1.monoTrigger",
+        "modEnv1.delay",
+        "modEnv1.hold",
+        "modEnv1.repeats",
+        "modEnv2.velocity",
+        "modEnv2.monoTrigger",
+        "modEnv2.delay",
+        "modEnv2.hold",
+        "modEnv2.repeats"
       ],
-      "verificationStatus": "verified",
+      "verificationStatus": "firmware-dependent",
       "documentation": {
-        "document": "Summit User Guide v1.1",
-        "section": "The Envelopes Menu",
-        "page": 30,
-        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Animate Envelopes",
+        "page": 6,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
         "verifiedAt": "2026-07-26",
         "verification": {
           "document": "Summit in detail",
-          "section": "The Envelopes Menu",
-          "locator": "The Envelopes Menu",
+          "section": "Animate Envelopes",
+          "locator": "Animate Envelopes",
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
-          "verifiedAt": "2026-07-26"
+          "verifiedAt": "2026-07-26",
+          "note": "Le pagine 1-6 sono confermate dalla guida base; le pagine 7-8 sono aggiunte dal firmware 2.1."
+        }
+      }
+    },
+    {
+      "id": "lfo",
+      "label": "LFO",
+      "pageCount": 8,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "parameterIds": [
+        "lfo1.phase",
+        "lfo1.monoTrigger",
+        "lfo1.slew",
+        "lfo1.fadeMode",
+        "lfo1.fadeSync",
+        "lfo1.repeats",
+        "lfo1.common",
+        "lfo2.phase",
+        "lfo2.monoTrigger",
+        "lfo2.slew",
+        "lfo2.fadeMode",
+        "lfo2.fadeSync",
+        "lfo2.repeats",
+        "lfo2.common",
+        "lfo3.phase",
+        "lfo3.slew",
+        "lfo3.fadeTime",
+        "lfo4.phase",
+        "lfo4.slew",
+        "lfo4.fadeTime"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "LFO 3 and 4 Additional Parameters",
+        "page": 6,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail",
+          "section": "LFO 3 and 4 Additional Parameters",
+          "locator": "LFO 3 and 4 Additional Parameters",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26",
+          "note": "La guida v1.1 verifica le pagine 1-8 originali; l'addendum non assegna una pagina numerica stabile ai tre nuovi parametri LFO 3/4."
         }
       }
     }

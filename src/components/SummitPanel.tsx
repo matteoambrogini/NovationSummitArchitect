@@ -4,12 +4,14 @@ import type { SummitPatchProposal } from "../domain/schemas";
 
 type LayoutControl = {
   id: string;
-  parameterId: string;
+  parameterId?: string;
+  parameterIds?: string[];
   label: string;
-  type: "knob" | "slider" | "selector";
+  type: "knob" | "slider" | "selector" | "button" | "toggle" | "encoder" | "led";
   x: number;
   y: number;
   size?: number;
+  stateOnly?: boolean;
 };
 
 const layout = layoutJson as {
@@ -73,14 +75,18 @@ export function SummitPanel({
         <text x="119" y="270" textAnchor="middle" className="panel-small">CONFIDENCE</text>
         <text x="119" y="301" textAnchor="middle" className="panel-value">{Math.round(proposal.analysis.overallConfidence * 100)}%</text>
         {layout.controls.map((control) => {
-          const setting = settings.get(control.parameterId);
+          const parameterId = [control.parameterId, ...(control.parameterIds ?? [])]
+            .filter((candidate): candidate is string => Boolean(candidate))
+            .find((candidate) => settings.has(candidate));
+          if (!parameterId || control.stateOnly) return null;
+          const setting = settings.get(parameterId);
           if (!setting) return null;
-          const normalized = normalizedValue(control.parameterId, setting.value);
-          const selected = selectedParameterId === control.parameterId;
-          const changed = changedIds.includes(control.parameterId);
-          const highlighted = highlightedIds.includes(control.parameterId);
+          const normalized = normalizedValue(parameterId, setting.value);
+          const selected = selectedParameterId === parameterId;
+          const changed = changedIds.includes(parameterId);
+          const highlighted = highlightedIds.includes(parameterId);
           const classes = ["panel-control", selected ? "selected" : "", changed ? "changed" : "", highlighted ? "highlighted" : ""].filter(Boolean).join(" ");
-          const activate = () => onSelect(control.parameterId);
+          const activate = () => onSelect(parameterId);
           if (control.type === "slider") {
             const y = control.y + 78 - normalized * 132;
             return (

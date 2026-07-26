@@ -1,5 +1,5 @@
 {
-  "viewBox": "0 0 3570 500",
+  "viewBox": "0 0 5290 560",
   "coordinateSystem": {
     "kind": "logical-panel-map",
     "note": "Coordinate relative per una futura UI; sezione e ordine seguono il pannello fisico Summit."
@@ -48,9 +48,33 @@
     {
       "id": "effects",
       "label": "EFFECTS",
-      "x": 3130,
+      "x": 4850,
       "y": 46,
       "width": 410,
+      "height": 410
+    },
+    {
+      "id": "mod-envelope",
+      "label": "MOD ENVELOPES",
+      "x": 3130,
+      "y": 46,
+      "width": 470,
+      "height": 410
+    },
+    {
+      "id": "lfo12",
+      "label": "LFO 1 & 2",
+      "x": 3620,
+      "y": 46,
+      "width": 760,
+      "height": 410
+    },
+    {
+      "id": "lfo34",
+      "label": "GLOBAL LFO 3 & 4",
+      "x": 4400,
+      "y": 46,
+      "width": 430,
       "height": 410
     }
   ],
@@ -674,7 +698,7 @@
       "label": "Chorus",
       "type": "knob",
       "sectionId": "effects",
-      "x": 3210,
+      "x": 4930,
       "y": 180,
       "verificationStatus": "verified"
     },
@@ -687,7 +711,7 @@
       "label": "Delay",
       "type": "knob",
       "sectionId": "effects",
-      "x": 3340,
+      "x": 5060,
       "y": 180,
       "verificationStatus": "verified"
     },
@@ -700,8 +724,326 @@
       "label": "Reverb",
       "type": "knob",
       "sectionId": "effects",
-      "x": 3470,
+      "x": 5190,
       "y": 180,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-key-tracking",
+      "parameterIds": [
+        "filter.keyTracking"
+      ],
+      "label": "Key Tracking",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2550,
+      "y": 120,
+      "parameterId": "filter.keyTracking",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-lfo1-depth",
+      "parameterIds": [
+        "filter.lfo1Depth"
+      ],
+      "label": "LFO 1 Depth",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2590,
+      "y": 330,
+      "parameterId": "filter.lfo1Depth",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-osc3-depth",
+      "parameterIds": [
+        "filter.osc3Depth"
+      ],
+      "label": "Osc 3 Filter Mod",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2180,
+      "y": 230,
+      "parameterId": "filter.osc3Depth",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-env-depth",
+      "parameterIds": [
+        "filter.ampEnvDepth",
+        "filter.modEnv1Depth"
+      ],
+      "label": "Env Depth",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2330,
+      "y": 230,
+      "contextSelectorId": "filter-env-source",
+      "parameterId": "filter.ampEnvDepth",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-env-source",
+      "parameterIds": [
+        "filter.envSource"
+      ],
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "filter",
+      "x": 2450,
+      "y": 230,
+      "parameterId": "filter.envSource",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mod-envelope-select",
+      "label": "Select",
+      "type": "selector",
+      "sectionId": "mod-envelope",
+      "x": 3180,
+      "y": 110,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mod-envelope-attack",
+      "parameterIds": [
+        "modEnv1.attack",
+        "modEnv2.attack"
+      ],
+      "label": "Attack",
+      "type": "slider",
+      "sectionId": "mod-envelope",
+      "x": 3270,
+      "y": 235,
+      "contextSelectorId": "mod-envelope-select",
+      "parameterId": "modEnv1.attack",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mod-envelope-decay",
+      "parameterIds": [
+        "modEnv1.decay",
+        "modEnv2.decay"
+      ],
+      "label": "Decay",
+      "type": "slider",
+      "sectionId": "mod-envelope",
+      "x": 3360,
+      "y": 235,
+      "contextSelectorId": "mod-envelope-select",
+      "parameterId": "modEnv1.decay",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mod-envelope-sustain",
+      "parameterIds": [
+        "modEnv1.sustain",
+        "modEnv2.sustain"
+      ],
+      "label": "Sustain",
+      "type": "slider",
+      "sectionId": "mod-envelope",
+      "x": 3450,
+      "y": 235,
+      "contextSelectorId": "mod-envelope-select",
+      "parameterId": "modEnv1.sustain",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mod-envelope-release",
+      "parameterIds": [
+        "modEnv1.release",
+        "modEnv2.release"
+      ],
+      "label": "Release",
+      "type": "slider",
+      "sectionId": "mod-envelope",
+      "x": 3540,
+      "y": 235,
+      "contextSelectorId": "mod-envelope-select",
+      "parameterId": "modEnv1.release",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "envelope-loop",
+      "parameterIds": [
+        "amp.loop",
+        "modEnv1.loop",
+        "modEnv2.loop"
+      ],
+      "label": "Loop",
+      "type": "button",
+      "sectionId": "mod-envelope",
+      "x": 3180,
+      "y": 340,
+      "contextSelectorId": "mod-envelope-select",
+      "parameterId": "amp.loop",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo1-waveform",
+      "parameterIds": [
+        "lfo1.waveform"
+      ],
+      "label": "LFO 1 Type",
+      "type": "selector",
+      "sectionId": "lfo12",
+      "x": 3690,
+      "y": 130,
+      "parameterId": "lfo1.waveform",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo1-fade-time",
+      "parameterIds": [
+        "lfo1.fadeTime"
+      ],
+      "label": "Fade Time",
+      "type": "knob",
+      "sectionId": "lfo12",
+      "x": 3810,
+      "y": 130,
+      "parameterId": "lfo1.fadeTime",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo1-range",
+      "parameterIds": [
+        "lfo1.range"
+      ],
+      "label": "Range",
+      "type": "selector",
+      "sectionId": "lfo12",
+      "x": 3930,
+      "y": 130,
+      "parameterId": "lfo1.range",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo1-rate",
+      "parameterIds": [
+        "lfo1.rate",
+        "lfo1.rateSync"
+      ],
+      "label": "Rate",
+      "type": "knob",
+      "sectionId": "lfo12",
+      "x": 4050,
+      "y": 130,
+      "contextSelectorId": "lfo1-range",
+      "parameterId": "lfo1.rate",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo2-waveform",
+      "parameterIds": [
+        "lfo2.waveform"
+      ],
+      "label": "LFO 2 Type",
+      "type": "selector",
+      "sectionId": "lfo12",
+      "x": 3690,
+      "y": 330,
+      "parameterId": "lfo2.waveform",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo2-fade-time",
+      "parameterIds": [
+        "lfo2.fadeTime"
+      ],
+      "label": "Fade Time",
+      "type": "knob",
+      "sectionId": "lfo12",
+      "x": 3810,
+      "y": 330,
+      "parameterId": "lfo2.fadeTime",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo2-range",
+      "parameterIds": [
+        "lfo2.range"
+      ],
+      "label": "Range",
+      "type": "selector",
+      "sectionId": "lfo12",
+      "x": 3930,
+      "y": 330,
+      "parameterId": "lfo2.range",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo2-rate",
+      "parameterIds": [
+        "lfo2.rate",
+        "lfo2.rateSync"
+      ],
+      "label": "Rate",
+      "type": "knob",
+      "sectionId": "lfo12",
+      "x": 4050,
+      "y": 330,
+      "contextSelectorId": "lfo2-range",
+      "parameterId": "lfo2.rate",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo34-select",
+      "label": "Select",
+      "type": "selector",
+      "sectionId": "lfo34",
+      "x": 4470,
+      "y": 130,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo34-waveform",
+      "parameterIds": [
+        "lfo3.waveform",
+        "lfo4.waveform"
+      ],
+      "label": "Type",
+      "type": "selector",
+      "sectionId": "lfo34",
+      "x": 4590,
+      "y": 130,
+      "contextSelectorId": "lfo34-select",
+      "parameterId": "lfo3.waveform",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo34-rate",
+      "parameterIds": [
+        "lfo3.rate",
+        "lfo3.rateSync",
+        "lfo4.rate",
+        "lfo4.rateSync"
+      ],
+      "label": "Rate",
+      "type": "knob",
+      "sectionId": "lfo34",
+      "x": 4710,
+      "y": 260,
+      "contextSelectorId": "lfo34-select",
+      "parameterId": "lfo3.rate",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "lfo34-sync",
+      "parameterIds": [
+        "lfo3.sync",
+        "lfo4.sync"
+      ],
+      "label": "Sync",
+      "type": "button",
+      "sectionId": "lfo34",
+      "x": 4470,
+      "y": 340,
+      "contextSelectorId": "lfo34-select",
+      "parameterId": "lfo3.sync",
       "verificationStatus": "verified"
     }
   ],
