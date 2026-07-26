@@ -1,5 +1,5 @@
 {
-  "viewBox": "0 0 8260 560",
+  "viewBox": "0 0 8800 560",
   "coordinateSystem": {
     "kind": "logical-panel-map",
     "note": "Coordinate relative per una futura UI; sezione e ordine seguono il pannello fisico Summit."
@@ -115,6 +115,14 @@
       "x": 7660,
       "y": 46,
       "width": 560,
+      "height": 410
+    },
+    {
+      "id": "multi-control",
+      "label": "MULTIPART & MULTIMODE",
+      "x": 8240,
+      "y": 46,
+      "width": 520,
       "height": 410
     }
   ],
@@ -1451,6 +1459,69 @@
       "x": 7740,
       "y": 220,
       "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "multipart-a",
+      "label": "Part A",
+      "type": "button",
+      "sectionId": "multi-control",
+      "x": 8310,
+      "y": 140,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "multipart-b",
+      "label": "Part B",
+      "type": "button",
+      "sectionId": "multi-control",
+      "x": 8430,
+      "y": 140,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "multi-layer",
+      "parameterIds": [
+        "multi.mode"
+      ],
+      "label": "Layer",
+      "type": "button",
+      "sectionId": "multi-control",
+      "x": 8310,
+      "y": 330,
+      "physicalValue": "Layer",
+      "parameterId": "multi.mode",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "multi-split",
+      "parameterIds": [
+        "multi.mode",
+        "multi.splitPoint"
+      ],
+      "label": "Split",
+      "type": "button",
+      "sectionId": "multi-control",
+      "x": 8440,
+      "y": 330,
+      "physicalValue": "Split",
+      "parameterId": "multi.mode",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "multi-dual",
+      "parameterIds": [
+        "multi.mode"
+      ],
+      "label": "Dual",
+      "type": "button",
+      "sectionId": "multi-control",
+      "x": 8570,
+      "y": 330,
+      "physicalValue": "Dual",
+      "parameterId": "multi.mode",
       "verificationStatus": "verified"
     }
   ],

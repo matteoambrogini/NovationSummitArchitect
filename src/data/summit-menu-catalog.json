@@ -239,13 +239,19 @@
     {
       "id": "settings",
       "label": "Settings",
-      "pageCount": "A–N plus Keyboard",
+      "pageCount": "1–9, A–V plus Keyboard",
       "patchRelevant": false,
       "verifiedPages": [
-        "Keyboard"
+        "Keyboard",
+        "A",
+        "B"
       ],
       "parameterIds": [
-        "keyboard.velocityCurve"
+        "keyboard.velocityCurve",
+        "settings.partAOutput",
+        "settings.partBOutput",
+        "settings.fxAOutput",
+        "settings.fxBOutput"
       ],
       "verificationStatus": "verified",
       "documentation": {
@@ -385,6 +391,44 @@
           "section": "The FX Modulation Matrix",
           "locator": "The FX Modulation Matrix",
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "multi",
+      "label": "Multi",
+      "pageCount": 4,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "parameterIds": [
+        "multi.partA.patchBank",
+        "multi.partA.patchNumber",
+        "multi.partB.patchBank",
+        "multi.partB.patchNumber",
+        "multi.partA.level",
+        "multi.partB.level",
+        "multi.splitPoint",
+        "multi.partA.octave",
+        "multi.partB.octave"
+      ],
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Multi Patches",
+        "page": 13,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Getting started with the Summit",
+          "section": "Multi Patches",
+          "locator": "Multi Patches",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
           "verifiedAt": "2026-07-26"
         }
       }

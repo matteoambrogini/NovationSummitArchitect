@@ -44,8 +44,10 @@ export type ProposalValidationIssue = { path: string; message: string };
 function validateValue(parameterId: string, value: string | number | boolean): string | undefined {
   const definition = parameterById.get(parameterId);
   if (!definition) return "Parametro non presente nel catalogo verificato";
-  if (definition.scope === "global") {
-    return "Parametro globale non inseribile in una patch";
+  if (definition.scope !== "part") {
+    return definition.scope === "global"
+      ? "Parametro globale non inseribile in una patch"
+      : "Parametro Multi non inseribile nelle impostazioni di una singola Parte";
   }
   if (!definition.aiExposed || definition.verificationStatus !== "verified") {
     return "Parametro non verificato o non esposto al provider AI";

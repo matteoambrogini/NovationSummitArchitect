@@ -7395,6 +7395,511 @@
     "aiExposed": true
   },
   {
+    "id": "multi.mode",
+    "label": "Multi Mode",
+    "physicalLabel": "Layer / Split / Dual",
+    "section": "Multi",
+    "location": {
+      "type": "panel",
+      "controlId": "multi-mode"
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "enum",
+    "enumValues": [
+      "Layer",
+      "Split",
+      "Dual"
+    ],
+    "defaultValue": "Layer",
+    "description": "Configura come le Parti A e B rispondono alla tastiera in una Multi Patch.",
+    "sonicEffect": "Layer sovrappone entrambe le Parti, Split le assegna alle due zone e Dual segue la selezione A/B/Both.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Bi-timbral synthesis",
+      "page": 12,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Bi-timbral synthesis",
+        "locator": "Bi-timbral synthesis",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partA.level",
+    "label": "Multi Part A Level",
+    "shortDisplayLabel": "Level A",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 3,
+      "row": 1
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "unknown",
+    "description": "Livello relativo della Parte A nella Multi Patch.",
+    "sonicEffect": "Bilancia la Parte A rispetto alla Parte B.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Settings Page 3 – Level A",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Patches",
+        "locator": "Page 3 – relative volume of Parts A and B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26",
+        "note": "Le fonti confermano funzione e posizione ma non dichiarano esplicitamente il range completo."
+      }
+    },
+    "verificationStatus": "unverified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partA.octave",
+    "label": "Multi Part A Octave",
+    "shortDisplayLabel": "Octave A",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 4,
+      "row": 1
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "integer",
+    "minimum": -2,
+    "maximum": 2,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Trasposizione indipendente della Parte A per ottave.",
+    "sonicEffect": "Sposta la Parte A fino a due ottave in alto o in basso.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Settings Page 4 – Octave A",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Settings Page 4 – Octave A",
+        "locator": "Multi Settings Page 4 – Octave A",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partA.patchBank",
+    "label": "Multi Part A Patch Bank",
+    "shortDisplayLabel": "Bank",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 2,
+      "row": 2
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "enum",
+    "enumValues": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "description": "Banco della Single Patch incorporata come Part A.",
+    "sonicEffect": "Seleziona il suono di base usato dalla Parte A.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Patches – Part A and Part B",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Patches – Part A and Part B",
+        "locator": "Multi Patches – Part A and Part B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partA.patchNumber",
+    "label": "Multi Part A Patch Number",
+    "shortDisplayLabel": "Patch",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 2,
+      "row": 1
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "integer",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "description": "Numero della Single Patch incorporata come Part A.",
+    "sonicEffect": "Sostituisce il suono di base della Parte A.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Patches – Part A and Part B",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Patches – Part A and Part B",
+        "locator": "Multi Patches – Part A and Part B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partB.level",
+    "label": "Multi Part B Level",
+    "shortDisplayLabel": "Level B",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 3,
+      "row": 2
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "unknown",
+    "description": "Livello relativo della Parte B nella Multi Patch.",
+    "sonicEffect": "Bilancia la Parte B rispetto alla Parte A.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Settings Page 3 – Level B",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Patches",
+        "locator": "Page 3 – relative volume of Parts A and B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26",
+        "note": "Le fonti confermano funzione e posizione ma non dichiarano esplicitamente il range completo."
+      }
+    },
+    "verificationStatus": "unverified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partB.octave",
+    "label": "Multi Part B Octave",
+    "shortDisplayLabel": "Octave B",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 4,
+      "row": 2
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "integer",
+    "minimum": -2,
+    "maximum": 2,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Trasposizione indipendente della Parte B per ottave.",
+    "sonicEffect": "Sposta la Parte B fino a due ottave in alto o in basso.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Settings Page 4 – Octave B",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Settings Page 4 – Octave B",
+        "locator": "Multi Settings Page 4 – Octave B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partB.patchBank",
+    "label": "Multi Part B Patch Bank",
+    "shortDisplayLabel": "Bank",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 2,
+      "row": 2
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "enum",
+    "enumValues": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "description": "Banco della Single Patch incorporata come Part B.",
+    "sonicEffect": "Seleziona il suono di base usato dalla Parte B.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Patches – Part A and Part B",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Patches – Part A and Part B",
+        "locator": "Multi Patches – Part A and Part B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.partB.patchNumber",
+    "label": "Multi Part B Patch Number",
+    "shortDisplayLabel": "Patch",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 2,
+      "row": 1
+    },
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "integer",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "description": "Numero della Single Patch incorporata come Part B.",
+    "sonicEffect": "Sostituisce il suono di base della Parte B.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Patches – Part A and Part B",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Patches – Part A and Part B",
+        "locator": "Multi Patches – Part A and Part B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "multi.splitPoint",
+    "label": "Multi Split Point",
+    "shortDisplayLabel": "SplitPoint",
+    "section": "Multi",
+    "location": {
+      "type": "menu",
+      "menu": "Multi",
+      "page": 3,
+      "row": 3
+    },
+    "alternateLocations": [
+      {
+        "type": "panel",
+        "controlId": "multi-split"
+      }
+    ],
+    "scope": "multi",
+    "singleMultiApplicability": "multi",
+    "valueType": "enum",
+    "enumValues": [
+      "C-2",
+      "C#-2",
+      "D-2",
+      "D#-2",
+      "E-2",
+      "F-2",
+      "F#-2",
+      "G-2",
+      "G#-2",
+      "A-2",
+      "A#-2",
+      "B-2",
+      "C-1",
+      "C#-1",
+      "D-1",
+      "D#-1",
+      "E-1",
+      "F-1",
+      "F#-1",
+      "G-1",
+      "G#-1",
+      "A-1",
+      "A#-1",
+      "B-1",
+      "C0",
+      "C#0",
+      "D0",
+      "D#0",
+      "E0",
+      "F0",
+      "F#0",
+      "G0",
+      "G#0",
+      "A0",
+      "A#0",
+      "B0",
+      "C1",
+      "C#1",
+      "D1",
+      "D#1",
+      "E1",
+      "F1",
+      "F#1",
+      "G1",
+      "G#1",
+      "A1",
+      "A#1",
+      "B1",
+      "C2",
+      "C#2",
+      "D2",
+      "D#2",
+      "E2",
+      "F2",
+      "F#2",
+      "G2",
+      "G#2",
+      "A2",
+      "A#2",
+      "B2",
+      "C3",
+      "C#3",
+      "D3",
+      "D#3",
+      "E3",
+      "F3",
+      "F#3",
+      "G3",
+      "G#3",
+      "A3",
+      "A#3",
+      "B3",
+      "C4",
+      "C#4",
+      "D4",
+      "D#4",
+      "E4",
+      "F4",
+      "F#4",
+      "G4",
+      "G#4",
+      "A4",
+      "A#4",
+      "B4",
+      "C5",
+      "C#5",
+      "D5",
+      "D#5",
+      "E5",
+      "F5",
+      "F#5",
+      "G5",
+      "G#5",
+      "A5",
+      "A#5",
+      "B5",
+      "C6",
+      "C#6",
+      "D6",
+      "D#6",
+      "E6",
+      "F6",
+      "F#6",
+      "G6",
+      "G#6",
+      "A6",
+      "A#6",
+      "B6",
+      "C7",
+      "C#7",
+      "D7",
+      "D#7",
+      "E7",
+      "F7",
+      "F#7",
+      "G7",
+      "G#7",
+      "A7",
+      "A#7",
+      "B7",
+      "C8",
+      "C#8",
+      "D8",
+      "D#8",
+      "E8",
+      "F8",
+      "F#8",
+      "G8"
+    ],
+    "defaultValue": "C3",
+    "dependencies": [
+      {
+        "parameterId": "multi.mode",
+        "condition": "Split"
+      }
+    ],
+    "description": "Ultima nota di riferimento della zona inferiore: Part A è sotto, Part B sopra il punto di split.",
+    "sonicEffect": "Sposta il confine fra le zone di tastiera assegnate alle due Parti.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Multi Settings Page 3 – SplitPoint",
+      "page": 13,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Getting started with the Summit",
+        "section": "Multi Settings Page 3 – SplitPoint",
+        "locator": "Multi Settings Page 3 – SplitPoint",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003970829330-Getting-started-with-the-Summit",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
     "id": "noise.highPass",
     "label": "Noise High-pass Filter",
     "shortDisplayLabel": "Noise HPF",
@@ -9955,6 +10460,158 @@
       }
     },
     "verificationStatus": "unverified",
+    "aiExposed": false
+  },
+  {
+    "id": "settings.fxAOutput",
+    "label": "FX Output Routing – Part A",
+    "shortDisplayLabel": "FxA Out",
+    "section": "Settings",
+    "location": {
+      "type": "menu",
+      "menu": "Settings",
+      "page": "B",
+      "row": 1
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "enumValues": [
+      "Main",
+      "AUX"
+    ],
+    "defaultValue": "Main",
+    "description": "Instrada l'uscita wet FX A su Main o AUX.",
+    "sonicEffect": "Separa l'uscita elaborata della Parte A.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "FX Routing – Part A",
+      "page": 43,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "FX Routing – Part A",
+        "locator": "FX Routing – Part A",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "settings.fxBOutput",
+    "label": "FX Output Routing – Part B",
+    "shortDisplayLabel": "FxB Out",
+    "section": "Settings",
+    "location": {
+      "type": "menu",
+      "menu": "Settings",
+      "page": "B",
+      "row": 2
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "enumValues": [
+      "Main",
+      "AUX"
+    ],
+    "defaultValue": "Main",
+    "description": "Instrada l'uscita wet FX B su Main o AUX.",
+    "sonicEffect": "Separa l'uscita elaborata della Parte B.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "FX Routing – Part B",
+      "page": 43,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "FX Routing – Part B",
+        "locator": "FX Routing – Part B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "settings.partAOutput",
+    "label": "Main Output Routing – Part A",
+    "shortDisplayLabel": "PartA Out",
+    "section": "Settings",
+    "location": {
+      "type": "menu",
+      "menu": "Settings",
+      "page": "A",
+      "row": 1
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "enumValues": [
+      "Main",
+      "AUX"
+    ],
+    "defaultValue": "Main",
+    "description": "Instrada l'uscita dry della Parte A su Main o AUX.",
+    "sonicEffect": "Separa fisicamente l'uscita della Parte A.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Main Output Routing – Part A",
+      "page": 43,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Main Output Routing – Part A",
+        "locator": "Main Output Routing – Part A",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "settings.partBOutput",
+    "label": "Main Output Routing – Part B",
+    "shortDisplayLabel": "PartB Out",
+    "section": "Settings",
+    "location": {
+      "type": "menu",
+      "menu": "Settings",
+      "page": "A",
+      "row": 2
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "enumValues": [
+      "Main",
+      "AUX"
+    ],
+    "defaultValue": "Main",
+    "description": "Instrada l'uscita dry della Parte B su Main o AUX.",
+    "sonicEffect": "Separa fisicamente l'uscita della Parte B.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Main Output Routing – Part B",
+      "page": 43,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Main Output Routing – Part B",
+        "locator": "Main Output Routing – Part B",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
     "aiExposed": false
   },
   {
