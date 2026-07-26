@@ -262,6 +262,62 @@
           "verifiedAt": "2026-07-26"
         }
       }
+    },
+    {
+      "id": "fx",
+      "label": "FX",
+      "pageCount": 10,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "parameterIds": [
+        "fx.wetLevel",
+        "fx.dryLevel",
+        "fx.routing",
+        "fx.chorus.depth",
+        "fx.chorus.feedback",
+        "fx.chorus.lowPass",
+        "fx.chorus.highPass",
+        "fx.delay.syncRate",
+        "fx.delay.lowPassDamping",
+        "fx.delay.highPassDamping",
+        "fx.delay.leftRightRatio",
+        "fx.delay.slewRate",
+        "fx.delay.width",
+        "fx.chorus.mode",
+        "fx.delay.timeMode",
+        "fx.delay.type",
+        "fx.delay.output",
+        "fx.reverb.preDelay",
+        "fx.reverb.lowPassDamping",
+        "fx.reverb.highPassDamping",
+        "fx.reverb.size",
+        "fx.reverb.modDepth",
+        "fx.reverb.modRate",
+        "fx.reverb.lowPass",
+        "fx.reverb.highPass"
+      ],
+      "verificationStatus": "conflict",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The FX Menu",
+        "page": 35,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit and Peak Firmware Update v2.1 Addendum and Summit in detail",
+          "section": "Chorus/Flanger/Phlanger; Switchable Delay Modes; Lo-Fi Delay",
+          "locator": "FX menu pages",
+          "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+          "verifiedAt": "2026-07-26",
+          "note": "Gli schermi dell'addendum indicano 10 pagine, mentre il testo della guida online mantiene il vecchio conteggio di 8."
+        }
+      }
     }
   ],
   "documentation": {

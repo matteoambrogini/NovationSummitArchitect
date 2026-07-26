@@ -1,5 +1,5 @@
 {
-  "viewBox": "0 0 7040 560",
+  "viewBox": "0 0 7640 560",
   "coordinateSystem": {
     "kind": "logical-panel-map",
     "note": "Coordinate relative per una futura UI; sezione e ordine seguono il pannello fisico Summit."
@@ -50,7 +50,7 @@
       "label": "EFFECTS",
       "x": 6600,
       "y": 46,
-      "width": 410,
+      "width": 1000,
       "height": 410
     },
     {
@@ -723,41 +723,41 @@
     },
     {
       "id": "fx-chorus",
-      "parameterId": "fx.chorus.level",
       "parameterIds": [
         "fx.chorus.level"
       ],
-      "label": "Chorus",
+      "label": "Chorus Level",
       "type": "knob",
       "sectionId": "effects",
-      "x": 6680,
-      "y": 180,
+      "x": 7280,
+      "y": 330,
+      "parameterId": "fx.chorus.level",
       "verificationStatus": "verified"
     },
     {
       "id": "fx-delay",
-      "parameterId": "fx.delay.level",
       "parameterIds": [
         "fx.delay.level"
       ],
-      "label": "Delay",
+      "label": "Delay Level",
       "type": "knob",
       "sectionId": "effects",
-      "x": 6810,
-      "y": 180,
+      "x": 7160,
+      "y": 140,
+      "parameterId": "fx.delay.level",
       "verificationStatus": "verified"
     },
     {
       "id": "fx-reverb",
-      "parameterId": "fx.reverb.level",
       "parameterIds": [
         "fx.reverb.level"
       ],
-      "label": "Reverb",
+      "label": "Reverb Level",
       "type": "knob",
       "sectionId": "effects",
-      "x": 6940,
-      "y": 180,
+      "x": 7040,
+      "y": 330,
+      "parameterId": "fx.reverb.level",
       "verificationStatus": "verified"
     },
     {
@@ -1239,6 +1239,130 @@
       "x": 6470,
       "y": 230,
       "parameterId": "keyboard.octave",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-distortion",
+      "parameterIds": [
+        "fx.distortion.level"
+      ],
+      "label": "Distortion",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 6670,
+      "y": 140,
+      "parameterId": "fx.distortion.level",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-delay-time",
+      "parameterIds": [
+        "fx.delay.time",
+        "fx.delay.syncRate"
+      ],
+      "label": "Delay Time",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 6800,
+      "y": 140,
+      "contextSelectorId": "fx-delay-sync",
+      "parameterId": "fx.delay.time",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-delay-feedback",
+      "parameterIds": [
+        "fx.delay.feedback"
+      ],
+      "label": "Feedback",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 6920,
+      "y": 140,
+      "parameterId": "fx.delay.feedback",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-delay-sync",
+      "parameterIds": [
+        "fx.delay.sync"
+      ],
+      "label": "Sync",
+      "type": "button",
+      "sectionId": "effects",
+      "x": 7040,
+      "y": 140,
+      "parameterId": "fx.delay.sync",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-reverb-time",
+      "parameterIds": [
+        "fx.reverb.time"
+      ],
+      "label": "Reverb Time",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 6800,
+      "y": 330,
+      "parameterId": "fx.reverb.time",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-reverb-size",
+      "parameterIds": [
+        "fx.reverb.size"
+      ],
+      "label": "Size",
+      "type": "selector",
+      "sectionId": "effects",
+      "x": 6920,
+      "y": 330,
+      "verificationStatus": "conflict",
+      "physicalValues": [
+        0,
+        64,
+        127
+      ],
+      "parameterId": "fx.reverb.size"
+    },
+    {
+      "id": "fx-chorus-rate",
+      "parameterIds": [
+        "fx.chorus.rate"
+      ],
+      "label": "Chorus Rate",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 7280,
+      "y": 140,
+      "parameterId": "fx.chorus.rate",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-chorus-type",
+      "parameterIds": [
+        "fx.chorus.type"
+      ],
+      "label": "Type",
+      "type": "selector",
+      "sectionId": "effects",
+      "x": 7400,
+      "y": 140,
+      "parameterId": "fx.chorus.type",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-bypass",
+      "parameterIds": [
+        "fx.bypass"
+      ],
+      "label": "Bypass",
+      "type": "button",
+      "sectionId": "effects",
+      "x": 7500,
+      "y": 330,
+      "parameterId": "fx.bypass",
       "verificationStatus": "verified"
     }
   ],
