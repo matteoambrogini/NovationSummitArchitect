@@ -5,6 +5,7 @@ import { summitParameterCatalogSchema, type SummitPatchProposal } from "./schema
 
 export const parameterCatalog = summitParameterCatalogSchema.parse(parameterCatalogJson);
 export const parameterById = new Map(parameterCatalog.map((parameter) => [parameter.id, parameter]));
+export const aiParameterCatalog = parameterCatalog.filter((parameter) => parameter.aiExposed);
 
 const modulationCatalog = modulationCatalogJson as {
   sources: Array<{ id: string; displayLabel: string }>;
@@ -27,6 +28,9 @@ export type ProposalValidationIssue = { path: string; message: string };
 function validateValue(parameterId: string, value: string | number | boolean): string | undefined {
   const definition = parameterById.get(parameterId);
   if (!definition) return "Parametro non presente nel catalogo verificato";
+  if (!definition.aiExposed || definition.verificationStatus !== "verified") {
+    return "Parametro non verificato o non esposto al provider AI";
+  }
   if (typeof value === "number") {
     if (definition.minimum !== undefined && value < definition.minimum) {
       return `Valore ${value} inferiore al minimo ${definition.minimum}`;

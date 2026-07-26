@@ -4,8 +4,20 @@ const documentationSchema = z.object({
   document: z.string().min(1),
   section: z.string().min(1),
   page: z.number().int().positive().optional(),
+  locator: z.string().min(1).optional(),
   sourceUrl: z.url().optional(),
   verifiedAt: z.iso.date(),
+  verification: z
+    .object({
+      document: z.string().min(1),
+      section: z.string().min(1),
+      page: z.number().int().positive().optional(),
+      locator: z.string().min(1).optional(),
+      sourceUrl: z.url(),
+      verifiedAt: z.iso.date(),
+      note: z.string().min(1).optional(),
+    })
+    .optional(),
 });
 
 const panelLocationSchema = z.object({
@@ -24,12 +36,14 @@ export const summitParameterDefinitionSchema = z
   .object({
     id: z.string().min(1),
     label: z.string().min(1),
+    physicalLabel: z.string().min(1).optional(),
     shortDisplayLabel: z.string().min(1).optional(),
     section: z.string().min(1),
     subsection: z.string().min(1).optional(),
     location: z.discriminatedUnion("type", [panelLocationSchema, menuLocationSchema]),
     scope: z.enum(["part", "multi", "global"]),
     partApplicability: z.enum(["A", "B", "both"]).optional(),
+    singleMultiApplicability: z.enum(["single", "multi", "both"]),
     valueType: z.enum([
       "integer",
       "decimal",
@@ -39,6 +53,7 @@ export const summitParameterDefinitionSchema = z
       "note",
       "frequency",
       "time",
+      "unknown",
     ]),
     minimum: z.number().optional(),
     maximum: z.number().optional(),
@@ -52,7 +67,21 @@ export const summitParameterDefinitionSchema = z
     description: z.string().min(1),
     sonicEffect: z.string().min(1),
     documentation: documentationSchema,
-    verificationStatus: z.literal("verified"),
+    verificationStatus: z.enum([
+      "verified",
+      "unverified",
+      "conflict",
+      "firmware-dependent",
+      "deprecated",
+    ]),
+    aiExposed: z.boolean(),
+    firmware: z
+      .object({
+        minimum: z.string().min(1).optional(),
+        maximum: z.string().min(1).optional(),
+        note: z.string().min(1).optional(),
+      })
+      .optional(),
   })
   .superRefine((definition, context) => {
     if (
@@ -65,9 +94,22 @@ export const summitParameterDefinitionSchema = z
       ["integer", "decimal", "bipolar", "frequency", "time"].includes(
         definition.valueType,
       ) &&
-      (definition.minimum === undefined || definition.maximum === undefined)
+      (definition.minimum === undefined || definition.maximum === undefined) &&
+      definition.verificationStatus === "verified"
     ) {
       context.addIssue({ code: "custom", message: "Il parametro numerico richiede min e max" });
+    }
+    if (definition.aiExposed && definition.verificationStatus !== "verified") {
+      context.addIssue({
+        code: "custom",
+        message: "Solo i parametri verified possono essere esposti al provider AI",
+      });
+    }
+    if (definition.verificationStatus === "verified" && !definition.documentation.verification) {
+      context.addIssue({
+        code: "custom",
+        message: "Un parametro verified richiede una verifica indipendente",
+      });
     }
   });
 

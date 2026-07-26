@@ -1,34 +1,722 @@
 {
-  "viewBox": "0 0 1600 560",
+  "viewBox": "0 0 3570 500",
+  "coordinateSystem": {
+    "kind": "logical-panel-map",
+    "note": "Coordinate relative per una futura UI; sezione e ordine seguono il pannello fisico Summit."
+  },
   "sections": [
-    { "id": "voice", "label": "VOICE", "x": 30, "y": 46, "width": 180, "height": 470 },
-    { "id": "oscillators", "label": "OSCILLATORS", "x": 225, "y": 46, "width": 360, "height": 470 },
-    { "id": "mixer", "label": "MIXER", "x": 600, "y": 46, "width": 190, "height": 470 },
-    { "id": "filter", "label": "FILTER", "x": 805, "y": 46, "width": 290, "height": 470 },
-    { "id": "envelopes", "label": "AMP ENVELOPE", "x": 1110, "y": 46, "width": 235, "height": 470 },
-    { "id": "effects", "label": "EFFECTS", "x": 1360, "y": 46, "width": 210, "height": 470 }
+    {
+      "id": "oscillators",
+      "label": "OSCILLATORS",
+      "x": 30,
+      "y": 46,
+      "width": 1110,
+      "height": 410
+    },
+    {
+      "id": "fm",
+      "label": "FM",
+      "x": 1160,
+      "y": 46,
+      "width": 360,
+      "height": 410
+    },
+    {
+      "id": "mixer",
+      "label": "MIXER",
+      "x": 1540,
+      "y": 46,
+      "width": 610,
+      "height": 410
+    },
+    {
+      "id": "filter",
+      "label": "FILTER",
+      "x": 2180,
+      "y": 46,
+      "width": 480,
+      "height": 410
+    },
+    {
+      "id": "amp-envelope",
+      "label": "AMP ENVELOPE",
+      "x": 2680,
+      "y": 46,
+      "width": 430,
+      "height": 410
+    },
+    {
+      "id": "effects",
+      "label": "EFFECTS",
+      "x": 3130,
+      "y": 46,
+      "width": 410,
+      "height": 410
+    }
   ],
   "controls": [
-    { "id": "osc1-range", "parameterId": "osc1.range", "label": "Range", "type": "selector", "x": 270, "y": 150 },
-    { "id": "osc1-coarse", "parameterId": "osc1.coarse", "label": "Coarse", "type": "knob", "x": 370, "y": 150 },
-    { "id": "osc1-fine", "parameterId": "osc1.fine", "label": "Fine", "type": "knob", "x": 470, "y": 150 },
-    { "id": "osc1-wave", "parameterId": "osc1.wave", "label": "Wave", "type": "selector", "x": 270, "y": 310 },
-    { "id": "osc1-shape", "parameterId": "osc1.shape", "label": "Shape", "type": "knob", "x": 420, "y": 310 },
-    { "id": "mixer-osc1", "parameterId": "mixer.osc1.level", "label": "Osc 1", "type": "knob", "x": 650, "y": 150 },
-    { "id": "mixer-osc2", "parameterId": "mixer.osc2.level", "label": "Osc 2", "type": "knob", "x": 740, "y": 150 },
-    { "id": "mixer-osc3", "parameterId": "mixer.osc3.level", "label": "Osc 3", "type": "knob", "x": 650, "y": 310 },
-    { "id": "mixer-noise", "parameterId": "mixer.noise.level", "label": "Noise", "type": "knob", "x": 740, "y": 310 },
-    { "id": "filter-shape", "parameterId": "filter.shape", "label": "Shape", "type": "selector", "x": 850, "y": 150 },
-    { "id": "filter-slope", "parameterId": "filter.slope", "label": "Slope", "type": "selector", "x": 950, "y": 150 },
-    { "id": "filter-frequency", "parameterId": "filter.frequency", "label": "Frequency", "type": "knob", "x": 1035, "y": 260, "size": 94 },
-    { "id": "filter-resonance", "parameterId": "filter.resonance", "label": "Resonance", "type": "knob", "x": 860, "y": 350 },
-    { "id": "filter-overdrive", "parameterId": "filter.overdrive", "label": "Overdrive", "type": "knob", "x": 960, "y": 350 },
-    { "id": "amp-attack", "parameterId": "amp.attack", "label": "Attack", "type": "slider", "x": 1150, "y": 235 },
-    { "id": "amp-decay", "parameterId": "amp.decay", "label": "Decay", "type": "slider", "x": 1200, "y": 235 },
-    { "id": "amp-sustain", "parameterId": "amp.sustain", "label": "Sustain", "type": "slider", "x": 1250, "y": 235 },
-    { "id": "amp-release", "parameterId": "amp.release", "label": "Release", "type": "slider", "x": 1300, "y": 235 },
-    { "id": "fx-chorus", "parameterId": "fx.chorus.level", "label": "Chorus", "type": "knob", "x": 1410, "y": 150 },
-    { "id": "fx-delay", "parameterId": "fx.delay.level", "label": "Delay", "type": "knob", "x": 1510, "y": 150 },
-    { "id": "fx-reverb", "parameterId": "fx.reverb.level", "label": "Reverb", "type": "knob", "x": 1460, "y": 330 }
-  ]
+    {
+      "id": "osc1-range",
+      "parameterId": "osc1.range",
+      "parameterIds": [
+        "osc1.range"
+      ],
+      "label": "Range",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 90,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc1-coarse",
+      "parameterId": "osc1.coarse",
+      "parameterIds": [
+        "osc1.coarse"
+      ],
+      "label": "Coarse",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 180,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc1-fine",
+      "parameterId": "osc1.fine",
+      "parameterIds": [
+        "osc1.fine"
+      ],
+      "label": "Fine",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 270,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc1-wave",
+      "parameterId": "osc1.wave",
+      "parameterIds": [
+        "osc1.wave"
+      ],
+      "label": "Wave",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 90,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc1-mod-env2-depth",
+      "parameterId": "osc1.pitch.modEnv2Depth",
+      "parameterIds": [
+        "osc1.pitch.modEnv2Depth"
+      ],
+      "label": "Mod Env 2",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 180,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc1-lfo2-depth",
+      "parameterId": "osc1.pitch.lfo2Depth",
+      "parameterIds": [
+        "osc1.pitch.lfo2Depth"
+      ],
+      "label": "LFO 2",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 270,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc1-shape",
+      "parameterId": "osc1.shape",
+      "parameterIds": [
+        "osc1.shape",
+        "osc1.shape.modEnv1Depth",
+        "osc1.shape.lfo1Depth"
+      ],
+      "label": "Shape Amount",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 350,
+      "y": 310,
+      "verificationStatus": "verified",
+      "contextSelectorId": "osc1-shape-source"
+    },
+    {
+      "id": "osc1-shape-source",
+      "parameterId": "osc1.shapeSource",
+      "parameterIds": [
+        "osc1.shapeSource"
+      ],
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 350,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-range",
+      "parameterId": "osc2.range",
+      "parameterIds": [
+        "osc2.range"
+      ],
+      "label": "Range",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 440,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-coarse",
+      "parameterId": "osc2.coarse",
+      "parameterIds": [
+        "osc2.coarse"
+      ],
+      "label": "Coarse",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 530,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-fine",
+      "parameterId": "osc2.fine",
+      "parameterIds": [
+        "osc2.fine"
+      ],
+      "label": "Fine",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 620,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-wave",
+      "parameterId": "osc2.wave",
+      "parameterIds": [
+        "osc2.wave"
+      ],
+      "label": "Wave",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 440,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-mod-env2-depth",
+      "parameterId": "osc2.pitch.modEnv2Depth",
+      "parameterIds": [
+        "osc2.pitch.modEnv2Depth"
+      ],
+      "label": "Mod Env 2",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 530,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-lfo2-depth",
+      "parameterId": "osc2.pitch.lfo2Depth",
+      "parameterIds": [
+        "osc2.pitch.lfo2Depth"
+      ],
+      "label": "LFO 2",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 620,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc2-shape",
+      "parameterId": "osc2.shape",
+      "parameterIds": [
+        "osc2.shape",
+        "osc2.shape.modEnv1Depth",
+        "osc2.shape.lfo1Depth"
+      ],
+      "label": "Shape Amount",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 700,
+      "y": 310,
+      "verificationStatus": "verified",
+      "contextSelectorId": "osc2-shape-source"
+    },
+    {
+      "id": "osc2-shape-source",
+      "parameterId": "osc2.shapeSource",
+      "parameterIds": [
+        "osc2.shapeSource"
+      ],
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 700,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-range",
+      "parameterId": "osc3.range",
+      "parameterIds": [
+        "osc3.range"
+      ],
+      "label": "Range",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 790,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-coarse",
+      "parameterId": "osc3.coarse",
+      "parameterIds": [
+        "osc3.coarse"
+      ],
+      "label": "Coarse",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 880,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-fine",
+      "parameterId": "osc3.fine",
+      "parameterIds": [
+        "osc3.fine"
+      ],
+      "label": "Fine",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 970,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-wave",
+      "parameterId": "osc3.wave",
+      "parameterIds": [
+        "osc3.wave"
+      ],
+      "label": "Wave",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 790,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-mod-env2-depth",
+      "parameterId": "osc3.pitch.modEnv2Depth",
+      "parameterIds": [
+        "osc3.pitch.modEnv2Depth"
+      ],
+      "label": "Mod Env 2",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 880,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-lfo2-depth",
+      "parameterId": "osc3.pitch.lfo2Depth",
+      "parameterIds": [
+        "osc3.pitch.lfo2Depth"
+      ],
+      "label": "LFO 2",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 970,
+      "y": 310,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "osc3-shape",
+      "parameterId": "osc3.shape",
+      "parameterIds": [
+        "osc3.shape",
+        "osc3.shape.modEnv1Depth",
+        "osc3.shape.lfo1Depth"
+      ],
+      "label": "Shape Amount",
+      "type": "knob",
+      "sectionId": "oscillators",
+      "x": 1050,
+      "y": 310,
+      "verificationStatus": "verified",
+      "contextSelectorId": "osc3-shape-source"
+    },
+    {
+      "id": "osc3-shape-source",
+      "parameterId": "osc3.shapeSource",
+      "parameterIds": [
+        "osc3.shapeSource"
+      ],
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "oscillators",
+      "x": 1050,
+      "y": 130,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fm-osc3ToOsc1",
+      "parameterId": "fm.osc3ToOsc1.manual",
+      "parameterIds": [
+        "fm.osc3ToOsc1.manual",
+        "fm.osc3ToOsc1.modEnv2",
+        "fm.osc3ToOsc1.lfo2"
+      ],
+      "label": "Osc 3 > Osc 1",
+      "type": "knob",
+      "sectionId": "fm",
+      "x": 1220,
+      "y": 190,
+      "verificationStatus": "unverified",
+      "contextSelectorId": "fm-osc3ToOsc1-source"
+    },
+    {
+      "id": "fm-osc3ToOsc1-source",
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "fm",
+      "x": 1220,
+      "y": 330,
+      "verificationStatus": "verified",
+      "stateOnly": true,
+      "states": [
+        "Manual",
+        "Mod Env 2",
+        "LFO 2"
+      ]
+    },
+    {
+      "id": "fm-osc1ToOsc2",
+      "parameterId": "fm.osc1ToOsc2.manual",
+      "parameterIds": [
+        "fm.osc1ToOsc2.manual",
+        "fm.osc1ToOsc2.modEnv2",
+        "fm.osc1ToOsc2.lfo2"
+      ],
+      "label": "Osc 1 > Osc 2",
+      "type": "knob",
+      "sectionId": "fm",
+      "x": 1325,
+      "y": 190,
+      "verificationStatus": "unverified",
+      "contextSelectorId": "fm-osc1ToOsc2-source"
+    },
+    {
+      "id": "fm-osc1ToOsc2-source",
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "fm",
+      "x": 1325,
+      "y": 330,
+      "verificationStatus": "verified",
+      "stateOnly": true,
+      "states": [
+        "Manual",
+        "Mod Env 2",
+        "LFO 2"
+      ]
+    },
+    {
+      "id": "fm-osc2ToOsc3",
+      "parameterId": "fm.osc2ToOsc3.manual",
+      "parameterIds": [
+        "fm.osc2ToOsc3.manual",
+        "fm.osc2ToOsc3.modEnv2",
+        "fm.osc2ToOsc3.lfo2"
+      ],
+      "label": "Osc 2 > Osc 3",
+      "type": "knob",
+      "sectionId": "fm",
+      "x": 1430,
+      "y": 190,
+      "verificationStatus": "unverified",
+      "contextSelectorId": "fm-osc2ToOsc3-source"
+    },
+    {
+      "id": "fm-osc2ToOsc3-source",
+      "label": "Source",
+      "type": "selector",
+      "sectionId": "fm",
+      "x": 1430,
+      "y": 330,
+      "verificationStatus": "verified",
+      "stateOnly": true,
+      "states": [
+        "Manual",
+        "Mod Env 2",
+        "LFO 2"
+      ]
+    },
+    {
+      "id": "mixer-osc1",
+      "parameterId": "mixer.osc1.level",
+      "parameterIds": [
+        "mixer.osc1.level"
+      ],
+      "label": "Osc 1",
+      "type": "knob",
+      "sectionId": "mixer",
+      "x": 1610,
+      "y": 150,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mixer-osc2",
+      "parameterId": "mixer.osc2.level",
+      "parameterIds": [
+        "mixer.osc2.level"
+      ],
+      "label": "Osc 2",
+      "type": "knob",
+      "sectionId": "mixer",
+      "x": 1780,
+      "y": 150,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mixer-osc3",
+      "parameterId": "mixer.osc3.level",
+      "parameterIds": [
+        "mixer.osc3.level"
+      ],
+      "label": "Osc 3",
+      "type": "knob",
+      "sectionId": "mixer",
+      "x": 1950,
+      "y": 150,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mixer-ring",
+      "parameterId": "mixer.ring.level",
+      "parameterIds": [
+        "mixer.ring.level"
+      ],
+      "label": "Ring 1*2",
+      "type": "knob",
+      "sectionId": "mixer",
+      "x": 1610,
+      "y": 330,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mixer-noise",
+      "parameterId": "mixer.noise.level",
+      "parameterIds": [
+        "mixer.noise.level"
+      ],
+      "label": "Noise",
+      "type": "knob",
+      "sectionId": "mixer",
+      "x": 1780,
+      "y": 330,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "mixer-vca-gain",
+      "parameterId": "mixer.vcaGain",
+      "parameterIds": [
+        "mixer.vcaGain"
+      ],
+      "label": "VCA Gain",
+      "type": "knob",
+      "sectionId": "mixer",
+      "x": 2070,
+      "y": 330,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-shape",
+      "parameterId": "filter.shape",
+      "parameterIds": [
+        "filter.shape"
+      ],
+      "label": "Shape",
+      "type": "selector",
+      "sectionId": "filter",
+      "x": 2250,
+      "y": 140,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-slope",
+      "parameterId": "filter.slope",
+      "parameterIds": [
+        "filter.slope"
+      ],
+      "label": "Slope",
+      "type": "selector",
+      "sectionId": "filter",
+      "x": 2370,
+      "y": 140,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-frequency",
+      "parameterId": "filter.frequency",
+      "parameterIds": [
+        "filter.frequency"
+      ],
+      "label": "Frequency",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2530,
+      "y": 240,
+      "size": 94,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-resonance",
+      "parameterId": "filter.resonance",
+      "parameterIds": [
+        "filter.resonance"
+      ],
+      "label": "Resonance",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2280,
+      "y": 330,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "filter-overdrive",
+      "parameterId": "filter.overdrive",
+      "parameterIds": [
+        "filter.overdrive"
+      ],
+      "label": "Overdrive",
+      "type": "knob",
+      "sectionId": "filter",
+      "x": 2420,
+      "y": 330,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "amp-attack",
+      "parameterId": "amp.attack",
+      "parameterIds": [
+        "amp.attack"
+      ],
+      "label": "Attack",
+      "type": "slider",
+      "sectionId": "amp-envelope",
+      "x": 2750,
+      "y": 235,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "amp-decay",
+      "parameterId": "amp.decay",
+      "parameterIds": [
+        "amp.decay"
+      ],
+      "label": "Decay",
+      "type": "slider",
+      "sectionId": "amp-envelope",
+      "x": 2840,
+      "y": 235,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "amp-sustain",
+      "parameterId": "amp.sustain",
+      "parameterIds": [
+        "amp.sustain"
+      ],
+      "label": "Sustain",
+      "type": "slider",
+      "sectionId": "amp-envelope",
+      "x": 2930,
+      "y": 235,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "amp-release",
+      "parameterId": "amp.release",
+      "parameterIds": [
+        "amp.release"
+      ],
+      "label": "Release",
+      "type": "slider",
+      "sectionId": "amp-envelope",
+      "x": 3020,
+      "y": 235,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-chorus",
+      "parameterId": "fx.chorus.level",
+      "parameterIds": [
+        "fx.chorus.level"
+      ],
+      "label": "Chorus",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 3210,
+      "y": 180,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-delay",
+      "parameterId": "fx.delay.level",
+      "parameterIds": [
+        "fx.delay.level"
+      ],
+      "label": "Delay",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 3340,
+      "y": 180,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "fx-reverb",
+      "parameterId": "fx.reverb.level",
+      "parameterIds": [
+        "fx.reverb.level"
+      ],
+      "label": "Reverb",
+      "type": "knob",
+      "sectionId": "effects",
+      "x": 3470,
+      "y": 180,
+      "verificationStatus": "verified"
+    }
+  ],
+  "documentation": {
+    "document": "Summit User Guide v1.1",
+    "section": "Hardware Overview",
+    "page": 5,
+    "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+    "verifiedAt": "2026-07-26",
+    "verification": {
+      "document": "Summit in detail",
+      "section": "Hardware Overview",
+      "locator": "Hardware Overview",
+      "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+      "verifiedAt": "2026-07-26"
+    }
+  }
 }

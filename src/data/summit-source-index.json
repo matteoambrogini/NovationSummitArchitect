@@ -1,0 +1,62 @@
+{
+  "sources": [
+    {
+      "id": "summit-user-guide-1.1",
+      "title": "Summit User Guide v1.1 English",
+      "publisher": "Novation",
+      "kind": "official-pdf",
+      "version": "1.1",
+      "localPath": "docs/references/Summit_User_Guide_1.1_EN.pdf",
+      "url": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "applicability": "Summit"
+    },
+    {
+      "id": "summit-firmware-addendum-2.1",
+      "title": "Summit and Peak Firmware Update - Version 2.1 Addendum",
+      "publisher": "Novation",
+      "kind": "official-pdf",
+      "version": "2.1",
+      "localPath": "docs/references/Summit_Peak_Firmware_2.1_Addendum_EN.pdf",
+      "url": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "applicability": "Summit and Peak, with Peak-only sections explicitly identified in the document"
+    },
+    {
+      "id": "summit-online-detail",
+      "title": "Summit in detail",
+      "publisher": "Novation User Guides",
+      "kind": "official-online-guide",
+      "version": "current",
+      "url": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+      "verifiedAt": "2026-07-26",
+      "applicability": "Summit"
+    },
+    {
+      "id": "summit-online-appendix",
+      "title": "Summit appendix",
+      "publisher": "Novation User Guides",
+      "kind": "official-online-guide",
+      "version": "current",
+      "url": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+      "verifiedAt": "2026-07-26",
+      "applicability": "Summit"
+    },
+    {
+      "id": "summit-downloads",
+      "title": "Summit Downloads",
+      "publisher": "Novation",
+      "kind": "official-download-index",
+      "version": "current",
+      "url": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "applicability": "Summit"
+    }
+  ],
+  "policy": {
+    "primarySourcesOnly": true,
+    "requiredPasses": ["extraction", "independent-verification"],
+    "aiExposureRule": "verificationStatus must be verified and aiExposed must be true",
+    "unsupportedEvidence": ["forums", "Reddit", "third-party editors", "reverse engineering"]
+  }
+}

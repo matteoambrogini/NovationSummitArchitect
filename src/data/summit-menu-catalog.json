@@ -1,12 +1,119 @@
 {
   "menus": [
-    { "id": "osc", "label": "Osc", "verifiedPages": [1, 4], "parameterIds": ["osc.common.drift", "osc1.bendRange"] },
-    { "id": "voice", "label": "Voice", "verifiedPages": [4], "parameterIds": ["voice.filterShapeMore", "voice.filterFrequencySeparation"] },
-    { "id": "env", "label": "Env", "verifiedPages": [2], "parameterIds": ["amp.delay"] }
+    {
+      "id": "osc",
+      "label": "Osc",
+      "pageCount": 8,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "parameterIds": [
+        "osc1.waveMore",
+        "osc1.fixedNote",
+        "osc1.bendRange",
+        "osc1.vsync",
+        "osc1.sawDensity",
+        "osc1.densityDetune",
+        "osc2.waveMore",
+        "osc2.fixedNote",
+        "osc2.bendRange",
+        "osc2.vsync",
+        "osc2.sawDensity",
+        "osc2.densityDetune",
+        "osc3.waveMore",
+        "osc3.fixedNote",
+        "osc3.bendRange",
+        "osc3.vsync",
+        "osc3.sawDensity",
+        "osc3.densityDetune",
+        "osc.common.diverge",
+        "osc.common.drift",
+        "osc.common.tuningTable",
+        "osc.common.keySync",
+        "noise.lowPass",
+        "noise.highPass"
+      ],
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Oscillator Menu",
+        "page": 25,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail",
+          "section": "The Oscillator Menu",
+          "locator": "The Oscillator Menu",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "voice",
+      "label": "Voice",
+      "pageCount": 5,
+      "patchRelevant": true,
+      "verifiedPages": [],
+      "parameterIds": [
+        "mixer.patchLevel"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Voice Menu",
+        "page": 23,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail",
+          "section": "The Voice menu",
+          "locator": "The Voice menu",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26",
+          "note": "Il conteggio pagine della guida online è internamente incoerente."
+        }
+      }
+    },
+    {
+      "id": "env",
+      "label": "Env",
+      "pageCount": 8,
+      "patchRelevant": true,
+      "verifiedPages": [
+        2
+      ],
+      "parameterIds": [
+        "amp.delay"
+      ],
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Envelopes Menu",
+        "page": 30,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail",
+          "section": "The Envelopes Menu",
+          "locator": "The Envelopes Menu",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    }
   ],
   "documentation": {
-    "document": "Summit User Guide v1.1 and Firmware Update Addendum 2.1",
-    "sourceUrl": "https://downloads.novationmusic.com/index.php/novation/synthesisers/summit",
-    "verifiedAt": "2026-07-22"
+    "document": "Summit User Guide v1.1 and Summit online user guide",
+    "section": "Patch-relevant menus",
+    "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+    "verifiedAt": "2026-07-26"
   }
 }
