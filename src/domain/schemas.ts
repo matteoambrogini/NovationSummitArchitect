@@ -1,0 +1,260 @@
+import { z } from "zod";
+
+const documentationSchema = z.object({
+  document: z.string().min(1),
+  section: z.string().min(1),
+  page: z.number().int().positive().optional(),
+  sourceUrl: z.url().optional(),
+  verifiedAt: z.iso.date(),
+});
+
+const panelLocationSchema = z.object({
+  type: z.literal("panel"),
+  controlId: z.string().min(1),
+});
+
+const menuLocationSchema = z.object({
+  type: z.literal("menu"),
+  menu: z.string().min(1),
+  page: z.union([z.number().int().positive(), z.string().min(1)]),
+  row: z.number().int().min(1).max(4).optional(),
+});
+
+export const summitParameterDefinitionSchema = z
+  .object({
+    id: z.string().min(1),
+    label: z.string().min(1),
+    shortDisplayLabel: z.string().min(1).optional(),
+    section: z.string().min(1),
+    subsection: z.string().min(1).optional(),
+    location: z.discriminatedUnion("type", [panelLocationSchema, menuLocationSchema]),
+    scope: z.enum(["part", "multi", "global"]),
+    partApplicability: z.enum(["A", "B", "both"]).optional(),
+    valueType: z.enum([
+      "integer",
+      "decimal",
+      "boolean",
+      "enum",
+      "bipolar",
+      "note",
+      "frequency",
+      "time",
+    ]),
+    minimum: z.number().optional(),
+    maximum: z.number().optional(),
+    step: z.number().positive().optional(),
+    unit: z.string().optional(),
+    enumValues: z.array(z.string()).min(1).optional(),
+    defaultValue: z.unknown().optional(),
+    dependencies: z
+      .array(z.object({ parameterId: z.string(), condition: z.string() }))
+      .optional(),
+    description: z.string().min(1),
+    sonicEffect: z.string().min(1),
+    documentation: documentationSchema,
+    verificationStatus: z.literal("verified"),
+  })
+  .superRefine((definition, context) => {
+    if (
+      definition.valueType === "enum" &&
+      (!definition.enumValues || definition.enumValues.length === 0)
+    ) {
+      context.addIssue({ code: "custom", message: "Un parametro enum richiede enumValues" });
+    }
+    if (
+      ["integer", "decimal", "bipolar", "frequency", "time"].includes(
+        definition.valueType,
+      ) &&
+      (definition.minimum === undefined || definition.maximum === undefined)
+    ) {
+      context.addIssue({ code: "custom", message: "Il parametro numerico richiede min e max" });
+    }
+  });
+
+export const summitParameterCatalogSchema = z.array(summitParameterDefinitionSchema);
+
+const parameterValueSchema = z.union([z.string(), z.number(), z.boolean()]);
+
+const panelControlSettingSchema = z.object({
+  parameterId: z.string().min(1),
+  value: parameterValueSchema,
+  normalizedValue: z.number().min(0).max(1).optional(),
+  displayValue: z.string(),
+  confidence: z.number().min(0).max(1),
+  rationale: z.string().min(1),
+});
+
+const menuSettingSchema = panelControlSettingSchema.omit({ normalizedValue: true }).extend({
+  menu: z.string().min(1),
+  page: z.union([z.number().int().positive(), z.string().min(1)]),
+});
+
+const modulationAssignmentSchema = z.object({
+  slot: z.number().int().positive(),
+  sourceA: z.string().min(1),
+  sourceB: z.string().min(1).optional(),
+  destination: z.string().min(1),
+  depth: z.number().int().min(-64).max(63),
+  rationale: z.string().min(1),
+});
+
+export const summitPatchProposalSchema = z.object({
+  schemaVersion: z.literal("1.0.0"),
+  proposalId: z.string().min(1),
+  createdAt: z.iso.datetime(),
+  patch: z.object({
+    name: z.string().min(1).max(16),
+    mode: z.enum(["single", "multi"]),
+    category: z.enum([
+      "bass",
+      "lead",
+      "pad",
+      "pluck",
+      "keys",
+      "bell",
+      "fx",
+      "sequence",
+      "other",
+    ]),
+    description: z.string().min(1),
+    targetSound: z.string().min(1),
+  }),
+  analysis: z.object({
+    soundRole: z.string().optional(),
+    synthesisHypothesis: z.string(),
+    oscillatorStrategy: z.string(),
+    filterStrategy: z.string(),
+    envelopeStrategy: z.string(),
+    modulationStrategy: z.string(),
+    effectsStrategy: z.string(),
+    overallConfidence: z.number().min(0).max(1),
+    assumptions: z.array(z.string()),
+    uncertainties: z.array(z.string()),
+  }),
+  parts: z
+    .array(
+      z.object({
+        part: z.enum(["A", "B"]),
+        panelControls: z.array(panelControlSettingSchema),
+        menuSettings: z.array(menuSettingSchema),
+        modulationMatrix: z.array(modulationAssignmentSchema),
+        fxModulationMatrix: z.array(modulationAssignmentSchema),
+      }),
+    )
+    .min(1)
+    .max(2),
+  setupInstructions: z.array(
+    z.object({
+      order: z.number().int().positive(),
+      area: z.string(),
+      instruction: z.string(),
+      parameterIds: z.array(z.string()),
+    }),
+  ),
+  auditionGuide: z.object({
+    recommendedNotes: z.array(z.string()),
+    recommendedVelocity: z.string().optional(),
+    recommendedPlayingStyle: z.string(),
+    whatToListenFor: z.array(z.string()),
+  }),
+  refinements: z.array(
+    z.object({
+      problem: z.string(),
+      suggestedChanges: z.array(
+        z.object({
+          parameterId: z.string(),
+          operation: z.enum(["set", "increase", "decrease"]),
+          value: parameterValueSchema.optional(),
+          amount: z.number().optional(),
+        }),
+      ),
+    }),
+  ),
+  alternatives: z.array(
+    z.object({
+      name: z.string(),
+      explanation: z.string(),
+      changedParameterIds: z.array(z.string()),
+    }),
+  ),
+});
+
+export const summitPatchDeltaSchema = z.object({
+  baseProposalId: z.string(),
+  userInstruction: z.string().min(1),
+  changes: z.array(
+    z.object({
+      parameterId: z.string(),
+      previousValue: parameterValueSchema,
+      newValue: parameterValueSchema,
+      rationale: z.string(),
+    }),
+  ),
+  unchangedStrategy: z.array(z.string()),
+  warnings: z.array(z.string()),
+});
+
+export const audioFeatureSummarySchema = z.object({
+  durationSeconds: z.number().nonnegative(),
+  analysisRegion: z.object({ startSeconds: z.number(), endSeconds: z.number() }),
+  pitch: z
+    .object({ medianHz: z.number().optional(), confidence: z.number(), stability: z.number().optional() })
+    .optional(),
+  envelope: z.object({
+    attackMs: z.number().optional(),
+    decayMs: z.number().optional(),
+    sustainEstimate: z.number().optional(),
+    releaseMs: z.number().optional(),
+    transientStrength: z.number().optional(),
+  }),
+  spectrum: z.object({
+    centroidHz: z.number().optional(),
+    rolloffHz: z.number().optional(),
+    flatness: z.number().optional(),
+    harmonicity: z.number().optional(),
+  }),
+  modulation: z
+    .object({ amplitudeRateHz: z.number().optional(), pitchRateHz: z.number().optional(), confidence: z.number() })
+    .optional(),
+  stereo: z.object({
+    width: z.number().optional(),
+    correlation: z.number().optional(),
+    lowBandCorrelation: z.number().optional(),
+  }),
+  warnings: z.array(z.string()),
+});
+
+export const summitProjectFileSchema = z.object({
+  fileFormat: z.literal("summit-patch-architect-project"),
+  version: z.literal("1.0.0"),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+  input: z.object({
+    description: z.string(),
+    reference: z
+      .object({
+        platform: z.enum(["spotify", "youtube", "other"]),
+        url: z.url(),
+        title: z.string().optional(),
+        artist: z.string().optional(),
+        timestampSeconds: z.number().nonnegative().optional(),
+        targetSound: z.string().optional(),
+      })
+      .optional(),
+    audioFileReference: z
+      .object({
+        originalName: z.string(),
+        localManagedCopy: z.string().optional(),
+        sha256: z.string().optional(),
+      })
+      .optional(),
+  }),
+  proposals: z.array(summitPatchProposalSchema),
+  activeProposalId: z.string(),
+});
+
+export type SummitParameterDefinition = z.infer<typeof summitParameterDefinitionSchema>;
+export type SummitPatchProposal = z.infer<typeof summitPatchProposalSchema>;
+export type SummitPatchDelta = z.infer<typeof summitPatchDeltaSchema>;
+export type SummitProjectFile = z.infer<typeof summitProjectFileSchema>;
+export type AudioFeatureSummary = z.infer<typeof audioFeatureSummarySchema>;

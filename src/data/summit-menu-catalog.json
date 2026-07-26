@@ -1,0 +1,12 @@
+{
+  "menus": [
+    { "id": "osc", "label": "Osc", "verifiedPages": [1, 4], "parameterIds": ["osc.common.drift", "osc1.bendRange"] },
+    { "id": "voice", "label": "Voice", "verifiedPages": [4], "parameterIds": ["voice.filterShapeMore", "voice.filterFrequencySeparation"] },
+    { "id": "env", "label": "Env", "verifiedPages": [2], "parameterIds": ["amp.delay"] }
+  ],
+  "documentation": {
+    "document": "Summit User Guide v1.1 and Firmware Update Addendum 2.1",
+    "sourceUrl": "https://downloads.novationmusic.com/index.php/novation/synthesisers/summit",
+    "verifiedAt": "2026-07-22"
+  }
+}

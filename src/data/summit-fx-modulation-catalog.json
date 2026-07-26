@@ -1,0 +1,20 @@
+{
+  "sources": [
+    { "id": "direct", "displayLabel": "Direct" },
+    { "id": "modwheel", "displayLabel": "ModWheel" },
+    { "id": "aftertouch", "displayLabel": "AftTouch" },
+    { "id": "velocity", "displayLabel": "Velocity" },
+    { "id": "lfo3.bipolar", "displayLabel": "Lfo3+/-" },
+    { "id": "lfo4.bipolar", "displayLabel": "Lfo4+/-" },
+    { "id": "animate1", "displayLabel": "Animate1" },
+    { "id": "animate2", "displayLabel": "Animate2" }
+  ],
+  "destinations": [
+    { "id": "fx.chorus.level", "displayLabel": "Chor Lev" },
+    { "id": "fx.delay.level", "displayLabel": "Del Lev" },
+    { "id": "fx.reverb.level", "displayLabel": "Rev Lev" }
+  ],
+  "slots": 4,
+  "depthRange": [-64, 63],
+  "documentation": { "document": "Summit User Guide v1.1", "section": "FX Modulation Matrix", "pages": [39, 40], "sourceUrl": "https://downloads.novationmusic.com/index.php/novation/synthesisers/summit", "verifiedAt": "2026-07-22" }
+}

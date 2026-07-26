@@ -1,0 +1,27 @@
+{
+  "sources": [
+    { "id": "direct", "displayLabel": "Direct" },
+    { "id": "modwheel", "displayLabel": "ModWheel" },
+    { "id": "aftertouch", "displayLabel": "AftTouch" },
+    { "id": "velocity", "displayLabel": "Velocity" },
+    { "id": "lfo1.bipolar", "displayLabel": "Lfo1+/-" },
+    { "id": "lfo2.bipolar", "displayLabel": "Lfo2+/-" },
+    { "id": "amp.env", "displayLabel": "AmpEnv" },
+    { "id": "mod.env1", "displayLabel": "ModEnv1" },
+    { "id": "mod.env2", "displayLabel": "ModEnv2" },
+    { "id": "animate1", "displayLabel": "Animate1" },
+    { "id": "animate2", "displayLabel": "Animate2" }
+  ],
+  "destinations": [
+    { "id": "osc1.shape", "displayLabel": "Osc1Shpe" },
+    { "id": "filter.frequency", "displayLabel": "FiltFreq" },
+    { "id": "filter.resonance", "displayLabel": "Filt Res" },
+    { "id": "mixer.osc1.level", "displayLabel": "Osc1 Lev" },
+    { "id": "amp.attack", "displayLabel": "AmpEnv A" },
+    { "id": "amp.decay", "displayLabel": "AmpEnv D" },
+    { "id": "amp.release", "displayLabel": "AmpEnv R" }
+  ],
+  "slots": 16,
+  "depthRange": [-64, 63],
+  "documentation": { "document": "Summit User Guide v1.1", "section": "Modulation Matrix and Appendix", "pages": [38, 39, 46], "sourceUrl": "https://downloads.novationmusic.com/index.php/novation/synthesisers/summit", "verifiedAt": "2026-07-22" }
+}
