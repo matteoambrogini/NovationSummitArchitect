@@ -71,12 +71,12 @@
         "filter.postDrive",
         "mixer.patchLevel",
         "voice.audioInput",
-        "voice.unison",
-        "voice.unisonDetune",
+        "voice.panPosition",
+        "voice.preGlide",
         "voice.spread",
         "voice.spreadMode",
-        "voice.panPosition",
-        "voice.preGlide"
+        "voice.unison",
+        "voice.unisonDetune"
       ],
       "verificationStatus": "conflict",
       "documentation": {
@@ -157,29 +157,37 @@
         3,
         4,
         5,
-        6
+        6,
+        7,
+        8
       ],
       "parameterIds": [
-        "lfo1.phase",
-        "lfo1.monoTrigger",
-        "lfo1.slew",
+        "lfo1.common",
         "lfo1.fadeMode",
         "lfo1.fadeSync",
+        "lfo1.monoTrigger",
+        "lfo1.phase",
         "lfo1.repeats",
-        "lfo1.common",
-        "lfo2.phase",
-        "lfo2.monoTrigger",
-        "lfo2.slew",
+        "lfo1.slew",
+        "lfo2.common",
         "lfo2.fadeMode",
         "lfo2.fadeSync",
+        "lfo2.monoTrigger",
+        "lfo2.phase",
         "lfo2.repeats",
-        "lfo2.common",
-        "lfo3.phase",
-        "lfo3.slew",
+        "lfo2.slew",
         "lfo3.fadeTime",
+        "lfo3.phase",
+        "lfo3.rate",
+        "lfo3.rateSync",
+        "lfo3.slew",
+        "lfo3.waveform",
+        "lfo4.fadeTime",
         "lfo4.phase",
+        "lfo4.rate",
+        "lfo4.rateSync",
         "lfo4.slew",
-        "lfo4.fadeTime"
+        "lfo4.waveform"
       ],
       "verificationStatus": "firmware-dependent",
       "documentation": {
@@ -218,9 +226,10 @@
         "arp.swing",
         "arp.syncRate",
         "arp.keySync",
-        "arp.velocityMode"
+        "arp.velocityMode",
+        "arp.chance"
       ],
-      "verificationStatus": "verified",
+      "verificationStatus": "conflict",
       "documentation": {
         "document": "Summit User Guide v1.1",
         "section": "The Arp/Clock Menu",
@@ -228,11 +237,12 @@
         "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
         "verifiedAt": "2026-07-26",
         "verification": {
-          "document": "Summit in detail",
-          "section": "The Arp/Clock Menu",
-          "locator": "The Arp/Clock Menu",
-          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
-          "verifiedAt": "2026-07-26"
+          "document": "Summit and Peak Firmware Update v2.1 Addendum",
+          "section": "Arp Chance",
+          "page": 11,
+          "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+          "verifiedAt": "2026-07-26",
+          "note": "ArpChance occupa la pagina 4 nell'addendum, dove la guida base colloca ArpVelMode."
         }
       }
     },

@@ -671,6 +671,49 @@
     }
   },
   {
+    "id": "arp.chance",
+    "label": "Arpeggiator Step Chance",
+    "shortDisplayLabel": "ArpChance",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "menu",
+      "menu": "Arp/Clock",
+      "page": 4,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 10,
+    "maximum": 100,
+    "step": 1,
+    "unit": "%",
+    "defaultValue": 100,
+    "description": "Probabilità che ogni step dell'arpeggio venga eseguito.",
+    "sonicEffect": "Introduce omissioni casuali; in Chord 2 la probabilità viene valutata per ciascuna nota dell'accordo.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Arp Chance",
+      "page": 11,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Arp Chance",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "Aggiunto dal firmware 2.1."
+    }
+  },
+  {
     "id": "arp.clockSource",
     "label": "Master Clock Source",
     "shortDisplayLabel": "Source",
@@ -1116,27 +1159,33 @@
       "Up-Down 2",
       "Played",
       "Random",
-      "Chord"
+      "Chord",
+      "Chord 2"
     ],
     "defaultValue": "Up",
     "description": "Sceglie l'ordine di esecuzione delle note dell'arpeggio.",
     "sonicEffect": "Produce sequenze ascendenti, discendenti, alternate, suonate, casuali o ad accordo.",
     "documentation": {
-      "document": "Summit User Guide v1.1",
-      "section": "Arp Mode",
-      "page": 33,
-      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Arp mode – Chord 2",
+      "page": 11,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
       "verifiedAt": "2026-07-26",
       "verification": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list – ARP",
-        "locator": "Arp Mode",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
+        "document": "Summit in detail",
+        "section": "Arp mode",
+        "locator": "Arp mode",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26",
+        "note": "La guida base verifica i sette modi originali; l'addendum aggiunge Chord 2."
       }
     },
-    "verificationStatus": "verified",
-    "aiExposed": true
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "Chord 2 è stato aggiunto dal firmware 2.1 ed è legato ad ArpChance."
+    }
   },
   {
     "id": "arp.velocityMode",
@@ -1255,7 +1304,15 @@
     "firmware": {
       "minimum": "2.1",
       "note": "I valori restano parametri patch, ma la pagina di navigazione cambia tra User Guide v1.1 e guida online aggiornata."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 4,
+        "row": 2
+      }
+    ]
   },
   {
     "id": "filter.dualShape",
@@ -1313,7 +1370,15 @@
     "firmware": {
       "minimum": "2.1",
       "note": "I valori restano parametri patch, ma la pagina di navigazione cambia tra User Guide v1.1 e guida online aggiornata."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 5,
+        "row": 1
+      }
+    ]
   },
   {
     "id": "filter.envSource",
@@ -1436,7 +1501,15 @@
     "firmware": {
       "minimum": "2.1",
       "note": "I valori restano parametri patch, ma la pagina di navigazione cambia tra User Guide v1.1 e guida online aggiornata."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 5,
+        "row": 2
+      }
+    ]
   },
   {
     "id": "filter.keyTracking",
@@ -1659,7 +1732,15 @@
     "firmware": {
       "minimum": "2.1",
       "note": "I valori restano parametri patch, ma la pagina di navigazione cambia tra User Guide v1.1 e guida online aggiornata."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 4,
+        "row": 1
+      }
+    ]
   },
   {
     "id": "filter.resonance",
@@ -5496,7 +5577,15 @@
       }
     },
     "verificationStatus": "verified",
-    "aiExposed": true
+    "aiExposed": true,
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "LFO",
+        "page": 7,
+        "row": 2
+      }
+    ]
   },
   {
     "id": "lfo3.rateSync",
@@ -5573,7 +5662,15 @@
       }
     },
     "verificationStatus": "verified",
-    "aiExposed": true
+    "aiExposed": true,
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "LFO",
+        "page": 7,
+        "row": 3
+      }
+    ]
   },
   {
     "id": "lfo3.slew",
@@ -5690,7 +5787,15 @@
       }
     },
     "verificationStatus": "verified",
-    "aiExposed": true
+    "aiExposed": true,
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "LFO",
+        "page": 7,
+        "row": 1
+      }
+    ]
   },
   {
     "id": "lfo4.fadeTime",
@@ -5933,7 +6038,15 @@
       }
     },
     "verificationStatus": "verified",
-    "aiExposed": true
+    "aiExposed": true,
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "LFO",
+        "page": 8,
+        "row": 2
+      }
+    ]
   },
   {
     "id": "lfo4.rateSync",
@@ -6010,7 +6123,15 @@
       }
     },
     "verificationStatus": "verified",
-    "aiExposed": true
+    "aiExposed": true,
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "LFO",
+        "page": 8,
+        "row": 3
+      }
+    ]
   },
   {
     "id": "lfo4.slew",
@@ -6127,7 +6248,15 @@
       }
     },
     "verificationStatus": "verified",
-    "aiExposed": true
+    "aiExposed": true,
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "LFO",
+        "page": 8,
+        "row": 1
+      }
+    ]
   },
   {
     "id": "mixer.noise.level",
@@ -6314,7 +6443,21 @@
     "aiExposed": false,
     "firmware": {
       "note": "User Guide v1.1: Voice page 2; official online guide current: Voice page 3."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 2,
+        "row": 2
+      },
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 3,
+        "row": 2
+      }
+    ]
   },
   {
     "id": "mixer.ring.level",
@@ -10658,7 +10801,15 @@
     "firmware": {
       "minimum": "2.1",
       "note": "I valori restano parametri patch, ma la pagina di navigazione cambia tra User Guide v1.1 e guida online aggiornata."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 4,
+        "row": 3
+      }
+    ]
   },
   {
     "id": "voice.mode",
@@ -10791,7 +10942,15 @@
     "firmware": {
       "minimum": "2.1",
       "note": "La disposizione delle pagine Voice è stata modificata dal firmware 2.1."
-    }
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 3,
+        "row": 1
+      }
+    ]
   },
   {
     "id": "voice.spread",

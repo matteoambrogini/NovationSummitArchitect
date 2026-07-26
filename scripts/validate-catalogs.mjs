@@ -10,6 +10,8 @@ const layout = await readJson("src/data/summit-control-layout.json");
 const menuCatalog = await readJson("src/data/summit-menu-catalog.json");
 const modulation = await readJson("src/data/summit-modulation-catalog.json");
 const fxModulation = await readJson("src/data/summit-fx-modulation-catalog.json");
+const midiCatalog = await readJson("src/data/summit-midi-catalog.json");
+const firmwareOverrides = await readJson("src/data/summit-firmware-overrides.json");
 
 const errors = [];
 const ids = new Set();
@@ -74,6 +76,35 @@ for (const catalog of [modulation, fxModulation]) {
   }
   if (!Number.isInteger(catalog.slots) || catalog.slots < 1) errors.push("Numero slot modulazione non valido");
   if (catalog.slotDefinitions?.length && catalog.slotDefinitions.length !== catalog.slots) errors.push(`Definizioni slot incomplete: ${catalog.slotDefinitions.length}/${catalog.slots}`);
+}
+
+const midiMappingIds = new Set();
+const midiMappedParameterIds = new Set();
+for (const mapping of midiCatalog.mappings) {
+  if (midiMappingIds.has(mapping.id)) errors.push(`Mappatura MIDI duplicata: ${mapping.id}`);
+  midiMappingIds.add(mapping.id);
+  midiMappedParameterIds.add(mapping.parameterId);
+  if (!ids.has(mapping.parameterId)) errors.push(`Mappatura MIDI senza parametro: ${mapping.id} -> ${mapping.parameterId}`);
+  if (!mapping.documentation?.sourceUrl || !mapping.documentation?.verifiedAt) errors.push(`Fonte MIDI mancante: ${mapping.id}`);
+  if (mapping.rawRange && mapping.rawRange.minimum > mapping.rawRange.maximum) errors.push(`Range MIDI invertito: ${mapping.id}`);
+  if (mapping.verificationStatus === "verified" && mapping.translation?.verificationStatus !== "verified") errors.push(`Traduzione MIDI non verificata per mapping verified: ${mapping.id}`);
+}
+
+const nonControllableIds = new Set();
+for (const entry of midiCatalog.nonControllable) {
+  if (!ids.has(entry.parameterId)) errors.push(`Parametro non controllabile MIDI assente: ${entry.parameterId}`);
+  if (nonControllableIds.has(entry.parameterId)) errors.push(`Parametro non controllabile MIDI duplicato: ${entry.parameterId}`);
+  nonControllableIds.add(entry.parameterId);
+}
+for (const parameterId of ids) {
+  if (!midiMappedParameterIds.has(parameterId) && !nonControllableIds.has(parameterId)) errors.push(`Copertura MIDI mancante: ${parameterId}`);
+}
+
+for (const override of firmwareOverrides.overrides) {
+  if (!override.documentation?.sourceUrl || !override.documentation?.verifiedAt) errors.push(`Fonte override firmware mancante: ${override.id}`);
+  for (const parameterId of override.parameterIds ?? []) {
+    if (!ids.has(parameterId)) errors.push(`Override firmware ${override.id} riferisce parametro assente: ${parameterId}`);
+  }
 }
 
 if (errors.length) {
