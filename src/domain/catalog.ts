@@ -14,8 +14,8 @@ const modulationCatalog = modulationCatalogJson as {
 };
 const fxModulationCatalog = fxModulationCatalogJson as {
   slots: number;
-  sources: Array<{ id: string; displayLabel: string }>;
-  destinations: Array<{ id: string; displayLabel: string }>;
+  sources: Array<{ id: string; displayLabel: string; verificationStatus: string }>;
+  destinations: Array<{ id: string; displayLabel: string; verificationStatus: string }>;
 };
 
 const mainSources = new Set(
@@ -28,9 +28,15 @@ const mainDestinations = new Set(
     .filter((destination) => destination.verificationStatus === "verified")
     .map((destination) => destination.id),
 );
-const fxSources = new Set(fxModulationCatalog.sources.map((source) => source.id));
+const fxSources = new Set(
+  fxModulationCatalog.sources
+    .filter((source) => source.verificationStatus === "verified")
+    .map((source) => source.id),
+);
 const fxDestinations = new Set(
-  fxModulationCatalog.destinations.map((destination) => destination.id),
+  fxModulationCatalog.destinations
+    .filter((destination) => destination.verificationStatus === "verified")
+    .map((destination) => destination.id),
 );
 
 export type ProposalValidationIssue = { path: string; message: string };

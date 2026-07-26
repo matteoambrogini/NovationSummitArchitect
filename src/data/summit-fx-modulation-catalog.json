@@ -1,20 +1,1198 @@
 {
+  "slots": 4,
+  "perPart": true,
+  "depthRange": [
+    -64,
+    63
+  ],
+  "depthVerificationStatus": "conflict",
+  "depthVerificationNote": "Il manuale e la guida online stampano '64 to +63' ma descrivono esplicitamente valori negativi; il limite sicuro adottato è -64..+63, coerente con il controllo signed documentato.",
+  "sourceCombination": {
+    "withinSlot": "multiplicative",
+    "acrossSlots": "additive",
+    "direct": "Con Direct, Depth regola direttamente la destinazione; con due sorgenti, Depth controlla il loro effetto combinato."
+  },
   "sources": [
-    { "id": "direct", "displayLabel": "Direct" },
-    { "id": "modwheel", "displayLabel": "ModWheel" },
-    { "id": "aftertouch", "displayLabel": "AftTouch" },
-    { "id": "velocity", "displayLabel": "Velocity" },
-    { "id": "lfo3.bipolar", "displayLabel": "Lfo3+/-" },
-    { "id": "lfo4.bipolar", "displayLabel": "Lfo4+/-" },
-    { "id": "animate1", "displayLabel": "Animate1" },
-    { "id": "animate2", "displayLabel": "Animate2" }
+    {
+      "id": "direct",
+      "displayLabel": "Direct",
+      "description": "Depth applica un offset fisso.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modwheel",
+      "displayLabel": "ModWheel",
+      "description": "Modulation wheel.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "aftertouch",
+      "displayLabel": "AftTouch",
+      "description": "Aftertouch di tastiera.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "expressionPedal1",
+      "displayLabel": "ExprPED1",
+      "description": "Pedale di espressione PEDAL 1.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "breathPedal2",
+      "displayLabel": "BrthPED2",
+      "description": "Pedale di espressione PEDAL 2.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "velocity",
+      "displayLabel": "Velocity",
+      "description": "Velocity della tastiera.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "keyboard",
+      "displayLabel": "Keyboard",
+      "description": "Posizione della nota sulla tastiera.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "animate1",
+      "displayLabel": "Animate1",
+      "description": "Pulsante Animate 1.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "animate2",
+      "displayLabel": "Animate2",
+      "description": "Pulsante Animate 2.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "cv.bipolar",
+      "displayLabel": "CV +/-",
+      "description": "Ingresso CV bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo3.unipolar",
+      "displayLabel": "LFO3 +",
+      "description": "LFO 3 in senso positivo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo3.bipolar",
+      "displayLabel": "LFO3 +/-",
+      "description": "LFO 3 in senso bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo4.unipolar",
+      "displayLabel": "LFO4 +",
+      "description": "LFO 4 in senso positivo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo4.bipolar",
+      "displayLabel": "LFO4 +/-",
+      "description": "LFO 4 in senso bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "pitchBend.positive",
+      "displayLabel": "BndWhl+",
+      "description": "Pitch Bend verso l'alto aumenta la destinazione.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "pitchBend.negative",
+      "displayLabel": "BndWhl-",
+      "description": "Pitch Bend verso l'alto diminuisce la destinazione.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – sources",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "FX modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "noise",
+      "displayLabel": "Noise",
+      "description": "Oscillatore Noise come sorgente.",
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Noise as a Mod Source",
+        "page": 10,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – sources",
+          "locator": "Noise as a Mod Source",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Sorgente aggiunta dal firmware 2.1."
+      }
+    }
   ],
   "destinations": [
-    { "id": "fx.chorus.level", "displayLabel": "Chor Lev" },
-    { "id": "fx.delay.level", "displayLabel": "Del Lev" },
-    { "id": "fx.reverb.level", "displayLabel": "Rev Lev" }
+    {
+      "id": "fx.distortion.level",
+      "displayLabel": "Dist Lev",
+      "controlledParameter": "Distortion Level.",
+      "parameterIds": [
+        "fx.distortion.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.chorus.level",
+      "displayLabel": "Chor Lev",
+      "controlledParameter": "Chorus Level.",
+      "parameterIds": [
+        "fx.chorus.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.chorus.rate",
+      "displayLabel": "ChorRate",
+      "controlledParameter": "Chorus Rate.",
+      "parameterIds": [
+        "fx.chorus.rate"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.chorus.depth",
+      "displayLabel": "Chor Dep",
+      "controlledParameter": "Chorus Depth.",
+      "parameterIds": [
+        "fx.chorus.depth"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.chorus.feedback",
+      "displayLabel": "Chor FB",
+      "controlledParameter": "Chorus Feedback.",
+      "parameterIds": [
+        "fx.chorus.feedback"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.delay.level",
+      "displayLabel": "Del Lev",
+      "controlledParameter": "Delay Level.",
+      "parameterIds": [
+        "fx.delay.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.delay.time",
+      "displayLabel": "Del Time",
+      "controlledParameter": "Delay Time.",
+      "parameterIds": [
+        "fx.delay.time"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.delay.feedback",
+      "displayLabel": "Del FB",
+      "controlledParameter": "Delay Feedback.",
+      "parameterIds": [
+        "fx.delay.feedback"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.reverb.level",
+      "displayLabel": "Rev Lev",
+      "controlledParameter": "Reverb Level.",
+      "parameterIds": [
+        "fx.reverb.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.reverb.time",
+      "displayLabel": "Rev Time",
+      "controlledParameter": "Reverb Time.",
+      "parameterIds": [
+        "fx.reverb.time"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.reverb.lowPassDamping",
+      "displayLabel": "RevLdamp",
+      "controlledParameter": "Reverb low-frequency damping.",
+      "parameterIds": [
+        "fx.reverb.lowPassDamping"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.reverb.highPassDamping",
+      "displayLabel": "RevHdamp",
+      "controlledParameter": "Reverb high-frequency damping.",
+      "parameterIds": [
+        "fx.reverb.highPassDamping"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "FX modulation matrix – destinations",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fx.reverb.size",
+      "displayLabel": "Rev Size",
+      "controlledParameter": "Reverb Size.",
+      "parameterIds": [
+        "fx.reverb.size"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.reverb.lowPass",
+      "displayLabel": "RevLpass",
+      "controlledParameter": "Reverb Low Pass.",
+      "parameterIds": [
+        "fx.reverb.lowPass"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.reverb.highPass",
+      "displayLabel": "RevHpass",
+      "controlledParameter": "Reverb High Pass.",
+      "parameterIds": [
+        "fx.reverb.highPass"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.delay.slewRate",
+      "displayLabel": "Del Slew",
+      "controlledParameter": "Delay Slew.",
+      "parameterIds": [
+        "fx.delay.slewRate"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.delay.highPassDamping",
+      "displayLabel": "DelLdamp",
+      "controlledParameter": "Delay low-frequency damping.",
+      "parameterIds": [
+        "fx.delay.highPassDamping"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.delay.lowPassDamping",
+      "displayLabel": "DelHdamp",
+      "controlledParameter": "Delay high-frequency damping.",
+      "parameterIds": [
+        "fx.delay.lowPassDamping"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.delay.width",
+      "displayLabel": "DelWidth",
+      "controlledParameter": "Delay Width.",
+      "parameterIds": [
+        "fx.delay.width"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "fx.delay.leftRightRatio",
+      "displayLabel": "DelRatio",
+      "controlledParameter": "Delay Ratio.",
+      "parameterIds": [
+        "fx.delay.leftRightRatio"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "lfo3.rate",
+      "displayLabel": "Lfo3Rate",
+      "controlledParameter": "LFO 3 Rate.",
+      "parameterIds": [
+        "lfo3.rate"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "lfo4.rate",
+      "displayLabel": "Lfo4Rate",
+      "controlledParameter": "LFO 4 Rate.",
+      "parameterIds": [
+        "lfo4.rate"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "noise.lowPass",
+      "displayLabel": "NoiseLPF",
+      "controlledParameter": "Noise Low-Pass Filter.",
+      "parameterIds": [
+        "noise.lowPass"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    },
+    {
+      "id": "noise.highPass",
+      "displayLabel": "NoiseHPF",
+      "controlledParameter": "Noise High-Pass Filter.",
+      "parameterIds": [
+        "noise.highPass"
+      ],
+      "verificationStatus": "firmware-dependent",
+      "aiExposed": false,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "FX modulation matrix – destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "firmware": {
+        "minimum": "2.1",
+        "note": "Destinazione aggiunta dal firmware 2.1."
+      }
+    }
   ],
-  "slots": 4,
-  "depthRange": [-64, 63],
-  "documentation": { "document": "Summit User Guide v1.1", "section": "FX Modulation Matrix", "pages": [39, 40], "sourceUrl": "https://downloads.novationmusic.com/index.php/novation/synthesisers/summit", "verifiedAt": "2026-07-22" }
+  "slotDefinitions": [
+    {
+      "slot": 1,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "FX Mod",
+      "page": 1,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Fx Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "fx.distortion.level"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "FX Mod",
+      "page": 2,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Fx Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "fx.distortion.level"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "FX Mod",
+      "page": 3,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Fx Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "fx.distortion.level"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "FX Mod",
+      "page": 4,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Fx Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "fx.distortion.level"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "destinationId": "fx.delay.width",
+      "condition": "Il rapporto L/R deve produrre una separazione stereo perché Width sia udibile."
+    },
+    {
+      "destinationId": "fx.reverb.size",
+      "condition": "Il default ufficiale è in conflitto fra User Guide v1.1 e guida online."
+    }
+  ],
+  "midi": {
+    "verificationStatus": "unverified",
+    "note": "La documentazione ufficiale consultata non assegna numeri CC/NRPN ai campi dei quattro slot FX Mod; non viene inferita alcuna mappatura."
+  },
+  "documentation": {
+    "document": "Summit User Guide v1.1 and Summit appendix",
+    "section": "The FX Modulation Matrix",
+    "pages": [
+      39,
+      40
+    ],
+    "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+    "verifiedAt": "2026-07-26",
+    "verification": {
+      "document": "Summit in detail",
+      "section": "The FX modulation matrix",
+      "locator": "The FX modulation matrix",
+      "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+      "verifiedAt": "2026-07-26",
+      "note": "Il testo online contiene un riferimento errato a 16 slot; manuale, descrizione dedicata e struttura a quattro pagine confermano quattro slot FX."
+    }
+  }
 }

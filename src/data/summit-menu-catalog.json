@@ -359,6 +359,35 @@
           "verifiedAt": "2026-07-26"
         }
       }
+    },
+    {
+      "id": "fx-mod",
+      "label": "FX Mod",
+      "pageCount": 4,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "parameterIds": [],
+      "catalogReference": "summit-fx-modulation-catalog.json",
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The FX Modulation Matrix",
+        "page": 40,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "The FX Modulation Matrix",
+          "locator": "The FX Modulation Matrix",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
     }
   ],
   "documentation": {
