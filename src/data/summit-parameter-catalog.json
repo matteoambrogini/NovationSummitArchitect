@@ -503,6 +503,682 @@
     "aiExposed": true
   },
   {
+    "id": "animate1.attack",
+    "label": "Animate 1 Attack",
+    "shortDisplayLabel": "Anim1Att",
+    "section": "Animate Envelopes",
+    "location": {
+      "type": "menu",
+      "menu": "Env",
+      "page": 7,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "time",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Attacco esponenziale del pulsante Animate 1.",
+    "sonicEffect": "Introduce gradualmente le modulazioni assegnate mentre il pulsante viene premuto.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Animate Envelopes",
+      "page": 6,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Animate Envelopes",
+        "locator": "Animate Envelopes",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "Gli inviluppi Animate sono stati aggiunti dal firmware 2.1."
+    }
+  },
+  {
+    "id": "animate1.release",
+    "label": "Animate 1 Release",
+    "shortDisplayLabel": "Anim1Rel",
+    "section": "Animate Envelopes",
+    "location": {
+      "type": "menu",
+      "menu": "Env",
+      "page": 7,
+      "row": 2
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "time",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Rilascio esponenziale del pulsante Animate 1.",
+    "sonicEffect": "Fa decadere gradualmente le modulazioni assegnate dopo il rilascio.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Animate Envelopes",
+      "page": 6,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Animate Envelopes",
+        "locator": "Animate Envelopes",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "Gli inviluppi Animate sono stati aggiunti dal firmware 2.1."
+    }
+  },
+  {
+    "id": "animate2.attack",
+    "label": "Animate 2 Attack",
+    "shortDisplayLabel": "Anim2Att",
+    "section": "Animate Envelopes",
+    "location": {
+      "type": "menu",
+      "menu": "Env",
+      "page": 8,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "time",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Attacco esponenziale del pulsante Animate 2.",
+    "sonicEffect": "Introduce gradualmente le modulazioni assegnate mentre il pulsante viene premuto.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Animate Envelopes",
+      "page": 6,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Animate Envelopes",
+        "locator": "Animate Envelopes",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "Gli inviluppi Animate sono stati aggiunti dal firmware 2.1."
+    }
+  },
+  {
+    "id": "animate2.release",
+    "label": "Animate 2 Release",
+    "shortDisplayLabel": "Anim2Rel",
+    "section": "Animate Envelopes",
+    "location": {
+      "type": "menu",
+      "menu": "Env",
+      "page": 8,
+      "row": 2
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "time",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Rilascio esponenziale del pulsante Animate 2.",
+    "sonicEffect": "Fa decadere gradualmente le modulazioni assegnate dopo il rilascio.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Animate Envelopes",
+      "page": 6,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Animate Envelopes",
+        "locator": "Animate Envelopes",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "Gli inviluppi Animate sono stati aggiunti dal firmware 2.1."
+    }
+  },
+  {
+    "id": "arp.clockSource",
+    "label": "Master Clock Source",
+    "shortDisplayLabel": "Source",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "menu",
+      "menu": "Arp/Clock",
+      "page": 1,
+      "row": 2
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "Auto",
+      "Internal",
+      "Ext-Auto",
+      "MIDI",
+      "USB"
+    ],
+    "defaultValue": "Auto",
+    "description": "Seleziona il clock interno o una sorgente clock esterna.",
+    "sonicEffect": "Determina quale base temporale governa tutte le funzioni sincronizzate.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Clock source",
+      "page": 34,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Clock source",
+        "locator": "Clock source",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "arp.enabled",
+    "label": "Arpeggiator On",
+    "physicalLabel": "On",
+    "section": "Arpeggiator",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-on"
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "boolean",
+    "step": 1,
+    "defaultValue": false,
+    "description": "Abilita l'arpeggiatore della Parte.",
+    "sonicEffect": "Trasforma note o accordi tenuti in una sequenza articolata.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "The Arpeggiator",
+      "page": 33,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "The Arpeggiator",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.gate",
+    "label": "Arpeggiator Gate",
+    "physicalLabel": "Gate",
+    "section": "Arpeggiator",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-gate"
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 64,
+    "description": "Imposta la durata della nota come porzione dello step.",
+    "sonicEffect": "Passa da note staccate a note consecutive senza pausa.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Note duration",
+      "page": 33,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "Note duration",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.keyLatch",
+    "label": "Arpeggiator Key Latch",
+    "physicalLabel": "Key Latch",
+    "section": "Arpeggiator",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-key-latch"
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "boolean",
+    "step": 1,
+    "defaultValue": false,
+    "description": "Mantiene la sequenza arpeggiata senza tenere premuti i tasti.",
+    "sonicEffect": "Lascia proseguire l'arpeggio e consente di sostituire o aggiungere note.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Key Latch",
+      "page": 33,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "Key Latch",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.keySync",
+    "label": "Arpeggiator Key Sync",
+    "shortDisplayLabel": "KeySync",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "menu",
+      "menu": "Arp/Clock",
+      "page": 3,
+      "row": 3
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "boolean",
+    "step": 1,
+    "defaultValue": false,
+    "dependencies": [
+      {
+        "parameterId": "arp.keyLatch",
+        "condition": "On"
+      }
+    ],
+    "description": "Riavvia il pattern quando viene suonato un nuovo insieme di note.",
+    "sonicEffect": "Allinea l'inizio ritmico dell'arpeggio al nuovo accordo.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Arp Key Sync",
+      "page": 34,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "Arp/Clock Sync Rate",
+        "locator": "Arp Key Sync",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.octaves",
+    "label": "Arpeggiator Octave Range",
+    "physicalLabel": "Octaves",
+    "section": "Arpeggiator",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-octaves"
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Arp/Clock",
+        "page": 2,
+        "row": 3
+      }
+    ],
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 1,
+    "maximum": 6,
+    "step": 1,
+    "defaultValue": 1,
+    "description": "Estende la sequenza in copie trasposte alle ottave superiori.",
+    "sonicEffect": "Allunga il pattern e ne amplia l'estensione verticale.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Octave range",
+      "page": 34,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "Arp/Clock Octave",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26",
+        "note": "Menu e tabella MIDI indicano 1-6, mentre il testo del pannello a pagina 33 afferma 1-7."
+      }
+    },
+    "verificationStatus": "conflict",
+    "aiExposed": false
+  },
+  {
+    "id": "arp.rhythm",
+    "label": "Arpeggiator Rhythm",
+    "physicalLabel": "Rhythm",
+    "section": "Arpeggiator",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-rhythm"
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Arp/Clock",
+        "page": 2,
+        "row": 2
+      }
+    ],
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 1,
+    "maximum": 33,
+    "step": 1,
+    "defaultValue": 1,
+    "description": "Seleziona uno dei 33 pattern ritmici predefiniti.",
+    "sonicEffect": "Introduce pause, sincopi e suddivisioni diverse nel pattern.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Arp Rhythm",
+      "page": 33,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "Arp Rhythm",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.swing",
+    "label": "Arpeggiator Swing",
+    "shortDisplayLabel": "Swing",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "menu",
+      "menu": "Arp/Clock",
+      "page": 3,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 20,
+    "maximum": 80,
+    "step": 1,
+    "defaultValue": 50,
+    "description": "Sposta temporalmente gli intervalli alterni del pattern.",
+    "sonicEffect": "Introduce swing o groove rispetto alla scansione regolare.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Swing",
+      "page": 34,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "Swing",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.syncRate",
+    "label": "Arpeggiator Sync Rate",
+    "shortDisplayLabel": "SyncRate",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "menu",
+      "menu": "Arp/Clock",
+      "page": 3,
+      "row": 2
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "8 beats",
+      "6 beats",
+      "5 + 1/3",
+      "4 beats",
+      "3 beats",
+      "2 + 2/3",
+      "2nd",
+      "4th D",
+      "1 + 1/3",
+      "4th",
+      "8th D",
+      "4th T",
+      "8th",
+      "16th D",
+      "8th T",
+      "16th",
+      "16th T",
+      "32nd",
+      "32nd T"
+    ],
+    "defaultValue": "16th",
+    "description": "Sceglie la divisione musicale del clock dell'arpeggiatore.",
+    "sonicEffect": "Determina la durata base di ogni step rispetto al tempo master.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Arp Rate Sync",
+      "page": 34,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "Arp/Clock Sync Rate",
+        "locator": "Arp Rate Sync",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.tempo",
+    "label": "Master Clock Rate",
+    "physicalLabel": "Tempo",
+    "shortDisplayLabel": "ClockRate",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-tempo"
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Arp/Clock",
+        "page": 1,
+        "row": 1
+      }
+    ],
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 40,
+    "maximum": 240,
+    "step": 1,
+    "unit": "BPM",
+    "defaultValue": 120,
+    "description": "Imposta il clock interno condiviso dalle funzioni sincronizzate.",
+    "sonicEffect": "Varia tempo dell'arpeggiatore e delle modulazioni o delay sincronizzati.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Tempo",
+      "page": 33,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Tempo",
+        "locator": "Tempo",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "arp.type",
+    "label": "Arpeggiator Type",
+    "physicalLabel": "Type",
+    "section": "Arpeggiator",
+    "location": {
+      "type": "panel",
+      "controlId": "arp-type"
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Arp/Clock",
+        "page": 2,
+        "row": 1
+      }
+    ],
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "Up",
+      "Down",
+      "Up-Down 1",
+      "Up-Down 2",
+      "Played",
+      "Random",
+      "Chord"
+    ],
+    "defaultValue": "Up",
+    "description": "Sceglie l'ordine di esecuzione delle note dell'arpeggio.",
+    "sonicEffect": "Produce sequenze ascendenti, discendenti, alternate, suonate, casuali o ad accordo.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Arp Mode",
+      "page": 33,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list – ARP",
+        "locator": "Arp Mode",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "arp.velocityMode",
+    "label": "Arpeggiator Velocity Mode",
+    "shortDisplayLabel": "ArpVelMode",
+    "section": "Arp/Clock",
+    "location": {
+      "type": "menu",
+      "menu": "Arp/Clock",
+      "page": 4,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "Rhythm",
+      "Played"
+    ],
+    "defaultValue": "Rhythm",
+    "description": "Sceglie velocity incorporate nel ritmo o velocity dei tasti suonati.",
+    "sonicEffect": "Conserva gli accenti del pattern oppure la dinamica dell'esecuzione.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Arp Velocity Mode",
+      "page": 34,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Arp Velocity Mode",
+        "locator": "Arp Velocity Mode",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
     "id": "filter.ampEnvDepth",
     "label": "Amp Envelope to Filter Frequency",
     "physicalLabel": "Env Depth",
@@ -1501,6 +2177,154 @@
     },
     "verificationStatus": "verified",
     "aiExposed": true
+  },
+  {
+    "id": "glide.enabled",
+    "label": "Glide On",
+    "physicalLabel": "On",
+    "section": "Glide",
+    "location": {
+      "type": "panel",
+      "controlId": "glide-on"
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "boolean",
+    "step": 1,
+    "defaultValue": false,
+    "description": "Abilita il portamento tra note successive.",
+    "sonicEffect": "Sostituisce il salto immediato di intonazione con una transizione continua.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Glide",
+      "page": 22,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Glide",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "glide.time",
+    "label": "Glide Time",
+    "physicalLabel": "Time",
+    "section": "Glide",
+    "location": {
+      "type": "panel",
+      "controlId": "glide-time"
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "time",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 60,
+    "description": "Durata del portamento, fino a circa cinque secondi.",
+    "sonicEffect": "Regola la rapidità del passaggio continuo tra le altezze.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Glide",
+      "page": 22,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Glide",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "keyboard.octave",
+    "label": "Keyboard Octave",
+    "physicalLabel": "Octave -/+",
+    "section": "Keyboard",
+    "location": {
+      "type": "panel",
+      "controlId": "keyboard-octave"
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": -3,
+    "maximum": 3,
+    "step": 1,
+    "unit": "octaves",
+    "defaultValue": 0,
+    "description": "Traspone globalmente la tastiera interna per ottave.",
+    "sonicEffect": "Sposta l'estensione esecutiva senza modificare l'intonazione salvata degli oscillatori.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Octave buttons",
+      "page": 15,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Octave buttons",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
+  },
+  {
+    "id": "keyboard.velocityCurve",
+    "label": "Keyboard Velocity Curve",
+    "shortDisplayLabel": "VelCurve",
+    "section": "Settings",
+    "location": {
+      "type": "menu",
+      "menu": "Settings",
+      "page": "Keyboard",
+      "row": 1
+    },
+    "scope": "global",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "HIGH",
+      "NORMHI",
+      "NORMAL",
+      "NORMLO",
+      "LOW"
+    ],
+    "defaultValue": "NORMAL",
+    "description": "Configura la risposta globale della tastiera alla velocity.",
+    "sonicEffect": "Cambia la forza richiesta per ottenere valori di velocity alti o bassi.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Keyboard page – Velocity Curve",
+      "page": 44,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Keyboard page – Velocity Curve",
+        "locator": "Keyboard page – Velocity Curve",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": false
   },
   {
     "id": "lfo1.common",
@@ -7751,5 +8575,322 @@
       "minimum": "2.1",
       "note": "I valori restano parametri patch, ma la pagina di navigazione cambia tra User Guide v1.1 e guida online aggiornata."
     }
+  },
+  {
+    "id": "voice.mode",
+    "label": "Voice Mode",
+    "physicalLabel": "Voice Mode",
+    "section": "Voice",
+    "location": {
+      "type": "panel",
+      "controlId": "voice-mode"
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "Mono",
+      "Mono2",
+      "MonoLG",
+      "Poly",
+      "Poly2"
+    ],
+    "defaultValue": "Poly",
+    "description": "Seleziona l'algoritmo di assegnazione e riattivazione delle voci della Parte.",
+    "sonicEffect": "Cambia polifonia, voice stealing, comportamento degli inviluppi e del glide.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Voices",
+      "page": 22,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Voices",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "voice.panPosition",
+    "label": "Voice Panning Position",
+    "shortDisplayLabel": "PanPosn",
+    "section": "Voice Menu",
+    "location": {
+      "type": "menu",
+      "menu": "Voice",
+      "page": 2,
+      "row": 3
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "bipolar",
+    "minimum": -64,
+    "maximum": 63,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Sposta la posizione di riferimento delle voci nel campo stereo.",
+    "sonicEffect": "Pesa verso sinistra o destra la distribuzione calcolata da Spread Mode.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Voice Menu: Pan Position",
+      "page": 4,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Voice Menu: Pan Position",
+        "locator": "Voice Menu: Pan Position",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "La disposizione delle pagine Voice è stata modificata dal firmware 2.1."
+    }
+  },
+  {
+    "id": "voice.preGlide",
+    "label": "Voice Pre-Glide",
+    "shortDisplayLabel": "PreGlide",
+    "section": "Voice Menu",
+    "location": {
+      "type": "menu",
+      "menu": "Voice",
+      "page": 2,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "bipolar",
+    "minimum": -12,
+    "maximum": 12,
+    "step": 1,
+    "unit": "semitones",
+    "defaultValue": 0,
+    "dependencies": [
+      {
+        "parameterId": "glide.enabled",
+        "condition": "On"
+      }
+    ],
+    "description": "Avvia ogni nota da un offset cromatico fisso e la porta alla nota suonata.",
+    "sonicEffect": "Crea un attacco glissato indipendente dall'altezza della nota precedente.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Pre-Glide",
+      "page": 23,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Voice Menu: Spread",
+        "page": 3,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "note": "Il dominio è documentato, ma la posizione menu dipende dal firmware."
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "La disposizione delle pagine Voice è stata modificata dal firmware 2.1."
+    }
+  },
+  {
+    "id": "voice.spread",
+    "label": "Voice Spread",
+    "shortDisplayLabel": "Spread",
+    "section": "Voice Menu",
+    "location": {
+      "type": "menu",
+      "menu": "Voice",
+      "page": 1,
+      "row": 3
+    },
+    "alternateLocations": [
+      {
+        "type": "menu",
+        "menu": "Voice",
+        "page": 2,
+        "row": 1
+      }
+    ],
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 0,
+    "description": "Distribuisce le voci nel campo stereo secondo Spread Mode.",
+    "sonicEffect": "Allarga progressivamente l'immagine stereo delle voci.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "Voice panning",
+      "page": 23,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Voice Menu: Spread",
+        "page": 3,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "note": "Il dominio è documentato, ma la posizione menu dipende dal firmware."
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "La disposizione delle pagine Voice è stata modificata dal firmware 2.1."
+    }
+  },
+  {
+    "id": "voice.spreadMode",
+    "label": "Voice Panning Mode",
+    "shortDisplayLabel": "SpreadMode",
+    "section": "Voice Menu",
+    "location": {
+      "type": "menu",
+      "menu": "Voice",
+      "page": 2,
+      "row": 2
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "Diverge",
+      "Alternate",
+      "Diverge 2",
+      "NoteVal"
+    ],
+    "defaultValue": "Diverge",
+    "description": "Sceglie l'algoritmo di distribuzione stereo delle voci.",
+    "sonicEffect": "Cambia la regola con cui voce, ordine o nota determinano la posizione stereo.",
+    "documentation": {
+      "document": "Summit and Peak Firmware Update v2.1 Addendum",
+      "section": "Voice Menu: Spread",
+      "page": 3,
+      "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "Voice Menu: Spread",
+        "locator": "Voice Menu: Spread",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "firmware-dependent",
+    "aiExposed": false,
+    "firmware": {
+      "minimum": "2.1",
+      "note": "La disposizione delle pagine Voice è stata modificata dal firmware 2.1."
+    }
+  },
+  {
+    "id": "voice.unison",
+    "label": "Voice Unison",
+    "shortDisplayLabel": "Unison",
+    "section": "Voice Menu",
+    "location": {
+      "type": "menu",
+      "menu": "Voice",
+      "page": 1,
+      "row": 1
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "enum",
+    "step": 1,
+    "enumValues": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "8"
+    ],
+    "defaultValue": "1",
+    "description": "Assegna una, due, tre, quattro o otto voci a ogni nota.",
+    "sonicEffect": "Ispessisce il timbro riducendo proporzionalmente la polifonia disponibile.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "The Voice Menu",
+      "page": 23,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "The Voice Menu",
+        "locator": "The Voice Menu",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
+  },
+  {
+    "id": "voice.unisonDetune",
+    "label": "Voice Unison Detune",
+    "shortDisplayLabel": "UniDeTune",
+    "section": "Voice Menu",
+    "location": {
+      "type": "menu",
+      "menu": "Voice",
+      "page": 1,
+      "row": 2
+    },
+    "scope": "part",
+    "partApplicability": "both",
+    "singleMultiApplicability": "both",
+    "valueType": "integer",
+    "minimum": 0,
+    "maximum": 127,
+    "step": 1,
+    "defaultValue": 25,
+    "dependencies": [
+      {
+        "parameterId": "voice.unison",
+        "condition": "not 1"
+      }
+    ],
+    "description": "Scorda relativamente le voci aggiunte da Unison.",
+    "sonicEffect": "Aumenta ampiezza e movimento del suono unisono.",
+    "documentation": {
+      "document": "Summit User Guide v1.1",
+      "section": "The Voice Menu",
+      "page": 23,
+      "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+      "verifiedAt": "2026-07-26",
+      "verification": {
+        "document": "Summit in detail",
+        "section": "The Voice Menu",
+        "locator": "The Voice Menu",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    "verificationStatus": "verified",
+    "aiExposed": true
   }
 ]

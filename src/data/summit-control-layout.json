@@ -1,5 +1,5 @@
 {
-  "viewBox": "0 0 5290 560",
+  "viewBox": "0 0 7040 560",
   "coordinateSystem": {
     "kind": "logical-panel-map",
     "note": "Coordinate relative per una futura UI; sezione e ordine seguono il pannello fisico Summit."
@@ -48,7 +48,7 @@
     {
       "id": "effects",
       "label": "EFFECTS",
-      "x": 4850,
+      "x": 6600,
       "y": 46,
       "width": 410,
       "height": 410
@@ -75,6 +75,38 @@
       "x": 4400,
       "y": 46,
       "width": 430,
+      "height": 410
+    },
+    {
+      "id": "voice-glide",
+      "label": "VOICE & GLIDE",
+      "x": 4850,
+      "y": 46,
+      "width": 470,
+      "height": 410
+    },
+    {
+      "id": "animate",
+      "label": "ANIMATE",
+      "x": 5340,
+      "y": 46,
+      "width": 280,
+      "height": 410
+    },
+    {
+      "id": "arpeggiator",
+      "label": "ARPEGGIATOR",
+      "x": 5640,
+      "y": 46,
+      "width": 700,
+      "height": 410
+    },
+    {
+      "id": "keyboard",
+      "label": "KEYBOARD",
+      "x": 6360,
+      "y": 46,
+      "width": 220,
       "height": 410
     }
   ],
@@ -698,7 +730,7 @@
       "label": "Chorus",
       "type": "knob",
       "sectionId": "effects",
-      "x": 4930,
+      "x": 6680,
       "y": 180,
       "verificationStatus": "verified"
     },
@@ -711,7 +743,7 @@
       "label": "Delay",
       "type": "knob",
       "sectionId": "effects",
-      "x": 5060,
+      "x": 6810,
       "y": 180,
       "verificationStatus": "verified"
     },
@@ -724,7 +756,7 @@
       "label": "Reverb",
       "type": "knob",
       "sectionId": "effects",
-      "x": 5190,
+      "x": 6940,
       "y": 180,
       "verificationStatus": "verified"
     },
@@ -1044,6 +1076,169 @@
       "y": 340,
       "contextSelectorId": "lfo34-select",
       "parameterId": "lfo3.sync",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "voice-mode",
+      "parameterIds": [
+        "voice.mode"
+      ],
+      "label": "Voice Mode",
+      "type": "selector",
+      "sectionId": "voice-glide",
+      "x": 4930,
+      "y": 170,
+      "parameterId": "voice.mode",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "glide-on",
+      "parameterIds": [
+        "glide.enabled"
+      ],
+      "label": "Glide On",
+      "type": "button",
+      "sectionId": "voice-glide",
+      "x": 5080,
+      "y": 330,
+      "parameterId": "glide.enabled",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "glide-time",
+      "parameterIds": [
+        "glide.time"
+      ],
+      "label": "Glide Time",
+      "type": "knob",
+      "sectionId": "voice-glide",
+      "x": 5220,
+      "y": 210,
+      "parameterId": "glide.time",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "animate-1",
+      "label": "Animate 1",
+      "type": "button",
+      "sectionId": "animate",
+      "x": 5420,
+      "y": 190,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "animate-2",
+      "label": "Animate 2",
+      "type": "button",
+      "sectionId": "animate",
+      "x": 5540,
+      "y": 310,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "arp-on",
+      "parameterIds": [
+        "arp.enabled"
+      ],
+      "label": "On",
+      "type": "button",
+      "sectionId": "arpeggiator",
+      "x": 5700,
+      "y": 140,
+      "parameterId": "arp.enabled",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "arp-key-latch",
+      "parameterIds": [
+        "arp.keyLatch"
+      ],
+      "label": "Key Latch",
+      "type": "button",
+      "sectionId": "arpeggiator",
+      "x": 5810,
+      "y": 330,
+      "parameterId": "arp.keyLatch",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "arp-tempo",
+      "parameterIds": [
+        "arp.tempo"
+      ],
+      "label": "Tempo",
+      "type": "encoder",
+      "sectionId": "arpeggiator",
+      "x": 5930,
+      "y": 140,
+      "parameterId": "arp.tempo",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "arp-type",
+      "parameterIds": [
+        "arp.type"
+      ],
+      "label": "Type",
+      "type": "selector",
+      "sectionId": "arpeggiator",
+      "x": 6060,
+      "y": 140,
+      "parameterId": "arp.type",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "arp-gate",
+      "parameterIds": [
+        "arp.gate"
+      ],
+      "label": "Gate",
+      "type": "knob",
+      "sectionId": "arpeggiator",
+      "x": 5930,
+      "y": 330,
+      "parameterId": "arp.gate",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "arp-octaves",
+      "parameterIds": [
+        "arp.octaves"
+      ],
+      "label": "Octaves",
+      "type": "selector",
+      "sectionId": "arpeggiator",
+      "x": 6180,
+      "y": 330,
+      "verificationStatus": "conflict",
+      "parameterId": "arp.octaves"
+    },
+    {
+      "id": "arp-rhythm",
+      "parameterIds": [
+        "arp.rhythm"
+      ],
+      "label": "Rhythm",
+      "type": "selector",
+      "sectionId": "arpeggiator",
+      "x": 6300,
+      "y": 140,
+      "parameterId": "arp.rhythm",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "keyboard-octave",
+      "parameterIds": [
+        "keyboard.octave"
+      ],
+      "label": "Octave -/+",
+      "type": "button",
+      "sectionId": "keyboard",
+      "x": 6470,
+      "y": 230,
+      "parameterId": "keyboard.octave",
       "verificationStatus": "verified"
     }
   ],

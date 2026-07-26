@@ -144,7 +144,7 @@ export function buildDemoProposal(config: DemoConfig, targetSound?: string): Sum
         ],
         menuSettings: [
           { ...control("osc.common.drift", v.drift, 0.68, "Instabilità analogica controllata."), menu: "Osc", page: 1 },
-          { ...control("osc1.bendRange", 12, 0.77, "Escursione performativa standard di un'ottava."), menu: "Osc", page: 4 },
+          { ...control("osc1.bendRange", 12, 0.77, "Escursione performativa standard di un'ottava."), menu: "Osc", page: 3 },
           { ...control("amp.delay", 0, 0.91, "L'inviluppo parte insieme alla nota."), menu: "Env", page: 2 },
         ],
         modulationMatrix: [

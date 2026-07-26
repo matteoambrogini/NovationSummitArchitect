@@ -23,7 +23,8 @@ for (const parameter of parameters) {
   if (parameter.aiExposed && parameter.verificationStatus !== "verified") errors.push(`Parametro AI-exposed non verified: ${parameter.id}`);
   if (parameter.minimum !== undefined && parameter.maximum !== undefined && parameter.minimum > parameter.maximum) errors.push(`Range invertito: ${parameter.id}`);
   if (parameter.valueType === "enum" && !parameter.enumValues?.length) errors.push(`Enum vuoto: ${parameter.id}`);
-  if (parameter.location?.type === "menu" && !parameter.location.page) errors.push(`Pagina menu mancante: ${parameter.id}`);
+  const locations = [parameter.location, ...(parameter.alternateLocations ?? [])];
+  if (locations.some((location) => location?.type === "menu" && !location.page)) errors.push(`Pagina menu mancante: ${parameter.id}`);
 }
 
 for (const control of layout.controls) {
@@ -33,11 +34,11 @@ for (const control of layout.controls) {
   for (const parameterId of bindings) {
     const parameter = parameterById.get(parameterId);
     if (!parameter) errors.push(`Controllo UI senza parametro: ${control.id} -> ${parameterId}`);
-    else if (parameter.location.type !== "panel") errors.push(`Controllo UI mappa un parametro menu: ${control.id} -> ${parameterId}`);
+    else if (![parameter.location, ...(parameter.alternateLocations ?? [])].some((location) => location.type === "panel")) errors.push(`Controllo UI mappa un parametro senza posizione pannello: ${control.id} -> ${parameterId}`);
   }
 }
 
-for (const parameter of parameters.filter((candidate) => candidate.location.type === "panel")) {
+for (const parameter of parameters.filter((candidate) => [candidate.location, ...(candidate.alternateLocations ?? [])].some((location) => location.type === "panel"))) {
   if (!layout.controls.some((control) => (control.parameterIds ?? [control.parameterId]).includes(parameter.id))) errors.push(`Parametro pannello senza controllo UI: ${parameter.id}`);
 }
 
@@ -45,10 +46,12 @@ for (const menu of menuCatalog.menus) {
   for (const id of menu.parameterIds) {
     const parameter = parameters.find((candidate) => candidate.id === id);
     if (!parameter) errors.push(`Menu ${menu.id} riferisce parametro assente: ${id}`);
-    else if (parameter.location.type !== "menu") errors.push(`Menu ${menu.id} riferisce parametro pannello: ${id}`);
     else {
-      if (parameter.location.menu.toLowerCase() !== menu.label.toLowerCase()) errors.push(`Menu incoerente per ${id}: ${parameter.location.menu} != ${menu.label}`);
-      if (parameter.verificationStatus === "verified" && !menu.verifiedPages.includes(parameter.location.page)) errors.push(`Pagina menu non verificata per ${id}: ${parameter.location.page}`);
+      const menuLocations = [parameter.location, ...(parameter.alternateLocations ?? [])].filter((location) => location.type === "menu" && location.menu.toLowerCase() === menu.label.toLowerCase());
+      if (!menuLocations.length) errors.push(`Menu incoerente per ${id}: nessuna posizione ${menu.label}`);
+      for (const location of menuLocations) {
+        if (parameter.verificationStatus === "verified" && !menu.verifiedPages.includes(location.page)) errors.push(`Pagina menu non verificata per ${id}: ${location.page}`);
+      }
     }
   }
 }

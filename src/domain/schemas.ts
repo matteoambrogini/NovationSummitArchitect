@@ -32,6 +32,11 @@ const menuLocationSchema = z.object({
   row: z.number().int().min(1).max(4).optional(),
 });
 
+const parameterLocationSchema = z.discriminatedUnion("type", [
+  panelLocationSchema,
+  menuLocationSchema,
+]);
+
 export const summitParameterDefinitionSchema = z
   .object({
     id: z.string().min(1),
@@ -40,7 +45,8 @@ export const summitParameterDefinitionSchema = z
     shortDisplayLabel: z.string().min(1).optional(),
     section: z.string().min(1),
     subsection: z.string().min(1).optional(),
-    location: z.discriminatedUnion("type", [panelLocationSchema, menuLocationSchema]),
+    location: parameterLocationSchema,
+    alternateLocations: z.array(parameterLocationSchema).optional(),
     scope: z.enum(["part", "multi", "global"]),
     partApplicability: z.enum(["A", "B", "both"]).optional(),
     singleMultiApplicability: z.enum(["single", "multi", "both"]),

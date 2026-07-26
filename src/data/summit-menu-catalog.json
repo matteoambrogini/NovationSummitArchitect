@@ -61,14 +61,22 @@
       "label": "Voice",
       "pageCount": 5,
       "patchRelevant": true,
-      "verifiedPages": [],
+      "verifiedPages": [
+        1
+      ],
       "parameterIds": [
-        "mixer.patchLevel",
-        "filter.postDrive",
         "filter.divergence",
-        "voice.audioInput",
         "filter.dualShape",
-        "filter.frequencySeparation"
+        "filter.frequencySeparation",
+        "filter.postDrive",
+        "mixer.patchLevel",
+        "voice.audioInput",
+        "voice.unison",
+        "voice.unisonDetune",
+        "voice.spread",
+        "voice.spreadMode",
+        "voice.panPosition",
+        "voice.preGlide"
       ],
       "verificationStatus": "conflict",
       "documentation": {
@@ -78,12 +86,12 @@
         "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
         "verifiedAt": "2026-07-26",
         "verification": {
-          "document": "Summit in detail",
-          "section": "The Voice menu",
-          "locator": "The Voice menu",
+          "document": "Summit in detail and firmware 2.1 addendum",
+          "section": "The Voice menu / Voice Menu: Spread",
+          "locator": "Voice menu pages 1–5",
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26",
-          "note": "La guida online descrive cinque pagine ma dichiara ancora che il menu ne ha quattro."
+          "note": "Il manuale 1.1 mostra quattro pagine; il firmware 2.1 sposta Spread; la guida online descrive una pagina 5 ma dichiara ancora quattro pagine."
         }
       }
     },
@@ -102,20 +110,24 @@
       ],
       "parameterIds": [
         "amp.delay",
-        "amp.velocity",
-        "amp.monoTrigger",
         "amp.hold",
+        "amp.monoTrigger",
         "amp.repeats",
-        "modEnv1.velocity",
-        "modEnv1.monoTrigger",
+        "amp.velocity",
         "modEnv1.delay",
         "modEnv1.hold",
+        "modEnv1.monoTrigger",
         "modEnv1.repeats",
-        "modEnv2.velocity",
-        "modEnv2.monoTrigger",
+        "modEnv1.velocity",
         "modEnv2.delay",
         "modEnv2.hold",
-        "modEnv2.repeats"
+        "modEnv2.monoTrigger",
+        "modEnv2.repeats",
+        "modEnv2.velocity",
+        "animate1.attack",
+        "animate1.release",
+        "animate2.attack",
+        "animate2.release"
       ],
       "verificationStatus": "firmware-dependent",
       "documentation": {
@@ -183,6 +195,71 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26",
           "note": "La guida v1.1 verifica le pagine 1-8 originali; l'addendum non assegna una pagina numerica stabile ai tre nuovi parametri LFO 3/4."
+        }
+      }
+    },
+    {
+      "id": "arp-clock",
+      "label": "Arp/Clock",
+      "pageCount": 4,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "parameterIds": [
+        "arp.tempo",
+        "arp.clockSource",
+        "arp.type",
+        "arp.rhythm",
+        "arp.octaves",
+        "arp.swing",
+        "arp.syncRate",
+        "arp.keySync",
+        "arp.velocityMode"
+      ],
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Arp/Clock Menu",
+        "page": 33,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail",
+          "section": "The Arp/Clock Menu",
+          "locator": "The Arp/Clock Menu",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "settings",
+      "label": "Settings",
+      "pageCount": "A–N plus Keyboard",
+      "patchRelevant": false,
+      "verifiedPages": [
+        "Keyboard"
+      ],
+      "parameterIds": [
+        "keyboard.velocityCurve"
+      ],
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Settings Menu – Keyboard page",
+        "page": 44,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail",
+          "section": "Settings Menu – Keyboard page",
+          "locator": "Settings Menu – Keyboard page",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
         }
       }
     }

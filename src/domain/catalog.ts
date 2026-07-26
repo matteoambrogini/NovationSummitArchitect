@@ -28,6 +28,9 @@ export type ProposalValidationIssue = { path: string; message: string };
 function validateValue(parameterId: string, value: string | number | boolean): string | undefined {
   const definition = parameterById.get(parameterId);
   if (!definition) return "Parametro non presente nel catalogo verificato";
+  if (definition.scope === "global") {
+    return "Parametro globale non inseribile in una patch";
+  }
   if (!definition.aiExposed || definition.verificationStatus !== "verified") {
     return "Parametro non verificato o non esposto al provider AI";
   }
@@ -52,7 +55,10 @@ export function validateProposalAgainstCatalog(
   for (const part of proposal.parts) {
     for (const [index, setting] of part.panelControls.entries()) {
       const definition = parameterById.get(setting.parameterId);
-      if (definition?.location.type !== "panel") {
+      const locations = definition
+        ? [definition.location, ...(definition.alternateLocations ?? [])]
+        : [];
+      if (!locations.some((location) => location.type === "panel")) {
         issues.push({
           path: `parts.${part.part}.panelControls.${index}`,
           message: definition ? "Parametro menu inserito tra i controlli pannello" : "Parametro inventato",
@@ -63,10 +69,21 @@ export function validateProposalAgainstCatalog(
     }
     for (const [index, setting] of part.menuSettings.entries()) {
       const definition = parameterById.get(setting.parameterId);
-      if (definition?.location.type !== "menu") {
+      const locations = definition
+        ? [definition.location, ...(definition.alternateLocations ?? [])]
+        : [];
+      const matchingMenu = locations.find(
+        (location) =>
+          location.type === "menu" &&
+          location.menu.toLowerCase() === setting.menu.toLowerCase() &&
+          location.page === setting.page,
+      );
+      if (!matchingMenu) {
         issues.push({
           path: `parts.${part.part}.menuSettings.${index}`,
-          message: definition ? "Parametro pannello inserito nei menu" : "Parametro inventato",
+          message: definition
+            ? "Menu o pagina non corrispondono al catalogo verificato"
+            : "Parametro inventato",
         });
       }
       const message = validateValue(setting.parameterId, setting.value);
