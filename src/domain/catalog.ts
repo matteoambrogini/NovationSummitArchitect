@@ -8,16 +8,26 @@ export const parameterById = new Map(parameterCatalog.map((parameter) => [parame
 export const aiParameterCatalog = parameterCatalog.filter((parameter) => parameter.aiExposed);
 
 const modulationCatalog = modulationCatalogJson as {
-  sources: Array<{ id: string; displayLabel: string }>;
-  destinations: Array<{ id: string; displayLabel: string }>;
+  slots: number;
+  sources: Array<{ id: string; displayLabel: string; verificationStatus: string }>;
+  destinations: Array<{ id: string; displayLabel: string; verificationStatus: string }>;
 };
 const fxModulationCatalog = fxModulationCatalogJson as {
+  slots: number;
   sources: Array<{ id: string; displayLabel: string }>;
   destinations: Array<{ id: string; displayLabel: string }>;
 };
 
-const mainSources = new Set(modulationCatalog.sources.map((source) => source.id));
-const mainDestinations = new Set(modulationCatalog.destinations.map((destination) => destination.id));
+const mainSources = new Set(
+  modulationCatalog.sources
+    .filter((source) => source.verificationStatus === "verified")
+    .map((source) => source.id),
+);
+const mainDestinations = new Set(
+  modulationCatalog.destinations
+    .filter((destination) => destination.verificationStatus === "verified")
+    .map((destination) => destination.id),
+);
 const fxSources = new Set(fxModulationCatalog.sources.map((source) => source.id));
 const fxDestinations = new Set(
   fxModulationCatalog.destinations.map((destination) => destination.id),
@@ -90,6 +100,9 @@ export function validateProposalAgainstCatalog(
       if (message) issues.push({ path: setting.parameterId, message });
     }
     for (const assignment of part.modulationMatrix) {
+      if (assignment.slot > modulationCatalog.slots) {
+        issues.push({ path: `mod.${assignment.slot}`, message: "Slot Mod Matrix oltre il limite" });
+      }
       if (!mainSources.has(assignment.sourceA)) {
         issues.push({ path: `mod.${assignment.slot}.sourceA`, message: "Sorgente non verificata" });
       }
@@ -101,6 +114,9 @@ export function validateProposalAgainstCatalog(
       }
     }
     for (const assignment of part.fxModulationMatrix) {
+      if (assignment.slot > fxModulationCatalog.slots) {
+        issues.push({ path: `fxMod.${assignment.slot}`, message: "Slot FX Mod oltre il limite" });
+      }
       if (!fxSources.has(assignment.sourceA)) {
         issues.push({ path: `fxMod.${assignment.slot}.sourceA`, message: "Sorgente non verificata" });
       }

@@ -1,5 +1,5 @@
 {
-  "viewBox": "0 0 7640 560",
+  "viewBox": "0 0 8260 560",
   "coordinateSystem": {
     "kind": "logical-panel-map",
     "note": "Coordinate relative per una futura UI; sezione e ordine seguono il pannello fisico Summit."
@@ -107,6 +107,14 @@
       "x": 6360,
       "y": 46,
       "width": 220,
+      "height": 410
+    },
+    {
+      "id": "menu-controls",
+      "label": "DISPLAY & MENU CONTROL",
+      "x": 7660,
+      "y": 46,
+      "width": 560,
       "height": 410
     }
   ],
@@ -1363,6 +1371,76 @@
       "x": 7500,
       "y": 330,
       "parameterId": "fx.bypass",
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-mod",
+      "label": "Mod",
+      "type": "button",
+      "sectionId": "menu-controls",
+      "x": 7740,
+      "y": 120,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-row-1",
+      "label": "Row 1",
+      "type": "button",
+      "sectionId": "menu-controls",
+      "x": 7860,
+      "y": 120,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-row-2",
+      "label": "Row 2",
+      "type": "button",
+      "sectionId": "menu-controls",
+      "x": 7860,
+      "y": 220,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-row-3",
+      "label": "Row 3",
+      "type": "button",
+      "sectionId": "menu-controls",
+      "x": 7860,
+      "y": 320,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-page-left",
+      "label": "Page Left",
+      "type": "button",
+      "sectionId": "menu-controls",
+      "x": 7980,
+      "y": 350,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-page-right",
+      "label": "Page Right",
+      "type": "button",
+      "sectionId": "menu-controls",
+      "x": 8100,
+      "y": 350,
+      "stateOnly": true,
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "menu-value",
+      "label": "Value",
+      "type": "encoder",
+      "sectionId": "menu-controls",
+      "x": 8100,
+      "y": 160,
+      "stateOnly": true,
       "verificationStatus": "verified"
     }
   ],

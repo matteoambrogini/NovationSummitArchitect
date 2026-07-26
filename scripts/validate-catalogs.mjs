@@ -61,13 +61,19 @@ for (const catalog of [modulation, fxModulation]) {
   for (const source of catalog.sources) {
     if (sourceIds.has(source.id)) errors.push(`Sorgente modulazione duplicata: ${source.id}`);
     sourceIds.add(source.id);
+    if (!(source.documentation ?? catalog.documentation)?.sourceUrl || !(source.documentation ?? catalog.documentation)?.verifiedAt) errors.push(`Fonte sorgente modulazione mancante: ${source.id}`);
   }
   const destinationIds = new Set();
   for (const destination of catalog.destinations) {
     if (destinationIds.has(destination.id)) errors.push(`Destinazione modulazione duplicata: ${destination.id}`);
     destinationIds.add(destination.id);
-    if (!ids.has(destination.id)) errors.push(`Destinazione senza parametro: ${destination.id}`);
+    if (!(destination.documentation ?? catalog.documentation)?.sourceUrl || !(destination.documentation ?? catalog.documentation)?.verifiedAt) errors.push(`Fonte destinazione modulazione mancante: ${destination.id}`);
+    for (const parameterId of destination.parameterIds ?? []) {
+      if (!ids.has(parameterId)) errors.push(`Destinazione ${destination.id} punta a parametro assente: ${parameterId}`);
+    }
   }
+  if (!Number.isInteger(catalog.slots) || catalog.slots < 1) errors.push("Numero slot modulazione non valido");
+  if (catalog.slotDefinitions?.length && catalog.slotDefinitions.length !== catalog.slots) errors.push(`Definizioni slot incomplete: ${catalog.slotDefinitions.length}/${catalog.slots}`);
 }
 
 if (errors.length) {

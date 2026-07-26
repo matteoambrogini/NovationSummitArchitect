@@ -318,6 +318,47 @@
           "note": "Gli schermi dell'addendum indicano 10 pagine, mentre il testo della guida online mantiene il vecchio conteggio di 8."
         }
       }
+    },
+    {
+      "id": "mod",
+      "label": "Mod",
+      "pageCount": 16,
+      "patchRelevant": true,
+      "verifiedPages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "parameterIds": [],
+      "catalogReference": "summit-modulation-catalog.json",
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Modulation Matrix",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "The Modulation Matrix",
+          "locator": "The Modulation Matrix",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
     }
   ],
   "documentation": {
