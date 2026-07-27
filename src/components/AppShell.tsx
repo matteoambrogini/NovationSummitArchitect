@@ -6,7 +6,11 @@ import {
   parseProjectFileContents,
   saveProjectFile,
 } from "../services/projectFiles";
-import { selectActiveProposal, useAppStore } from "../stores/useAppStore";
+import {
+  selectActiveProposal,
+  selectIsDirty,
+  useAppStore,
+} from "../stores/useAppStore";
 
 const navItems = [
   { to: "/", label: copy.nav.home, icon: "⌂" },
@@ -20,6 +24,7 @@ const navItems = [
 export function AppShell({ children }: PropsWithChildren) {
   const proposal = useAppStore(selectActiveProposal);
   const status = useAppStore((state) => state.statusMessage);
+  const dirty = useAppStore(selectIsDirty);
   const loadProject = useAppStore((state) => state.loadProject);
   const toProject = useAppStore((state) => state.toProject);
   const [projectNotice, setProjectNotice] = useState("");
@@ -109,7 +114,7 @@ export function AppShell({ children }: PropsWithChildren) {
             <strong>{proposal?.patch.name ?? "Nessuna patch"}</strong>
           </div>
           <div className="topbar-status" role="status">
-            <span className="status-dot green" /> {status}
+            <span className={`status-dot ${dirty ? "amber" : "green"}`} /> {status}
           </div>
           <div className="topbar-actions">
             <button className="button subtle" onClick={() => void handleOpen()}>

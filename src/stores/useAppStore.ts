@@ -1,9 +1,24 @@
 import { create } from "zustand";
 import { MockPatchProvider } from "../ai/mockProvider";
+import { buildDemoProposal, demoConfigs } from "../ai/demoPatches";
 import type { AnalysisMode } from "../ai/provider";
-import { validateProposalAgainstCatalog } from "../domain/catalog";
+import {
+  parameterById,
+  validateProposalAgainstCatalog,
+  validateUiParameterValue,
+} from "../domain/catalog";
 import { applyPatchDelta } from "../domain/patchDelta";
-import { summitProjectFileSchema, type SummitPatchProposal, type SummitProjectFile } from "../domain/schemas";
+import {
+  buildDefaultMultiSettings,
+  type ParameterValue,
+  type PatchScope,
+} from "../domain/patchUi";
+import {
+  summitPatchProposalSchema,
+  summitProjectFileSchema,
+  type SummitPatchProposal,
+  type SummitProjectFile,
+} from "../domain/schemas";
 import { parseReferenceUrl, parseTimestamp } from "../services/reference";
 
 type GenerationStatus = "idle" | "analysing" | "validating" | "ready" | "error";
@@ -24,16 +39,23 @@ type AppState = {
   generationStatus: GenerationStatus;
   statusMessage: string;
   selectedParameterId: string | undefined;
+  activeScope: PatchScope;
   setupMode: boolean;
   setupStep: number;
+  setupOnlyModified: boolean;
   updateInput: (input: Partial<SoundInput>) => void;
   setAudioFileName: (name?: string) => void;
   generate: () => Promise<void>;
+  loadDemo: (demoId: string) => void;
   refine: (instruction: string) => Promise<void>;
-  setParameterValue: (parameterId: string, value: string | number | boolean) => void;
+  setParameterValue: (parameterId: string, value: ParameterValue) => void;
   selectParameter: (parameterId?: string) => void;
+  setActiveScope: (scope: PatchScope) => void;
   toggleSetupMode: () => void;
   nextSetupStep: () => void;
+  previousSetupStep: () => void;
+  skipSetupStep: () => void;
+  toggleSetupOnlyModified: () => void;
   undo: () => void;
   redo: () => void;
   loadProject: (project: SummitProjectFile) => void;
@@ -57,8 +79,10 @@ export const useAppStore = create<AppState>((set, get) => ({
   generationStatus: "idle",
   statusMessage: "Modalità demo pronta: nessuna credenziale necessaria.",
   selectedParameterId: undefined,
+  activeScope: "single",
   setupMode: false,
   setupStep: 0,
+  setupOnlyModified: true,
   updateInput: (next) =>
     set((state) => ({
       input: { ...state.input, ...next },
@@ -105,11 +129,29 @@ export const useAppStore = create<AppState>((set, get) => ({
         generationStatus: "ready",
         statusMessage: "Proposta demo validata. Regola i controlli e prova un raffinamento.",
         selectedParameterId: proposal.parts[0]?.panelControls[0]?.parameterId,
+        activeScope: "single",
         setupStep: 0,
       });
     } catch (error) {
       set({ generationStatus: "error", statusMessage: error instanceof Error ? error.message : "Generazione non riuscita" });
     }
+  },
+  loadDemo: (demoId) => {
+    const demo = demoConfigs.find((candidate) => candidate.id === demoId);
+    if (!demo) throw new Error(`Demo sconosciuta: ${demoId}`);
+    const proposal = buildDemoProposal(demo);
+    const issues = validateProposalAgainstCatalog(proposal);
+    if (issues.length) throw new Error(issues[0]?.message ?? "Demo non valida");
+    set({
+      proposals: [proposal],
+      activeIndex: 0,
+      activeScope: "single",
+      generationStatus: "ready",
+      statusMessage: `${demo.displayName} aperta dal catalogo demo.`,
+      selectedParameterId: "filter.frequency",
+      setupMode: false,
+      setupStep: 0,
+    });
   },
   refine: async (instruction) => {
     const state = get();
@@ -130,28 +172,96 @@ export const useAppStore = create<AppState>((set, get) => ({
     const state = get();
     const active = state.proposals[state.activeIndex];
     if (!active) return;
+    const validationIssue = validateUiParameterValue(
+      parameterId,
+      value,
+      active.targetFirmware,
+    );
+    if (validationIssue) throw new Error(validationIssue);
+    const definition = parameterById.get(parameterId);
+    if (!definition || definition.scope === "global") {
+      throw new Error("Le impostazioni globali non fanno parte della patch");
+    }
     const next = structuredClone(active);
     next.proposalId = `${active.proposalId}-m${Date.now()}`;
     next.createdAt = new Date().toISOString();
     let found = false;
-    for (const part of next.parts) {
-      for (const setting of [...part.panelControls, ...part.menuSettings]) {
+    const collections =
+      definition.scope === "multi"
+        ? next.multiSetup
+          ? [next.multiSetup.panelControls, next.multiSetup.menuSettings]
+          : []
+        : next.parts
+            .filter((part) => part.part === (state.activeScope === "multi-b" ? "B" : "A"))
+            .flatMap((part) => [part.panelControls, part.menuSettings]);
+    for (const collection of collections) {
+      for (const setting of collection) {
         if (setting.parameterId !== parameterId) continue;
         setting.value = value;
-        setting.displayValue = String(value);
+        setting.displayValue =
+          typeof value === "boolean"
+            ? value
+              ? "On"
+              : "Off"
+            : `${String(value)}${definition.unit ? ` ${definition.unit}` : ""}`;
         setting.confidence = 1;
         setting.rationale = "Valore modificato manualmente dall'utente.";
         found = true;
       }
     }
     if (!found) throw new Error(`Parametro ${parameterId} non presente nella proposta`);
-    const issues = validateProposalAgainstCatalog(next);
-    if (issues.length) throw new Error(issues[0]?.message ?? "Valore non valido");
+    summitPatchProposalSchema.parse(next);
     const proposals = state.proposals.slice(0, state.activeIndex + 1);
     proposals.push(next);
-    set({ proposals, activeIndex: proposals.length - 1, statusMessage: "Modifica manuale salvata come nuova versione." });
+    set({
+      proposals,
+      activeIndex: proposals.length - 1,
+      statusMessage: "Patch modificata · stato non salvato.",
+    });
   },
   selectParameter: (selectedParameterId) => set({ selectedParameterId }),
+  setActiveScope: (scope) => {
+    const state = get();
+    const active = state.proposals[state.activeIndex];
+    if (!active) {
+      set({ activeScope: scope });
+      return;
+    }
+    if (
+      (scope === "single" && active.patch.mode === "single") ||
+      (scope !== "single" && active.patch.mode === "multi")
+    ) {
+      set({ activeScope: scope });
+      return;
+    }
+    const next = structuredClone(active);
+    next.proposalId = `${active.proposalId}-${scope}-${Date.now()}`;
+    next.createdAt = new Date().toISOString();
+    if (scope === "single") {
+      next.patch.mode = "single";
+      next.parts = [next.parts.find((part) => part.part === "A") ?? next.parts[0]!];
+      delete next.multiSetup;
+    } else {
+      next.patch.mode = "multi";
+      const partA = next.parts.find((part) => part.part === "A") ?? next.parts[0]!;
+      if (!next.parts.some((part) => part.part === "B")) {
+        next.parts.push({ ...structuredClone(partA), part: "B" });
+      }
+      next.multiSetup ??= buildDefaultMultiSettings();
+    }
+    const valid = summitPatchProposalSchema.parse(next);
+    const proposals = state.proposals.slice(0, state.activeIndex + 1);
+    proposals.push(valid);
+    set({
+      proposals,
+      activeIndex: proposals.length - 1,
+      activeScope: scope,
+      statusMessage:
+        scope === "single"
+          ? "Scope Single attivo."
+          : `Scope ${scope === "multi-a" ? "Multi A" : "Multi B"} attivo.`,
+    });
+  },
   toggleSetupMode: () => set((state) => ({ setupMode: !state.setupMode, setupStep: 0 })),
   nextSetupStep: () => {
     const state = get();
@@ -159,12 +269,25 @@ export const useAppStore = create<AppState>((set, get) => ({
     const count = active?.setupInstructions.length ?? 0;
     if (count) set({ setupStep: (state.setupStep + 1) % count });
   },
+  previousSetupStep: () => {
+    const state = get();
+    const active = state.proposals[state.activeIndex];
+    const count = active?.setupInstructions.length ?? 0;
+    if (count) set({ setupStep: (state.setupStep - 1 + count) % count });
+  },
+  skipSetupStep: () => {
+    const state = get();
+    state.nextSetupStep();
+    set({ statusMessage: "Passaggio Setup Mode saltato." });
+  },
+  toggleSetupOnlyModified: () =>
+    set((state) => ({ setupOnlyModified: !state.setupOnlyModified, setupStep: 0 })),
   undo: () => set((state) => ({ activeIndex: Math.max(0, state.activeIndex - 1) })),
   redo: () => set((state) => ({ activeIndex: Math.min(state.proposals.length - 1, state.activeIndex + 1) })),
   loadProject: (project) => {
     const valid = summitProjectFileSchema.parse(project);
     const activeIndex = Math.max(0, valid.proposals.findIndex((proposal) => proposal.proposalId === valid.activeProposalId));
-    set({ proposals: valid.proposals, activeIndex, input: { ...initialInput, description: valid.input.description, referenceUrl: valid.input.reference?.url ?? "", targetSound: valid.input.reference?.targetSound ?? "", analysisMode: valid.input.audioFileReference ? "audio-assisted" : valid.input.reference ? "reference" : "text", ...(valid.input.audioFileReference ? { audioFileName: valid.input.audioFileReference.originalName } : {}) }, generationStatus: "ready", statusMessage: "Progetto aperto e validato." });
+    set({ proposals: valid.proposals, activeIndex, activeScope: valid.proposals[activeIndex]?.patch.mode === "multi" ? "multi-a" : "single", input: { ...initialInput, description: valid.input.description, referenceUrl: valid.input.reference?.url ?? "", targetSound: valid.input.reference?.targetSound ?? "", analysisMode: valid.input.audioFileReference ? "audio-assisted" : valid.input.reference ? "reference" : "text", ...(valid.input.audioFileReference ? { audioFileName: valid.input.audioFileReference.originalName } : {}) }, generationStatus: "ready", statusMessage: "Progetto aperto e validato." });
   },
   toProject: () => {
     const state = get();
@@ -190,3 +313,5 @@ export const useAppStore = create<AppState>((set, get) => ({
 }));
 
 export const selectActiveProposal = (state: AppState) => state.proposals[state.activeIndex];
+export const selectIsDirty = (state: AppState) =>
+  state.proposals.length > 1 && state.activeIndex > 0;

@@ -6,12 +6,36 @@ import {
   aiParameterCatalog,
   catalogTarget,
   getAiParameterCatalog,
+  isFirmwareApplicable,
   isParameterAiUsable,
+  parameterById,
   parameterCatalog,
   validateProposalAgainstCatalog,
 } from "./catalog";
 
 describe("Summit catalogs", () => {
+  function proposalForFirmware(
+    source: (typeof demoProposals)[number],
+    firmware: string,
+  ) {
+    const proposal = structuredClone(source);
+    for (const part of proposal.parts) {
+      part.panelControls = part.panelControls.filter((setting) => {
+        const definition = parameterById.get(setting.parameterId);
+        return Boolean(definition && isFirmwareApplicable(definition, firmware));
+      });
+      part.menuSettings = part.menuSettings.filter((setting) => {
+        const definition = parameterById.get(setting.parameterId);
+        return Boolean(
+          definition &&
+            isFirmwareApplicable(definition, firmware) &&
+            isFirmwareApplicable(definition.location, firmware),
+        );
+      });
+    }
+    return proposal;
+  }
+
   it("has unique, documented parameter identifiers", () => {
     const ids = parameterCatalog.map((parameter) => parameter.id);
     expect(new Set(ids).size).toBe(ids.length);
@@ -168,7 +192,10 @@ describe("Summit catalogs", () => {
   });
 
   it("validates firmware-specific menu locations and enum values", () => {
-    const legacySpread = structuredClone(demoProposals[0]!);
+    const legacySpread = proposalForFirmware(demoProposals[0]!, "1.1");
+    legacySpread.parts[0]!.menuSettings = legacySpread.parts[0]!.menuSettings.filter(
+      (setting) => setting.parameterId !== "voice.spread",
+    );
     legacySpread.parts[0]!.menuSettings.push({
       parameterId: "voice.spread",
       value: 64,
@@ -188,15 +215,17 @@ describe("Summit catalogs", () => {
     );
 
     const firmwareEnum = structuredClone(demoProposals[0]!);
-    firmwareEnum.parts[0]!.panelControls.push({
-      parameterId: "arp.type",
-      value: "Chord 2",
-      displayValue: "Chord 2",
-      confidence: 1,
-      rationale: "Modalità introdotta dal firmware 2.1",
-    });
+    const arpType = firmwareEnum.parts[0]!.panelControls.find(
+      (setting) => setting.parameterId === "arp.type",
+    )!;
+    arpType.value = "Chord 2";
+    arpType.displayValue = "Chord 2";
+    arpType.confidence = 1;
+    arpType.rationale = "Modalità introdotta dal firmware 2.1";
     expect(validateProposalAgainstCatalog(firmwareEnum, "2.1")).toEqual([]);
-    expect(validateProposalAgainstCatalog(firmwareEnum, "1.1")).toEqual(
+    expect(
+      validateProposalAgainstCatalog(proposalForFirmware(firmwareEnum, "1.1"), "1.1"),
+    ).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           message: "Valore Chord 2 non disponibile nel firmware 1.1",

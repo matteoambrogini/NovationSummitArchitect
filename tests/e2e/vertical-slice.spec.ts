@@ -1,52 +1,73 @@
 import { expect, test } from "@playwright/test";
 
-test("completa il flusso demo principale", async ({ page, context }) => {
+test("demo, pannello, patch state, menu, matrici e Setup Mode restano sincronizzati", async ({
+  page,
+}) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /Dal carattere sonoro/ })).toBeVisible();
-  await page.screenshot({ path: "tmp/visual-qa/home.png", fullPage: true });
-  await page.getByRole("link", { name: /Crea un nuovo suono/ }).click();
-  await expect(page.getByRole("heading", { name: /Che suono vuoi costruire/ })).toBeVisible();
-  await page.getByLabel("Descrizione sonora").fill(
-    "Pluck progressive-house brillante, corto e largo con un filtro leggermente scuro",
-  );
-  await page.getByRole("button", { name: /Genera proposta demo/ }).click();
-  await expect(page.getByRole("heading", { name: "Aurora Pluck" })).toBeVisible();
-  await page.screenshot({ path: "tmp/visual-qa/panel.png", fullPage: true });
-  await page.getByRole("button", { name: /Frequency:/ }).click();
-  await expect(page.getByRole("heading", { name: "Filter Frequency" })).toBeVisible();
-  await page.getByLabel("Modifica manuale").fill("150");
-  await expect(page.getByText(/Modifica manuale salvata/)).toBeVisible();
-  await page.getByRole("link", { name: "Display & menu" }).click();
-  await expect(page.getByRole("heading", { name: /Configurazione oltre il pannello/ })).toBeVisible();
-  await page.screenshot({ path: "tmp/visual-qa/menus.png", fullPage: true });
-  await page.getByLabel("Istruzione di raffinamento").fill("Rendila più scura");
-  await page.getByRole("button", { name: "Applica delta" }).click();
-  await expect(page.getByText(/Delta applicato/)).toBeVisible();
-  await page.getByRole("link", { name: "Confronta" }).click();
-  await expect(page.getByText("Filter Frequency", { exact: true })).toBeVisible();
-  await page.screenshot({ path: "tmp/visual-qa/compare.png", fullPage: true });
-
-  const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: "Salva" }).click();
-  const download = await downloadPromise;
-  const savedProjectPath = await download.path();
-  expect(savedProjectPath).not.toBeNull();
-  if (!savedProjectPath) throw new Error("Playwright non ha restituito il file progetto salvato");
-
-  await page.close();
-  const reopenedPage = await context.newPage();
-  await reopenedPage.goto("/");
-  await expect(reopenedPage.getByText("Nessuna patch", { exact: true })).toBeVisible();
-  const fileChooserPromise = reopenedPage.waitForEvent("filechooser");
-  await reopenedPage.getByRole("button", { name: "Apri" }).click();
-  const fileChooser = await fileChooserPromise;
-  await fileChooser.setFiles(savedProjectPath);
-  await expect(reopenedPage.getByText(/Progetto aperto:/)).toBeVisible();
   await expect(
-    reopenedPage.getByRole("banner").getByText("Aurora Pluck R", { exact: true }),
+    page.getByRole("heading", { name: /Dal carattere sonoro/ }),
   ).toBeVisible();
-  await reopenedPage.getByRole("link", { name: "Pannello fisico" }).click();
-  await expect(reopenedPage.getByRole("heading", { name: "Aurora Pluck R" })).toBeVisible();
-  await expect(reopenedPage.getByRole("button", { name: "Frequency: 128" })).toBeVisible();
-  await reopenedPage.screenshot({ path: "tmp/visual-qa/reopened-project.png", fullPage: true });
+
+  await page
+    .getByRole("link", { name: "Apri Progressive House Pluck" })
+    .click();
+  await expect(page.getByRole("heading", { name: "Prog House Plk" })).toBeVisible();
+  await expect(
+    page.getByRole("group", { name: "Pannello vettoriale interattivo Novation Summit" }),
+  ).toBeVisible();
+
+  for (const [name, width, height] of [
+    ["1920x1080", 1920, 1080],
+    ["2560x1440", 2560, 1440],
+    ["1440x900", 1440, 900],
+  ] as const) {
+    await page.setViewportSize({ width, height });
+    await page.screenshot({
+      path: `tmp/visual-qa/panel-${name}.png`,
+      fullPage: true,
+    });
+  }
+
+  const frequency = page.getByRole("slider", { name: "Frequency: 185" });
+  await frequency.focus();
+  await frequency.press("ArrowDown");
+  await expect(
+    page.getByRole("slider", { name: "Frequency: 184" }),
+  ).toBeVisible();
+  await expect(page.getByText(/Patch modificata/)).toBeVisible();
+
+  await page.getByText("Patch JSON sincronizzato").click();
+  await expect(page.getByTestId("patch-json")).toContainText(
+    '"filter.frequency": 184',
+  );
+
+  await page.getByRole("link", { name: "Display & menu" }).click();
+  await expect(
+    page.getByRole("heading", { name: "Display, percorsi e matrici" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Oscillator Drift" }),
+  ).toBeVisible();
+
+  await page.getByRole("button", { name: /Parameter Table/ }).click();
+  const driftRow = page.getByRole("row", { name: /Oscillator Drift/ });
+  await driftRow.scrollIntoViewIfNeeded();
+  await expect(driftRow).toBeVisible();
+  await expect(driftRow.getByRole("cell", { name: "7", exact: true })).toBeVisible();
+
+  await page.getByRole("button", { name: /Modulation/ }).click();
+  await expect(page.getByRole("heading", { name: "Mod Matrix", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "FX Mod Matrix" })).toBeVisible();
+  await expect(page.locator(".matrix-table").first().locator("tbody tr")).toHaveCount(16);
+  await expect(page.locator(".matrix-table").nth(1).locator("tbody tr")).toHaveCount(4);
+  await page.screenshot({ path: "tmp/visual-qa/modulation.png", fullPage: true });
+
+  await page.getByRole("link", { name: "Pannello fisico" }).click();
+  await page.getByRole("button", { name: "Configura il Summit" }).click();
+  await expect(page.getByLabel("Setup Mode")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Successivo →" })).toBeVisible();
+  await page.getByRole("button", { name: "Successivo →" }).click();
+  await page.getByRole("button", { name: "Salta" }).click();
+  await page.getByRole("button", { name: "← Precedente" }).click();
+  await page.screenshot({ path: "tmp/visual-qa/setup-mode.png", fullPage: true });
 });

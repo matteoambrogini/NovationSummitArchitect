@@ -10,7 +10,7 @@ describe("mock provider", () => {
       mode: "text",
     });
     expect(provider.requiresCredentials).toBe(false);
-    expect(proposal.patch.name).toBe("Aurora Pluck");
+    expect(proposal.patch.name).toBe("Prog House Plk");
     expect(validateProposalAgainstCatalog(proposal)).toEqual([]);
   });
 

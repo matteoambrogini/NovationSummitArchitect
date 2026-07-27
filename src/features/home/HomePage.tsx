@@ -5,7 +5,7 @@ import { selectActiveProposal, useAppStore } from "../../stores/useAppStore";
 
 export function HomePage() {
   const proposal = useAppStore(selectActiveProposal);
-  const updateInput = useAppStore((state) => state.updateInput);
+  const loadDemo = useAppStore((state) => state.loadDemo);
 
   return (
     <div className="page home-page">
@@ -47,13 +47,14 @@ export function HomePage() {
           <div className="demo-grid">
             {demoConfigs.map((demo) => (
               <Link
-                to="/new"
+                to="/panel"
                 className="demo-card"
                 key={demo.id}
-                onClick={() => updateInput({ description: demo.description, targetSound: "" })}
+                onClick={() => loadDemo(demo.id)}
+                aria-label={`Apri ${demo.displayName}`}
               >
                 <span className={`demo-orb ${demo.category}`} />
-                <strong>{demo.name}</strong>
+                <strong>{demo.displayName}</strong>
                 <small>{demo.category.toUpperCase()}</small>
                 <p>{demo.description}</p>
               </Link>
