@@ -4,6 +4,7 @@ import fxModulationCatalogJson from "../data/summit-fx-modulation-catalog.json";
 import menuCatalogJson from "../data/summit-menu-catalog.json";
 import midiCatalogJson from "../data/summit-midi-catalog.json";
 import catalogTargetJson from "../data/summit-catalog-target.json";
+import displayStructureJson from "../data/summit-display-structure.json";
 import { z } from "zod";
 import {
   summitCatalogTargetSchema,
@@ -39,19 +40,23 @@ const modulationCatalogSchema = z
   .object({
     slots: z.number().int().positive(),
     slotDefinitions: z.array(
-      z.object({
-        slot: z.number().int().positive(),
-        menu: z.string().min(1),
-        page: z.number().int().positive(),
-        fields: z.array(
-          z.object({
-            id: z.enum(["sourceA", "sourceB", "destination", "depth"]),
-            displayLabel: z.string().min(1),
-            row: z.number().int().positive(),
-            defaultValue: z.union([z.string(), z.number()]),
-          }).passthrough(),
-        ),
-      }).passthrough(),
+      z
+        .object({
+          slot: z.number().int().positive(),
+          menu: z.string().min(1),
+          page: z.number().int().positive(),
+          fields: z.array(
+            z
+              .object({
+                id: z.enum(["sourceA", "sourceB", "destination", "depth"]),
+                displayLabel: z.string().min(1),
+                row: z.number().int().positive(),
+                defaultValue: z.union([z.string(), z.number()]),
+              })
+              .passthrough(),
+          ),
+        })
+        .passthrough(),
     ),
     depthRange: z.tuple([z.number().int(), z.number().int()]),
     sources: z.array(modulationEntitySchema),
@@ -59,45 +64,101 @@ const modulationCatalogSchema = z
   })
   .passthrough();
 
-const menuCatalogSchema = z.object({
-  menus: z.array(
-    z.object({
-      id: z.string().min(1),
-      label: z.string().min(1),
-      pageCount: z.union([z.number().int().positive(), z.string().min(1)]),
-      verifiedPages: z.array(
-        z.union([z.number().int().positive(), z.string().min(1)]),
-      ),
-      parameterIds: z.array(z.string().min(1)),
-      verificationStatus: verificationStatusSchema,
-      documentation: z.object({
-        document: z.string().min(1),
-        section: z.string().min(1),
-        page: z.number().int().positive().optional(),
-        sourceUrl: z.url().optional(),
-        verifiedAt: z.iso.date(),
-        verification: z.object({
-          note: z.string().min(1).optional(),
-        }).passthrough().optional(),
-      }),
-    }).passthrough(),
-  ),
-}).passthrough();
+const menuCatalogSchema = z
+  .object({
+    menus: z.array(
+      z
+        .object({
+          id: z.string().min(1),
+          label: z.string().min(1),
+          pageCount: z.union([z.number().int().positive(), z.string().min(1)]),
+          verifiedPages: z.array(z.union([z.number().int().positive(), z.string().min(1)])),
+          parameterIds: z.array(z.string().min(1)),
+          verificationStatus: verificationStatusSchema,
+          documentation: z.object({
+            document: z.string().min(1),
+            section: z.string().min(1),
+            page: z.number().int().positive().optional(),
+            sourceUrl: z.url().optional(),
+            verifiedAt: z.iso.date(),
+            verification: z
+              .object({
+                note: z.string().min(1).optional(),
+              })
+              .passthrough()
+              .optional(),
+          }),
+        })
+        .passthrough(),
+    ),
+  })
+  .passthrough();
 
-const midiMappingSchema = z.object({
-  parameterId: z.string().min(1),
-  messageType: z.string().min(1),
-  nrpn: z.string().optional(),
-  controllers: z.array(z.number().int()).optional(),
-  verificationStatus: verificationStatusSchema,
-  translation: z.object({
+const midiMappingSchema = z
+  .object({
+    parameterId: z.string().min(1),
+    messageType: z.string().min(1),
+    nrpn: z.string().optional(),
+    controllers: z.array(z.number().int()).optional(),
     verificationStatus: verificationStatusSchema,
-  }).passthrough(),
-}).passthrough();
+    translation: z
+      .object({
+        verificationStatus: verificationStatusSchema,
+      })
+      .passthrough(),
+  })
+  .passthrough();
 
-const midiCatalogSchema = z.object({
-  mappings: z.array(midiMappingSchema),
-}).passthrough();
+const midiCatalogSchema = z
+  .object({
+    mappings: z.array(midiMappingSchema),
+  })
+  .passthrough();
+
+const displayFieldSchema = z.object({
+  id: z.string().min(1),
+  displayLabel: z.string().min(1),
+  line: z.number().int().positive(),
+  parameterId: z.string().min(1).optional(),
+  fieldKind: z.enum(["value", "action", "status", "matrix-field"]).default("value"),
+  unmappedReason: z.string().min(1).optional(),
+});
+
+const displayPageSchema = z.object({
+  page: z.number().int().positive(),
+  displayTitle: z.string().min(1),
+  fields: z.array(displayFieldSchema),
+});
+
+const displayAreaSchema = z.object({
+  id: z.string().min(1),
+  displayLabel: z.string().min(1),
+  physicalButton: z.string().min(1),
+  kind: z.enum(["pages", "slots", "unobserved"]),
+  patchRelevant: z.boolean(),
+  verificationStatus: z.enum(["observed", "not-traversed"]),
+  evidence: z.object({
+    startSeconds: z.number().nonnegative(),
+    endSeconds: z.number().nonnegative(),
+  }),
+  pages: z.array(displayPageSchema).default([]),
+  slotCount: z.number().int().positive().optional(),
+  slotFields: z.array(displayFieldSchema).optional(),
+  note: z.string().min(1).optional(),
+});
+
+const displayStructureSchema = z.object({
+  schemaVersion: z.string().min(1),
+  targetFirmware: z.string().min(1),
+  observedAt: z.iso.date(),
+  documentation: z.object({
+    document: z.string().min(1),
+    section: z.string().min(1),
+    sourceUrl: z.string().min(1),
+    verifiedAt: z.iso.date(),
+  }),
+  areas: z.array(displayAreaSchema),
+});
 
 export const modulationCatalog = modulationCatalogSchema.parse(modulationCatalogJson);
 export const fxModulationCatalog = modulationCatalogSchema.parse(fxModulationCatalogJson);
@@ -106,6 +167,24 @@ export const menuByLabel = new Map(
   menuCatalog.menus.map((menu) => [menu.label.toLowerCase(), menu]),
 );
 export const midiCatalog = midiCatalogSchema.parse(midiCatalogJson);
+export const displayStructure = displayStructureSchema.parse(displayStructureJson);
+export type SummitDisplayField = z.infer<typeof displayFieldSchema>;
+export type SummitDisplayPage = z.infer<typeof displayPageSchema>;
+export type SummitDisplayArea = z.infer<typeof displayAreaSchema>;
+export const displayAreaById = new Map(displayStructure.areas.map((area) => [area.id, area]));
+export const displayLocationByParameterId = new Map<
+  string,
+  { area: SummitDisplayArea; page: SummitDisplayPage; field: SummitDisplayField }
+>();
+for (const area of displayStructure.areas) {
+  for (const page of area.pages) {
+    for (const field of page.fields) {
+      if (field.parameterId) {
+        displayLocationByParameterId.set(field.parameterId, { area, page, field });
+      }
+    }
+  }
+}
 export const midiMappingsByParameterId = new Map<string, z.infer<typeof midiMappingSchema>[]>();
 for (const mapping of midiCatalog.mappings) {
   const mappings = midiMappingsByParameterId.get(mapping.parameterId) ?? [];

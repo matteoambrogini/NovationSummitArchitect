@@ -7,11 +7,7 @@ import {
   type WheelEvent,
 } from "react";
 import { parameterById } from "../../domain/catalog";
-import {
-  formatParameterValue,
-  isParameterValue,
-  type ParameterValue,
-} from "../../domain/patchUi";
+import { formatParameterValue, isParameterValue, type ParameterValue } from "../../domain/patchUi";
 import type { SummitParameterDefinition } from "../../domain/schemas";
 import {
   isBipolarDefinition,
@@ -21,12 +17,7 @@ import {
 } from "./controlMath";
 
 export type ControlVisualState =
-  | "default"
-  | "modified"
-  | "suggested"
-  | "selected"
-  | "low-confidence"
-  | "unavailable";
+  "default" | "modified" | "suggested" | "selected" | "low-confidence" | "unavailable";
 
 type CommonProps = {
   parameterId: string;
@@ -60,13 +51,9 @@ function useControlInteraction(
   props: CommonProps,
   definition: SummitParameterDefinition,
 ): Interaction {
-  const [localValue, setLocalValue] = useState<ParameterValue | undefined>(
-    undefined,
-  );
+  const [localValue, setLocalValue] = useState<ParameterValue | undefined>(undefined);
   const displayValue = localValue ?? props.value;
-  const drag = useRef<
-    { pointerId: number; y: number; normalized: number } | undefined
-  >(undefined);
+  const drag = useRef<{ pointerId: number; y: number; normalized: number } | undefined>(undefined);
 
   const commit = (next: ParameterValue) => {
     setLocalValue(undefined);
@@ -153,11 +140,7 @@ function useControlInteraction(
   };
 }
 
-function controlClass(
-  base: string,
-  states: readonly ControlVisualState[],
-  highlighted = false,
-) {
+function controlClass(base: string, states: readonly ControlVisualState[], highlighted = false) {
   return ["panel-control", base, ...states, highlighted ? "setup-highlight" : ""]
     .filter(Boolean)
     .join(" ");
@@ -175,10 +158,21 @@ function StatusMarkers({
   return (
     <g className="control-status-markers" aria-hidden="true">
       {states.includes("modified") ? (
-        <path d={`M ${x - 5} ${y} L ${x} ${y - 5} L ${x + 5} ${y} L ${x} ${y + 5} Z`} className="marker-modified" />
+        <path
+          d={`M ${x - 5} ${y} L ${x} ${y - 5} L ${x + 5} ${y} L ${x} ${y + 5} Z`}
+          className="marker-modified"
+        />
       ) : null}
-      {states.includes("suggested") ? <text x={x} y={y + 3} className="marker-suggested">✦</text> : null}
-      {states.includes("low-confidence") ? <text x={x} y={y + 3} className="marker-low">?</text> : null}
+      {states.includes("suggested") ? (
+        <text x={x} y={y + 3} className="marker-suggested">
+          ✦
+        </text>
+      ) : null}
+      {states.includes("low-confidence") ? (
+        <text x={x} y={y + 3} className="marker-low">
+          ?
+        </text>
+      ) : null}
     </g>
   );
 }
@@ -195,9 +189,7 @@ function ariaValues(definition: SummitParameterDefinition, value: ParameterValue
         : 0;
   return {
     "aria-valuemin": definition.enumValues ? 0 : definition.minimum,
-    "aria-valuemax": definition.enumValues
-      ? definition.enumValues.length - 1
-      : definition.maximum,
+    "aria-valuemax": definition.enumValues ? definition.enumValues.length - 1 : definition.maximum,
     "aria-valuenow": numericValue,
     "aria-valuetext": formatParameterValue(definition, value),
   };
@@ -212,7 +204,7 @@ function useDefinition(parameterId: string) {
 export const SummitKnob = memo(function SummitKnob(props: CommonProps) {
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
-  const radius = (props.size ?? 72) / 2;
+  const radius = (props.size ?? 20) / 2;
   const rotation = -135 + interaction.normalized * 270;
   const formatted = formatParameterValue(definition, interaction.displayValue);
   const bipolar = isBipolarDefinition(definition);
@@ -227,15 +219,37 @@ export const SummitKnob = memo(function SummitKnob(props: CommonProps) {
       {...interaction.handlers}
     >
       <title>{`${definition.label} · ${formatted} · trascina verticalmente, usa trackpad o frecce; doppio clic per il default`}</title>
-      <text x={props.x} y={props.y - radius - 20} textAnchor="middle" className="control-label">{props.label}</text>
-      <path d={`M ${props.x - radius * 0.72} ${props.y + radius * 0.72} A ${radius} ${radius} 0 1 1 ${props.x + radius * 0.72} ${props.y + radius * 0.72}`} className="knob-arc" />
-      {bipolar ? <line x1={props.x} y1={props.y - radius - 5} x2={props.x} y2={props.y - radius + 4} className="bipolar-zero" /> : null}
-      <circle cx={props.x} cy={props.y} r={radius + 10} className="control-halo" />
+      <text x={props.x} y={props.y - radius - 6} textAnchor="middle" className="control-label">
+        {props.label}
+      </text>
+      <path
+        d={`M ${props.x - radius * 0.72} ${props.y + radius * 0.72} A ${radius} ${radius} 0 1 1 ${props.x + radius * 0.72} ${props.y + radius * 0.72}`}
+        className="knob-arc"
+      />
+      {bipolar ? (
+        <line
+          x1={props.x}
+          y1={props.y - radius - 5}
+          x2={props.x}
+          y2={props.y - radius + 4}
+          className="bipolar-zero"
+        />
+      ) : null}
+      <circle cx={props.x} cy={props.y} r={radius + 4} className="control-halo" />
       <circle cx={props.x} cy={props.y} r={radius} className="knob-rim" />
-      <circle cx={props.x} cy={props.y} r={radius - 7} className="knob-body" />
-      <line x1={props.x} y1={props.y} x2={props.x} y2={props.y - radius + 12} className="knob-indicator" transform={`rotate(${rotation} ${props.x} ${props.y})`} />
-      <text x={props.x} y={props.y + radius + 31} textAnchor="middle" className="control-value">{formatted}</text>
-      <StatusMarkers x={props.x + radius + 8} y={props.y - radius - 3} states={props.states} />
+      <circle cx={props.x} cy={props.y} r={Math.max(3, radius - 2.5)} className="knob-body" />
+      <line
+        x1={props.x}
+        y1={props.y}
+        x2={props.x}
+        y2={props.y - Math.max(3, radius - 3)}
+        className="knob-indicator"
+        transform={`rotate(${rotation} ${props.x} ${props.y})`}
+      />
+      <text x={props.x} y={props.y + radius + 11} textAnchor="middle" className="control-value">
+        {formatted}
+      </text>
+      <StatusMarkers x={props.x + radius + 4} y={props.y - radius - 2} states={props.states} />
     </g>
   );
 });
@@ -244,8 +258,9 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
   const formatted = formatParameterValue(definition, interaction.displayValue);
-  const top = props.y - 80;
-  const bottom = props.y + 80;
+  const travel = props.size ?? 52;
+  const top = props.y - travel / 2;
+  const bottom = props.y + travel / 2;
   const handleY = bottom - interaction.normalized * (bottom - top);
   return (
     <g
@@ -259,14 +274,46 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
       {...interaction.handlers}
     >
       <title>{`${definition.label} · ${formatted} · trascina verticalmente, usa trackpad o frecce; doppio clic per il default`}</title>
-      <text x={props.x} y={top - 28} textAnchor="middle" className="control-label">{props.label}</text>
-      <rect x={props.x - 12} y={top - 8} width="24" height={bottom - top + 16} rx="8" className="slider-well" />
+      <text x={props.x} y={top - 6} textAnchor="middle" className="control-label">
+        {props.label}
+      </text>
+      <rect
+        x={props.x - 4}
+        y={top - 3}
+        width="8"
+        height={bottom - top + 6}
+        rx="3"
+        className="slider-well"
+      />
       <line x1={props.x} y1={top} x2={props.x} y2={bottom} className="slider-track" />
-      {isBipolarDefinition(definition) ? <line x1={props.x - 16} y1={props.y} x2={props.x + 16} y2={props.y} className="bipolar-zero" /> : null}
-      <rect x={props.x - 21} y={handleY - 8} width="42" height="16" rx="4" className="slider-handle" />
-      <line x1={props.x - 14} y1={handleY} x2={props.x + 14} y2={handleY} className="slider-handle-line" />
-      <text x={props.x} y={bottom + 31} textAnchor="middle" className="control-value">{formatted}</text>
-      <StatusMarkers x={props.x + 21} y={top - 20} states={props.states} />
+      {isBipolarDefinition(definition) ? (
+        <line
+          x1={props.x - 6}
+          y1={props.y}
+          x2={props.x + 6}
+          y2={props.y}
+          className="bipolar-zero"
+        />
+      ) : null}
+      <rect
+        x={props.x - 7}
+        y={handleY - 3}
+        width="14"
+        height="6"
+        rx="2"
+        className="slider-handle"
+      />
+      <line
+        x1={props.x - 5}
+        y1={handleY}
+        x2={props.x + 5}
+        y2={handleY}
+        className="slider-handle-line"
+      />
+      <text x={props.x} y={bottom + 10} textAnchor="middle" className="control-value">
+        {formatted}
+      </text>
+      <StatusMarkers x={props.x + 8} y={top - 4} states={props.states} />
     </g>
   );
 });
@@ -274,7 +321,7 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
 export const SteppedSelector = memo(function SteppedSelector(props: CommonProps) {
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
-  const radius = (props.size ?? 66) / 2;
+  const radius = (props.size ?? 19) / 2;
   const formatted = formatParameterValue(definition, interaction.displayValue);
   const positions = Math.min(7, Math.max(2, definition.enumValues?.length ?? 3));
   return (
@@ -288,16 +335,35 @@ export const SteppedSelector = memo(function SteppedSelector(props: CommonProps)
       {...interaction.handlers}
     >
       <title>{`${definition.label} · ${formatted} · selettore a scatti`}</title>
-      <text x={props.x} y={props.y - radius - 20} textAnchor="middle" className="control-label">{props.label}</text>
+      <text x={props.x} y={props.y - radius - 6} textAnchor="middle" className="control-label">
+        {props.label}
+      </text>
       {Array.from({ length: positions }, (_, index) => {
         const angle = (-135 + (270 * index) / (positions - 1)) * (Math.PI / 180);
-        return <circle key={index} cx={props.x + Math.sin(angle) * (radius + 9)} cy={props.y - Math.cos(angle) * (radius + 9)} r="2.4" className="selector-tick" />;
+        return (
+          <circle
+            key={index}
+            cx={props.x + Math.sin(angle) * (radius + 3)}
+            cy={props.y - Math.cos(angle) * (radius + 3)}
+            r="1"
+            className="selector-tick"
+          />
+        );
       })}
-      <circle cx={props.x} cy={props.y} r={radius + 10} className="control-halo" />
+      <circle cx={props.x} cy={props.y} r={radius + 4} className="control-halo" />
       <circle cx={props.x} cy={props.y} r={radius} className="selector-body" />
-      <line x1={props.x} y1={props.y} x2={props.x} y2={props.y - radius + 10} className="knob-indicator" transform={`rotate(${-135 + interaction.normalized * 270} ${props.x} ${props.y})`} />
-      <text x={props.x} y={props.y + radius + 31} textAnchor="middle" className="control-value">{formatted}</text>
-      <StatusMarkers x={props.x + radius + 8} y={props.y - radius - 3} states={props.states} />
+      <line
+        x1={props.x}
+        y1={props.y}
+        x2={props.x}
+        y2={props.y - Math.max(3, radius - 3)}
+        className="knob-indicator"
+        transform={`rotate(${-135 + interaction.normalized * 270} ${props.x} ${props.y})`}
+      />
+      <text x={props.x} y={props.y + radius + 11} textAnchor="middle" className="control-value">
+        {formatted}
+      </text>
+      <StatusMarkers x={props.x + radius + 4} y={props.y - radius - 2} states={props.states} />
     </g>
   );
 });
@@ -310,14 +376,14 @@ export const IlluminatedButton = memo(function IlluminatedButton(props: CommonPr
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
   const formatted = formatParameterValue(definition, interaction.displayValue);
+  const width = Math.max(14, (props.size ?? 18) * 1.55);
+  const height = Math.max(8, (props.size ?? 18) * 0.72);
   const activate = () => {
     props.onSelect(props.parameterId);
     const next = stepControlValue(definition, interaction.displayValue, 1);
     props.onChange(
       props.parameterId,
-      next === interaction.displayValue
-        ? valueFromNormalized(definition, 0)
-        : next,
+      next === interaction.displayValue ? valueFromNormalized(definition, 0) : next,
     );
   };
   return (
@@ -339,12 +405,35 @@ export const IlluminatedButton = memo(function IlluminatedButton(props: CommonPr
       onDoubleClick={interaction.handlers.onDoubleClick}
     >
       <title>{`${definition.label} · ${formatted}`}</title>
-      <text x={props.x} y={props.y - 27} textAnchor="middle" className="control-label">{props.label}</text>
-      <rect x={props.x - 31} y={props.y - 15} width="62" height="30" rx="6" className="button-bezel" />
-      <rect x={props.x - 24} y={props.y - 9} width="48" height="18" rx="4" className="button-cap" />
-      <circle cx={props.x + 23} cy={props.y - 9} r="4" className="control-led" />
-      <text x={props.x} y={props.y + 34} textAnchor="middle" className="control-value">{formatted}</text>
-      <StatusMarkers x={props.x + 34} y={props.y - 21} states={props.states} />
+      <text x={props.x} y={props.y - height / 2 - 5} textAnchor="middle" className="control-label">
+        {props.label}
+      </text>
+      <rect
+        x={props.x - width / 2}
+        y={props.y - height / 2}
+        width={width}
+        height={height}
+        rx="2.5"
+        className="button-bezel"
+      />
+      <rect
+        x={props.x - width / 2 + 2}
+        y={props.y - height / 2 + 2}
+        width={width - 4}
+        height={height - 4}
+        rx="1.5"
+        className="button-cap"
+      />
+      <circle
+        cx={props.x + width / 2 - 2}
+        cy={props.y - height / 2 + 2}
+        r="1.5"
+        className="control-led"
+      />
+      <text x={props.x} y={props.y + height / 2 + 10} textAnchor="middle" className="control-value">
+        {formatted}
+      </text>
+      <StatusMarkers x={props.x + width / 2 + 3} y={props.y - height / 2} states={props.states} />
     </g>
   );
 });
@@ -381,11 +470,27 @@ export const SummitToggle = memo(function SummitToggle(props: CommonProps) {
       onDoubleClick={interaction.handlers.onDoubleClick}
     >
       <title>{`${definition.label} · ${formatted}`}</title>
-      <text x={props.x} y={props.y - 31} textAnchor="middle" className="control-label">{props.label}</text>
-      <rect x={props.x - 28} y={props.y - 14} width="56" height="28" rx="14" className="toggle-track" />
-      <circle cx={props.x + (interaction.normalized >= 0.5 ? 14 : -14)} cy={props.y} r="10" className="toggle-thumb" />
-      <text x={props.x} y={props.y + 35} textAnchor="middle" className="control-value">{formatted}</text>
-      <StatusMarkers x={props.x + 31} y={props.y - 23} states={props.states} />
+      <text x={props.x} y={props.y - 12} textAnchor="middle" className="control-label">
+        {props.label}
+      </text>
+      <rect
+        x={props.x - 11}
+        y={props.y - 5}
+        width="22"
+        height="10"
+        rx="5"
+        className="toggle-track"
+      />
+      <circle
+        cx={props.x + (interaction.normalized >= 0.5 ? 5 : -5)}
+        cy={props.y}
+        r="3.5"
+        className="toggle-thumb"
+      />
+      <text x={props.x} y={props.y + 14} textAnchor="middle" className="control-value">
+        {formatted}
+      </text>
+      <StatusMarkers x={props.x + 13} y={props.y - 8} states={props.states} />
     </g>
   );
 });
@@ -395,7 +500,7 @@ export const UnavailableControl = memo(function UnavailableControl({
   type,
   x,
   y,
-  size = 66,
+  size = 18,
   reason,
 }: {
   label: string;
@@ -407,22 +512,173 @@ export const UnavailableControl = memo(function UnavailableControl({
 }) {
   const radius = size / 2;
   return (
-    <g className={`panel-control unavailable unavailable-${type}`} aria-label={`${label}: non disponibile`} role="img">
+    <g
+      className={`panel-control unavailable unavailable-${type}`}
+      aria-label={`${label}: non disponibile`}
+      role="img"
+    >
       <title>{`${label} · ${reason}`}</title>
-      <text x={x} y={y - radius - 20} textAnchor="middle" className="control-label">{label}</text>
+      <text x={x} y={y - radius - 5} textAnchor="middle" className="control-label">
+        {label}
+      </text>
       {type === "slider" ? (
         <>
-          <line x1={x} y1={y - 80} x2={x} y2={y + 80} className="slider-track" />
-          <rect x={x - 20} y={y - 7} width="40" height="14" rx="4" className="slider-handle" />
+          <line x1={x} y1={y - size / 2} x2={x} y2={y + size / 2} className="slider-track" />
+          <rect x={x - 6} y={y - 2.5} width="12" height="5" rx="2" className="slider-handle" />
         </>
       ) : type === "button" || type === "toggle" ? (
-        <rect x={x - 29} y={y - 15} width="58" height="30" rx="6" className="button-bezel" />
+        <rect
+          x={x - size * 0.72}
+          y={y - size * 0.35}
+          width={size * 1.44}
+          height={size * 0.7}
+          rx="2"
+          className="button-bezel"
+        />
       ) : (
         <circle cx={x} cy={y} r={radius} className="knob-body" />
       )}
-      <line x1={x - 13} y1={y - 13} x2={x + 13} y2={y + 13} className="unavailable-cross" />
-      <line x1={x + 13} y1={y - 13} x2={x - 13} y2={y + 13} className="unavailable-cross" />
-      <text x={x} y={y + radius + 31} textAnchor="middle" className="control-value">N/D</text>
+      <line x1={x - 4} y1={y - 4} x2={x + 4} y2={y + 4} className="unavailable-cross" />
+      <line x1={x + 4} y1={y - 4} x2={x - 4} y2={y + 4} className="unavailable-cross" />
+      <text x={x} y={y + radius + 10} textAnchor="middle" className="control-value">
+        N/D
+      </text>
     </g>
   );
 });
+
+type HardwareElementProps = {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  size?: number | undefined;
+  highlighted?: boolean;
+  displayAreaId?: string | undefined;
+};
+
+export const SummitButton = memo(function SummitButton({
+  id,
+  label,
+  x,
+  y,
+  size = 16,
+  highlighted = false,
+  displayAreaId,
+}: HardwareElementProps) {
+  const width = Math.max(13, size * 1.55);
+  const height = Math.max(7, size * 0.68);
+  return (
+    <g
+      className={`hardware-control summit-button${highlighted ? " setup-highlight" : ""}`}
+      role="img"
+      aria-label={`${label}: controllo hardware`}
+      data-control-id={id}
+      data-display-area-id={displayAreaId}
+    >
+      <title>{`${label} · controllo hardware o di navigazione, non salvato nella patch`}</title>
+      <text x={x} y={y - height / 2 - 4} textAnchor="middle" className="control-label">
+        {label}
+      </text>
+      <rect
+        x={x - width / 2}
+        y={y - height / 2}
+        width={width}
+        height={height}
+        rx="2"
+        className="button-bezel"
+      />
+      <rect
+        x={x - width / 2 + 2}
+        y={y - height / 2 + 2}
+        width={width - 4}
+        height={height - 4}
+        rx="1"
+        className="button-cap"
+      />
+      <circle cx={x + width / 2 - 2} cy={y - height / 2 + 2} r="1.3" className="control-led" />
+    </g>
+  );
+});
+
+export const SummitLed = memo(function SummitLed({
+  id,
+  label,
+  x,
+  y,
+  highlighted = false,
+}: HardwareElementProps) {
+  return (
+    <g
+      className="hardware-control summit-led"
+      role="img"
+      aria-label={`${label}: LED`}
+      data-control-id={id}
+    >
+      <title>{label}</title>
+      <circle
+        cx={x}
+        cy={y}
+        r="2.3"
+        className={highlighted ? "control-led active" : "control-led"}
+      />
+    </g>
+  );
+});
+
+function SummitWheel({
+  id,
+  label,
+  x,
+  y,
+  size = 56,
+  className,
+}: HardwareElementProps & { className: string }) {
+  return (
+    <g
+      className={`hardware-control summit-wheel ${className}`}
+      role="img"
+      aria-label={label}
+      data-control-id={id}
+    >
+      <title>{`${label} · performance control`}</title>
+      <rect
+        x={x - size * 0.23}
+        y={y - size / 2}
+        width={size * 0.46}
+        height={size}
+        rx={size * 0.18}
+        className="wheel-well"
+      />
+      <rect
+        x={x - size * 0.15}
+        y={y - size * 0.4}
+        width={size * 0.3}
+        height={size * 0.8}
+        rx={size * 0.12}
+        className="wheel-body"
+      />
+      {Array.from({ length: 7 }, (_, index) => (
+        <line
+          key={index}
+          x1={x - size * 0.1}
+          x2={x + size * 0.1}
+          y1={y - size * 0.25 + index * size * 0.083}
+          y2={y - size * 0.25 + index * size * 0.083}
+          className="wheel-ridge"
+        />
+      ))}
+    </g>
+  );
+}
+
+export const SummitPitchWheel = memo(function SummitPitchWheel(props: HardwareElementProps) {
+  return <SummitWheel {...props} className="pitch-wheel" />;
+});
+
+export const SummitModWheel = memo(function SummitModWheel(props: HardwareElementProps) {
+  return <SummitWheel {...props} className="mod-wheel" />;
+});
+
+export const SummitIlluminatedButton = IlluminatedButton;
+export const SummitRotarySelector = RotarySelector;

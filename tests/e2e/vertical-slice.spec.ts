@@ -4,17 +4,14 @@ test("demo, pannello, patch state, menu, matrici e Setup Mode restano sincronizz
   page,
 }) => {
   await page.goto("/");
-  await expect(
-    page.getByRole("heading", { name: /Dal carattere sonoro/ }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Dal carattere sonoro/ })).toBeVisible();
 
-  await page
-    .getByRole("link", { name: "Apri Progressive House Pluck" })
-    .click();
+  await page.getByRole("link", { name: "Apri Progressive House Pluck" }).click();
   await expect(page.getByRole("heading", { name: "Prog House Plk" })).toBeVisible();
   await expect(
     page.getByRole("group", { name: "Pannello vettoriale interattivo Novation Summit" }),
   ).toBeVisible();
+  await expect(page.getByTestId("panel-oled")).toBeVisible();
 
   for (const [name, width, height] of [
     ["1920x1080", 1920, 1080],
@@ -27,33 +24,39 @@ test("demo, pannello, patch state, menu, matrici e Setup Mode restano sincronizz
       fullPage: true,
     });
   }
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const panelViewportBox = await page.locator(".panel-viewport").boundingBox();
+  const panelCanvasBox = await page.locator(".panel-canvas").boundingBox();
+  expect(panelViewportBox).not.toBeNull();
+  expect(panelCanvasBox).not.toBeNull();
+  if (!panelViewportBox || !panelCanvasBox) throw new Error("Geometria pannello non disponibile");
+  expect(panelCanvasBox.width).toBeLessThanOrEqual(panelViewportBox.width + 1);
 
   const frequency = page.getByRole("slider", { name: "Frequency: 185" });
   await frequency.focus();
   await frequency.press("ArrowDown");
-  await expect(
-    page.getByRole("slider", { name: "Frequency: 184" }),
-  ).toBeVisible();
+  await expect(page.getByRole("slider", { name: "Frequency: 184" })).toBeVisible();
   await expect(page.getByText(/Patch modificata/)).toBeVisible();
 
   await page.getByText("Patch JSON sincronizzato").click();
-  await expect(page.getByTestId("patch-json")).toContainText(
-    '"filter.frequency": 184',
-  );
+  await expect(page.getByTestId("patch-json")).toContainText('"filter.frequency": 184');
 
   await page.getByRole("link", { name: "Display & menu" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Display, percorsi e matrici" }),
-  ).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Oscillator Drift" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Display, percorsi e checklist" })).toBeVisible();
+  await page.getByRole("button", { name: /Drift/ }).click();
+  await expect(page.getByRole("heading", { name: "Oscillator Drift" })).toBeVisible();
+  await expect(page.getByText(/PAGE 1/)).toBeVisible();
 
-  await page.getByRole("button", { name: /Parameter Table/ }).click();
-  const driftRow = page.getByRole("row", { name: /Oscillator Drift/ });
-  await driftRow.scrollIntoViewIfNeeded();
-  await expect(driftRow).toBeVisible();
-  await expect(driftRow.getByRole("cell", { name: "7", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /LFO.*10 pagine/ }).click();
+  await page.getByRole("button", { name: "Pagina 10" }).click();
+  await expect(page.getByText("LFO 4", { exact: true })).toBeVisible();
+  await expect(page.getByText(/PAGE ▶ × 9/).first()).toBeVisible();
+  await page.screenshot({ path: "tmp/visual-qa/display-browser.png", fullPage: true });
+
+  await page.getByRole("button", { name: /Patch checklist/ }).click();
+  await expect(page.getByRole("heading", { name: /Prog House Plk/ })).toBeVisible();
+  expect(await page.locator(".patch-checklist li").count()).toBeGreaterThan(180);
+  await page.screenshot({ path: "tmp/visual-qa/checklist.png", fullPage: true });
 
   await page.getByRole("button", { name: /Modulation/ }).click();
   await expect(page.getByRole("heading", { name: "Mod Matrix", exact: true })).toBeVisible();
@@ -64,10 +67,15 @@ test("demo, pannello, patch state, menu, matrici e Setup Mode restano sincronizz
 
   await page.getByRole("link", { name: "Pannello fisico" }).click();
   await page.getByRole("button", { name: "Configura il Summit" }).click();
-  await expect(page.getByLabel("Setup Mode")).toBeVisible();
+  const setupRegion = page.getByRole("region", { name: "Setup Mode" });
+  await expect(setupRegion).toBeVisible();
+  await page.getByRole("button", { name: "Menu / matrici" }).click();
+  await expect(setupRegion).toContainText("DISPLAY");
   await expect(page.getByRole("button", { name: "Successivo →" })).toBeVisible();
   await page.getByRole("button", { name: "Successivo →" }).click();
   await page.getByRole("button", { name: "Salta" }).click();
   await page.getByRole("button", { name: "← Precedente" }).click();
+  await page.getByRole("button", { name: "Mostra overlay" }).click();
+  await expect(page.getByRole("button", { name: "Nascondi overlay" })).toBeVisible();
   await page.screenshot({ path: "tmp/visual-qa/setup-mode.png", fullPage: true });
 });

@@ -8,11 +8,8 @@ import {
   validateUiParameterValue,
 } from "../domain/catalog";
 import { applyPatchDelta } from "../domain/patchDelta";
-import {
-  buildDefaultMultiSettings,
-  type ParameterValue,
-  type PatchScope,
-} from "../domain/patchUi";
+import { buildPatchSetupChecklist, type SetupFilter } from "../domain/displayStructure";
+import { buildDefaultMultiSettings, type ParameterValue, type PatchScope } from "../domain/patchUi";
 import {
   summitPatchProposalSchema,
   summitProjectFileSchema,
@@ -43,6 +40,7 @@ type AppState = {
   setupMode: boolean;
   setupStep: number;
   setupOnlyModified: boolean;
+  setupFilter: SetupFilter;
   updateInput: (input: Partial<SoundInput>) => void;
   setAudioFileName: (name?: string) => void;
   generate: () => Promise<void>;
@@ -56,6 +54,7 @@ type AppState = {
   previousSetupStep: () => void;
   skipSetupStep: () => void;
   toggleSetupOnlyModified: () => void;
+  setSetupFilter: (filter: SetupFilter) => void;
   undo: () => void;
   redo: () => void;
   loadProject: (project: SummitProjectFile) => void;
@@ -65,7 +64,8 @@ type AppState = {
 const provider = new MockPatchProvider();
 
 const initialInput: SoundInput = {
-  description: "Un pluck progressive-house brillante con transiente netto, decay corto e immagine stereo ampia.",
+  description:
+    "Un pluck progressive-house brillante con transiente netto, decay corto e immagine stereo ampia.",
   referenceUrl: "",
   timestamp: "",
   targetSound: "",
@@ -83,13 +83,21 @@ export const useAppStore = create<AppState>((set, get) => ({
   setupMode: false,
   setupStep: 0,
   setupOnlyModified: true,
+  setupFilter: "all",
   updateInput: (next) =>
     set((state) => ({
       input: { ...state.input, ...next },
     })),
   setAudioFileName: (name) =>
     set((state) => {
-      const input = { ...state.input, analysisMode: name ? "audio-assisted" as const : state.input.referenceUrl ? "reference" as const : "text" as const };
+      const input = {
+        ...state.input,
+        analysisMode: name
+          ? ("audio-assisted" as const)
+          : state.input.referenceUrl
+            ? ("reference" as const)
+            : ("text" as const),
+      };
       if (name) input.audioFileName = name;
       else delete input.audioFileName;
       return { input };
@@ -97,15 +105,22 @@ export const useAppStore = create<AppState>((set, get) => ({
   generate: async () => {
     const { input } = get();
     if (!input.description.trim() && !input.referenceUrl.trim()) {
-      set({ generationStatus: "error", statusMessage: "Descrivi il suono o inserisci un riferimento." });
+      set({
+        generationStatus: "error",
+        statusMessage: "Descrivi il suono o inserisci un riferimento.",
+      });
       return;
     }
     try {
       set({ generationStatus: "analysing", statusMessage: "Analisi dell'intento sonoro…" });
       const reference = parseReferenceUrl(input.referenceUrl);
-      if (reference && !input.targetSound.trim()) throw new Error("Indica quale suono vuoi riprodurre dal riferimento.");
+      if (reference && !input.targetSound.trim())
+        throw new Error("Indica quale suono vuoi riprodurre dal riferimento.");
       const timestampSeconds = parseTimestamp(input.timestamp);
-      set({ generationStatus: "validating", statusMessage: "Validazione contro il catalogo Summit…" });
+      set({
+        generationStatus: "validating",
+        statusMessage: "Validazione contro il catalogo Summit…",
+      });
       const request = {
         description: input.description,
         mode: input.analysisMode,
@@ -133,7 +148,10 @@ export const useAppStore = create<AppState>((set, get) => ({
         setupStep: 0,
       });
     } catch (error) {
-      set({ generationStatus: "error", statusMessage: error instanceof Error ? error.message : "Generazione non riuscita" });
+      set({
+        generationStatus: "error",
+        statusMessage: error instanceof Error ? error.message : "Generazione non riuscita",
+      });
     }
   },
   loadDemo: (demoId) => {
@@ -163,20 +181,24 @@ export const useAppStore = create<AppState>((set, get) => ({
       const next = applyPatchDelta(active, delta);
       const proposals = state.proposals.slice(0, state.activeIndex + 1);
       proposals.push(next);
-      set({ proposals, activeIndex: proposals.length - 1, generationStatus: "ready", statusMessage: `Delta applicato: ${delta.changes[0]?.rationale ?? instruction}` });
+      set({
+        proposals,
+        activeIndex: proposals.length - 1,
+        generationStatus: "ready",
+        statusMessage: `Delta applicato: ${delta.changes[0]?.rationale ?? instruction}`,
+      });
     } catch (error) {
-      set({ generationStatus: "error", statusMessage: error instanceof Error ? error.message : "Raffinamento non riuscito" });
+      set({
+        generationStatus: "error",
+        statusMessage: error instanceof Error ? error.message : "Raffinamento non riuscito",
+      });
     }
   },
   setParameterValue: (parameterId, value) => {
     const state = get();
     const active = state.proposals[state.activeIndex];
     if (!active) return;
-    const validationIssue = validateUiParameterValue(
-      parameterId,
-      value,
-      active.targetFirmware,
-    );
+    const validationIssue = validateUiParameterValue(parameterId, value, active.targetFirmware);
     if (validationIssue) throw new Error(validationIssue);
     const definition = parameterById.get(parameterId);
     if (!definition || definition.scope === "global") {
@@ -266,13 +288,27 @@ export const useAppStore = create<AppState>((set, get) => ({
   nextSetupStep: () => {
     const state = get();
     const active = state.proposals[state.activeIndex];
-    const count = active?.setupInstructions.length ?? 0;
+    const count = active
+      ? buildPatchSetupChecklist(
+          active,
+          state.activeScope,
+          state.setupFilter,
+          state.setupOnlyModified,
+        ).length
+      : 0;
     if (count) set({ setupStep: (state.setupStep + 1) % count });
   },
   previousSetupStep: () => {
     const state = get();
     const active = state.proposals[state.activeIndex];
-    const count = active?.setupInstructions.length ?? 0;
+    const count = active
+      ? buildPatchSetupChecklist(
+          active,
+          state.activeScope,
+          state.setupFilter,
+          state.setupOnlyModified,
+        ).length
+      : 0;
     if (count) set({ setupStep: (state.setupStep - 1 + count) % count });
   },
   skipSetupStep: () => {
@@ -282,12 +318,37 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
   toggleSetupOnlyModified: () =>
     set((state) => ({ setupOnlyModified: !state.setupOnlyModified, setupStep: 0 })),
+  setSetupFilter: (setupFilter) => set({ setupFilter, setupStep: 0 }),
   undo: () => set((state) => ({ activeIndex: Math.max(0, state.activeIndex - 1) })),
-  redo: () => set((state) => ({ activeIndex: Math.min(state.proposals.length - 1, state.activeIndex + 1) })),
+  redo: () =>
+    set((state) => ({ activeIndex: Math.min(state.proposals.length - 1, state.activeIndex + 1) })),
   loadProject: (project) => {
     const valid = summitProjectFileSchema.parse(project);
-    const activeIndex = Math.max(0, valid.proposals.findIndex((proposal) => proposal.proposalId === valid.activeProposalId));
-    set({ proposals: valid.proposals, activeIndex, activeScope: valid.proposals[activeIndex]?.patch.mode === "multi" ? "multi-a" : "single", input: { ...initialInput, description: valid.input.description, referenceUrl: valid.input.reference?.url ?? "", targetSound: valid.input.reference?.targetSound ?? "", analysisMode: valid.input.audioFileReference ? "audio-assisted" : valid.input.reference ? "reference" : "text", ...(valid.input.audioFileReference ? { audioFileName: valid.input.audioFileReference.originalName } : {}) }, generationStatus: "ready", statusMessage: "Progetto aperto e validato." });
+    const activeIndex = Math.max(
+      0,
+      valid.proposals.findIndex((proposal) => proposal.proposalId === valid.activeProposalId),
+    );
+    set({
+      proposals: valid.proposals,
+      activeIndex,
+      activeScope: valid.proposals[activeIndex]?.patch.mode === "multi" ? "multi-a" : "single",
+      input: {
+        ...initialInput,
+        description: valid.input.description,
+        referenceUrl: valid.input.reference?.url ?? "",
+        targetSound: valid.input.reference?.targetSound ?? "",
+        analysisMode: valid.input.audioFileReference
+          ? "audio-assisted"
+          : valid.input.reference
+            ? "reference"
+            : "text",
+        ...(valid.input.audioFileReference
+          ? { audioFileName: valid.input.audioFileReference.originalName }
+          : {}),
+      },
+      generationStatus: "ready",
+      statusMessage: "Progetto aperto e validato.",
+    });
   },
   toProject: () => {
     const state = get();
@@ -303,8 +364,19 @@ export const useAppStore = create<AppState>((set, get) => ({
       updatedAt: now,
       input: {
         description: state.input.description,
-        ...(reference ? { reference: { platform: reference.platform, url: reference.originalUrl, ...(timestampSeconds === undefined ? {} : { timestampSeconds }), ...(state.input.targetSound ? { targetSound: state.input.targetSound } : {}) } } : {}),
-        ...(state.input.audioFileName ? { audioFileReference: { originalName: state.input.audioFileName } } : {}),
+        ...(reference
+          ? {
+              reference: {
+                platform: reference.platform,
+                url: reference.originalUrl,
+                ...(timestampSeconds === undefined ? {} : { timestampSeconds }),
+                ...(state.input.targetSound ? { targetSound: state.input.targetSound } : {}),
+              },
+            }
+          : {}),
+        ...(state.input.audioFileName
+          ? { audioFileReference: { originalName: state.input.audioFileName } }
+          : {}),
       },
       proposals: state.proposals,
       activeProposalId: active.proposalId,

@@ -13,9 +13,9 @@ describe("catalog-backed patch UI helpers", () => {
     const settings = buildDefaultPartSettings();
     expect(settings.panelControls.length).toBeGreaterThan(90);
     expect(settings.menuSettings.length).toBeGreaterThan(90);
-    expect(
-      settings.panelControls.every((setting) => parameterById.has(setting.parameterId)),
-    ).toBe(true);
+    expect(settings.panelControls.every((setting) => parameterById.has(setting.parameterId))).toBe(
+      true,
+    );
   });
 
   it("filters Single and Multi-only definitions by scope", () => {
@@ -26,11 +26,15 @@ describe("catalog-backed patch UI helpers", () => {
     expect(isDefinitionVisible(multi, "multi-a")).toBe(true);
   });
 
-  it("never invents a page when the official menu has a conflict", () => {
+  it("uses the full-video observed page without mutating parameter semantics", () => {
     const definition = parameterById.get("voice.spread")!;
     const navigation = getMenuNavigation(definition, "64")!;
-    expect(navigation.verified).toBe(false);
-    expect(navigation.uncertainty).toMatch(/pagin|guida|firmware/i);
+    expect(navigation.verified).toBe(true);
+    expect(navigation.menu).toBe("VOICE");
+    expect(navigation.page).toBe(2);
+    expect(navigation.pageRightPresses).toBe(1);
+    expect(navigation.row).toBe(1);
+    expect(navigation.uncertainty).toBeUndefined();
   });
 
   it("materializes all 16 Mod Matrix and 4 FX Mod Matrix slots", () => {

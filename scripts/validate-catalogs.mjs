@@ -8,6 +8,7 @@ const readJson = async (relative) => JSON.parse(await readFile(path.join(root, r
 const target = await readJson("src/data/summit-catalog-target.json");
 const parameters = await readJson("src/data/summit-parameter-catalog.json");
 const layout = await readJson("src/data/summit-control-layout.json");
+const displayStructure = await readJson("src/data/summit-display-structure.json");
 const menuCatalog = await readJson("src/data/summit-menu-catalog.json");
 const modulation = await readJson("src/data/summit-modulation-catalog.json");
 const fxModulation = await readJson("src/data/summit-fx-modulation-catalog.json");
@@ -129,6 +130,83 @@ for (const control of layout.controls) {
       errors.push(
         `Controllo UI mappa un parametro senza posizione pannello: ${control.id} -> ${parameterId}`,
       );
+  }
+}
+
+if (
+  !layout.geometry?.document ||
+  !layout.geometry?.section ||
+  !layout.geometry?.page ||
+  !layout.geometry?.sourceUrl ||
+  !layout.geometry?.verifiedAt
+) {
+  errors.push("Metadati della geometria del pannello incompleti");
+}
+const sectionIds = new Set(layout.sections.map((section) => section.id));
+const controlIds = new Set();
+for (const control of layout.controls) {
+  if (controlIds.has(control.id)) errors.push(`Controllo UI duplicato: ${control.id}`);
+  controlIds.add(control.id);
+  if (!sectionIds.has(control.sectionId)) {
+    errors.push(`Sezione layout assente per ${control.id}: ${control.sectionId}`);
+  }
+  if (![control.x, control.y].every(Number.isFinite)) {
+    errors.push(`Coordinate layout non valide: ${control.id}`);
+  }
+}
+
+if (
+  displayStructure.targetFirmware !== target.primaryFirmware ||
+  !displayStructure.documentation?.document ||
+  !displayStructure.documentation?.section ||
+  !displayStructure.documentation?.sourceUrl ||
+  !displayStructure.documentation?.verifiedAt
+) {
+  errors.push("Struttura display senza target firmware o riferimento completo");
+}
+const displayAreaIds = new Set();
+const displayParameterIds = new Set();
+for (const area of displayStructure.areas) {
+  if (displayAreaIds.has(area.id)) errors.push(`Area display duplicata: ${area.id}`);
+  displayAreaIds.add(area.id);
+  if (area.evidence?.endSeconds < area.evidence?.startSeconds) {
+    errors.push(`Intervallo video invertito: ${area.id}`);
+  }
+  if (area.kind === "pages" && area.pages.length === 0) {
+    errors.push(`Area display senza pagine: ${area.id}`);
+  }
+  if (area.kind === "slots" && (!area.slotCount || area.slotFields?.length !== 4)) {
+    errors.push(`Area slot incompleta: ${area.id}`);
+  }
+  (area.pages ?? []).forEach((page, pageIndex) => {
+    if (page.page !== pageIndex + 1) {
+      errors.push(`Numerazione pagina non contigua: ${area.id} pagina ${page.page}`);
+    }
+    page.fields.forEach((field, fieldIndex) => {
+      if (field.line !== fieldIndex + 1) {
+        errors.push(`Riga display non contigua: ${area.id}/${page.page}/${field.id}`);
+      }
+      if (field.parameterId) {
+        if (!parameterById.has(field.parameterId)) {
+          errors.push(
+            `Campo display senza parametro: ${area.id}/${page.page} -> ${field.parameterId}`,
+          );
+        }
+        if (displayParameterIds.has(field.parameterId)) {
+          errors.push(`Parametro display duplicato: ${field.parameterId}`);
+        }
+        displayParameterIds.add(field.parameterId);
+      } else if (!field.unmappedReason) {
+        errors.push(
+          `Campo display non mappato senza motivazione: ${area.id}/${page.page}/${field.id}`,
+        );
+      }
+    });
+  });
+}
+for (const control of layout.controls.filter((candidate) => candidate.displayAreaId)) {
+  if (!displayAreaIds.has(control.displayAreaId)) {
+    errors.push(`Pulsante hardware riferisce area display assente: ${control.id}`);
   }
 }
 

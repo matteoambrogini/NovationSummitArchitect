@@ -1,16 +1,12 @@
-import { useRef, useState, type ChangeEvent, type PropsWithChildren } from "react";
-import { NavLink } from "react-router-dom";
+import { useEffect, useRef, useState, type ChangeEvent, type PropsWithChildren } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { copy } from "../i18n/it";
 import {
   openProjectFile,
   parseProjectFileContents,
   saveProjectFile,
 } from "../services/projectFiles";
-import {
-  selectActiveProposal,
-  selectIsDirty,
-  useAppStore,
-} from "../stores/useAppStore";
+import { selectActiveProposal, selectIsDirty, useAppStore } from "../stores/useAppStore";
 
 const navItems = [
   { to: "/", label: copy.nav.home, icon: "⌂" },
@@ -22,6 +18,7 @@ const navItems = [
 ];
 
 export function AppShell({ children }: PropsWithChildren) {
+  const { pathname } = useLocation();
   const proposal = useAppStore(selectActiveProposal);
   const status = useAppStore((state) => state.statusMessage);
   const dirty = useAppStore(selectIsDirty);
@@ -29,6 +26,10 @@ export function AppShell({ children }: PropsWithChildren) {
   const toProject = useAppStore((state) => state.toProject);
   const [projectNotice, setProjectNotice] = useState("");
   const browserProjectInput = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
 
   const handleSave = async () => {
     try {
@@ -120,7 +121,11 @@ export function AppShell({ children }: PropsWithChildren) {
             <button className="button subtle" onClick={() => void handleOpen()}>
               Apri
             </button>
-            <button className="button subtle" onClick={() => void handleSave()} disabled={!proposal}>
+            <button
+              className="button subtle"
+              onClick={() => void handleSave()}
+              disabled={!proposal}
+            >
               Salva
             </button>
           </div>

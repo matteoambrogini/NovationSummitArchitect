@@ -1,27 +1,15 @@
-import {
-  useMemo,
-  useRef,
-  useState,
-  type PointerEvent,
-} from "react";
+import { useMemo, useRef, useState, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
 import { SummitPanel } from "../../components/SummitPanel";
-import {
-  panelRenderStats,
-  summitPanelLayout,
-} from "../../components/SummitPanelLayout";
-import { parameterById } from "../../domain/catalog";
+import { panelRenderStats, summitPanelLayout } from "../../components/SummitPanelLayout";
+import { buildPatchSetupChecklist, type SetupFilter } from "../../domain/displayStructure";
 import { changedParameterIds } from "../../domain/patchDelta";
-import { getScopePart, getSetting } from "../../domain/patchUi";
-import {
-  selectActiveProposal,
-  selectIsDirty,
-  useAppStore,
-} from "../../stores/useAppStore";
+import { getScopePart } from "../../domain/patchUi";
+import { selectActiveProposal, selectIsDirty, useAppStore } from "../../stores/useAppStore";
 import { ParameterInspector } from "./ParameterInspector";
 
-const PANEL_WIDTH = 8800;
-const PANEL_HEIGHT = 560;
+const PANEL_WIDTH = 1536;
+const PANEL_HEIGHT = 539;
 
 export function PhysicalPanelPage() {
   const proposal = useAppStore(selectActiveProposal);
@@ -35,19 +23,20 @@ export function PhysicalPanelPage() {
   const setupMode = useAppStore((state) => state.setupMode);
   const setupStep = useAppStore((state) => state.setupStep);
   const setupOnlyModified = useAppStore((state) => state.setupOnlyModified);
+  const setupFilter = useAppStore((state) => state.setupFilter);
   const toggleSetupMode = useAppStore((state) => state.toggleSetupMode);
   const nextSetupStep = useAppStore((state) => state.nextSetupStep);
   const previousSetupStep = useAppStore((state) => state.previousSetupStep);
   const skipSetupStep = useAppStore((state) => state.skipSetupStep);
-  const toggleSetupOnlyModified = useAppStore(
-    (state) => state.toggleSetupOnlyModified,
-  );
+  const toggleSetupOnlyModified = useAppStore((state) => state.toggleSetupOnlyModified);
+  const setSetupFilter = useAppStore((state) => state.setSetupFilter);
   const viewport = useRef<HTMLDivElement>(null);
   const panStart = useRef<
     { pointerId: number; x: number; y: number; left: number; top: number } | undefined
   >(undefined);
-  const [zoom, setZoom] = useState(0.62);
+  const [zoom, setZoom] = useState(0.6);
   const [focusedSectionId, setFocusedSectionId] = useState<string>();
+  const [showInfoOverlay, setShowInfoOverlay] = useState(false);
 
   const baseline = proposals[0];
   const changedIds = useMemo(
@@ -57,20 +46,12 @@ export function PhysicalPanelPage() {
   const changedSet = useMemo(() => new Set(changedIds), [changedIds]);
   const setupSteps = useMemo(() => {
     if (!proposal) return [];
-    if (!setupOnlyModified) return proposal.setupInstructions;
-    return proposal.setupInstructions
-      .map((step) => ({
-        ...step,
-        parameterIds: step.parameterIds.filter((parameterId) => {
-          const setting = getSetting(proposal, parameterId, activeScope);
-          const definition = parameterById.get(parameterId);
-          return setting && setting.value !== definition?.defaultValue;
-        }),
-      }))
-      .filter((step) => step.parameterIds.length > 0);
-  }, [activeScope, proposal, setupOnlyModified]);
-  const instruction =
-    setupSteps.length > 0 ? setupSteps[setupStep % setupSteps.length] : undefined;
+    return buildPatchSetupChecklist(proposal, activeScope, setupFilter, setupOnlyModified);
+  }, [activeScope, proposal, setupFilter, setupOnlyModified]);
+  const instruction = setupSteps.length > 0 ? setupSteps[setupStep % setupSteps.length] : undefined;
+  const setupParameterId = instruction?.parameterIds[0];
+  const effectiveSelectedParameterId =
+    setupMode && setupParameterId ? setupParameterId : selectedParameterId;
 
   if (!proposal) {
     return (
@@ -98,7 +79,7 @@ export function PhysicalPanelPage() {
     });
   };
   const resetZoom = () => {
-    setZoom(0.62);
+    setZoom(0.6);
     setFocusedSectionId(undefined);
     requestAnimationFrame(() => {
       if (viewport.current) {
@@ -108,12 +89,10 @@ export function PhysicalPanelPage() {
     });
   };
   const focusSection = (sectionId: string) => {
-    const section = summitPanelLayout.sections.find(
-      (candidate) => candidate.id === sectionId,
-    );
+    const section = summitPanelLayout.sections.find((candidate) => candidate.id === sectionId);
     if (!section) return;
     const width = viewport.current?.clientWidth ?? 1000;
-    const nextZoom = Math.max(0.55, Math.min(1.35, (width - 50) / section.width));
+    const nextZoom = Math.max(0.8, Math.min(2.2, (width - 50) / section.width));
     setZoom(nextZoom);
     setFocusedSectionId(section.id);
     requestAnimationFrame(() => {
@@ -172,7 +151,7 @@ export function PhysicalPanelPage() {
     <div className="page panel-page">
       <header className="page-heading panel-heading">
         <div>
-          <span className="eyebrow accent">PHYSICAL PANEL · VECTOR WORKSPACE</span>
+          <span className="eyebrow accent">PHYSICAL PANEL · OPERATIONAL HARDWARE MAP</span>
           <h1>{proposal.patch.name}</h1>
           <p>{proposal.patch.description}</p>
         </div>
@@ -214,7 +193,8 @@ export function PhysicalPanelPage() {
           </div>
           <div className="setup-copy">
             <span className="eyebrow">
-              SETUP MODE · {instruction?.area.toUpperCase() ?? "NESSUN VALORE DA IMPOSTARE"}
+              SETUP MODE · {instruction?.kind === "menu" ? "DISPLAY" : "PANNELLO"} ·{" "}
+              {instruction?.area.toUpperCase() ?? "NESSUN VALORE DA IMPOSTARE"}
             </span>
             <strong>
               {instruction?.instruction ??
@@ -228,6 +208,24 @@ export function PhysicalPanelPage() {
               />
               Solo valori diversi dal default
             </label>
+            <div className="setup-kind-filter" aria-label="Filtro passaggi Setup Mode">
+              {(
+                [
+                  ["all", "Tutto"],
+                  ["physical", "Controlli fisici"],
+                  ["menu", "Menu / matrici"],
+                ] as Array<[SetupFilter, string]>
+              ).map(([filter, label]) => (
+                <button
+                  key={filter}
+                  className={setupFilter === filter ? "active" : ""}
+                  aria-pressed={setupFilter === filter}
+                  onClick={() => setSetupFilter(filter)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="setup-actions">
             <button className="button subtle" onClick={previousSetupStep} disabled={!instruction}>
@@ -262,8 +260,19 @@ export function PhysicalPanelPage() {
               >
                 +
               </button>
-              <button className="tool-button text" onClick={fitPanel}>Fit panel</button>
-              <button className="tool-button text" onClick={resetZoom}>Reset zoom</button>
+              <button className="tool-button text" onClick={fitPanel}>
+                Fit panel
+              </button>
+              <button className="tool-button text" onClick={resetZoom}>
+                Reset zoom
+              </button>
+              <button
+                className={`tool-button text${showInfoOverlay ? " active" : ""}`}
+                aria-pressed={showInfoOverlay}
+                onClick={() => setShowInfoOverlay((value) => !value)}
+              >
+                {showInfoOverlay ? "Nascondi overlay" : "Mostra overlay"}
+              </button>
               <select
                 aria-label="Focus sezione"
                 value={focusedSectionId ?? ""}
@@ -273,17 +282,31 @@ export function PhysicalPanelPage() {
               >
                 <option value="">Focus sezione…</option>
                 {summitPanelLayout.sections.map((section) => (
-                  <option key={section.id} value={section.id}>{section.label}</option>
+                  <option key={section.id} value={section.id}>
+                    {section.label}
+                  </option>
                 ))}
               </select>
             </div>
             <div className="panel-state-legend" aria-label="Legenda stati">
-              <span><i className="legend-shape default" /> default</span>
-              <span><i className="legend-shape modified">◆</i> modificato</span>
-              <span><i className="legend-shape suggested">✦</i> suggerito</span>
-              <span><i className="legend-shape selected">◎</i> selezionato</span>
-              <span><i className="legend-shape low">?</i> bassa conf.</span>
-              <span><i className="legend-shape unavailable">×</i> non disponibile</span>
+              <span>
+                <i className="legend-shape default" /> default
+              </span>
+              <span>
+                <i className="legend-shape modified">◆</i> modificato
+              </span>
+              <span>
+                <i className="legend-shape suggested">✦</i> suggerito
+              </span>
+              <span>
+                <i className="legend-shape selected">◎</i> selezionato
+              </span>
+              <span>
+                <i className="legend-shape low">?</i> bassa conf.
+              </span>
+              <span>
+                <i className="legend-shape unavailable">×</i> non disponibile
+              </span>
             </div>
           </div>
           <div
@@ -301,18 +324,21 @@ export function PhysicalPanelPage() {
               <div
                 className="panel-scale"
                 style={{
-                  width: PANEL_WIDTH,
-                  height: PANEL_HEIGHT,
-                  transform: `scale(${zoom})`,
+                  width: PANEL_WIDTH * zoom,
+                  height: PANEL_HEIGHT * zoom,
                 }}
               >
                 <SummitPanel
                   proposal={proposal}
                   scope={activeScope}
-                  selectedParameterId={selectedParameterId}
+                  selectedParameterId={effectiveSelectedParameterId}
                   changedIds={changedIds}
-                  highlightedIds={setupMode ? instruction?.parameterIds ?? [] : []}
+                  highlightedIds={setupMode ? (instruction?.parameterIds ?? []) : []}
+                  highlightedAreaId={
+                    setupMode && instruction?.kind === "menu" ? instruction.areaId : undefined
+                  }
                   focusedSectionId={focusedSectionId}
+                  showInfoOverlay={showInfoOverlay}
                   onSelect={selectParameter}
                   onChange={setParameterValue}
                 />
@@ -320,15 +346,16 @@ export function PhysicalPanelPage() {
             </div>
           </div>
           <div className="panel-caption">
-            {panelRenderStats.total} controlli dal layout ufficiale ·{" "}
-            {panelRenderStats.parameterBound} catalog-bound · trascina il fondo per il pan,
-            i controlli verticalmente per modificarli.
+            {panelRenderStats.total} controlli registrati · {panelRenderStats.parameterBindings}{" "}
+            binding di parametro · {panelRenderStats.physicalElements} elementi inclusi contando 61
+            tasti e 2 wheel. Valori e stati restano nell’overlay informativo; la vista hardware
+            conserva la serigrafia fisica.
           </div>
         </section>
         <ParameterInspector
           proposal={proposal}
           scope={activeScope}
-          parameterId={selectedParameterId}
+          parameterId={effectiveSelectedParameterId}
         />
       </div>
 

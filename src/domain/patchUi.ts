@@ -1,5 +1,6 @@
 import {
   catalogTarget,
+  displayLocationByParameterId,
   fxModulationCatalog,
   isFirmwareApplicable,
   menuByLabel,
@@ -33,10 +34,7 @@ export function isDefinitionVisible(
 ): boolean {
   if (!isFirmwareApplicable(definition, targetFirmware)) return false;
   if (scope === "single") {
-    return (
-      definition.scope !== "multi" &&
-      definition.singleMultiApplicability !== "multi"
-    );
+    return definition.scope !== "multi" && definition.singleMultiApplicability !== "multi";
   }
   if (definition.scope === "multi" || definition.scope === "global") return true;
   const part = scope === "multi-a" ? "A" : "B";
@@ -144,10 +142,7 @@ export function getScopePart(
   scope: PatchScope,
 ): SummitPatchProposal["parts"][number] {
   const requestedPart = scope === "multi-b" ? "B" : "A";
-  return (
-    proposal.parts.find((part) => part.part === requestedPart) ??
-    proposal.parts[0]!
-  );
+  return proposal.parts.find((part) => part.part === requestedPart) ?? proposal.parts[0]!;
 }
 
 export function getSetting(
@@ -171,8 +166,11 @@ export function getSetting(
 }
 
 export type MenuNavigation = {
+  areaId: string;
   menu: string;
   page: number | string;
+  pageCount: number | undefined;
+  pageRightPresses: number | undefined;
   row: number | undefined;
   parameterLabel: string;
   value: string;
@@ -184,29 +182,47 @@ export function getMenuNavigation(
   definition: SummitParameterDefinition,
   value: string,
 ): MenuNavigation | undefined {
+  const observed = displayLocationByParameterId.get(definition.id);
+  if (observed) {
+    return {
+      areaId: observed.area.id,
+      menu: observed.area.physicalButton,
+      page: observed.page.page,
+      pageCount: observed.area.pages.length,
+      pageRightPresses: observed.page.page - 1,
+      row: observed.field.line,
+      parameterLabel: observed.field.displayLabel,
+      value,
+      verified: true,
+      uncertainty: undefined,
+    };
+  }
   if (definition.location.type !== "menu") return undefined;
   const menu = menuByLabel.get(definition.location.menu.toLowerCase());
   const conflictNote =
     menu?.verificationStatus === "conflict"
-      ? menu.documentation.verification?.note ??
-        "La numerazione delle pagine presenta un conflitto documentato."
+      ? (menu.documentation.verification?.note ??
+        "La numerazione delle pagine presenta un conflitto documentato.")
       : undefined;
   return {
+    areaId: definition.location.menu.toLowerCase().replaceAll(/[^a-z0-9]+/g, "-"),
     menu: definition.location.menu,
     page: definition.location.page,
+    pageCount: typeof menu?.pageCount === "number" ? menu.pageCount : undefined,
+    pageRightPresses:
+      typeof definition.location.page === "number"
+        ? Math.max(0, definition.location.page - 1)
+        : undefined,
     row: definition.location.row,
     parameterLabel: definition.shortDisplayLabel ?? definition.label,
     value,
     verified:
-      definition.verificationStatus === "verified" &&
-      menu?.verificationStatus === "verified",
+      definition.verificationStatus === "verified" && menu?.verificationStatus === "verified",
     uncertainty: conflictNote,
   };
 }
 
-function matrixDefaults(
-  catalog: typeof modulationCatalog,
-): MatrixAssignment[] {
+function matrixDefaults(catalog: typeof modulationCatalog): MatrixAssignment[] {
   return catalog.slotDefinitions.map((slot) => {
     const field = (id: "sourceA" | "sourceB" | "destination" | "depth") =>
       slot.fields.find((candidate) => candidate.id === id)?.defaultValue;
@@ -237,9 +253,7 @@ export function completeMatrixSlots(
   assignments: readonly MatrixAssignment[],
   kind: "mod" | "fx",
 ): MatrixAssignment[] {
-  const defaults = matrixDefaults(
-    kind === "mod" ? modulationCatalog : fxModulationCatalog,
-  );
+  const defaults = matrixDefaults(kind === "mod" ? modulationCatalog : fxModulationCatalog);
   const assigned = new Map(assignments.map((assignment) => [assignment.slot, assignment]));
   return defaults.map((fallback) => assigned.get(fallback.slot) ?? fallback);
 }
