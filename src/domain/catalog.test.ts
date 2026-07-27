@@ -1,7 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { demoProposals } from "../ai/demoPatches";
 import midiCatalog from "../data/summit-midi-catalog.json";
-import { aiParameterCatalog, parameterCatalog, validateProposalAgainstCatalog } from "./catalog";
+import { summitPatchProposalSchema } from "./schemas";
+import {
+  aiParameterCatalog,
+  catalogTarget,
+  getAiParameterCatalog,
+  isParameterAiUsable,
+  parameterCatalog,
+  validateProposalAgainstCatalog,
+} from "./catalog";
 
 describe("Summit catalogs", () => {
   it("has unique, documented parameter identifiers", () => {
@@ -132,5 +140,158 @@ describe("Summit catalogs", () => {
             mapping.translation.verificationStatus === "verified",
         ),
     ).toBe(true);
+  });
+
+  it("uses Summit firmware 2.1 as the explicit primary catalog target", () => {
+    expect(catalogTarget.primaryFirmware).toBe("2.1");
+    expect(catalogTarget.supportedFirmware.target).toBe("2.1");
+  });
+
+  it("keeps verification independent from firmware applicability", () => {
+    const animateAttack = parameterCatalog.find((parameter) => parameter.id === "animate1.attack")!;
+
+    expect(animateAttack.verificationStatus).toBe("verified");
+    expect(animateAttack.introducedInFirmware).toBe("2.1");
+    expect(isParameterAiUsable(animateAttack, "2.1")).toBe(true);
+    expect(isParameterAiUsable(animateAttack, "2.0")).toBe(false);
+    expect(getAiParameterCatalog("2.1").some((item) => item.id === animateAttack.id)).toBe(true);
+    expect(getAiParameterCatalog("2.0").some((item) => item.id === animateAttack.id)).toBe(false);
+  });
+
+  it("never exposes conflict, unverified, or unknown parameters to AI", () => {
+    const unsafe = parameterCatalog.filter((parameter) =>
+      ["conflict", "unverified", "unknown"].includes(parameter.verificationStatus),
+    );
+
+    expect(unsafe.length).toBeGreaterThan(0);
+    expect(unsafe.every((parameter) => !isParameterAiUsable(parameter, "2.1"))).toBe(true);
+  });
+
+  it("validates firmware-specific menu locations and enum values", () => {
+    const legacySpread = structuredClone(demoProposals[0]!);
+    legacySpread.parts[0]!.menuSettings.push({
+      parameterId: "voice.spread",
+      value: 64,
+      displayValue: "64",
+      confidence: 1,
+      rationale: "Posizione Voice precedente al firmware 2.1",
+      menu: "Voice",
+      page: 1,
+    });
+    expect(validateProposalAgainstCatalog(legacySpread, "1.1")).toEqual([]);
+    expect(validateProposalAgainstCatalog(legacySpread, "2.1")).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          message: "Menu o pagina non corrispondono al catalogo verificato",
+        }),
+      ]),
+    );
+
+    const firmwareEnum = structuredClone(demoProposals[0]!);
+    firmwareEnum.parts[0]!.panelControls.push({
+      parameterId: "arp.type",
+      value: "Chord 2",
+      displayValue: "Chord 2",
+      confidence: 1,
+      rationale: "Modalità introdotta dal firmware 2.1",
+    });
+    expect(validateProposalAgainstCatalog(firmwareEnum, "2.1")).toEqual([]);
+    expect(validateProposalAgainstCatalog(firmwareEnum, "1.1")).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          message: "Valore Chord 2 non disponibile nel firmware 1.1",
+        }),
+      ]),
+    );
+  });
+
+  it("filters firmware 2.1 modulation additions for earlier targets", () => {
+    const proposal = structuredClone(demoProposals[0]!);
+    proposal.parts[0]!.modulationMatrix.push({
+      slot: 16,
+      sourceA: "noise",
+      destination: "voice.panPosition",
+      depth: 63,
+      rationale: "Sorgente e destinazione ufficiali del firmware 2.1",
+    });
+
+    expect(validateProposalAgainstCatalog(proposal, "2.1")).toEqual([]);
+    expect(validateProposalAgainstCatalog(proposal, "1.1")).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ message: "Sorgente non verificata" }),
+        expect.objectContaining({ message: "Destinazione non verificata" }),
+      ]),
+    );
+  });
+
+  it("keeps attribute-level conflicts usable when the value domain is verified", () => {
+    const reverbSize = parameterCatalog.find((parameter) => parameter.id === "fx.reverb.size")!;
+
+    expect(reverbSize.verificationStatus).toBe("verified");
+    expect(reverbSize.attributeConflicts?.[0]?.field).toBe("defaultValue");
+    expect(isParameterAiUsable(reverbSize, "2.1")).toBe(true);
+  });
+
+  it("supports verified Multi setup settings without mixing them into Part settings", () => {
+    const proposal = structuredClone(demoProposals[0]!);
+    proposal.patch.mode = "multi";
+    proposal.multiSetup = {
+      panelControls: [
+        {
+          parameterId: "multi.mode",
+          value: "Layer",
+          displayValue: "Layer",
+          confidence: 1,
+          rationale: "Modalità Multi verificata",
+        },
+      ],
+      menuSettings: [
+        {
+          parameterId: "multi.splitPoint",
+          value: "C3",
+          displayValue: "C3",
+          confidence: 1,
+          rationale: "Split point verificato",
+          menu: "Multi",
+          page: 3,
+        },
+      ],
+    };
+
+    expect(summitPatchProposalSchema.safeParse(proposal).success).toBe(true);
+    expect(validateProposalAgainstCatalog(proposal, "2.1")).toEqual([]);
+
+    proposal.multiSetup.menuSettings.push({
+      parameterId: "multi.partA.level",
+      value: 64,
+      displayValue: "64",
+      confidence: 0.5,
+      rationale: "Dominio non pubblicato",
+      menu: "Multi",
+      page: 3,
+    });
+    expect(validateProposalAgainstCatalog(proposal, "2.1")).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          message: "Parametro non verificato o non esposto al provider AI",
+        }),
+      ]),
+    );
+  });
+
+  it("classifies MIDI mapping existence separately from translation safety", () => {
+    const enumMapping = midiCatalog.mappings.find(
+      (mapping) => mapping.id === "voice.mode:primary",
+    )!;
+    const firmwareMapping = midiCatalog.mappings.find(
+      (mapping) => mapping.id === "animate1.attack:primary",
+    )!;
+
+    expect(enumMapping.verificationStatus).toBe("verified");
+    expect(enumMapping.translation.verificationStatus).toBe("unverified");
+    expect(enumMapping.aiUsable).toBe(false);
+    expect(firmwareMapping.verificationStatus).toBe("verified");
+    expect(firmwareMapping.translation.verificationStatus).toBe("verified");
+    expect(firmwareMapping.aiUsable).toBe(true);
   });
 });

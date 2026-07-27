@@ -38,10 +38,11 @@
         "osc.common.drift",
         "osc.common.tuningTable",
         "osc.common.keySync",
-        "noise.lowPass",
-        "noise.highPass"
-      ],
-      "documentation": {
+      "noise.lowPass",
+      "noise.highPass"
+    ],
+    "verificationStatus": "verified",
+    "documentation": {
         "document": "Summit User Guide v1.1",
         "section": "The Oscillator Menu",
         "page": 25,
@@ -62,7 +63,11 @@
       "pageCount": 5,
       "patchRelevant": true,
       "verifiedPages": [
-        1
+        1,
+        2,
+        3,
+        4,
+        5
       ],
       "parameterIds": [
         "filter.divergence",
@@ -106,7 +111,9 @@
         3,
         4,
         5,
-        6
+        6,
+        7,
+        8
       ],
       "parameterIds": [
         "amp.delay",
@@ -129,7 +136,7 @@
         "animate2.attack",
         "animate2.release"
       ],
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Animate Envelopes",
@@ -189,7 +196,7 @@
         "lfo4.slew",
         "lfo4.waveform"
       ],
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "LFO 3 and 4 Additional Parameters",
@@ -202,7 +209,7 @@
           "locator": "LFO 3 and 4 Additional Parameters",
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26",
-          "note": "La guida v1.1 verifica le pagine 1-8 originali; l'addendum non assegna una pagina numerica stabile ai tre nuovi parametri LFO 3/4."
+          "note": "La guida v1.1 verifica la sequenza di otto pagine; l'addendum aggiunge Phase, Slew e FadeTime alle pagine LFO 3/4, e la guida online conferma una pagina dedicata per ciascuno."
         }
       }
     },
@@ -289,7 +296,12 @@
         2,
         3,
         4,
-        5
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
       ],
       "parameterIds": [
         "fx.wetLevel",

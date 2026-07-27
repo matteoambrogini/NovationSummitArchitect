@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "2.0.0",
   "mappings": [
     {
       "id": "voice.mode:primary",
@@ -26,7 +26,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -41,7 +41,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "voice.unison:primary",
@@ -68,7 +69,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -83,7 +84,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "voice.unisonDetune:primary",
@@ -140,8 +142,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "note": "Il parametro UniSpread viene riorganizzato dal firmware 2.1.",
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -221,7 +223,7 @@
         "verificationStatus": "conflict",
         "note": "La tabella stampa un default raw 0 e un default Summit 60."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -236,7 +238,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "voice.preGlide:primary",
@@ -493,10 +496,10 @@
       },
       "translation": {
         "type": "official-8-bit-range",
-        "verificationStatus": "unverified",
-        "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
+        "verificationStatus": "conflict",
+        "note": "La fonte non documenta formula e ordine della coppia 8-bit; inoltre il dominio MIDI dichiarato eccede il dominio fisico ±12 semitoni."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "note": "Il dominio MIDI dichiarato eccede il dominio fisico ±12 semitoni del pannello.",
       "documentation": {
@@ -512,7 +515,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc1.fine:primary",
@@ -536,7 +540,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -551,7 +555,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc1.pitch.modEnv2Depth:primary",
@@ -617,7 +622,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -632,7 +637,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc1.wave:primary",
@@ -659,7 +665,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -674,7 +680,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc1.waveMore:primary",
@@ -756,7 +763,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -771,7 +778,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc1.shapeSource:primary",
@@ -796,7 +804,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -811,7 +819,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc1.shape:primary",
@@ -837,7 +846,7 @@
         "verificationStatus": "conflict",
         "note": "La tabella MIDI indica -64..+63, mentre la descrizione del parametro manuale indica -63..+63."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -852,7 +861,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc1.shape.modEnv1Depth:primary",
@@ -920,7 +930,7 @@
         "verificationStatus": "conflict",
         "note": "Il range raw 1..127 non contiene 128 valori per coprire -64..+63."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -935,7 +945,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc1.vsync:primary",
@@ -1157,7 +1168,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1172,7 +1183,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc1.bendRange:primary",
@@ -1282,10 +1294,10 @@
       },
       "translation": {
         "type": "official-8-bit-range",
-        "verificationStatus": "unverified",
-        "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
+        "verificationStatus": "conflict",
+        "note": "La fonte non documenta formula e ordine della coppia 8-bit; inoltre il dominio MIDI dichiarato eccede il dominio fisico ±12 semitoni."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "note": "Il dominio MIDI dichiarato eccede il dominio fisico ±12 semitoni del pannello.",
       "documentation": {
@@ -1301,7 +1313,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc2.fine:primary",
@@ -1325,7 +1338,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1340,7 +1353,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc2.pitch.modEnv2Depth:primary",
@@ -1406,7 +1420,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1421,7 +1435,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc2.wave:primary",
@@ -1448,7 +1463,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1463,7 +1478,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc2.waveMore:primary",
@@ -1545,7 +1561,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1560,7 +1576,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc2.shapeSource:primary",
@@ -1585,7 +1602,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1600,7 +1617,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc2.shape:primary",
@@ -1626,7 +1644,7 @@
         "verificationStatus": "conflict",
         "note": "La tabella MIDI indica -64..+63, mentre la descrizione del parametro manuale indica -63..+63."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1641,7 +1659,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc2.shape.modEnv1Depth:primary",
@@ -1709,7 +1728,7 @@
         "verificationStatus": "conflict",
         "note": "Il range raw 1..127 non contiene 128 valori per coprire -64..+63."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1724,7 +1743,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc2.vsync:primary",
@@ -1946,7 +1966,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -1961,7 +1981,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc2.bendRange:primary",
@@ -2071,10 +2092,10 @@
       },
       "translation": {
         "type": "official-8-bit-range",
-        "verificationStatus": "unverified",
-        "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
+        "verificationStatus": "conflict",
+        "note": "La fonte non documenta formula e ordine della coppia 8-bit; inoltre il dominio MIDI dichiarato eccede il dominio fisico ±12 semitoni."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "note": "Il dominio MIDI dichiarato eccede il dominio fisico ±12 semitoni del pannello.",
       "documentation": {
@@ -2090,7 +2111,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc3.fine:primary",
@@ -2114,7 +2136,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2129,7 +2151,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc3.pitch.modEnv2Depth:primary",
@@ -2195,7 +2218,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2210,7 +2233,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc3.wave:primary",
@@ -2237,7 +2261,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2252,7 +2276,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc3.waveMore:primary",
@@ -2334,7 +2359,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2349,7 +2374,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc3.shapeSource:primary",
@@ -2374,7 +2400,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2389,7 +2415,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc3.shape:primary",
@@ -2415,7 +2442,7 @@
         "verificationStatus": "conflict",
         "note": "La tabella MIDI indica -64..+63, mentre la descrizione del parametro manuale indica -63..+63."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2430,7 +2457,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc3.shape.modEnv1Depth:primary",
@@ -2498,7 +2526,7 @@
         "verificationStatus": "conflict",
         "note": "Il range raw 1..127 non contiene 128 valori per coprire -64..+63."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2513,7 +2541,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "osc3.vsync:primary",
@@ -2735,7 +2764,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2750,7 +2779,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "osc3.bendRange:primary",
@@ -2808,12 +2838,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -2827,7 +2853,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "fm.osc1ToOsc2.manual:primary",
@@ -2845,12 +2873,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -2864,7 +2888,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "fm.osc2ToOsc3.manual:primary",
@@ -2882,12 +2908,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -2901,7 +2923,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "mixer.osc1.level:primary",
@@ -2925,7 +2949,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2940,7 +2964,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "mixer.osc2.level:primary",
@@ -2964,7 +2989,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -2979,7 +3004,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "mixer.osc3.level:primary",
@@ -3003,7 +3029,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3018,7 +3044,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "mixer.ring.level:primary",
@@ -3042,7 +3069,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3057,7 +3084,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "mixer.noise.level:primary",
@@ -3081,7 +3109,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3096,7 +3124,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "mixer.patchLevel:primary",
@@ -3340,7 +3369,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3355,7 +3384,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "filter.shape:primary",
@@ -3383,9 +3413,10 @@
           "1": "BP",
           "2": "HP"
         },
-        "verificationStatus": "verified"
+        "verificationStatus": "conflict",
+        "note": "La mappa 0=LP, 1=BP, 2=HP è esplicita, ma non rappresenta la modalità fisica Dual."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "note": "La modalità fisica Dual non è inclusa nel range MIDI ufficiale 0..2.",
       "documentation": {
@@ -3401,7 +3432,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "filter.keyTracking:primary",
@@ -3501,7 +3533,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3516,7 +3548,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "filter.lfo1Depth:primary",
@@ -3540,7 +3573,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3555,7 +3588,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "filter.osc3Depth:primary",
@@ -3617,7 +3651,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3632,7 +3666,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "filter.ampEnvDepth:primary",
@@ -3964,7 +3999,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -3979,7 +4014,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "modEnv1.attack:primary",
@@ -4191,7 +4227,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4206,7 +4242,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "modEnv2.attack:primary",
@@ -4418,7 +4455,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4433,7 +4470,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.range:primary",
@@ -4458,7 +4496,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4473,7 +4511,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.rate:primary",
@@ -4497,7 +4536,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4512,7 +4551,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.rateSync:primary",
@@ -4570,7 +4610,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4585,7 +4625,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.waveform:primary",
@@ -4611,7 +4652,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4626,7 +4667,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.phase:primary",
@@ -4769,7 +4811,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4784,7 +4826,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.slew:primary",
@@ -4884,7 +4927,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -4899,7 +4942,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo1.repeats:primary",
@@ -5049,7 +5093,7 @@
         "verificationStatus": "conflict",
         "note": "Il MIDI espone One Shot 0/1, mentre Repeats accetta Off e 1..127."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5064,7 +5108,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "lfo1.common:primary",
@@ -5126,7 +5171,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5141,7 +5186,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo2.rate:primary",
@@ -5165,7 +5211,7 @@
         "verificationStatus": "unverified",
         "note": "La fonte identifica la coppia e il range 8-bit ma non documenta l'ordine dei messaggi o la formula di composizione."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5180,7 +5226,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo2.rateSync:primary",
@@ -5238,7 +5285,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5253,7 +5300,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo2.waveform:primary",
@@ -5279,7 +5327,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5294,7 +5342,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo2.phase:primary",
@@ -5437,7 +5486,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5452,7 +5501,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo2.slew:primary",
@@ -5552,7 +5602,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5567,7 +5617,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "lfo2.repeats:primary",
@@ -5717,7 +5768,7 @@
         "verificationStatus": "conflict",
         "note": "Il MIDI espone One Shot 0/1, mentre Repeats accetta Off e 1..127."
       },
-      "verificationStatus": "conflict",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5732,7 +5783,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati; il conflitto riguarda il dominio o la traduzione ed è classificato separatamente."
     },
     {
       "id": "lfo2.common:primary",
@@ -5870,7 +5922,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -5885,7 +5937,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "fx.delay.level:primary",
@@ -6067,7 +6120,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -6082,7 +6135,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "fx.delay.feedback:primary",
@@ -6639,7 +6693,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -6654,7 +6708,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "fx.chorus.rate:primary",
@@ -6863,7 +6918,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -6878,7 +6933,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "arp.syncRate:primary",
@@ -6918,7 +6974,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -6933,7 +6989,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "arp.type:primary",
@@ -6962,7 +7019,7 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "unverified",
+      "verificationStatus": "verified",
       "aiUsable": false,
       "documentation": {
         "document": "Summit User Guide v1.1",
@@ -6977,7 +7034,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "verificationNote": "L'esistenza e l'indirizzo del mapping sono pubblicati nella tabella ufficiale; l'eventuale traduzione resta classificata separatamente."
     },
     {
       "id": "arp.rhythm:primary",
@@ -7255,12 +7313,8 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7274,7 +7328,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "voice.spreadMode:primary",
@@ -7299,12 +7355,8 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7318,7 +7370,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "fx.chorus.mode:primary",
@@ -7342,12 +7396,8 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7361,7 +7411,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "fx.delay.timeMode:primary",
@@ -7387,12 +7439,8 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7406,7 +7454,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "osc.common.tuningTable:primary",
@@ -7426,12 +7476,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7445,7 +7491,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "arp.chance:primary",
@@ -7454,7 +7502,7 @@
       "messageType": "NRPN",
       "nrpn": "25:33",
       "rawRange": {
-        "minimum": 10,
+        "minimum": 1,
         "maximum": 100
       },
       "summitDomain": {
@@ -7463,14 +7511,11 @@
       },
       "translation": {
         "type": "identity",
-        "verificationStatus": "verified"
+        "verificationStatus": "conflict",
+        "note": "La tabella MIDI pubblica 1–100, mentre il menu firmware 2.1 pubblica 10–100."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7484,7 +7529,10 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1.",
+      "verificationNote": "Il mapping e l'indirizzo sono ufficiali, ma la differenza tra minimo MIDI 1 e minimo del parametro 10 impedisce una traduzione automatica sicura."
     },
     {
       "id": "animate1.attack:primary",
@@ -7504,12 +7552,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7523,7 +7567,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "animate1.release:primary",
@@ -7543,12 +7589,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7562,7 +7604,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "animate2.attack:primary",
@@ -7582,12 +7626,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7601,7 +7641,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "animate2.release:primary",
@@ -7621,12 +7663,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7640,7 +7678,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "lfo3.phase:primary",
@@ -7782,12 +7822,8 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7801,7 +7837,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "lfo3.slew:primary",
@@ -7821,12 +7859,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7840,7 +7874,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "lfo3.fadeTime:primary",
@@ -7860,12 +7896,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -7879,7 +7911,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "lfo4.phase:primary",
@@ -8021,12 +8055,8 @@
         "verificationStatus": "unverified",
         "note": "La tabella ufficiale fornisce il range numerico ma non associa esplicitamente ogni numero alla label."
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -8040,7 +8070,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "lfo4.slew:primary",
@@ -8060,12 +8092,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -8079,7 +8107,9 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     },
     {
       "id": "lfo4.fadeTime:primary",
@@ -8099,12 +8129,8 @@
         "type": "identity",
         "verificationStatus": "verified"
       },
-      "verificationStatus": "firmware-dependent",
-      "aiUsable": false,
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Mappatura aggiunta o aggiornata dal firmware 2.1."
-      },
+      "verificationStatus": "verified",
+      "aiUsable": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -8118,697 +8144,34 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
-    }
-  ],
-  "nonControllable": [
-    {
-      "parameterId": "amp.delay",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "amp.hold",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "amp.loop",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "amp.repeats",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "arp.clockSource",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "arp.tempo",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "arp.velocityMode",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "filter.dualShape",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "filter.frequencySeparation",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fm.osc1ToOsc2.lfo2",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fm.osc1ToOsc2.modEnv2",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fm.osc2ToOsc3.lfo2",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fm.osc2ToOsc3.modEnv2",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fm.osc3ToOsc1.lfo2",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fm.osc3ToOsc1.modEnv2",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fx.delay.leftRightRatio",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fx.delay.output",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "fx.delay.type",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "keyboard.velocityCurve",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo1.fadeSync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo1.monoTrigger",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo2.fadeSync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo2.monoTrigger",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo3.rate",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo3.rateSync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo3.sync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo3.waveform",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo4.rate",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo4.rateSync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo4.sync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "lfo4.waveform",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv1.delay",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv1.hold",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv1.loop",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv1.repeats",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv2.delay",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv2.hold",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv2.loop",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "modEnv2.repeats",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.mode",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partA.level",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partA.octave",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partA.patchBank",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partA.patchNumber",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partB.level",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partB.octave",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partB.patchBank",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.partB.patchNumber",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "multi.splitPoint",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "noise.highPass",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "osc.common.keySync",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "settings.fxAOutput",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "settings.fxBOutput",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "settings.partAOutput",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "settings.partBOutput",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
-    },
-    {
-      "parameterId": "voice.audioInput",
-      "verificationStatus": "unverified",
-      "reason": "Non compare nella lista ufficiale dei parametri MIDI consultata; l'assenza non viene interpretata come prova assoluta di non-controllabilità.",
-      "documentation": {
-        "document": "Summit appendix",
-        "section": "MIDI parameters list",
-        "locator": "Full official parameter list",
-        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
-        "verifiedAt": "2026-07-26"
-      }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Mapping pubblicato come aggiunta o aggiornamento del firmware Summit 2.1."
     }
   ],
   "summary": {
     "totalMappings": 177,
-    "byStatus": {
-      "unverified": 50,
-      "verified": 94,
-      "firmware-dependent": 20,
-      "conflict": 13
+    "byMappingStatus": {
+      "verified": 177,
+      "unverified": 0,
+      "conflict": 0,
+      "unknown": 0
     },
-    "nonControllableOrNotListed": 56
+    "byTranslationStatus": {
+      "verified": 107,
+      "unverified": 56,
+      "conflict": 14,
+      "unknown": 0
+    },
+    "aiUsableForFirmware21": 107,
+    "officiallyAbsentFromPublishedTable": 56
   },
   "policy": {
     "noSysexInference": true,
     "ccPairs": "Le coppie CC sono registrate, ma non vengono usate per codifica/decodifica finché una fonte ufficiale non documenta la formula e l'ordine dei messaggi.",
-    "aiExposure": "Solo mapping verified con traduzione verified possono essere usati da automazioni future."
+    "aiExposure": "Solo mapping verified con traduzione verified possono essere usati da automazioni future.",
+    "mappingClassification": "Lo stato del mapping descrive l'esistenza e l'indirizzo pubblicati; lo stato translation descrive separatamente la sicurezza della conversione.",
+    "unlistedClassification": "officially-absent significa soltanto assente dalla tabella ufficiale pubblicata; unknown è riservato a casi in cui la pubblicazione non consente una conclusione."
   },
   "documentation": {
     "document": "Summit User Guide v1.1, Summit appendix and Firmware 2.1 Addendum",
@@ -8827,5 +8190,735 @@
       "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
       "verifiedAt": "2026-07-26"
     }
-  }
+  },
+  "unlistedParameters": [
+    {
+      "parameterId": "amp.delay",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "amp.hold",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "amp.loop",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "amp.repeats",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "arp.clockSource",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "arp.tempo",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "arp.velocityMode",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "filter.dualShape",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "filter.frequencySeparation",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fm.osc1ToOsc2.lfo2",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fm.osc1ToOsc2.modEnv2",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fm.osc2ToOsc3.lfo2",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fm.osc2ToOsc3.modEnv2",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fm.osc3ToOsc1.lfo2",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fm.osc3ToOsc1.modEnv2",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fx.delay.leftRightRatio",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fx.delay.output",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "fx.delay.type",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "keyboard.velocityCurve",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo1.fadeSync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo1.monoTrigger",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo2.fadeSync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo2.monoTrigger",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo3.rate",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo3.rateSync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo3.sync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo3.waveform",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo4.rate",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo4.rateSync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo4.sync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "lfo4.waveform",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv1.delay",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv1.hold",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv1.loop",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv1.repeats",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv2.delay",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv2.hold",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv2.loop",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "modEnv2.repeats",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.mode",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partA.level",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partA.octave",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partA.patchBank",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partA.patchNumber",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partB.level",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partB.octave",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partB.patchBank",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.partB.patchNumber",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "multi.splitPoint",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "noise.highPass",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "osc.common.keySync",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "settings.fxAOutput",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "settings.fxBOutput",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "settings.partAOutput",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "settings.partBOutput",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    },
+    {
+      "parameterId": "voice.audioInput",
+      "publicationStatus": "officially-absent",
+      "verificationStatus": "verified",
+      "reason": "Assente dalla lista completa dei parametri MIDI pubblicata da Novation; ciò non dimostra una non-controllabilità assoluta né autorizza a inferire un mapping.",
+      "documentation": {
+        "document": "Summit appendix",
+        "section": "MIDI parameters list",
+        "locator": "Full official parameter list",
+        "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+        "verifiedAt": "2026-07-26"
+      }
+    }
+  ]
 }

@@ -353,8 +353,8 @@
       "id": "noise",
       "displayLabel": "Noise",
       "description": "Oscillatore Noise come sorgente.",
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Noise as a Mod Source",
@@ -369,10 +369,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Sorgente aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Sorgente aggiunta dal firmware 2.1."
     }
   ],
   "destinations": [
@@ -671,8 +669,8 @@
       "parameterIds": [
         "fx.reverb.size"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -687,10 +685,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.reverb.lowPass",
@@ -699,8 +695,8 @@
       "parameterIds": [
         "fx.reverb.lowPass"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -715,10 +711,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.reverb.highPass",
@@ -727,8 +721,8 @@
       "parameterIds": [
         "fx.reverb.highPass"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -743,10 +737,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.delay.slewRate",
@@ -755,8 +747,8 @@
       "parameterIds": [
         "fx.delay.slewRate"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -771,10 +763,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.delay.highPassDamping",
@@ -783,8 +773,8 @@
       "parameterIds": [
         "fx.delay.highPassDamping"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -799,10 +789,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.delay.lowPassDamping",
@@ -811,8 +799,8 @@
       "parameterIds": [
         "fx.delay.lowPassDamping"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -827,10 +815,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.delay.width",
@@ -839,8 +825,8 @@
       "parameterIds": [
         "fx.delay.width"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -855,10 +841,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "fx.delay.leftRightRatio",
@@ -867,8 +851,8 @@
       "parameterIds": [
         "fx.delay.leftRightRatio"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -883,10 +867,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "lfo3.rate",
@@ -895,8 +877,8 @@
       "parameterIds": [
         "lfo3.rate"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -911,10 +893,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "lfo4.rate",
@@ -923,8 +903,8 @@
       "parameterIds": [
         "lfo4.rate"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -939,10 +919,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "noise.lowPass",
@@ -951,8 +929,8 @@
       "parameterIds": [
         "noise.lowPass"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -967,10 +945,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "noise.highPass",
@@ -979,8 +955,8 @@
       "parameterIds": [
         "noise.highPass"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -995,10 +971,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     }
   ],
   "slotDefinitions": [

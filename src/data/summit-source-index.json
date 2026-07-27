@@ -55,12 +55,20 @@
   ],
   "policy": {
     "primarySourcesOnly": true,
-    "requiredPasses": ["extraction", "independent-verification"],
-    "aiExposureRule": "verificationStatus must be verified and aiExposed must be true",
-    "midiExposureRule": "mapping and translation must both be verified and aiUsable must be true",
-    "firmwareRule": "firmware-dependent entities require an explicit compatible firmware context",
+    "requiredPasses": [
+      "extraction",
+      "independent-verification"
+    ],
+    "aiExposureRule": "verificationStatus must be verified, aiExposed must be true, and the entity must be applicable to the target firmware",
+    "midiExposureRule": "mapping existence, translation, and firmware applicability must all be verified; aiUsable must be true",
+    "firmwareRule": "Verification status and firmware applicability are independent. Applicability is expressed with introducedInFirmware/removedInFirmware and evaluated against the explicit catalog target.",
     "scopeRule": "part, multi and global settings are validated independently",
-    "unsupportedEvidence": ["forums", "Reddit", "third-party editors", "reverse engineering"]
+    "unsupportedEvidence": [
+      "forums",
+      "Reddit",
+      "third-party editors",
+      "reverse engineering"
+    ]
   },
   "knownOfficialConflicts": [
     "Voice menu pagination and firmware 2.1 page moves",
@@ -68,10 +76,11 @@
     "Mod Matrix MIDI fields documented only for slot 1",
     "Oscillator Coarse panel domain versus MIDI domain",
     "Oscillator Manual Shape lower bound",
-    "Wavetable number/name association and ten user slots",
-    "Multi A/B level range",
+    "Ten user-configurable wavetable slots are not stable AI values",
+    "Multi A/B level range is not published",
     "Arpeggiator Octaves 1–7 versus 1–6",
-    "Reverb Size default 64 versus 90",
+    "Reverb Size default attribute 64 versus 90",
+    "Arp Chance MIDI range 1–100 versus firmware parameter range 10–100",
     "FX Mod Depth lower bound missing its minus sign",
     "FX Mod slot count 16 versus 4",
     "FX menu page count 8 versus firmware screens ending at 10"

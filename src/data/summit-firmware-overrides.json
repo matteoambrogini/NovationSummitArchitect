@@ -24,7 +24,7 @@
           "voice.panPosition"
         ]
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Voice Menu: Spread / Pan Position",
@@ -38,7 +38,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.voice-menu-pagination",
@@ -79,7 +80,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.animate-envelopes",
@@ -98,7 +100,7 @@
           8
         ]
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Animate Envelopes",
@@ -112,7 +114,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.global-lfo-parameters",
@@ -127,9 +130,13 @@
         "lfo4.fadeTime"
       ],
       "details": {
-        "stableMenuPageNumbers": false
+        "menuPages": {
+          "lfo3": 7,
+          "lfo4": 8
+        },
+        "rowPositionsInferred": false
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "LFO 3 and 4 Additional Parameters",
@@ -143,7 +150,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.chorus-modes",
@@ -159,7 +167,7 @@
           "Phlanger"
         ]
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Chorus/Flanger/Phlanger",
@@ -173,7 +181,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.delay-modes",
@@ -187,7 +196,7 @@
       "details": {
         "fxMenuPage": 6
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Switchable Delay Modes / Lo-Fi Delay",
@@ -201,7 +210,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.arp-chance",
@@ -216,7 +226,7 @@
         "menu": "Arp/Clock",
         "page": 4
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Arp Chance / Arp mode – Chord 2",
@@ -230,7 +240,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.modulation-additions",
@@ -264,7 +275,7 @@
           "MEnv2Sus"
         ]
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations / Noise as a Mod Source",
@@ -278,7 +289,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.fx-modulation-additions",
@@ -301,7 +313,7 @@
       "details": {
         "destinationsAdded": 12
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "FX Mod Slot Destinations",
@@ -315,7 +327,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.reverb-size-default",
@@ -343,7 +356,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     },
     {
       "id": "2.1.midi-additions",
@@ -370,7 +384,7 @@
       "details": {
         "source": "Firmware addendum MIDI Parameters List"
       },
-      "verificationStatus": "firmware-dependent",
+      "verificationStatus": "verified",
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "MIDI Parameters List",
@@ -384,7 +398,8 @@
           "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
           "verifiedAt": "2026-07-26"
         }
-      }
+      },
+      "introducedInFirmware": "2.1"
     }
   ],
   "unresolvedOfficialConflicts": [

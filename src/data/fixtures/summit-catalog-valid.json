@@ -10,7 +10,10 @@
       "surfaceScope": "part",
       "parameterId": "osc.common.drift",
       "value": 0,
-      "location": { "menu": "Osc", "page": 1 }
+      "location": {
+        "menu": "Osc",
+        "page": 1
+      }
     },
     {
       "id": "voice-menu-verified",
@@ -21,7 +24,10 @@
       "surfaceScope": "part",
       "parameterId": "voice.unison",
       "value": "1",
-      "location": { "menu": "Voice", "page": 1 }
+      "location": {
+        "menu": "Voice",
+        "page": 1
+      }
     },
     {
       "id": "env-menu-verified",
@@ -32,7 +38,10 @@
       "surfaceScope": "part",
       "parameterId": "amp.delay",
       "value": 0,
-      "location": { "menu": "Env", "page": 2 }
+      "location": {
+        "menu": "Env",
+        "page": 2
+      }
     },
     {
       "id": "lfo-menu-verified",
@@ -43,7 +52,10 @@
       "surfaceScope": "part",
       "parameterId": "lfo1.phase",
       "value": "Free",
-      "location": { "menu": "LFO", "page": 1 }
+      "location": {
+        "menu": "LFO",
+        "page": 1
+      }
     },
     {
       "id": "arp-menu-verified",
@@ -54,7 +66,10 @@
       "surfaceScope": "part",
       "parameterId": "arp.swing",
       "value": 50,
-      "location": { "menu": "Arp/Clock", "page": 3 }
+      "location": {
+        "menu": "Arp/Clock",
+        "page": 3
+      }
     },
     {
       "id": "fx-menu-verified",
@@ -65,7 +80,10 @@
       "surfaceScope": "part",
       "parameterId": "fx.routing",
       "value": "Parallel",
-      "location": { "menu": "FX", "page": 1 }
+      "location": {
+        "menu": "FX",
+        "page": 1
+      }
     },
     {
       "id": "mod-menu-verified",
@@ -94,12 +112,38 @@
       "surfaceScope": "multi",
       "parameterId": "multi.splitPoint",
       "value": "C3",
-      "location": { "menu": "Multi", "page": 3 }
+      "location": {
+        "menu": "Multi",
+        "page": 3
+      }
+    },
+    {
+      "id": "firmware-21-verified-parameter",
+      "kind": "parameter",
+      "firmware": "2.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "animate1.attack",
+      "value": 64,
+      "location": {
+        "menu": "Env",
+        "page": 7
+      }
+    },
+    {
+      "id": "firmware-21-verified-mod-destination",
+      "kind": "main-modulation",
+      "firmware": "2.1",
+      "source": "noise",
+      "destination": "voice.panPosition",
+      "slot": 16,
+      "depth": 63
     },
     {
       "id": "midi-translation-verified",
       "kind": "midi",
-      "mappingId": "filter.overdrive:primary"
+      "firmware": "2.1",
+      "mappingId": "animate1.attack:primary"
     }
   ]
 }

@@ -35,14 +35,19 @@ utilizzabili dall'automazione.
 - `verified`: due fonti ufficiali coerenti;
 - `unverified`: una fonte ufficiale non basta a confermare range, menu o traduzione;
 - `conflict`: fonti ufficiali o sezioni dello stesso documento sono incompatibili;
-- `firmware-dependent`: il dato dipende esplicitamente dalla versione firmware;
+- `unknown`: l'entità è visibile o nominata, ma il dato necessario non è pubblicato;
 - `deprecated`: il dato è ufficialmente superato, ma resta necessario per la
   compatibilità storica.
 
-Solo parametri con `verificationStatus: "verified"` e `aiExposed: true` entrano nel
-catalogo AI. Un mapping MIDI è utilizzabile solo se mapping e traduzione sono entrambi
-`verified` e `aiUsable` è `true`. Le aggiunte firmware non vengono promosse
-automaticamente a `verified`.
+La verifica e l'applicabilità firmware sono assi indipendenti. `introducedInFirmware`
+e `removedInFirmware` definiscono l'intervallo di compatibilità senza declassare
+un'entità ufficiale: un parametro introdotto in 2.1 può quindi essere `verified` e
+AI-usable sul target 2.1, ma viene rifiutato su 1.1.
+
+Solo parametri con `verificationStatus: "verified"`, `aiExposed: true` e applicabilità
+al target entrano nel catalogo AI. Un mapping MIDI è utilizzabile solo se esistenza,
+traduzione e applicabilità sono tutte verificate. Lo stato del mapping non viene più
+usato per descrivere l'incertezza della traduzione.
 
 ## Ambiti e firmware
 
@@ -51,9 +56,17 @@ essere inseriti silenziosamente nelle impostazioni di una Parte. Le fixture regi
 anche modalità Single/Multi e versione firmware: un parametro introdotto da firmware
 2.1 deve essere rifiutato in un contesto 1.1.
 
+Il target primario è dichiarato in `src/data/summit-catalog-target.json`; in questa
+revisione è Summit firmware 2.1. Anche le posizioni menu e i singoli valori enum possono
+avere un intervallo firmware distinto dal parametro.
+
 Le differenze firmware sono mantenute in
 `src/data/summit-firmware-overrides.json`; non sovrascrivono né cancellano la
 documentazione della guida base.
+
+Nel catalogo MIDI, `officially-absent` significa esclusivamente che il parametro non
+compare nella lista completa pubblicata da Novation. Non è prova di non-controllabilità
+e non autorizza a inferire CC, NRPN o SysEx.
 
 ## Gate automatici
 
@@ -68,6 +81,6 @@ documentazione della guida base.
 - rifiuto delle fixture negative;
 - aggiornamento di `docs/summit-catalog-coverage.md`.
 
-Il report si rigenera con `pnpm catalog:coverage`. Le percentuali esprimono la quota
-`verified`, non una stima della completezza di protocolli che Novation non ha
-pubblicato.
+Il report si rigenera con `pnpm catalog:coverage`. La metrica principale è
+“AI usable @ firmware 2.1”: richiede verifica, esposizione AI e applicabilità. La
+copertura MIDI resta separata e non entra nelle soglie di sound-design.

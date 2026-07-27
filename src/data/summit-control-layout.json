@@ -461,8 +461,14 @@
       "sectionId": "fm",
       "x": 1220,
       "y": 190,
-      "verificationStatus": "unverified",
-      "contextSelectorId": "fm-osc3ToOsc1-source"
+      "verificationStatus": "verified",
+      "verificationNote": "La rotta e il controllo fisico sono verificati; i domini dei singoli contributi restano classificati nei rispettivi parametri.",
+      "contextSelectorId": "fm-osc3ToOsc1-source",
+      "route": {
+        "fromOscillator": 3,
+        "toOscillator": 1,
+        "contributionsAreAdditive": true
+      }
     },
     {
       "id": "fm-osc3ToOsc1-source",
@@ -477,6 +483,11 @@
         "Manual",
         "Mod Env 2",
         "LFO 2"
+      ],
+      "controlsParameterIds": [
+        "fm.osc3ToOsc1.manual",
+        "fm.osc3ToOsc1.modEnv2",
+        "fm.osc3ToOsc1.lfo2"
       ]
     },
     {
@@ -492,8 +503,14 @@
       "sectionId": "fm",
       "x": 1325,
       "y": 190,
-      "verificationStatus": "unverified",
-      "contextSelectorId": "fm-osc1ToOsc2-source"
+      "verificationStatus": "verified",
+      "verificationNote": "La rotta e il controllo fisico sono verificati; i domini dei singoli contributi restano classificati nei rispettivi parametri.",
+      "contextSelectorId": "fm-osc1ToOsc2-source",
+      "route": {
+        "fromOscillator": 1,
+        "toOscillator": 2,
+        "contributionsAreAdditive": true
+      }
     },
     {
       "id": "fm-osc1ToOsc2-source",
@@ -508,6 +525,11 @@
         "Manual",
         "Mod Env 2",
         "LFO 2"
+      ],
+      "controlsParameterIds": [
+        "fm.osc1ToOsc2.manual",
+        "fm.osc1ToOsc2.modEnv2",
+        "fm.osc1ToOsc2.lfo2"
       ]
     },
     {
@@ -523,8 +545,14 @@
       "sectionId": "fm",
       "x": 1430,
       "y": 190,
-      "verificationStatus": "unverified",
-      "contextSelectorId": "fm-osc2ToOsc3-source"
+      "verificationStatus": "verified",
+      "verificationNote": "La rotta e il controllo fisico sono verificati; i domini dei singoli contributi restano classificati nei rispettivi parametri.",
+      "contextSelectorId": "fm-osc2ToOsc3-source",
+      "route": {
+        "fromOscillator": 2,
+        "toOscillator": 3,
+        "contributionsAreAdditive": true
+      }
     },
     {
       "id": "fm-osc2ToOsc3-source",
@@ -539,6 +567,11 @@
         "Manual",
         "Mod Env 2",
         "LFO 2"
+      ],
+      "controlsParameterIds": [
+        "fm.osc2ToOsc3.manual",
+        "fm.osc2ToOsc3.modEnv2",
+        "fm.osc2ToOsc3.lfo2"
       ]
     },
     {
@@ -1141,7 +1174,33 @@
       "x": 5420,
       "y": 190,
       "stateOnly": true,
-      "verificationStatus": "verified"
+      "verificationStatus": "verified",
+      "behavior": {
+        "interaction": "momentary",
+        "modulationSourceId": "animate1",
+        "activeState": "Le assegnazioni restano attive finché il pulsante è premuto.",
+        "hold": "Il pulsante fisico Hold può bloccare lo stato On; una seconda pressione dello stesso Animate rilascia Animate e Hold.",
+        "firmware21Envelope": {
+          "introducedInFirmware": "2.1",
+          "attackParameterId": "animate1.attack",
+          "releaseParameterId": "animate1.release",
+          "trigger": "La pressione avvia l'attacco e il rilascio del pulsante avvia il release."
+        }
+      },
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Animate Buttons / Hardware Overview controls 80–81",
+        "page": 15,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit and Peak Firmware Update v2.1 Addendum",
+          "section": "Animate Envelopes",
+          "page": 6,
+          "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+          "verifiedAt": "2026-07-26"
+        }
+      }
     },
     {
       "id": "animate-2",
@@ -1151,7 +1210,33 @@
       "x": 5540,
       "y": 310,
       "stateOnly": true,
-      "verificationStatus": "verified"
+      "verificationStatus": "verified",
+      "behavior": {
+        "interaction": "momentary",
+        "modulationSourceId": "animate2",
+        "activeState": "Le assegnazioni restano attive finché il pulsante è premuto.",
+        "hold": "Il pulsante fisico Hold può bloccare lo stato On; una seconda pressione dello stesso Animate rilascia Animate e Hold.",
+        "firmware21Envelope": {
+          "introducedInFirmware": "2.1",
+          "attackParameterId": "animate2.attack",
+          "releaseParameterId": "animate2.release",
+          "trigger": "La pressione avvia l'attacco e il rilascio del pulsante avvia il release."
+        }
+      },
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "The Animate Buttons / Hardware Overview controls 80–81",
+        "page": 15,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit and Peak Firmware Update v2.1 Addendum",
+          "section": "Animate Envelopes",
+          "page": 6,
+          "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+          "verifiedAt": "2026-07-26"
+        }
+      }
     },
     {
       "id": "arp-on",

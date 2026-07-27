@@ -1,5 +1,58 @@
 import { z } from "zod";
 
+export const firmwareVersionSchema = z.string().regex(/^\d+\.\d+(?:\.\d+)?$/);
+
+const firmwareApplicabilitySchema = z.object({
+  introducedInFirmware: firmwareVersionSchema.optional(),
+  removedInFirmware: firmwareVersionSchema.optional(),
+  firmwareNote: z.string().min(1).optional(),
+});
+
+export const verificationStatusSchema = z.enum([
+  "verified",
+  "unverified",
+  "conflict",
+  "unknown",
+  "deprecated",
+]);
+
+export const summitCatalogTargetSchema = z.object({
+  schemaVersion: z.literal("1.0.0"),
+  product: z.literal("Novation Summit"),
+  primaryFirmware: firmwareVersionSchema,
+  supportedFirmware: z.object({
+    minimum: firmwareVersionSchema,
+    target: firmwareVersionSchema,
+  }),
+  coveragePolicy: z.object({
+    metric: z.literal("ai-usable"),
+    midiExcluded: z.literal(true),
+    thresholds: z.object({
+      oscillators: z.number().min(0).max(100),
+      fm: z.number().min(0).max(100),
+      mixer: z.number().min(0).max(100),
+      filter: z.number().min(0).max(100),
+      envelopes: z.number().min(0).max(100),
+      lfo: z.number().min(0).max(100),
+      voice: z.number().min(0).max(100),
+      reverb: z.number().min(0).max(100),
+      delay: z.number().min(0).max(100),
+      chorus: z.number().min(0).max(100),
+      mod: z.number().min(0).max(100),
+      fxMod: z.number().min(0).max(100),
+      multi: z.number().min(0).max(100),
+    }),
+    documentedExceptions: z.record(
+      z.string().min(1),
+      z.object({
+        residualIds: z.array(z.string().min(1)).min(1),
+        reason: z.string().min(1),
+      }),
+    ),
+  }),
+  verifiedAt: z.iso.date(),
+});
+
 const documentationSchema = z.object({
   document: z.string().min(1),
   section: z.string().min(1),
@@ -20,17 +73,21 @@ const documentationSchema = z.object({
     .optional(),
 });
 
-const panelLocationSchema = z.object({
-  type: z.literal("panel"),
-  controlId: z.string().min(1),
-});
+const panelLocationSchema = z
+  .object({
+    type: z.literal("panel"),
+    controlId: z.string().min(1),
+  })
+  .extend(firmwareApplicabilitySchema.shape);
 
-const menuLocationSchema = z.object({
-  type: z.literal("menu"),
-  menu: z.string().min(1),
-  page: z.union([z.number().int().positive(), z.string().min(1)]),
-  row: z.number().int().min(1).max(4).optional(),
-});
+const menuLocationSchema = z
+  .object({
+    type: z.literal("menu"),
+    menu: z.string().min(1),
+    page: z.union([z.number().int().positive(), z.string().min(1)]),
+    row: z.number().int().min(1).max(4).optional(),
+  })
+  .extend(firmwareApplicabilitySchema.shape);
 
 const parameterLocationSchema = z.discriminatedUnion("type", [
   panelLocationSchema,
@@ -66,28 +123,34 @@ export const summitParameterDefinitionSchema = z
     step: z.number().positive().optional(),
     unit: z.string().optional(),
     enumValues: z.array(z.string()).min(1).optional(),
+    aiEnumValues: z.array(z.string()).min(1).optional(),
+    aiStableEnumValueCount: z.number().int().positive().optional(),
+    enumValueFirmware: z.record(z.string().min(1), firmwareApplicabilitySchema).optional(),
     defaultValue: z.unknown().optional(),
-    dependencies: z
-      .array(z.object({ parameterId: z.string(), condition: z.string() }))
-      .optional(),
+    dependencies: z.array(z.object({ parameterId: z.string(), condition: z.string() })).optional(),
     description: z.string().min(1),
     sonicEffect: z.string().min(1),
     documentation: documentationSchema,
-    verificationStatus: z.enum([
-      "verified",
-      "unverified",
-      "conflict",
-      "firmware-dependent",
-      "deprecated",
-    ]),
-    aiExposed: z.boolean(),
-    firmware: z
-      .object({
-        minimum: z.string().min(1).optional(),
-        maximum: z.string().min(1).optional(),
-        note: z.string().min(1).optional(),
-      })
+    verificationStatus: verificationStatusSchema,
+    verificationNote: z.string().min(1).optional(),
+    attributeConflicts: z
+      .array(
+        z.object({
+          field: z.string().min(1),
+          values: z
+            .array(
+              z.object({
+                source: z.string().min(1),
+                value: z.union([z.string(), z.number(), z.boolean(), z.null()]),
+              }),
+            )
+            .min(2),
+          impact: z.string().min(1),
+        }),
+      )
       .optional(),
+    aiExposed: z.boolean(),
+    ...firmwareApplicabilitySchema.shape,
   })
   .superRefine((definition, context) => {
     if (
@@ -96,10 +159,23 @@ export const summitParameterDefinitionSchema = z
     ) {
       context.addIssue({ code: "custom", message: "Un parametro enum richiede enumValues" });
     }
+    if (definition.aiEnumValues?.some((value) => !definition.enumValues?.includes(value))) {
+      context.addIssue({
+        code: "custom",
+        message: "aiEnumValues deve essere un sottoinsieme di enumValues",
+      });
+    }
     if (
-      ["integer", "decimal", "bipolar", "frequency", "time"].includes(
-        definition.valueType,
-      ) &&
+      definition.aiStableEnumValueCount !== undefined &&
+      (!definition.enumValues || definition.aiStableEnumValueCount > definition.enumValues.length)
+    ) {
+      context.addIssue({
+        code: "custom",
+        message: "aiStableEnumValueCount eccede enumValues",
+      });
+    }
+    if (
+      ["integer", "decimal", "bipolar", "frequency", "time"].includes(definition.valueType) &&
       (definition.minimum === undefined || definition.maximum === undefined) &&
       definition.verificationStatus === "verified"
     ) {
@@ -146,86 +222,93 @@ const modulationAssignmentSchema = z.object({
   rationale: z.string().min(1),
 });
 
-export const summitPatchProposalSchema = z.object({
-  schemaVersion: z.literal("1.0.0"),
-  proposalId: z.string().min(1),
-  createdAt: z.iso.datetime(),
-  patch: z.object({
-    name: z.string().min(1).max(16),
-    mode: z.enum(["single", "multi"]),
-    category: z.enum([
-      "bass",
-      "lead",
-      "pad",
-      "pluck",
-      "keys",
-      "bell",
-      "fx",
-      "sequence",
-      "other",
-    ]),
-    description: z.string().min(1),
-    targetSound: z.string().min(1),
-  }),
-  analysis: z.object({
-    soundRole: z.string().optional(),
-    synthesisHypothesis: z.string(),
-    oscillatorStrategy: z.string(),
-    filterStrategy: z.string(),
-    envelopeStrategy: z.string(),
-    modulationStrategy: z.string(),
-    effectsStrategy: z.string(),
-    overallConfidence: z.number().min(0).max(1),
-    assumptions: z.array(z.string()),
-    uncertainties: z.array(z.string()),
-  }),
-  parts: z
-    .array(
-      z.object({
-        part: z.enum(["A", "B"]),
+export const summitPatchProposalSchema = z
+  .object({
+    schemaVersion: z.literal("1.0.0"),
+    proposalId: z.string().min(1),
+    createdAt: z.iso.datetime(),
+    targetFirmware: firmwareVersionSchema.optional(),
+    patch: z.object({
+      name: z.string().min(1).max(16),
+      mode: z.enum(["single", "multi"]),
+      category: z.enum(["bass", "lead", "pad", "pluck", "keys", "bell", "fx", "sequence", "other"]),
+      description: z.string().min(1),
+      targetSound: z.string().min(1),
+    }),
+    analysis: z.object({
+      soundRole: z.string().optional(),
+      synthesisHypothesis: z.string(),
+      oscillatorStrategy: z.string(),
+      filterStrategy: z.string(),
+      envelopeStrategy: z.string(),
+      modulationStrategy: z.string(),
+      effectsStrategy: z.string(),
+      overallConfidence: z.number().min(0).max(1),
+      assumptions: z.array(z.string()),
+      uncertainties: z.array(z.string()),
+    }),
+    parts: z
+      .array(
+        z.object({
+          part: z.enum(["A", "B"]),
+          panelControls: z.array(panelControlSettingSchema),
+          menuSettings: z.array(menuSettingSchema),
+          modulationMatrix: z.array(modulationAssignmentSchema),
+          fxModulationMatrix: z.array(modulationAssignmentSchema),
+        }),
+      )
+      .min(1)
+      .max(2),
+    multiSetup: z
+      .object({
         panelControls: z.array(panelControlSettingSchema),
         menuSettings: z.array(menuSettingSchema),
-        modulationMatrix: z.array(modulationAssignmentSchema),
-        fxModulationMatrix: z.array(modulationAssignmentSchema),
+      })
+      .optional(),
+    setupInstructions: z.array(
+      z.object({
+        order: z.number().int().positive(),
+        area: z.string(),
+        instruction: z.string(),
+        parameterIds: z.array(z.string()),
       }),
-    )
-    .min(1)
-    .max(2),
-  setupInstructions: z.array(
-    z.object({
-      order: z.number().int().positive(),
-      area: z.string(),
-      instruction: z.string(),
-      parameterIds: z.array(z.string()),
+    ),
+    auditionGuide: z.object({
+      recommendedNotes: z.array(z.string()),
+      recommendedVelocity: z.string().optional(),
+      recommendedPlayingStyle: z.string(),
+      whatToListenFor: z.array(z.string()),
     }),
-  ),
-  auditionGuide: z.object({
-    recommendedNotes: z.array(z.string()),
-    recommendedVelocity: z.string().optional(),
-    recommendedPlayingStyle: z.string(),
-    whatToListenFor: z.array(z.string()),
-  }),
-  refinements: z.array(
-    z.object({
-      problem: z.string(),
-      suggestedChanges: z.array(
-        z.object({
-          parameterId: z.string(),
-          operation: z.enum(["set", "increase", "decrease"]),
-          value: parameterValueSchema.optional(),
-          amount: z.number().optional(),
-        }),
-      ),
-    }),
-  ),
-  alternatives: z.array(
-    z.object({
-      name: z.string(),
-      explanation: z.string(),
-      changedParameterIds: z.array(z.string()),
-    }),
-  ),
-});
+    refinements: z.array(
+      z.object({
+        problem: z.string(),
+        suggestedChanges: z.array(
+          z.object({
+            parameterId: z.string(),
+            operation: z.enum(["set", "increase", "decrease"]),
+            value: parameterValueSchema.optional(),
+            amount: z.number().optional(),
+          }),
+        ),
+      }),
+    ),
+    alternatives: z.array(
+      z.object({
+        name: z.string(),
+        explanation: z.string(),
+        changedParameterIds: z.array(z.string()),
+      }),
+    ),
+  })
+  .superRefine((proposal, context) => {
+    if (proposal.multiSetup && proposal.patch.mode !== "multi") {
+      context.addIssue({
+        code: "custom",
+        path: ["multiSetup"],
+        message: "multiSetup è consentito soltanto per una patch Multi",
+      });
+    }
+  });
 
 export const summitPatchDeltaSchema = z.object({
   baseProposalId: z.string(),
@@ -246,7 +329,11 @@ export const audioFeatureSummarySchema = z.object({
   durationSeconds: z.number().nonnegative(),
   analysisRegion: z.object({ startSeconds: z.number(), endSeconds: z.number() }),
   pitch: z
-    .object({ medianHz: z.number().optional(), confidence: z.number(), stability: z.number().optional() })
+    .object({
+      medianHz: z.number().optional(),
+      confidence: z.number(),
+      stability: z.number().optional(),
+    })
     .optional(),
   envelope: z.object({
     attackMs: z.number().optional(),
@@ -262,7 +349,11 @@ export const audioFeatureSummarySchema = z.object({
     harmonicity: z.number().optional(),
   }),
   modulation: z
-    .object({ amplitudeRateHz: z.number().optional(), pitchRateHz: z.number().optional(), confidence: z.number() })
+    .object({
+      amplitudeRateHz: z.number().optional(),
+      pitchRateHz: z.number().optional(),
+      confidence: z.number(),
+    })
     .optional(),
   stereo: z.object({
     width: z.number().optional(),
@@ -302,6 +393,7 @@ export const summitProjectFileSchema = z.object({
 });
 
 export type SummitParameterDefinition = z.infer<typeof summitParameterDefinitionSchema>;
+export type SummitCatalogTarget = z.infer<typeof summitCatalogTargetSchema>;
 export type SummitPatchProposal = z.infer<typeof summitPatchProposalSchema>;
 export type SummitPatchDelta = z.infer<typeof summitPatchDeltaSchema>;
 export type SummitProjectFile = z.infer<typeof summitProjectFileSchema>;

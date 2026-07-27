@@ -502,8 +502,8 @@
       "id": "noise",
       "displayLabel": "Noise",
       "description": "Oscillatore Noise come segnale di modulazione.",
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Noise as a Mod Source",
@@ -518,10 +518,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Sorgente aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Sorgente aggiunta dal firmware 2.1."
     }
   ],
   "destinations": [
@@ -1448,8 +1446,8 @@
       "parameterIds": [
         "voice.panPosition"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1464,10 +1462,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "osc.all.shape",
@@ -1478,8 +1474,8 @@
         "osc2.shape",
         "osc3.shape"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1494,10 +1490,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "amp.delay",
@@ -1506,8 +1500,8 @@
       "parameterIds": [
         "amp.delay"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1522,10 +1516,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "amp.hold",
@@ -1534,8 +1526,8 @@
       "parameterIds": [
         "amp.hold"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1550,10 +1542,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "amp.sustain",
@@ -1562,8 +1552,8 @@
       "parameterIds": [
         "amp.sustain"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1578,10 +1568,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "modEnv1.delay",
@@ -1590,8 +1578,8 @@
       "parameterIds": [
         "modEnv1.delay"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1606,10 +1594,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "modEnv1.hold",
@@ -1618,8 +1604,8 @@
       "parameterIds": [
         "modEnv1.hold"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1634,10 +1620,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "modEnv1.sustain",
@@ -1646,8 +1630,8 @@
       "parameterIds": [
         "modEnv1.sustain"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1662,10 +1646,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "modEnv2.delay",
@@ -1674,8 +1656,8 @@
       "parameterIds": [
         "modEnv2.delay"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1690,10 +1672,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "modEnv2.hold",
@@ -1702,8 +1682,8 @@
       "parameterIds": [
         "modEnv2.hold"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1718,10 +1698,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     },
     {
       "id": "modEnv2.sustain",
@@ -1730,8 +1708,8 @@
       "parameterIds": [
         "modEnv2.sustain"
       ],
-      "verificationStatus": "firmware-dependent",
-      "aiExposed": false,
+      "verificationStatus": "verified",
+      "aiExposed": true,
       "documentation": {
         "document": "Summit and Peak Firmware Update v2.1 Addendum",
         "section": "Mod Matrix Destinations",
@@ -1746,10 +1724,8 @@
           "verifiedAt": "2026-07-26"
         }
       },
-      "firmware": {
-        "minimum": "2.1",
-        "note": "Destinazione aggiunta dal firmware 2.1."
-      }
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
     }
   ],
   "slotDefinitions": [
