@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "1.0.0",
+  "cases": [
+    {
+      "id": "osc-menu-verified",
+      "menuId": "osc",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "osc.common.drift",
+      "value": 0,
+      "location": {
+        "menu": "Osc",
+        "page": 1
+      }
+    },
+    {
+      "id": "voice-menu-verified",
+      "menuId": "voice",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "voice.unison",
+      "value": "1",
+      "location": {
+        "menu": "Voice",
+        "page": 1
+      }
+    },
+    {
+      "id": "env-menu-verified",
+      "menuId": "env",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "amp.delay",
+      "value": 0,
+      "location": {
+        "menu": "Env",
+        "page": 2
+      }
+    },
+    {
+      "id": "lfo-menu-verified",
+      "menuId": "lfo",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "lfo1.phase",
+      "value": "Free",
+      "location": {
+        "menu": "LFO",
+        "page": 1
+      }
+    },
+    {
+      "id": "arp-menu-verified",
+      "menuId": "arp-clock",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "arp.swing",
+      "value": 50,
+      "location": {
+        "menu": "Arp/Clock",
+        "page": 3
+      }
+    },
+    {
+      "id": "fx-menu-verified",
+      "menuId": "fx",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "fx.routing",
+      "value": "Parallel",
+      "location": {
+        "menu": "FX",
+        "page": 1
+      }
+    },
+    {
+      "id": "mod-menu-verified",
+      "menuId": "mod",
+      "kind": "main-modulation",
+      "source": "velocity",
+      "destination": "filter.frequency",
+      "slot": 1,
+      "depth": 0
+    },
+    {
+      "id": "fx-mod-menu-verified",
+      "menuId": "fx-mod",
+      "kind": "fx-modulation",
+      "source": "lfo3.bipolar",
+      "destination": "fx.chorus.level",
+      "slot": 1,
+      "depth": 0
+    },
+    {
+      "id": "multi-menu-verified",
+      "menuId": "multi",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "multi",
+      "surfaceScope": "multi",
+      "parameterId": "multi.splitPoint",
+      "value": "C3",
+      "location": {
+        "menu": "Multi",
+        "page": 3
+      }
+    },
+    {
+      "id": "firmware-21-verified-parameter",
+      "kind": "parameter",
+      "firmware": "2.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "animate1.attack",
+      "value": 64,
+      "location": {
+        "menu": "Env",
+        "page": 7
+      }
+    },
+    {
+      "id": "firmware-21-verified-mod-destination",
+      "kind": "main-modulation",
+      "firmware": "2.1",
+      "source": "noise",
+      "destination": "voice.panPosition",
+      "slot": 16,
+      "depth": 63
+    },
+    {
+      "id": "midi-translation-verified",
+      "kind": "midi",
+      "firmware": "2.1",
+      "mappingId": "animate1.attack:primary"
+    }
+  ]
+}

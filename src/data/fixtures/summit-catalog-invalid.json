@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "1.0.0",
+  "cases": [
+    {
+      "id": "parameter-not-found",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "osc1.magic",
+      "value": 0,
+      "location": {
+        "menu": "Osc",
+        "page": 1
+      },
+      "expectedErrorCode": "parameter-not-found"
+    },
+    {
+      "id": "enum-value-not-found",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "voice.unison",
+      "value": "16",
+      "location": {
+        "menu": "Voice",
+        "page": 1
+      },
+      "expectedErrorCode": "enum-value-not-found"
+    },
+    {
+      "id": "range-out-of-bounds",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "arp.swing",
+      "value": 81,
+      "location": {
+        "menu": "Arp/Clock",
+        "page": 3
+      },
+      "expectedErrorCode": "range-out-of-bounds"
+    },
+    {
+      "id": "page-mismatch",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "voice.unison",
+      "value": "1",
+      "location": {
+        "menu": "Voice",
+        "page": 2
+      },
+      "expectedErrorCode": "location-mismatch"
+    },
+    {
+      "id": "menu-mismatch",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "voice.unison",
+      "value": "1",
+      "location": {
+        "menu": "FX",
+        "page": 1
+      },
+      "expectedErrorCode": "location-mismatch"
+    },
+    {
+      "id": "multi-scope-in-part",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "multi.splitPoint",
+      "value": "C3",
+      "location": {
+        "menu": "Multi",
+        "page": 3
+      },
+      "expectedErrorCode": "scope-mismatch"
+    },
+    {
+      "id": "mod-source-not-found",
+      "kind": "main-modulation",
+      "source": "banana",
+      "destination": "filter.frequency",
+      "slot": 1,
+      "depth": 0,
+      "expectedErrorCode": "mod-source-not-found"
+    },
+    {
+      "id": "mod-destination-not-found",
+      "kind": "main-modulation",
+      "source": "velocity",
+      "destination": "filter.magic",
+      "slot": 1,
+      "depth": 0,
+      "expectedErrorCode": "mod-destination-not-found"
+    },
+    {
+      "id": "mod-slot-out-of-bounds",
+      "kind": "main-modulation",
+      "source": "velocity",
+      "destination": "filter.frequency",
+      "slot": 17,
+      "depth": 0,
+      "expectedErrorCode": "mod-slot-out-of-bounds"
+    },
+    {
+      "id": "firmware-incompatible",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "arp.chance",
+      "value": 100,
+      "location": {
+        "menu": "Arp/Clock",
+        "page": 4
+      },
+      "expectedErrorCode": "firmware-incompatible"
+    },
+    {
+      "id": "firmware-21-mod-destination-on-11",
+      "kind": "main-modulation",
+      "firmware": "1.1",
+      "source": "velocity",
+      "destination": "voice.panPosition",
+      "slot": 1,
+      "depth": 0,
+      "expectedErrorCode": "mod-destination-not-found"
+    },
+    {
+      "id": "firmware-enum-value-incompatible",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "arp.type",
+      "value": "Chord 2",
+      "location": {
+        "menu": "Arp/Clock",
+        "page": 2
+      },
+      "expectedErrorCode": "firmware-incompatible"
+    },
+    {
+      "id": "user-wavetable-not-ai-stable",
+      "kind": "parameter",
+      "firmware": "2.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "osc1.waveMore",
+      "value": "Yeah",
+      "location": {
+        "menu": "Osc",
+        "page": 3
+      },
+      "expectedErrorCode": "enum-value-not-ai-stable"
+    },
+    {
+      "id": "midi-translation-unverified",
+      "kind": "midi",
+      "mappingId": "voice.mode:primary",
+      "expectedErrorCode": "midi-translation-unverified"
+    },
+    {
+      "id": "global-parameter-in-patch",
+      "kind": "parameter",
+      "firmware": "1.1",
+      "mode": "single",
+      "surfaceScope": "part",
+      "parameterId": "settings.partAOutput",
+      "value": "Main",
+      "location": {
+        "menu": "Settings",
+        "page": "A"
+      },
+      "expectedErrorCode": "global-parameter-in-patch"
+    }
+  ]
+}

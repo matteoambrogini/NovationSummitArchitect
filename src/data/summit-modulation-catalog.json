@@ -1,27 +1,2412 @@
 {
+  "slots": 16,
+  "perPart": true,
+  "depthRange": [
+    -64,
+    63
+  ],
+  "sourceCombination": {
+    "withinSlot": "multiplicative",
+    "acrossSlots": "additive",
+    "direct": "Con Direct, Depth applica una variazione fissa; due sorgenti attive nello stesso slot vengono moltiplicate.",
+    "negativeDepthLimitations": [
+      "Oscillator Vsync deve avere una quantità già applicata prima di poterla ridurre.",
+      "La FM fra oscillatori deve essere applicata da un altro routing prima di poterla cancellare."
+    ]
+  },
   "sources": [
-    { "id": "direct", "displayLabel": "Direct" },
-    { "id": "modwheel", "displayLabel": "ModWheel" },
-    { "id": "aftertouch", "displayLabel": "AftTouch" },
-    { "id": "velocity", "displayLabel": "Velocity" },
-    { "id": "lfo1.bipolar", "displayLabel": "Lfo1+/-" },
-    { "id": "lfo2.bipolar", "displayLabel": "Lfo2+/-" },
-    { "id": "amp.env", "displayLabel": "AmpEnv" },
-    { "id": "mod.env1", "displayLabel": "ModEnv1" },
-    { "id": "mod.env2", "displayLabel": "ModEnv2" },
-    { "id": "animate1", "displayLabel": "Animate1" },
-    { "id": "animate2", "displayLabel": "Animate2" }
+    {
+      "id": "direct",
+      "displayLabel": "Direct",
+      "description": "Il controllo Depth applica un offset fisso.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modwheel",
+      "displayLabel": "ModWheel",
+      "description": "Modulation wheel.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "aftertouch",
+      "displayLabel": "AftTouch",
+      "description": "Aftertouch di tastiera channel o poly ricevuto.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "expressionPedal1",
+      "displayLabel": "ExprPED1",
+      "description": "Pedale di espressione connesso a PEDAL 1.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "breathPedal2",
+      "displayLabel": "BrthPED2",
+      "description": "Pedale di espressione connesso a PEDAL 2.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "velocity",
+      "displayLabel": "Velocity",
+      "description": "Velocity della tastiera.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "keyboard",
+      "displayLabel": "Keyboard",
+      "description": "Posizione della nota sulla tastiera.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo1.unipolar",
+      "displayLabel": "LFO1+",
+      "description": "LFO 1 in senso positivo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo1.bipolar",
+      "displayLabel": "LFO1+/-",
+      "description": "LFO 1 in senso bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo2.unipolar",
+      "displayLabel": "LFO2+",
+      "description": "LFO 2 in senso positivo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo2.bipolar",
+      "displayLabel": "LFO2+/-",
+      "description": "LFO 2 in senso bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "ampEnv",
+      "displayLabel": "AmpEnv",
+      "description": "Inviluppo di ampiezza.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv1",
+      "displayLabel": "ModEnv1",
+      "description": "Modulation Envelope 1.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv2",
+      "displayLabel": "ModEnv2",
+      "description": "Modulation Envelope 2.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "animate1",
+      "displayLabel": "Animate1",
+      "description": "Pulsante Animate 1 con il suo inviluppo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "animate2",
+      "displayLabel": "Animate2",
+      "description": "Pulsante Animate 2 con il suo inviluppo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "cv.bipolar",
+      "displayLabel": "CV +/-",
+      "description": "Ingresso CV bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo3.unipolar",
+      "displayLabel": "LFO3 +",
+      "description": "LFO 3 globale in senso positivo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo3.bipolar",
+      "displayLabel": "LFO3 +/-",
+      "description": "LFO 3 globale in senso bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo4.unipolar",
+      "displayLabel": "LFO4 +",
+      "description": "LFO 4 globale in senso positivo.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo4.bipolar",
+      "displayLabel": "LFO4 +/-",
+      "description": "LFO 4 globale in senso bipolare.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "pitchBend.positive",
+      "displayLabel": "BndWhl+",
+      "description": "Pitch Bend verso l'alto aumenta la destinazione.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "pitchBend.negative",
+      "displayLabel": "BndWhl-",
+      "description": "Pitch Bend verso l'alto diminuisce la destinazione.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – sources",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Modulation matrix – sources",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "noise",
+      "displayLabel": "Noise",
+      "description": "Oscillatore Noise come segnale di modulazione.",
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Noise as a Mod Source",
+        "page": 10,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – sources",
+          "locator": "Noise as a Mod Source",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Sorgente aggiunta dal firmware 2.1."
+    }
   ],
   "destinations": [
-    { "id": "osc1.shape", "displayLabel": "Osc1Shpe" },
-    { "id": "filter.frequency", "displayLabel": "FiltFreq" },
-    { "id": "filter.resonance", "displayLabel": "Filt Res" },
-    { "id": "mixer.osc1.level", "displayLabel": "Osc1 Lev" },
-    { "id": "amp.attack", "displayLabel": "AmpEnv A" },
-    { "id": "amp.decay", "displayLabel": "AmpEnv D" },
-    { "id": "amp.release", "displayLabel": "AmpEnv R" }
+    {
+      "id": "osc.all.pitch",
+      "displayLabel": "O123Ptch",
+      "controlledParameter": "Frequenza di tutti e tre gli oscillatori.",
+      "parameterIds": [
+        "osc1.coarse",
+        "osc2.coarse",
+        "osc3.coarse"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc1.pitch",
+      "displayLabel": "Osc1Ptch",
+      "controlledParameter": "Frequenza Oscillatore 1.",
+      "parameterIds": [
+        "osc1.coarse"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc2.pitch",
+      "displayLabel": "Osc2Ptch",
+      "controlledParameter": "Frequenza Oscillatore 2.",
+      "parameterIds": [
+        "osc2.coarse"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc3.pitch",
+      "displayLabel": "Osc3Ptch",
+      "controlledParameter": "Frequenza Oscillatore 3.",
+      "parameterIds": [
+        "osc3.coarse"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc1.vsync",
+      "displayLabel": "Osc1VSnc",
+      "controlledParameter": "VSync Oscillatore 1.",
+      "parameterIds": [
+        "osc1.vsync"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc2.vsync",
+      "displayLabel": "Osc2VSnc",
+      "controlledParameter": "VSync Oscillatore 2.",
+      "parameterIds": [
+        "osc2.vsync"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc3.vsync",
+      "displayLabel": "Osc3VSnc",
+      "controlledParameter": "VSync Oscillatore 3.",
+      "parameterIds": [
+        "osc3.vsync"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc1.shape",
+      "displayLabel": "Osc1Shpe",
+      "controlledParameter": "Shape Amount Oscillatore 1.",
+      "parameterIds": [
+        "osc1.shape"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc2.shape",
+      "displayLabel": "Osc2Shpe",
+      "controlledParameter": "Shape Amount Oscillatore 2.",
+      "parameterIds": [
+        "osc2.shape"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "osc3.shape",
+      "displayLabel": "Osc3Shpe",
+      "controlledParameter": "Shape Amount Oscillatore 3.",
+      "parameterIds": [
+        "osc3.shape"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "mixer.osc1.level",
+      "displayLabel": "Osc1 Lev",
+      "controlledParameter": "Livello Oscillatore 1.",
+      "parameterIds": [
+        "mixer.osc1.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "mixer.osc2.level",
+      "displayLabel": "Osc2 Lev",
+      "controlledParameter": "Livello Oscillatore 2.",
+      "parameterIds": [
+        "mixer.osc2.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "mixer.osc3.level",
+      "displayLabel": "Osc3 Lev",
+      "controlledParameter": "Livello Oscillatore 3.",
+      "parameterIds": [
+        "mixer.osc3.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "mixer.noise.level",
+      "displayLabel": "NoiseLev",
+      "controlledParameter": "Livello Noise.",
+      "parameterIds": [
+        "mixer.noise.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "mixer.ring.level",
+      "displayLabel": "Ring Lev",
+      "controlledParameter": "Livello Ring Modulator.",
+      "parameterIds": [
+        "mixer.ring.level"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "mixer.vcaGain",
+      "displayLabel": "VcaLevel",
+      "controlledParameter": "Livello di uscita complessivo del synth.",
+      "parameterIds": [
+        "mixer.vcaGain"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.overdrive",
+      "displayLabel": "Filt Drv",
+      "controlledParameter": "Overdrive pre-filtro.",
+      "parameterIds": [
+        "filter.overdrive"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.postDrive",
+      "displayLabel": "FiltDist",
+      "controlledParameter": "Distorsione post-filtro.",
+      "parameterIds": [
+        "filter.postDrive"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.frequency",
+      "displayLabel": "FiltFreq",
+      "controlledParameter": "Cutoff o frequenza centrale del filtro.",
+      "parameterIds": [
+        "filter.frequency"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.resonance",
+      "displayLabel": "Filt Res",
+      "controlledParameter": "Risonanza del filtro.",
+      "parameterIds": [
+        "filter.resonance"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo1.rate",
+      "displayLabel": "LFO1Rate",
+      "controlledParameter": "Frequenza LFO 1.",
+      "parameterIds": [
+        "lfo1.rate"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "lfo2.rate",
+      "displayLabel": "LFO2Rate",
+      "controlledParameter": "Frequenza LFO 2.",
+      "parameterIds": [
+        "lfo2.rate"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "amp.attack",
+      "displayLabel": "AmpEnv A",
+      "controlledParameter": "Attack Amp Envelope.",
+      "parameterIds": [
+        "amp.attack"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "amp.decay",
+      "displayLabel": "AmpEnv D",
+      "controlledParameter": "Decay Amp Envelope.",
+      "parameterIds": [
+        "amp.decay"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "amp.release",
+      "displayLabel": "AmpEnv R",
+      "controlledParameter": "Release Amp Envelope.",
+      "parameterIds": [
+        "amp.release"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv1.attack",
+      "displayLabel": "ModEnv1A",
+      "controlledParameter": "Attack Mod Envelope 1.",
+      "parameterIds": [
+        "modEnv1.attack"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv1.decay",
+      "displayLabel": "ModEnv1D",
+      "controlledParameter": "Decay Mod Envelope 1.",
+      "parameterIds": [
+        "modEnv1.decay"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv1.release",
+      "displayLabel": "ModEnv1R",
+      "controlledParameter": "Release Mod Envelope 1.",
+      "parameterIds": [
+        "modEnv1.release"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv2.attack",
+      "displayLabel": "ModEnv2A",
+      "controlledParameter": "Attack Mod Envelope 2.",
+      "parameterIds": [
+        "modEnv2.attack"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv2.decay",
+      "displayLabel": "ModEnv2D",
+      "controlledParameter": "Decay Mod Envelope 2.",
+      "parameterIds": [
+        "modEnv2.decay"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "modEnv2.release",
+      "displayLabel": "ModEnv2R",
+      "controlledParameter": "Release Mod Envelope 2.",
+      "parameterIds": [
+        "modEnv2.release"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fm.osc1ToOsc2",
+      "displayLabel": "FM O1>O2",
+      "controlledParameter": "FM di Oscillatore 2 da Oscillatore 1.",
+      "parameterIds": [
+        "fm.osc1ToOsc2.manual",
+        "fm.osc1ToOsc2.modEnv2",
+        "fm.osc1ToOsc2.lfo2"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fm.osc2ToOsc3",
+      "displayLabel": "FM O2>O3",
+      "controlledParameter": "FM di Oscillatore 3 da Oscillatore 2.",
+      "parameterIds": [
+        "fm.osc2ToOsc3.manual",
+        "fm.osc2ToOsc3.modEnv2",
+        "fm.osc2ToOsc3.lfo2"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fm.osc3ToOsc1",
+      "displayLabel": "FM O3>O1",
+      "controlledParameter": "FM di Oscillatore 1 da Oscillatore 3.",
+      "parameterIds": [
+        "fm.osc3ToOsc1.manual",
+        "fm.osc3ToOsc1.modEnv2",
+        "fm.osc3ToOsc1.lfo2"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "fm.noiseToOsc1",
+      "displayLabel": "FM Ns>O1",
+      "controlledParameter": "Quantità di Noise FM applicata a Oscillatore 1.",
+      "parameterIds": [],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.osc3Depth",
+      "displayLabel": "O3>FiltF",
+      "controlledParameter": "Controllo del cutoff da Oscillatore 3.",
+      "parameterIds": [
+        "filter.osc3Depth"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.noiseDepth",
+      "displayLabel": "Ns>FiltF",
+      "controlledParameter": "Controllo del cutoff dalla sorgente Noise.",
+      "parameterIds": [],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "filter.frequencySeparation",
+      "displayLabel": "FfreqSep",
+      "controlledParameter": "Separazione delle frequenze dei due filtri.",
+      "parameterIds": [
+        "filter.frequencySeparation"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit User Guide v1.1",
+        "section": "Modulation matrix – destinations",
+        "page": 39,
+        "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Modulation matrix – destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      }
+    },
+    {
+      "id": "voice.panPosition",
+      "displayLabel": "Pan Posn",
+      "controlledParameter": "Posizione panoramica delle voci.",
+      "parameterIds": [
+        "voice.panPosition"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "osc.all.shape",
+      "displayLabel": "O123Shpe",
+      "controlledParameter": "Shape Amount di tutti e tre gli oscillatori.",
+      "parameterIds": [
+        "osc1.shape",
+        "osc2.shape",
+        "osc3.shape"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "amp.delay",
+      "displayLabel": "AEnv Del",
+      "controlledParameter": "Delay Amp Envelope.",
+      "parameterIds": [
+        "amp.delay"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "amp.hold",
+      "displayLabel": "AEnv Hld",
+      "controlledParameter": "Hold Amp Envelope.",
+      "parameterIds": [
+        "amp.hold"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "amp.sustain",
+      "displayLabel": "AEnv Sus",
+      "controlledParameter": "Sustain Amp Envelope.",
+      "parameterIds": [
+        "amp.sustain"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "modEnv1.delay",
+      "displayLabel": "MEnv1Del",
+      "controlledParameter": "Delay Mod Envelope 1.",
+      "parameterIds": [
+        "modEnv1.delay"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "modEnv1.hold",
+      "displayLabel": "MEnv1Hld",
+      "controlledParameter": "Hold Mod Envelope 1.",
+      "parameterIds": [
+        "modEnv1.hold"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "modEnv1.sustain",
+      "displayLabel": "MEnv1Sus",
+      "controlledParameter": "Sustain Mod Envelope 1.",
+      "parameterIds": [
+        "modEnv1.sustain"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "modEnv2.delay",
+      "displayLabel": "MEnv2Del",
+      "controlledParameter": "Delay Mod Envelope 2.",
+      "parameterIds": [
+        "modEnv2.delay"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "modEnv2.hold",
+      "displayLabel": "MEnv2Hld",
+      "controlledParameter": "Hold Mod Envelope 2.",
+      "parameterIds": [
+        "modEnv2.hold"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    },
+    {
+      "id": "modEnv2.sustain",
+      "displayLabel": "MEnv2Sus",
+      "controlledParameter": "Sustain Mod Envelope 2.",
+      "parameterIds": [
+        "modEnv2.sustain"
+      ],
+      "verificationStatus": "verified",
+      "aiExposed": true,
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit appendix",
+          "section": "Modulation matrix – destinations",
+          "locator": "Mod Matrix Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1",
+      "firmwareNote": "Destinazione aggiunta dal firmware 2.1."
+    }
   ],
-  "slots": 16,
-  "depthRange": [-64, 63],
-  "documentation": { "document": "Summit User Guide v1.1", "section": "Modulation Matrix and Appendix", "pages": [38, 39, 46], "sourceUrl": "https://downloads.novationmusic.com/index.php/novation/synthesisers/summit", "verifiedAt": "2026-07-22" }
+  "slotDefinitions": [
+    {
+      "slot": 1,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 1,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 2,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 2,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 3,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 3,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 4,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 4,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 5,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 5,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 6,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 6,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 7,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 7,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 8,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 8,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 9,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 9,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 10,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 10,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 11,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 11,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 12,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 12,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 13,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 13,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 14,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 14,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 15,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 15,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    },
+    {
+      "slot": 16,
+      "partApplicability": [
+        "A",
+        "B"
+      ],
+      "menu": "Mod",
+      "page": 16,
+      "fields": [
+        {
+          "id": "sourceA",
+          "displayLabel": ":sA",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "sourceB",
+          "displayLabel": "sB:",
+          "row": 2,
+          "valuesFrom": "sources",
+          "defaultValue": "direct"
+        },
+        {
+          "id": "destination",
+          "displayLabel": "Destin",
+          "row": 3,
+          "valuesFrom": "destinations",
+          "defaultValue": "osc.all.pitch"
+        },
+        {
+          "id": "depth",
+          "displayLabel": "Depth",
+          "row": 4,
+          "minimum": -64,
+          "maximum": 63,
+          "defaultValue": 0
+        }
+      ]
+    }
+  ],
+  "midi": {
+    "slotSelection": {
+      "type": "NRPN",
+      "number": "0:125",
+      "range": [
+        0,
+        15
+      ],
+      "verificationStatus": "verified"
+    },
+    "slot1": {
+      "sourceA": "1:0",
+      "sourceB": "1:1",
+      "depth": "1:2",
+      "destination": "1:3",
+      "verificationStatus": "verified"
+    },
+    "slots2To16": {
+      "verificationStatus": "unverified",
+      "note": "La tabella ufficiale mostra i campi ma lascia vuoti i numeri NRPN; non viene inferita alcuna sequenza."
+    }
+  },
+  "documentation": {
+    "document": "Summit User Guide v1.1 and Summit appendix",
+    "section": "The Modulation Matrix; modulation matrix sources and destinations",
+    "pages": [
+      38,
+      39
+    ],
+    "sourceUrl": "https://downloads.novationmusic.com/novation/synthesisers/summit",
+    "verifiedAt": "2026-07-26",
+    "verification": {
+      "document": "Summit in detail",
+      "section": "The Modulation Matrix",
+      "locator": "The Modulation Matrix",
+      "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+      "verifiedAt": "2026-07-26"
+    }
+  }
 }

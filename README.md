@@ -269,3 +269,5 @@ pnpm desktop:build
 - [Roadmap MIDI](docs/midi-roadmap.md)
 - [Privacy e conformità](docs/privacy-and-platform-compliance.md)
 - [Limiti noti](docs/known-limitations.md)
+- [Metodo di verifica delle fonti Summit](docs/summit-source-methodology.md)
+- [Copertura del catalogo Summit](docs/summit-catalog-coverage.md)

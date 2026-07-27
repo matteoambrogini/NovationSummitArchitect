@@ -1,0 +1,418 @@
+{
+  "schemaVersion": "1.0.0",
+  "baseDocumentationVersion": "Summit User Guide v1.1",
+  "overrides": [
+    {
+      "id": "2.1.voice-stereo",
+      "firmware": "2.1",
+      "action": "add-and-move",
+      "parameterIds": [
+        "voice.spread",
+        "voice.spreadMode",
+        "voice.panPosition"
+      ],
+      "details": {
+        "moved": [
+          {
+            "parameterId": "voice.spread",
+            "from": "Voice page 1",
+            "to": "Voice page 2"
+          }
+        ],
+        "added": [
+          "voice.spreadMode",
+          "voice.panPosition"
+        ]
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Voice Menu: Spread / Pan Position",
+        "page": 3,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Voice Menu: Spread / Pan Position",
+          "locator": "Voice Menu: Spread / Pan Position",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.voice-menu-pagination",
+      "firmware": "2.1",
+      "action": "move",
+      "parameterIds": [
+        "voice.preGlide",
+        "mixer.patchLevel",
+        "filter.postDrive",
+        "filter.divergence",
+        "voice.audioInput",
+        "filter.dualShape",
+        "filter.frequencySeparation"
+      ],
+      "details": {
+        "base": [
+          "PreGlide and PatchLevel on page 2",
+          "filter/audio on page 3",
+          "dual filter on page 4"
+        ],
+        "current": [
+          "PreGlide and PatchLevel on page 3",
+          "filter/audio on page 4",
+          "dual filter on page 5"
+        ]
+      },
+      "verificationStatus": "conflict",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Voice Menu pagination",
+        "page": 3,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Voice Menu pagination",
+          "locator": "Voice Menu pagination",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.animate-envelopes",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "animate1.attack",
+        "animate1.release",
+        "animate2.attack",
+        "animate2.release"
+      ],
+      "details": {
+        "menu": "Env",
+        "pages": [
+          7,
+          8
+        ]
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Animate Envelopes",
+        "page": 6,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Animate Envelopes",
+          "locator": "Animate Envelopes",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.global-lfo-parameters",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "lfo3.phase",
+        "lfo3.slew",
+        "lfo3.fadeTime",
+        "lfo4.phase",
+        "lfo4.slew",
+        "lfo4.fadeTime"
+      ],
+      "details": {
+        "menuPages": {
+          "lfo3": 7,
+          "lfo4": 8
+        },
+        "rowPositionsInferred": false
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "LFO 3 and 4 Additional Parameters",
+        "page": 6,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "LFO 3 and 4 Additional Parameters",
+          "locator": "LFO 3 and 4 Additional Parameters",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.chorus-modes",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "fx.chorus.mode"
+      ],
+      "details": {
+        "values": [
+          "Chorus",
+          "Flanger",
+          "Phlanger"
+        ]
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Chorus/Flanger/Phlanger",
+        "page": 8,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Chorus/Flanger/Phlanger",
+          "locator": "Chorus/Flanger/Phlanger",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.delay-modes",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "fx.delay.type",
+        "fx.delay.output",
+        "fx.delay.timeMode"
+      ],
+      "details": {
+        "fxMenuPage": 6
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Switchable Delay Modes / Lo-Fi Delay",
+        "page": 9,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Switchable Delay Modes / Lo-Fi Delay",
+          "locator": "Switchable Delay Modes / Lo-Fi Delay",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.arp-chance",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "arp.chance",
+        "arp.type"
+      ],
+      "details": {
+        "enumAddition": "Chord 2",
+        "menu": "Arp/Clock",
+        "page": 4
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Arp Chance / Arp mode – Chord 2",
+        "page": 11,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Arp Chance / Arp mode – Chord 2",
+          "locator": "Arp Chance / Arp mode – Chord 2",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.modulation-additions",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "voice.panPosition",
+        "amp.delay",
+        "amp.hold",
+        "amp.sustain",
+        "modEnv1.delay",
+        "modEnv1.hold",
+        "modEnv1.sustain",
+        "modEnv2.delay",
+        "modEnv2.hold",
+        "modEnv2.sustain"
+      ],
+      "details": {
+        "source": "Noise",
+        "destinations": [
+          "Pan Posn",
+          "O123Shpe",
+          "AEnv Del",
+          "AEnv Hld",
+          "AEnv Sus",
+          "MEnv1Del",
+          "MEnv1Hld",
+          "MEnv1Sus",
+          "MEnv2Del",
+          "MEnv2Hld",
+          "MEnv2Sus"
+        ]
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Mod Matrix Destinations / Noise as a Mod Source",
+        "page": 5,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Mod Matrix Destinations / Noise as a Mod Source",
+          "locator": "Mod Matrix Destinations / Noise as a Mod Source",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.fx-modulation-additions",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "fx.reverb.size",
+        "fx.reverb.lowPass",
+        "fx.reverb.highPass",
+        "fx.delay.slewRate",
+        "fx.delay.lowPassDamping",
+        "fx.delay.highPassDamping",
+        "fx.delay.width",
+        "fx.delay.leftRightRatio",
+        "lfo3.rate",
+        "lfo4.rate",
+        "noise.lowPass",
+        "noise.highPass"
+      ],
+      "details": {
+        "destinationsAdded": 12
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "FX Mod Slot Destinations",
+        "page": 7,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "FX Mod Slot Destinations",
+          "locator": "FX Mod Slot Destinations",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.reverb-size-default",
+      "firmware": "2.1",
+      "action": "document-conflict",
+      "parameterIds": [
+        "fx.reverb.size"
+      ],
+      "details": {
+        "userGuide11": 64,
+        "midiTable": 64,
+        "onlineGuide": 90
+      },
+      "verificationStatus": "conflict",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "Reverb Size default conflict",
+        "page": 8,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "Reverb Size default conflict",
+          "locator": "Reverb Size default conflict",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003971047186-Summit-in-detail",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    },
+    {
+      "id": "2.1.midi-additions",
+      "firmware": "2.1",
+      "action": "add",
+      "parameterIds": [
+        "voice.panPosition",
+        "voice.spreadMode",
+        "fx.chorus.mode",
+        "fx.delay.timeMode",
+        "osc.common.tuningTable",
+        "arp.chance",
+        "animate1.attack",
+        "animate1.release",
+        "animate2.attack",
+        "animate2.release",
+        "lfo3.phase",
+        "lfo3.slew",
+        "lfo3.fadeTime",
+        "lfo4.phase",
+        "lfo4.slew",
+        "lfo4.fadeTime"
+      ],
+      "details": {
+        "source": "Firmware addendum MIDI Parameters List"
+      },
+      "verificationStatus": "verified",
+      "documentation": {
+        "document": "Summit and Peak Firmware Update v2.1 Addendum",
+        "section": "MIDI Parameters List",
+        "page": 18,
+        "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+        "verifiedAt": "2026-07-26",
+        "verification": {
+          "document": "Summit in detail / Summit appendix",
+          "section": "MIDI Parameters List",
+          "locator": "MIDI Parameters List",
+          "sourceUrl": "https://userguides.novationmusic.com/hc/en-gb/articles/25003993283986-Summit-appendix",
+          "verifiedAt": "2026-07-26"
+        }
+      },
+      "introducedInFirmware": "2.1"
+    }
+  ],
+  "unresolvedOfficialConflicts": [
+    "Voice menu page count and page moves",
+    "FX menu page count after firmware 2.1",
+    "Reverb Size default 64 versus 90",
+    "FX Mod Depth lower bound missing minus sign",
+    "Arpeggiator Octaves narrative 1–7 versus menu/MIDI 1–6"
+  ],
+  "documentation": {
+    "document": "Summit and Peak Firmware Update v2.1 Addendum",
+    "section": "All Summit-applicable updates",
+    "sourceUrl": "https://fael-downloads-prod.focusrite.com/customer/prod/downloads/summit_peak_2.1_firmware_update_addendum_v1_english_en.pdf",
+    "verifiedAt": "2026-07-26"
+  }
+}

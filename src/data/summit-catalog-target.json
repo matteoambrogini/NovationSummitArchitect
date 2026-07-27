@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "1.0.0",
+  "product": "Novation Summit",
+  "primaryFirmware": "2.1",
+  "supportedFirmware": {
+    "minimum": "1.1",
+    "target": "2.1"
+  },
+  "coveragePolicy": {
+    "metric": "ai-usable",
+    "midiExcluded": true,
+    "thresholds": {
+      "oscillators": 95,
+      "fm": 90,
+      "mixer": 95,
+      "filter": 90,
+      "envelopes": 95,
+      "lfo": 90,
+      "voice": 85,
+      "reverb": 85,
+      "delay": 85,
+      "chorus": 85,
+      "mod": 90,
+      "fxMod": 85,
+      "multi": 85
+    },
+    "documentedExceptions": {
+      "fm": {
+        "residualIds": [
+          "fm.osc1ToOsc2.lfo2",
+          "fm.osc1ToOsc2.modEnv2",
+          "fm.osc2ToOsc3.lfo2",
+          "fm.osc2ToOsc3.modEnv2",
+          "fm.osc3ToOsc1.lfo2",
+          "fm.osc3ToOsc1.modEnv2"
+        ],
+        "reason": "Le fonti ufficiali confermano rotte e contributi additivi, ma non pubblicano dominio, default o traduzione MIDI per le profondità LFO 2/Mod Env 2."
+      },
+      "multi": {
+        "residualIds": [
+          "multi.partA.level",
+          "multi.partB.level"
+        ],
+        "reason": "La guida mostra Level A/B ma non pubblica dominio numerico o default."
+      }
+    }
+  },
+  "verifiedAt": "2026-07-26"
+}
