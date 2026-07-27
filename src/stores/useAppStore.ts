@@ -3,13 +3,32 @@ import { MockPatchProvider } from "../ai/mockProvider";
 import { buildDemoProposal, demoConfigs } from "../ai/demoPatches";
 import type { AnalysisMode } from "../ai/provider";
 import {
+  displayAreaById,
+  fxModulationCatalog,
+  modulationCatalog,
   parameterById,
   validateProposalAgainstCatalog,
   validateUiParameterValue,
 } from "../domain/catalog";
 import { applyPatchDelta } from "../domain/patchDelta";
-import { buildPatchSetupChecklist, type SetupFilter } from "../domain/displayStructure";
-import { buildDefaultMultiSettings, type ParameterValue, type PatchScope } from "../domain/patchUi";
+import {
+  boundedDisplayPage,
+  buildPatchSetupChecklist,
+  firstMappedDisplayField,
+  getDisplaySelection,
+  getMatrixAssignment,
+  isMatrixDisplayAreaId,
+  type MatrixDisplayAreaId,
+  type MatrixDisplayFieldId,
+  type MatrixDisplayValue,
+  type SetupFilter,
+} from "../domain/displayStructure";
+import {
+  buildDefaultMultiSettings,
+  getScopePart,
+  type ParameterValue,
+  type PatchScope,
+} from "../domain/patchUi";
 import {
   summitPatchProposalSchema,
   summitProjectFileSchema,
@@ -37,6 +56,11 @@ type AppState = {
   statusMessage: string;
   selectedParameterId: string | undefined;
   activeScope: PatchScope;
+  activeDisplayAreaId: string;
+  activeDisplayPage: number;
+  selectedDisplayFieldId: string | undefined;
+  activeModulationSlot: number;
+  activeFxModulationSlot: number;
   setupMode: boolean;
   setupStep: number;
   setupOnlyModified: boolean;
@@ -48,6 +72,18 @@ type AppState = {
   refine: (instruction: string) => Promise<void>;
   setParameterValue: (parameterId: string, value: ParameterValue) => void;
   selectParameter: (parameterId?: string) => void;
+  selectDisplayArea: (areaId: string) => void;
+  setDisplayPage: (page: number) => void;
+  stepDisplayPage: (direction: -1 | 1) => void;
+  selectDisplayField: (fieldId: string) => void;
+  setDisplaySlot: (areaId: MatrixDisplayAreaId, slot: number) => void;
+  stepDisplaySlot: (direction: -1 | 1) => void;
+  setMatrixFieldValue: (
+    areaId: MatrixDisplayAreaId,
+    slot: number,
+    fieldId: MatrixDisplayFieldId,
+    value: MatrixDisplayValue,
+  ) => void;
   setActiveScope: (scope: PatchScope) => void;
   toggleSetupMode: () => void;
   nextSetupStep: () => void;
@@ -72,6 +108,21 @@ const initialInput: SoundInput = {
   analysisMode: "text",
 };
 
+function displayStateForParameter(parameterId?: string) {
+  const location = getDisplaySelection(parameterId);
+  if (!location) {
+    return {
+      selectedParameterId: parameterId,
+    };
+  }
+  return {
+    selectedParameterId: parameterId,
+    activeDisplayAreaId: location.area.id,
+    activeDisplayPage: location.page.page,
+    selectedDisplayFieldId: location.field?.id,
+  };
+}
+
 export const useAppStore = create<AppState>((set, get) => ({
   input: initialInput,
   proposals: [],
@@ -80,6 +131,11 @@ export const useAppStore = create<AppState>((set, get) => ({
   statusMessage: "Modalità demo pronta: nessuna credenziale necessaria.",
   selectedParameterId: undefined,
   activeScope: "single",
+  activeDisplayAreaId: "osc",
+  activeDisplayPage: 1,
+  selectedDisplayFieldId: "diverge",
+  activeModulationSlot: 1,
+  activeFxModulationSlot: 1,
   setupMode: false,
   setupStep: 0,
   setupOnlyModified: true,
@@ -143,7 +199,7 @@ export const useAppStore = create<AppState>((set, get) => ({
         activeIndex: 0,
         generationStatus: "ready",
         statusMessage: "Proposta demo validata. Regola i controlli e prova un raffinamento.",
-        selectedParameterId: proposal.parts[0]?.panelControls[0]?.parameterId,
+        ...displayStateForParameter(proposal.parts[0]?.panelControls[0]?.parameterId),
         activeScope: "single",
         setupStep: 0,
       });
@@ -166,7 +222,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       activeScope: "single",
       generationStatus: "ready",
       statusMessage: `${demo.displayName} aperta dal catalogo demo.`,
-      selectedParameterId: "filter.frequency",
+      ...displayStateForParameter("filter.frequency"),
       setupMode: false,
       setupStep: 0,
     });
@@ -241,7 +297,131 @@ export const useAppStore = create<AppState>((set, get) => ({
       statusMessage: "Patch modificata · stato non salvato.",
     });
   },
-  selectParameter: (selectedParameterId) => set({ selectedParameterId }),
+  selectParameter: (selectedParameterId) => set(displayStateForParameter(selectedParameterId)),
+  selectDisplayArea: (areaId) => {
+    const area = displayAreaById.get(areaId);
+    if (!area) return;
+    if (area.kind === "slots" && isMatrixDisplayAreaId(area.id)) {
+      set({
+        activeDisplayAreaId: area.id,
+        activeDisplayPage: 1,
+        selectedDisplayFieldId: area.slotFields?.[0]?.id,
+        selectedParameterId: undefined,
+        ...(area.id === "mod" ? { activeModulationSlot: 1 } : { activeFxModulationSlot: 1 }),
+      });
+      return;
+    }
+    const firstField = firstMappedDisplayField(area, 1);
+    set({
+      activeDisplayAreaId: area.id,
+      activeDisplayPage: 1,
+      selectedDisplayFieldId: firstField?.id,
+      selectedParameterId: firstField?.parameterId,
+    });
+  },
+  setDisplayPage: (page) => {
+    const state = get();
+    const area = displayAreaById.get(state.activeDisplayAreaId);
+    if (!area || area.kind !== "pages") return;
+    const bounded = boundedDisplayPage(area, page);
+    const firstField = firstMappedDisplayField(area, bounded);
+    set({
+      activeDisplayPage: bounded,
+      selectedDisplayFieldId: firstField?.id,
+      selectedParameterId: firstField?.parameterId,
+    });
+  },
+  stepDisplayPage: (direction) => {
+    const state = get();
+    state.setDisplayPage(state.activeDisplayPage + direction);
+  },
+  selectDisplayField: (fieldId) => {
+    const state = get();
+    const area = displayAreaById.get(state.activeDisplayAreaId);
+    if (!area) return;
+    if (area.kind === "slots") {
+      const field = area.slotFields?.find((candidate) => candidate.id === fieldId);
+      if (!field) return;
+      set({ selectedDisplayFieldId: field.id, selectedParameterId: undefined });
+      return;
+    }
+    const page = area.pages.find((candidate) => candidate.page === state.activeDisplayPage);
+    const field = page?.fields.find((candidate) => candidate.id === fieldId);
+    if (!field) return;
+    set({
+      selectedDisplayFieldId: field.id,
+      selectedParameterId: field.parameterId,
+    });
+  },
+  setDisplaySlot: (areaId, slot) => {
+    const area = displayAreaById.get(areaId);
+    if (!area || area.kind !== "slots" || !area.slotCount) return;
+    const bounded = Math.max(1, Math.min(area.slotCount, slot));
+    set({
+      activeDisplayAreaId: areaId,
+      activeDisplayPage: 1,
+      selectedDisplayFieldId: area.slotFields?.[0]?.id,
+      selectedParameterId: undefined,
+      ...(areaId === "mod"
+        ? { activeModulationSlot: bounded }
+        : { activeFxModulationSlot: bounded }),
+    });
+  },
+  stepDisplaySlot: (direction) => {
+    const state = get();
+    if (!isMatrixDisplayAreaId(state.activeDisplayAreaId)) return;
+    const current =
+      state.activeDisplayAreaId === "mod"
+        ? state.activeModulationSlot
+        : state.activeFxModulationSlot;
+    state.setDisplaySlot(state.activeDisplayAreaId, current + direction);
+  },
+  setMatrixFieldValue: (areaId, slot, fieldId, value) => {
+    const state = get();
+    const active = state.proposals[state.activeIndex];
+    if (!active) return;
+    const catalog = areaId === "mod" ? modulationCatalog : fxModulationCatalog;
+    const validStringIds =
+      fieldId === "destination"
+        ? new Set(catalog.destinations.map((entity) => entity.id))
+        : new Set(catalog.sources.map((entity) => entity.id));
+    if (
+      (fieldId === "depth" &&
+        (typeof value !== "number" ||
+          !Number.isInteger(value) ||
+          value < catalog.depthRange[0] ||
+          value > catalog.depthRange[1])) ||
+      (fieldId !== "depth" && (typeof value !== "string" || !validStringIds.has(value)))
+    ) {
+      throw new Error(`Valore matrice non valido: ${areaId}/${slot}/${fieldId}`);
+    }
+    const current = getMatrixAssignment(active, state.activeScope, areaId, slot);
+    if (!current) throw new Error(`Slot matrice inesistente: ${areaId}/${slot}`);
+    const next = structuredClone(active);
+    next.proposalId = `${active.proposalId}-${areaId}-${slot}-${Date.now()}`;
+    next.createdAt = new Date().toISOString();
+    const nextPart = getScopePart(next, state.activeScope);
+    const assignments = areaId === "mod" ? nextPart.modulationMatrix : nextPart.fxModulationMatrix;
+    const updated = { ...current, rationale: "Valore matrice modificato manualmente dall'utente." };
+    if (fieldId === "depth" && typeof value === "number") updated.depth = value;
+    else if (fieldId === "sourceA" && typeof value === "string") updated.sourceA = value;
+    else if (fieldId === "sourceB" && typeof value === "string") updated.sourceB = value;
+    else if (fieldId === "destination" && typeof value === "string") updated.destination = value;
+    const existingIndex = assignments.findIndex((assignment) => assignment.slot === slot);
+    if (existingIndex >= 0) assignments[existingIndex] = updated;
+    else assignments.push(updated);
+    assignments.sort((left, right) => left.slot - right.slot);
+    const valid = summitPatchProposalSchema.parse(next);
+    const issues = validateProposalAgainstCatalog(valid);
+    if (issues.length) throw new Error(issues[0]?.message ?? "Matrice non valida");
+    const proposals = state.proposals.slice(0, state.activeIndex + 1);
+    proposals.push(valid);
+    set({
+      proposals,
+      activeIndex: proposals.length - 1,
+      statusMessage: "Matrice modificata · stato non salvato.",
+    });
+  },
   setActiveScope: (scope) => {
     const state = get();
     const active = state.proposals[state.activeIndex];
@@ -328,10 +508,13 @@ export const useAppStore = create<AppState>((set, get) => ({
       0,
       valid.proposals.findIndex((proposal) => proposal.proposalId === valid.activeProposalId),
     );
+    const selectedParameterId =
+      valid.proposals[activeIndex]?.parts[0]?.panelControls[0]?.parameterId;
     set({
       proposals: valid.proposals,
       activeIndex,
       activeScope: valid.proposals[activeIndex]?.patch.mode === "multi" ? "multi-a" : "single",
+      ...displayStateForParameter(selectedParameterId),
       input: {
         ...initialInput,
         description: valid.input.description,

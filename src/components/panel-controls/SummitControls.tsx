@@ -555,6 +555,9 @@ type HardwareElementProps = {
   size?: number | undefined;
   highlighted?: boolean;
   displayAreaId?: string | undefined;
+  active?: boolean;
+  disabled?: boolean;
+  onClick?: (() => void) | undefined;
 };
 
 export const SummitButton = memo(function SummitButton({
@@ -565,16 +568,47 @@ export const SummitButton = memo(function SummitButton({
   size = 16,
   highlighted = false,
   displayAreaId,
+  active = false,
+  disabled = false,
+  onClick,
 }: HardwareElementProps) {
   const width = Math.max(13, size * 1.55);
   const height = Math.max(7, size * 0.68);
+  const interactive = Boolean(onClick);
+  const activate = () => {
+    if (!disabled) onClick?.();
+  };
   return (
     <g
-      className={`hardware-control summit-button${highlighted ? " setup-highlight" : ""}`}
-      role="img"
-      aria-label={`${label}: controllo hardware`}
+      className={[
+        "hardware-control",
+        "summit-button",
+        highlighted ? "setup-highlight" : "",
+        active ? "active" : "",
+        disabled ? "disabled" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role={interactive ? "button" : "img"}
+      tabIndex={interactive && !disabled ? 0 : undefined}
+      aria-label={
+        interactive ? `${label}: controllo menu hardware` : `${label}: controllo hardware`
+      }
+      aria-pressed={interactive ? active : undefined}
+      aria-disabled={interactive ? disabled : undefined}
       data-control-id={id}
       data-display-area-id={displayAreaId}
+      onClick={activate}
+      onKeyDown={
+        interactive
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                activate();
+              }
+            }
+          : undefined
+      }
     >
       <title>{`${label} · controllo hardware o di navigazione, non salvato nella patch`}</title>
       <text x={x} y={y - height / 2 - 4} textAnchor="middle" className="control-label">
@@ -597,6 +631,113 @@ export const SummitButton = memo(function SummitButton({
         className="button-cap"
       />
       <circle cx={x + width / 2 - 2} cy={y - height / 2 + 2} r="1.3" className="control-led" />
+    </g>
+  );
+});
+
+export const SummitValueEncoder = memo(function SummitValueEncoder({
+  id,
+  label,
+  valueText,
+  x,
+  y,
+  size = 18,
+  active = false,
+  disabled = false,
+  onSelect,
+  onStep,
+}: {
+  id: string;
+  label: string;
+  valueText: string;
+  x: number;
+  y: number;
+  size?: number | undefined;
+  active?: boolean;
+  disabled?: boolean;
+  onSelect: () => void;
+  onStep: (steps: number) => void;
+}) {
+  const drag = useRef<{ pointerId: number; y: number; steps: number } | undefined>(undefined);
+  const radius = size / 2;
+  const step = (steps: number) => {
+    if (!disabled && steps !== 0) onStep(steps);
+  };
+  return (
+    <g
+      className={[
+        "panel-control",
+        "summit-value-encoder",
+        active ? "selected" : "",
+        disabled ? "disabled" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role="slider"
+      tabIndex={disabled ? undefined : 0}
+      aria-label={`${label}: ${valueText}`}
+      aria-valuetext={valueText}
+      aria-disabled={disabled}
+      data-control-id={id}
+      onFocus={onSelect}
+      onPointerDown={(event) => {
+        if (disabled) return;
+        onSelect();
+        event.currentTarget.setPointerCapture(event.pointerId);
+        drag.current = { pointerId: event.pointerId, y: event.clientY, steps: 0 };
+      }}
+      onPointerMove={(event) => {
+        const current = drag.current;
+        if (!current || current.pointerId !== event.pointerId) return;
+        const nextSteps = Math.trunc((current.y - event.clientY) / 8);
+        const delta = nextSteps - current.steps;
+        if (delta !== 0) {
+          current.steps = nextSteps;
+          step(delta);
+        }
+      }}
+      onPointerUp={(event) => {
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          event.currentTarget.releasePointerCapture(event.pointerId);
+        }
+        drag.current = undefined;
+      }}
+      onPointerCancel={() => {
+        drag.current = undefined;
+      }}
+      onWheel={(event) => {
+        event.preventDefault();
+        onSelect();
+        step(event.deltaY < 0 ? 1 : -1);
+      }}
+      onKeyDown={(event) => {
+        const direction =
+          event.key === "ArrowUp" || event.key === "ArrowRight"
+            ? 1
+            : event.key === "ArrowDown" || event.key === "ArrowLeft"
+              ? -1
+              : 0;
+        if (direction !== 0) {
+          event.preventDefault();
+          step(direction * (event.shiftKey ? 10 : 1));
+        }
+      }}
+    >
+      <title>{`${label} · ${valueText} · trascina verticalmente, usa trackpad o frecce`}</title>
+      <text x={x} y={y - radius - 5} textAnchor="middle" className="control-label">
+        {label}
+      </text>
+      <path
+        d={`M ${x - radius * 0.72} ${y + radius * 0.72} A ${radius} ${radius} 0 1 1 ${x + radius * 0.72} ${y + radius * 0.72}`}
+        className="knob-arc"
+      />
+      <circle cx={x} cy={y} r={radius + 3} className="control-halo" />
+      <circle cx={x} cy={y} r={radius} className="knob-rim" />
+      <circle cx={x} cy={y} r={Math.max(3, radius - 2.5)} className="knob-body" />
+      <line x1={x} y1={y} x2={x} y2={y - Math.max(3, radius - 3)} className="knob-indicator" />
+      <text x={x} y={y + radius + 10} textAnchor="middle" className="control-value">
+        {valueText}
+      </text>
     </g>
   );
 });

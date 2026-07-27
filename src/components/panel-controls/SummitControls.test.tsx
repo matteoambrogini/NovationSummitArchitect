@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { SummitKnob, SummitSlider } from "./SummitControls";
+import { SummitKnob, SummitSlider, SummitValueEncoder } from "./SummitControls";
 
 const common = {
   x: 50,
@@ -49,5 +49,36 @@ describe("reusable Summit controls", () => {
     expect(slider).toHaveAttribute("aria-orientation", "vertical");
     fireEvent.keyDown(slider, { key: "ArrowDown" });
     expect(onChange).toHaveBeenCalledWith("filter.modEnv1Depth", -1);
+  });
+
+  it("supports Value encoder keyboard, wheel and vertical drag steps", () => {
+    const onStep = vi.fn();
+    render(
+      <svg>
+        <SummitValueEncoder
+          id="menu-value"
+          label="Value"
+          valueText="7"
+          x={50}
+          y={50}
+          onSelect={vi.fn()}
+          onStep={onStep}
+        />
+      </svg>,
+    );
+    const encoder = screen.getByRole("slider", { name: "Value: 7" });
+    fireEvent.keyDown(encoder, { key: "ArrowUp" });
+    fireEvent.wheel(encoder, { deltaY: 10 });
+    expect(onStep).toHaveBeenNthCalledWith(1, 1);
+    expect(onStep).toHaveBeenNthCalledWith(2, -1);
+
+    Object.assign(encoder, {
+      setPointerCapture: vi.fn(),
+      hasPointerCapture: vi.fn(() => false),
+    });
+    fireEvent.pointerDown(encoder, { pointerId: 1, clientY: 100 });
+    fireEvent.pointerMove(encoder, { pointerId: 1, clientY: 84 });
+    fireEvent.pointerUp(encoder, { pointerId: 1, clientY: 84 });
+    expect(onStep).toHaveBeenCalledWith(2);
   });
 });

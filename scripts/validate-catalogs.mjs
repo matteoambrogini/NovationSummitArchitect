@@ -138,9 +138,26 @@ if (
   !layout.geometry?.section ||
   !layout.geometry?.page ||
   !layout.geometry?.sourceUrl ||
-  !layout.geometry?.verifiedAt
+  !layout.geometry?.verifiedAt ||
+  !layout.geometry?.measurementMethod ||
+  layout.geometry?.referenceWidth !== 1536 ||
+  layout.geometry?.referenceHeight !== 539
 ) {
   errors.push("Metadati della geometria del pannello incompleti");
+}
+for (const item of [...(layout.landmarks ?? []), ...(layout.serigraphy ?? [])]) {
+  if (![item.x, item.y, item.width].every(Number.isFinite)) {
+    errors.push(`Geometria tracciata non valida: ${item.id}`);
+  }
+  if (item.x < 0 || item.y < 0 || item.x + item.width > 1536) {
+    errors.push(`Geometria tracciata fuori riferimento: ${item.id}`);
+  }
+}
+if (!(layout.landmarks ?? []).some((landmark) => landmark.id === "display")) {
+  errors.push("Landmark display assente dal tracciato");
+}
+if (!(layout.serigraphy ?? []).some((mark) => mark.id === "oscillator-3")) {
+  errors.push("Serigrafia delle tre righe oscillatore incompleta");
 }
 const sectionIds = new Set(layout.sections.map((section) => section.id));
 const controlIds = new Set();

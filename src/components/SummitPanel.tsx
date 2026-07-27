@@ -1,7 +1,17 @@
 import { memo, useMemo } from "react";
-import { catalogTarget, isFirmwareApplicable, parameterById } from "../domain/catalog";
-import { getDisplaySelection } from "../domain/displayStructure";
 import {
+  catalogTarget,
+  displayAreaById,
+  isFirmwareApplicable,
+  parameterById,
+} from "../domain/catalog";
+import {
+  getMatrixFieldValue,
+  isMatrixDisplayAreaId,
+  isMatrixDisplayFieldId,
+} from "../domain/displayStructure";
+import {
+  formatParameterValue,
   getSetting,
   isDefinitionVisible,
   type ParameterValue,
@@ -19,10 +29,11 @@ import {
   SummitPitchWheel,
   SummitSlider,
   SummitToggle,
+  SummitValueEncoder,
   UnavailableControl,
   type ControlVisualState,
 } from "./panel-controls/SummitControls";
-import { summitPanelLayout, type LayoutControl } from "./SummitPanelLayout";
+import { panelLandmarkById, summitPanelLayout, type LayoutControl } from "./SummitPanelLayout";
 
 function controlStates(
   parameterId: string,
@@ -95,9 +106,15 @@ const ParameterControl = memo(function ParameterControl({
 function StateOnlyControl({
   control,
   highlighted,
+  active = false,
+  disabled = false,
+  onClick,
 }: {
   control: LayoutControl;
   highlighted: boolean;
+  active?: boolean;
+  disabled?: boolean;
+  onClick?: (() => void) | undefined;
 }) {
   if (control.type === "button" || control.type === "toggle") {
     return (
@@ -109,6 +126,9 @@ function StateOnlyControl({
         size={control.size}
         highlighted={highlighted}
         displayAreaId={control.displayAreaId}
+        active={active}
+        disabled={disabled}
+        onClick={onClick}
       />
     );
   }
@@ -139,9 +159,11 @@ function StateOnlyControl({
 }
 
 function SummitKeyboard() {
-  const x = 185;
-  const y = 288;
-  const width = 1274;
+  const keyboard = panelLandmarkById.get("keyboard");
+  const x = keyboard?.x ?? 185;
+  const y = keyboard?.y ?? 285;
+  const width = keyboard?.width ?? 1275;
+  const height = keyboard?.height ?? 202;
   const whiteCount = 36;
   const whiteWidth = width / whiteCount;
   const blackAfter = new Set<number>();
@@ -157,7 +179,7 @@ function SummitKeyboard() {
           x={x + index * whiteWidth}
           y={y}
           width={whiteWidth + 0.4}
-          height="218"
+          height={height}
           className="white-key"
         />
       ))}
@@ -167,7 +189,7 @@ function SummitKeyboard() {
           x={x + (index + 0.7) * whiteWidth}
           y={y}
           width={whiteWidth * 0.6}
-          height="132"
+          height={height * 0.61}
           rx="2"
           className="black-key"
         />
@@ -180,6 +202,11 @@ export const SummitPanel = memo(function SummitPanel({
   proposal,
   scope,
   selectedParameterId,
+  activeDisplayAreaId,
+  activeDisplayPage,
+  selectedDisplayFieldId,
+  activeModulationSlot,
+  activeFxModulationSlot,
   changedIds = [],
   highlightedIds = [],
   highlightedAreaId,
@@ -187,10 +214,19 @@ export const SummitPanel = memo(function SummitPanel({
   showInfoOverlay = false,
   onSelect,
   onChange,
+  onDisplayAreaSelect,
+  onDisplayStep,
+  onDisplayFieldSelect,
+  onDisplayValueStep,
 }: {
   proposal: SummitPatchProposal;
   scope: PatchScope;
   selectedParameterId: string | undefined;
+  activeDisplayAreaId: string;
+  activeDisplayPage: number;
+  selectedDisplayFieldId: string | undefined;
+  activeModulationSlot: number;
+  activeFxModulationSlot: number;
   changedIds?: string[];
   highlightedIds?: string[];
   highlightedAreaId?: string | undefined;
@@ -198,10 +234,72 @@ export const SummitPanel = memo(function SummitPanel({
   showInfoOverlay?: boolean;
   onSelect: (parameterId: string) => void;
   onChange: (parameterId: string, value: ParameterValue) => void;
+  onDisplayAreaSelect: (areaId: string) => void;
+  onDisplayStep: (direction: -1 | 1) => void;
+  onDisplayFieldSelect: (fieldId: string) => void;
+  onDisplayValueStep: (steps: number) => void;
 }) {
   const changed = useMemo(() => new Set(changedIds), [changedIds]);
   const highlighted = useMemo(() => new Set(highlightedIds), [highlightedIds]);
-  const displaySelection = getDisplaySelection(selectedParameterId);
+  const displayArea = displayAreaById.get(activeDisplayAreaId);
+  const displayPage =
+    displayArea?.kind === "pages"
+      ? displayArea.pages.find((page) => page.page === activeDisplayPage)
+      : undefined;
+  const activeDisplaySlot =
+    activeDisplayAreaId === "mod"
+      ? activeModulationSlot
+      : activeDisplayAreaId === "fx-mod"
+        ? activeFxModulationSlot
+        : undefined;
+  const displayFields =
+    displayArea?.kind === "slots" ? (displayArea.slotFields ?? []) : (displayPage?.fields ?? []);
+  const activeDisplayField = displayFields.find((field) => field.id === selectedDisplayFieldId);
+  const selectedDisplayParameterId = activeDisplayField?.parameterId;
+  const selectedDisplayDefinition = selectedDisplayParameterId
+    ? parameterById.get(selectedDisplayParameterId)
+    : undefined;
+  const selectedDisplaySetting =
+    selectedDisplayParameterId && selectedDisplayDefinition
+      ? getSetting(proposal, selectedDisplayParameterId, scope)
+      : undefined;
+  const matrixDisplayValue =
+    displayArea &&
+    isMatrixDisplayAreaId(displayArea.id) &&
+    activeDisplaySlot &&
+    activeDisplayField &&
+    isMatrixDisplayFieldId(activeDisplayField.id)
+      ? getMatrixFieldValue(
+          proposal,
+          scope,
+          displayArea.id,
+          activeDisplaySlot,
+          activeDisplayField.id,
+        )
+      : undefined;
+  const valueEncoderText =
+    matrixDisplayValue !== undefined
+      ? String(matrixDisplayValue)
+      : selectedDisplayDefinition && selectedDisplaySetting
+        ? formatParameterValue(selectedDisplayDefinition, selectedDisplaySetting.value)
+        : "—";
+  const valueEncoderDisabled =
+    matrixDisplayValue === undefined &&
+    (!selectedDisplayDefinition ||
+      !selectedDisplaySetting ||
+      selectedDisplayDefinition.scope === "global");
+  const displayAtFirst =
+    displayArea?.kind === "slots" ? activeDisplaySlot === 1 : activeDisplayPage <= 1;
+  const displayAtLast =
+    displayArea?.kind === "slots"
+      ? activeDisplaySlot === displayArea.slotCount
+      : displayArea?.kind === "pages"
+        ? activeDisplayPage >= displayArea.pages.length
+        : true;
+  const panelBody = panelLandmarkById.get("panel");
+  const displayLandmark = panelLandmarkById.get("display");
+  const pitchWheel = panelLandmarkById.get("pitch-wheel");
+  const modWheel = panelLandmarkById.get("mod-wheel");
 
   return (
     <svg
@@ -236,70 +334,128 @@ export const SummitPanel = memo(function SummitPanel({
         </filter>
       </defs>
 
-      <rect x="13" y="20" width="1480" height="499" rx="15" fill="#090b0c" />
+      <rect
+        x={panelBody?.x ?? 14}
+        y={panelBody?.y ?? 41}
+        width={panelBody?.width ?? 1484}
+        height={panelBody?.height ?? 446}
+        rx="7"
+        fill="#090b0c"
+      />
       <path
-        d="M 13 35 Q 13 20 28 20 H 38 V 519 H 28 Q 13 519 13 504 Z"
+        d="M 14 49 Q 14 41 23 41 H 35 V 487 H 23 Q 14 487 14 478 Z"
         fill="url(#wood)"
         className="wood-cheek left"
       />
       <path
-        d="M 1459 20 H 1478 Q 1493 20 1493 35 V 504 Q 1493 519 1478 519 H 1459 Z"
+        d="M 1474 41 H 1489 Q 1498 41 1498 50 V 478 Q 1498 487 1489 487 H 1474 Z"
         fill="url(#wood)"
         className="wood-cheek right"
       />
       <rect
         x="35"
-        y="28"
-        width="1424"
-        height="254"
-        rx="3"
+        y="42"
+        width="1439"
+        height="243"
+        rx="1"
         fill="url(#panel-bg)"
         className="control-deck"
       />
-      <path d="M 35 282 H 1459" className="panel-keyboard-rule" />
-      <text x="48" y="51" className="panel-wordmark">
+      <rect x="35" y="285" width="150" height="202" fill="url(#panel-bg)" />
+      <path d="M 35 285 H 1474" className="panel-keyboard-rule" />
+      <text x="1459" y="61" textAnchor="end" className="panel-wordmark">
         SUMMIT
       </text>
-      <text x="1450" y="51" textAnchor="end" className="panel-submark">
-        16-VOICE POLYPHONIC SYNTHESISER
+      <text x="184" y="278" className="panel-submark">
+        OXFORD OSCILLATORS
+      </text>
+      <text x="1457" y="276" textAnchor="end" className="panel-submark">
+        BI-TIMBRAL POLYPHONIC SYNTHESISER
       </text>
 
-      {summitPanelLayout.sections
-        .filter((section) => !["keyboard", "performance"].includes(section.id))
-        .map((section) => (
-          <g
-            key={section.id}
-            className={`panel-section-group${focusedSectionId === section.id ? " focused" : ""}`}
-            data-section-id={section.id}
-          >
+      {summitPanelLayout.sections.map((section) => (
+        <g
+          key={section.id}
+          className={`panel-section-group${focusedSectionId === section.id ? " focused" : ""}`}
+          data-section-id={section.id}
+        >
+          {focusedSectionId === section.id ? (
             <rect
               x={section.x}
               y={section.y}
               width={section.width}
               height={section.height}
-              rx="2"
-              className="panel-section"
+              rx="1"
+              className="panel-focus-region"
             />
-            <text x={section.x + 4} y={section.y + 10} className="panel-section-label">
-              {section.label}
-            </text>
-          </g>
-        ))}
+          ) : null}
+        </g>
+      ))}
+
+      {summitPanelLayout.serigraphy.map((mark) => (
+        <g key={mark.id} className="panel-serigraphy" data-serigraphy-id={mark.id}>
+          <line x1={mark.x} y1={mark.y} x2={mark.x + mark.width} y2={mark.y} />
+          <text x={mark.x} y={mark.y - 4}>
+            {mark.label}
+          </text>
+        </g>
+      ))}
 
       <SummitOledSvg
         proposal={proposal}
         scope={scope}
-        area={displaySelection?.area}
-        page={displaySelection?.page}
+        area={displayArea}
+        page={displayPage}
+        activeSlot={activeDisplaySlot}
+        selectedDisplayFieldId={selectedDisplayFieldId}
         selectedParameterId={selectedParameterId}
-        x={176}
-        y={55}
-        width={103}
-        height={72}
+        onFieldSelect={onDisplayFieldSelect}
+        x={displayLandmark?.x ?? 164}
+        y={displayLandmark?.y ?? 135}
+        width={displayLandmark?.width ?? 110}
+        height={displayLandmark?.height ?? 44}
       />
 
       {summitPanelLayout.controls.map((control) => {
         if (control.stateOnly) {
+          if (control.id === "menu-value") {
+            return (
+              <SummitValueEncoder
+                key={control.id}
+                id={control.id}
+                label={control.label}
+                valueText={valueEncoderText}
+                x={control.x}
+                y={control.y}
+                size={control.size}
+                active={!valueEncoderDisabled}
+                disabled={valueEncoderDisabled}
+                onSelect={() => {
+                  if (activeDisplayField) onDisplayFieldSelect(activeDisplayField.id);
+                }}
+                onStep={onDisplayValueStep}
+              />
+            );
+          }
+          const rowIndex = control.id.startsWith("menu-row-")
+            ? Number(control.id.replace("menu-row-", "")) - 1
+            : undefined;
+          const rowField =
+            rowIndex !== undefined && Number.isInteger(rowIndex)
+              ? displayFields[rowIndex]
+              : undefined;
+          const isPageLeft = control.id === "menu-page-left";
+          const isPageRight = control.id === "menu-page-right";
+          const displayAreaId = control.displayAreaId;
+          const onHardwareClick = displayAreaId
+            ? () => onDisplayAreaSelect(displayAreaId)
+            : isPageLeft
+              ? () => onDisplayStep(-1)
+              : isPageRight
+                ? () => onDisplayStep(1)
+                : rowField
+                  ? () => onDisplayFieldSelect(rowField.id)
+                  : undefined;
           return (
             <StateOnlyControl
               key={control.id}
@@ -307,6 +463,16 @@ export const SummitPanel = memo(function SummitPanel({
               highlighted={Boolean(
                 highlightedAreaId && control.displayAreaId === highlightedAreaId,
               )}
+              active={Boolean(
+                (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
+                (rowField && rowField.id === selectedDisplayFieldId),
+              )}
+              disabled={Boolean(
+                (isPageLeft && displayAtFirst) ||
+                (isPageRight && displayAtLast) ||
+                (rowIndex !== undefined && !rowField),
+              )}
+              onClick={onHardwareClick}
             />
           );
         }
@@ -394,10 +560,22 @@ export const SummitPanel = memo(function SummitPanel({
         );
       })}
 
-      <SummitPitchWheel id="pitch-wheel" label="Pitch wheel" x={78} y={409} size={72} />
-      <SummitModWheel id="mod-wheel" label="Modulation wheel" x={132} y={409} size={72} />
+      <SummitPitchWheel
+        id="pitch-wheel"
+        label="Pitch wheel"
+        x={pitchWheel ? pitchWheel.x + pitchWheel.width / 2 : 78}
+        y={pitchWheel ? pitchWheel.y + pitchWheel.height / 2 : 372}
+        size={pitchWheel?.height ?? 84}
+      />
+      <SummitModWheel
+        id="mod-wheel"
+        label="Modulation wheel"
+        x={modWheel ? modWheel.x + modWheel.width / 2 : 130}
+        y={modWheel ? modWheel.y + modWheel.height / 2 : 372}
+        size={modWheel?.height ?? 84}
+      />
       <SummitKeyboard />
-      <text x="40" y="513" className="panel-footnote">
+      <text x="38" y="483" className="panel-footnote">
         FIRMWARE {catalogTarget.primaryFirmware} · PATCH ARCHITECT OPERATIONAL MAP
       </text>
     </svg>

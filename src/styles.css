@@ -1859,6 +1859,95 @@ td code {
   }
 }
 
+/* Photo-traced Summit fascia: silkscreen rules replace visual section cards. */
+.summit-panel .panel-section {
+  display: none;
+}
+.panel-focus-region {
+  fill: rgba(89, 181, 228, 0.045);
+  stroke: #7bd4ff;
+  stroke-width: 1.4;
+  stroke-dasharray: 4 2;
+  pointer-events: none;
+}
+.panel-serigraphy {
+  pointer-events: none;
+}
+.panel-serigraphy line {
+  stroke: #48acd4;
+  stroke-width: 0.8;
+  opacity: 0.9;
+}
+.panel-serigraphy text {
+  fill: #d3d9dc;
+  font:
+    750 5px Inter,
+    sans-serif;
+  letter-spacing: 0.025em;
+}
+.panel-wordmark {
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+.panel-submark {
+  fill: #d0d5d8;
+  font-size: 5.2px;
+}
+.panel-display-cluster {
+  pointer-events: auto;
+}
+
+.oled-row-hitbox {
+  fill: transparent;
+  pointer-events: all;
+}
+.oled-svg-row.selectable {
+  cursor: pointer;
+  outline: none;
+}
+.oled-svg-row.selectable:hover .oled-row-selection,
+.oled-svg-row.selectable:focus-visible .oled-row-selection {
+  fill: rgba(19, 50, 32, 0.28);
+}
+.oled-svg-row.selectable:focus-visible .oled-field-svg,
+.oled-svg-row.selectable:focus-visible .oled-value-svg {
+  font-weight: 950;
+}
+.hardware-control[role="button"] {
+  cursor: pointer;
+  pointer-events: auto;
+  outline: none;
+}
+.hardware-control[role="button"]:focus-visible .button-bezel,
+.hardware-control.active .button-bezel {
+  stroke: #8ed8ff;
+  stroke-width: 1.2;
+}
+.hardware-control.active .control-led {
+  fill: #67c5f6;
+  filter: url(#control-glow);
+}
+.hardware-control.disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+.panel-control.disabled {
+  cursor: default;
+  opacity: 0.48;
+}
+.panel-control:hover .control-value {
+  display: block;
+}
+.matrix-table tbody tr {
+  cursor: pointer;
+}
+.matrix-table tbody tr.selected {
+  outline: 1px solid #63b9f1;
+  outline-offset: -1px;
+  background: rgba(69, 146, 193, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

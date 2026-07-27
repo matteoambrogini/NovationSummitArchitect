@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.0.0",
+  "schemaVersion": "2.1.0",
   "viewBox": "0 0 1536 539",
   "geometry": {
     "coordinateSystem": "Summit front elevation, normalized to the 1536 × 539 reference image",
@@ -7,60 +7,155 @@
     "section": "Complete front elevation",
     "page": 1,
     "sourceUrl": "docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
-    "verifiedAt": "2026-07-27"
+    "verifiedAt": "2026-07-27",
+    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference; coordinates are stored without grid interpolation.",
+    "referenceWidth": 1536,
+    "referenceHeight": 539
   },
+  "landmarks": [
+    { "id": "panel", "label": "Complete chassis", "x": 14, "y": 41, "width": 1484, "height": 446 },
+    { "id": "display", "label": "OLED", "x": 164, "y": 135, "width": 110, "height": 44 },
+    { "id": "pitch-wheel", "label": "Pitch wheel", "x": 63, "y": 329, "width": 30, "height": 84 },
+    { "id": "mod-wheel", "label": "Mod wheel", "x": 114, "y": 329, "width": 30, "height": 84 },
+    {
+      "id": "keyboard",
+      "label": "61-key keyboard",
+      "x": 185,
+      "y": 285,
+      "width": 1275,
+      "height": 202
+    },
+    { "id": "master", "label": "Master", "x": 51, "y": 64, "width": 92, "height": 67 },
+    { "id": "voice", "label": "Voice", "x": 321, "y": 64, "width": 139, "height": 58 },
+    { "id": "arp", "label": "Arpeggiator", "x": 321, "y": 128, "width": 139, "height": 140 },
+    {
+      "id": "oscillator-1",
+      "label": "Oscillator 1",
+      "x": 465,
+      "y": 64,
+      "width": 292,
+      "height": 61
+    },
+    {
+      "id": "oscillator-2",
+      "label": "Oscillator 2",
+      "x": 465,
+      "y": 129,
+      "width": 292,
+      "height": 61
+    },
+    {
+      "id": "oscillator-3",
+      "label": "Oscillator 3",
+      "x": 465,
+      "y": 194,
+      "width": 292,
+      "height": 63
+    },
+    { "id": "filter", "label": "Filter", "x": 900, "y": 64, "width": 120, "height": 193 },
+    {
+      "id": "amp-envelope",
+      "label": "Amp Envelope",
+      "x": 1023,
+      "y": 64,
+      "width": 146,
+      "height": 91
+    },
+    {
+      "id": "mod-envelopes",
+      "label": "Mod Envelopes",
+      "x": 1023,
+      "y": 159,
+      "width": 146,
+      "height": 98
+    },
+    { "id": "effects", "label": "Effects", "x": 1297, "y": 64, "width": 168, "height": 193 }
+  ],
+  "serigraphy": [
+    { "id": "master", "label": "MASTER", "x": 52, "y": 65, "width": 92 },
+    { "id": "menu", "label": "MENU", "x": 149, "y": 65, "width": 169 },
+    { "id": "active-voices", "label": "ACTIVE VOICES", "x": 52, "y": 139, "width": 92 },
+    { "id": "multi-part", "label": "MULTI PART CONTROL", "x": 52, "y": 181, "width": 92 },
+    { "id": "multi-mode", "label": "MULTI MODE", "x": 52, "y": 221, "width": 92 },
+    { "id": "animates", "label": "ANIMATES", "x": 52, "y": 253, "width": 92 },
+    { "id": "voice", "label": "VOICE", "x": 321, "y": 65, "width": 139 },
+    { "id": "arp", "label": "ARP", "x": 321, "y": 129, "width": 139 },
+    { "id": "oscillator-1", "label": "OSCILLATOR 1", "x": 465, "y": 65, "width": 292 },
+    { "id": "oscillator-2", "label": "OSCILLATOR 2", "x": 465, "y": 130, "width": 292 },
+    { "id": "oscillator-3", "label": "OSCILLATOR 3", "x": 465, "y": 195, "width": 292 },
+    { "id": "fm", "label": "FM", "x": 760, "y": 65, "width": 60 },
+    { "id": "mixer", "label": "MIXER", "x": 823, "y": 65, "width": 74 },
+    { "id": "filter", "label": "FILTER", "x": 900, "y": 65, "width": 120 },
+    { "id": "amp-envelope", "label": "AMP ENVELOPE", "x": 1023, "y": 65, "width": 146 },
+    { "id": "mod-envelopes", "label": "MOD ENVELOPES", "x": 1023, "y": 160, "width": 146 },
+    { "id": "lfo-1", "label": "LFO 1", "x": 1172, "y": 65, "width": 123 },
+    { "id": "lfo-2", "label": "LFO 2", "x": 1172, "y": 130, "width": 123 },
+    { "id": "global-lfo", "label": "GLOBAL LFO 3&4", "x": 1172, "y": 195, "width": 123 },
+    { "id": "distortion", "label": "DISTORTION", "x": 1298, "y": 65, "width": 70 },
+    { "id": "chorus", "label": "CHORUS", "x": 1371, "y": 65, "width": 94 },
+    { "id": "delay", "label": "DELAY", "x": 1298, "y": 130, "width": 167 },
+    { "id": "effects", "label": "EFFECTS", "x": 1298, "y": 195, "width": 70 },
+    { "id": "reverb", "label": "REVERB", "x": 1371, "y": 195, "width": 94 }
+  ],
   "sections": [
-    { "id": "master", "label": "MASTER", "x": 35, "y": 36, "width": 102, "height": 96 },
+    { "id": "master", "label": "MASTER", "x": 51, "y": 64, "width": 93, "height": 67 },
     {
       "id": "display-menu",
       "label": "DISPLAY / MENU",
-      "x": 141,
-      "y": 36,
+      "x": 149,
+      "y": 64,
       "width": 169,
-      "height": 132
+      "height": 128
     },
-    { "id": "multi-control", "label": "MULTI", "x": 35, "y": 139, "width": 102, "height": 63 },
-    { "id": "animate", "label": "ANIMATE", "x": 35, "y": 207, "width": 102, "height": 61 },
-    { "id": "voice-glide", "label": "VOICE", "x": 315, "y": 36, "width": 121, "height": 63 },
+    { "id": "multi-control", "label": "MULTI", "x": 51, "y": 139, "width": 93, "height": 105 },
+    { "id": "animate", "label": "ANIMATE", "x": 51, "y": 253, "width": 93, "height": 30 },
+    { "id": "voice-glide", "label": "VOICE", "x": 321, "y": 64, "width": 139, "height": 59 },
     {
       "id": "arpeggiator",
       "label": "ARPEGGIATOR",
-      "x": 315,
-      "y": 104,
-      "width": 121,
-      "height": 164
+      "x": 321,
+      "y": 128,
+      "width": 139,
+      "height": 140
     },
-    { "id": "oscillators", "label": "OSCILLATORS", "x": 444, "y": 36, "width": 307, "height": 232 },
-    { "id": "fm", "label": "FM", "x": 754, "y": 36, "width": 67, "height": 232 },
-    { "id": "mixer", "label": "MIXER", "x": 824, "y": 36, "width": 88, "height": 232 },
-    { "id": "filter", "label": "FILTER", "x": 916, "y": 36, "width": 141, "height": 232 },
+    {
+      "id": "oscillators",
+      "label": "OSCILLATORS 1–3",
+      "x": 465,
+      "y": 64,
+      "width": 292,
+      "height": 193
+    },
+    { "id": "fm", "label": "FM", "x": 760, "y": 64, "width": 60, "height": 193 },
+    { "id": "mixer", "label": "MIXER", "x": 823, "y": 64, "width": 74, "height": 193 },
+    { "id": "filter", "label": "FILTER", "x": 900, "y": 64, "width": 120, "height": 193 },
     {
       "id": "amp-envelope",
       "label": "AMP ENVELOPE",
-      "x": 1061,
-      "y": 36,
-      "width": 113,
-      "height": 100
+      "x": 1023,
+      "y": 64,
+      "width": 146,
+      "height": 91
     },
     {
       "id": "mod-envelope",
       "label": "MOD ENVELOPES",
-      "x": 1061,
-      "y": 140,
-      "width": 113,
-      "height": 128
+      "x": 1023,
+      "y": 159,
+      "width": 146,
+      "height": 98
     },
-    { "id": "lfo12", "label": "LFO 1 / 2", "x": 1178, "y": 36, "width": 122, "height": 160 },
-    { "id": "lfo34", "label": "LFO 3 / 4", "x": 1178, "y": 200, "width": 122, "height": 68 },
-    { "id": "effects", "label": "EFFECTS", "x": 1304, "y": 36, "width": 155, "height": 232 },
-    { "id": "performance", "label": "PERFORMANCE", "x": 35, "y": 282, "width": 149, "height": 237 },
+    { "id": "lfo12", "label": "LFO 1 / 2", "x": 1172, "y": 64, "width": 123, "height": 126 },
+    { "id": "lfo34", "label": "GLOBAL LFO 3&4", "x": 1172, "y": 194, "width": 123, "height": 63 },
+    { "id": "effects", "label": "EFFECTS", "x": 1298, "y": 64, "width": 167, "height": 193 },
+    { "id": "performance", "label": "PERFORMANCE", "x": 35, "y": 285, "width": 150, "height": 202 },
     {
       "id": "keyboard",
       "label": "61-KEY KEYBOARD",
       "x": 185,
-      "y": 282,
-      "width": 1274,
-      "height": 237
+      "y": 285,
+      "width": 1275,
+      "height": 202
     }
   ],
   "controls": [
@@ -69,8 +164,8 @@
       "sectionId": "master",
       "label": "Volume",
       "type": "knob",
-      "x": 62,
-      "y": 76,
+      "x": 70,
+      "y": 96,
       "size": 23,
       "stateOnly": true
     },
@@ -79,8 +174,8 @@
       "sectionId": "master",
       "label": "Initialise",
       "type": "button",
-      "x": 101,
-      "y": 66,
+      "x": 108,
+      "y": 80,
       "size": 18,
       "stateOnly": true
     },
@@ -89,8 +184,8 @@
       "sectionId": "master",
       "label": "Compare",
       "type": "button",
-      "x": 101,
-      "y": 99,
+      "x": 136,
+      "y": 80,
       "size": 18,
       "stateOnly": true
     },
@@ -100,8 +195,8 @@
       "sectionId": "display-menu",
       "label": "OSC",
       "type": "button",
-      "x": 153,
-      "y": 61,
+      "x": 179,
+      "y": 87,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "osc"
@@ -111,8 +206,8 @@
       "sectionId": "display-menu",
       "label": "ENV",
       "type": "button",
-      "x": 153,
-      "y": 84,
+      "x": 207,
+      "y": 87,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "env"
@@ -122,8 +217,8 @@
       "sectionId": "display-menu",
       "label": "LFO",
       "type": "button",
-      "x": 153,
-      "y": 107,
+      "x": 235,
+      "y": 87,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "lfo"
@@ -133,8 +228,8 @@
       "sectionId": "display-menu",
       "label": "ARP",
       "type": "button",
-      "x": 153,
-      "y": 130,
+      "x": 263,
+      "y": 87,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "arp-clock"
@@ -144,8 +239,8 @@
       "sectionId": "display-menu",
       "label": "VOICE",
       "type": "button",
-      "x": 297,
-      "y": 61,
+      "x": 207,
+      "y": 108,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "voice-filter"
@@ -155,8 +250,8 @@
       "sectionId": "display-menu",
       "label": "FX",
       "type": "button",
-      "x": 297,
-      "y": 84,
+      "x": 235,
+      "y": 108,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "fx"
@@ -166,8 +261,8 @@
       "sectionId": "display-menu",
       "label": "SETTINGS",
       "type": "button",
-      "x": 297,
-      "y": 107,
+      "x": 291,
+      "y": 108,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "settings"
@@ -177,8 +272,8 @@
       "sectionId": "display-menu",
       "label": "MOD",
       "type": "button",
-      "x": 167,
-      "y": 154,
+      "x": 179,
+      "y": 108,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "mod"
@@ -188,8 +283,8 @@
       "sectionId": "display-menu",
       "label": "1",
       "type": "button",
-      "x": 206,
-      "y": 154,
+      "x": 153,
+      "y": 139,
       "size": 14,
       "stateOnly": true
     },
@@ -198,8 +293,8 @@
       "sectionId": "display-menu",
       "label": "2",
       "type": "button",
-      "x": 225,
-      "y": 154,
+      "x": 153,
+      "y": 156,
       "size": 14,
       "stateOnly": true
     },
@@ -208,28 +303,28 @@
       "sectionId": "display-menu",
       "label": "3",
       "type": "button",
-      "x": 244,
-      "y": 154,
+      "x": 153,
+      "y": 173,
       "size": 14,
       "stateOnly": true
     },
     {
       "id": "menu-page-left",
       "sectionId": "display-menu",
-      "label": "<",
+      "label": "PAGE ◀",
       "type": "button",
-      "x": 263,
-      "y": 154,
+      "x": 207,
+      "y": 187,
       "size": 14,
       "stateOnly": true
     },
     {
       "id": "menu-page-right",
       "sectionId": "display-menu",
-      "label": ">",
+      "label": "PAGE ▶",
       "type": "button",
-      "x": 282,
-      "y": 154,
+      "x": 235,
+      "y": 187,
       "size": 14,
       "stateOnly": true
     },
@@ -238,8 +333,8 @@
       "sectionId": "display-menu",
       "label": "Value",
       "type": "encoder",
-      "x": 292,
-      "y": 133,
+      "x": 295,
+      "y": 155,
       "size": 17,
       "stateOnly": true
     },
@@ -248,8 +343,8 @@
       "sectionId": "display-menu",
       "label": "FX MOD",
       "type": "button",
-      "x": 187,
-      "y": 154,
+      "x": 263,
+      "y": 108,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "fx-mod"
@@ -260,8 +355,8 @@
       "sectionId": "multi-control",
       "label": "A",
       "type": "button",
-      "x": 51,
-      "y": 162,
+      "x": 68,
+      "y": 167,
       "size": 15,
       "stateOnly": true
     },
@@ -270,8 +365,8 @@
       "sectionId": "multi-control",
       "label": "B",
       "type": "button",
-      "x": 72,
-      "y": 162,
+      "x": 97,
+      "y": 167,
       "size": 15,
       "stateOnly": true
     },
@@ -281,8 +376,8 @@
       "parameterId": "multi.mode",
       "label": "Layer",
       "type": "button",
-      "x": 55,
-      "y": 187,
+      "x": 68,
+      "y": 211,
       "size": 15
     },
     {
@@ -292,8 +387,8 @@
       "parameterIds": ["multi.mode", "multi.splitPoint"],
       "label": "Split",
       "type": "button",
-      "x": 85,
-      "y": 187,
+      "x": 97,
+      "y": 211,
       "size": 15
     },
     {
@@ -302,8 +397,8 @@
       "parameterId": "multi.mode",
       "label": "Dual",
       "type": "button",
-      "x": 115,
-      "y": 187,
+      "x": 126,
+      "y": 211,
       "size": 15
     },
     {
@@ -311,8 +406,8 @@
       "sectionId": "animate",
       "label": "Animate 1",
       "type": "button",
-      "x": 65,
-      "y": 239,
+      "x": 68,
+      "y": 271,
       "size": 22,
       "stateOnly": true
     },
@@ -321,8 +416,8 @@
       "sectionId": "animate",
       "label": "Animate 2",
       "type": "button",
-      "x": 108,
-      "y": 239,
+      "x": 98,
+      "y": 271,
       "size": 22,
       "stateOnly": true
     },
@@ -333,8 +428,8 @@
       "parameterId": "voice.mode",
       "label": "Mode",
       "type": "selector",
-      "x": 336,
-      "y": 70,
+      "x": 340,
+      "y": 91,
       "size": 19
     },
     {
@@ -343,8 +438,8 @@
       "parameterId": "glide.enabled",
       "label": "Glide",
       "type": "button",
-      "x": 377,
-      "y": 70,
+      "x": 381,
+      "y": 91,
       "size": 17
     },
     {
@@ -353,8 +448,8 @@
       "parameterId": "glide.time",
       "label": "Time",
       "type": "knob",
-      "x": 416,
-      "y": 70,
+      "x": 422,
+      "y": 91,
       "size": 19
     },
     {
@@ -906,8 +1001,8 @@
       "label": "A",
       "type": "slider",
       "x": 1075,
-      "y": 88,
-      "size": 46
+      "y": 110,
+      "size": 70
     },
     {
       "id": "amp-decay",
@@ -916,8 +1011,8 @@
       "label": "D",
       "type": "slider",
       "x": 1103,
-      "y": 88,
-      "size": 46
+      "y": 110,
+      "size": 70
     },
     {
       "id": "amp-sustain",
@@ -926,8 +1021,8 @@
       "label": "S",
       "type": "slider",
       "x": 1131,
-      "y": 88,
-      "size": 46
+      "y": 110,
+      "size": 70
     },
     {
       "id": "amp-release",
@@ -936,8 +1031,8 @@
       "label": "R",
       "type": "slider",
       "x": 1159,
-      "y": 88,
-      "size": 46
+      "y": 110,
+      "size": 70
     },
     {
       "id": "mod-envelope-select",
@@ -945,7 +1040,7 @@
       "label": "1 / 2",
       "type": "selector",
       "x": 1077,
-      "y": 166,
+      "y": 180,
       "size": 16,
       "stateOnly": true
     },
@@ -957,8 +1052,8 @@
       "label": "A",
       "type": "slider",
       "x": 1077,
-      "y": 219,
-      "size": 58
+      "y": 210,
+      "size": 78
     },
     {
       "id": "mod-envelope-decay",
@@ -968,8 +1063,8 @@
       "label": "D",
       "type": "slider",
       "x": 1104,
-      "y": 219,
-      "size": 58
+      "y": 210,
+      "size": 78
     },
     {
       "id": "mod-envelope-sustain",
@@ -979,8 +1074,8 @@
       "label": "S",
       "type": "slider",
       "x": 1131,
-      "y": 219,
-      "size": 58
+      "y": 210,
+      "size": 78
     },
     {
       "id": "mod-envelope-release",
@@ -990,8 +1085,8 @@
       "label": "R",
       "type": "slider",
       "x": 1158,
-      "y": 219,
-      "size": 58
+      "y": 210,
+      "size": 78
     },
     {
       "id": "envelope-loop",
@@ -1001,7 +1096,7 @@
       "label": "Loop",
       "type": "button",
       "x": 1157,
-      "y": 160,
+      "y": 180,
       "size": 14
     },
 
@@ -1012,7 +1107,7 @@
       "label": "Type 1",
       "type": "selector",
       "x": 1195,
-      "y": 75,
+      "y": 92,
       "size": 17
     },
     {
@@ -1022,7 +1117,7 @@
       "label": "Fade 1",
       "type": "knob",
       "x": 1224,
-      "y": 75,
+      "y": 92,
       "size": 17
     },
     {
@@ -1032,7 +1127,7 @@
       "label": "Range 1",
       "type": "selector",
       "x": 1254,
-      "y": 75,
+      "y": 92,
       "size": 17
     },
     {
@@ -1043,7 +1138,7 @@
       "label": "Rate 1",
       "type": "knob",
       "x": 1284,
-      "y": 75,
+      "y": 92,
       "size": 18
     },
     {
@@ -1053,7 +1148,7 @@
       "label": "Type 2",
       "type": "selector",
       "x": 1195,
-      "y": 150,
+      "y": 157,
       "size": 17
     },
     {
@@ -1063,7 +1158,7 @@
       "label": "Fade 2",
       "type": "knob",
       "x": 1224,
-      "y": 150,
+      "y": 157,
       "size": 17
     },
     {
@@ -1073,7 +1168,7 @@
       "label": "Range 2",
       "type": "selector",
       "x": 1254,
-      "y": 150,
+      "y": 157,
       "size": 17
     },
     {
@@ -1084,7 +1179,7 @@
       "label": "Rate 2",
       "type": "knob",
       "x": 1284,
-      "y": 150,
+      "y": 157,
       "size": 18
     },
     {
@@ -1093,7 +1188,7 @@
       "label": "3 / 4",
       "type": "selector",
       "x": 1195,
-      "y": 235,
+      "y": 222,
       "size": 16,
       "stateOnly": true
     },
@@ -1104,7 +1199,7 @@
       "label": "Type",
       "type": "selector",
       "x": 1225,
-      "y": 235,
+      "y": 222,
       "size": 17
     },
     {
@@ -1114,7 +1209,7 @@
       "label": "Rate",
       "type": "knob",
       "x": 1255,
-      "y": 235,
+      "y": 222,
       "size": 18
     },
     {
@@ -1124,7 +1219,7 @@
       "label": "Sync",
       "type": "button",
       "x": 1285,
-      "y": 235,
+      "y": 222,
       "size": 15
     },
 
@@ -1135,7 +1230,7 @@
       "label": "Distortion",
       "type": "knob",
       "x": 1323,
-      "y": 76,
+      "y": 92,
       "size": 18
     },
     {
@@ -1145,7 +1240,7 @@
       "label": "Chorus",
       "type": "knob",
       "x": 1362,
-      "y": 76,
+      "y": 92,
       "size": 18
     },
     {
@@ -1155,7 +1250,7 @@
       "label": "Rate",
       "type": "knob",
       "x": 1401,
-      "y": 76,
+      "y": 92,
       "size": 18
     },
     {
@@ -1165,7 +1260,7 @@
       "label": "Type",
       "type": "selector",
       "x": 1440,
-      "y": 76,
+      "y": 92,
       "size": 17
     },
     {
@@ -1175,7 +1270,7 @@
       "label": "Delay",
       "type": "knob",
       "x": 1323,
-      "y": 143,
+      "y": 157,
       "size": 18
     },
     {
@@ -1186,7 +1281,7 @@
       "label": "Time",
       "type": "knob",
       "x": 1362,
-      "y": 143,
+      "y": 157,
       "size": 18
     },
     {
@@ -1196,7 +1291,7 @@
       "label": "Feedback",
       "type": "knob",
       "x": 1401,
-      "y": 143,
+      "y": 157,
       "size": 18
     },
     {
@@ -1206,7 +1301,7 @@
       "label": "Sync",
       "type": "button",
       "x": 1440,
-      "y": 143,
+      "y": 157,
       "size": 15
     },
     {
@@ -1216,7 +1311,7 @@
       "label": "Reverb",
       "type": "knob",
       "x": 1323,
-      "y": 211,
+      "y": 222,
       "size": 18
     },
     {
@@ -1226,7 +1321,7 @@
       "label": "Time",
       "type": "knob",
       "x": 1362,
-      "y": 211,
+      "y": 222,
       "size": 18
     },
     {
@@ -1236,7 +1331,7 @@
       "label": "Size",
       "type": "selector",
       "x": 1401,
-      "y": 211,
+      "y": 222,
       "size": 17
     },
     {
@@ -1246,7 +1341,7 @@
       "label": "Bypass",
       "type": "button",
       "x": 1440,
-      "y": 211,
+      "y": 222,
       "size": 15
     },
 

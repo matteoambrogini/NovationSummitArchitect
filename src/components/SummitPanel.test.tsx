@@ -12,8 +12,17 @@ describe("SummitPanel", () => {
         proposal={demoProposals[0]!}
         scope="single"
         selectedParameterId={undefined}
+        activeDisplayAreaId="osc"
+        activeDisplayPage={1}
+        selectedDisplayFieldId="diverge"
+        activeModulationSlot={1}
+        activeFxModulationSlot={1}
         onSelect={onSelect}
         onChange={onChange}
+        onDisplayAreaSelect={vi.fn()}
+        onDisplayStep={vi.fn()}
+        onDisplayFieldSelect={vi.fn()}
+        onDisplayValueStep={vi.fn()}
       />,
     );
     const control = screen.getByRole("slider", { name: "Frequency: 185" });

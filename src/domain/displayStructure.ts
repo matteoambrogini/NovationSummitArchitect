@@ -1,6 +1,8 @@
 import {
   displayLocationByParameterId,
   displayStructure,
+  fxModulationCatalog,
+  modulationCatalog,
   parameterById,
   type SummitDisplayArea,
   type SummitDisplayField,
@@ -23,6 +25,9 @@ export type DisplaySelection = {
 };
 
 export type SetupFilter = "all" | "physical" | "menu";
+export type MatrixDisplayAreaId = "mod" | "fx-mod";
+export type MatrixDisplayFieldId = "sourceA" | "sourceB" | "destination" | "depth";
+export type MatrixDisplayValue = string | number;
 
 export type PatchSetupItem = {
   id: string;
@@ -41,10 +46,99 @@ export type PatchSetupItem = {
 export const observedPageAreas = displayStructure.areas.filter(
   (area) => area.kind === "pages" && area.patchRelevant,
 );
+export const patchDisplayAreas = displayStructure.areas.filter((area) => area.patchRelevant);
+
+export function isMatrixDisplayAreaId(areaId: string): areaId is MatrixDisplayAreaId {
+  return areaId === "mod" || areaId === "fx-mod";
+}
+
+export function isMatrixDisplayFieldId(fieldId: string): fieldId is MatrixDisplayFieldId {
+  return (
+    fieldId === "sourceA" ||
+    fieldId === "sourceB" ||
+    fieldId === "destination" ||
+    fieldId === "depth"
+  );
+}
+
+export function getDisplayArea(areaId: string): SummitDisplayArea {
+  return (
+    displayStructure.areas.find((area) => area.id === areaId) ??
+    observedPageAreas[0] ??
+    (() => {
+      throw new Error("La struttura display non contiene aree navigabili");
+    })()
+  );
+}
+
+export function boundedDisplayPage(area: SummitDisplayArea, page: number): number {
+  if (area.kind !== "pages") return 1;
+  return Math.max(1, Math.min(area.pages.length, page));
+}
+
+export function firstMappedDisplayField(
+  area: SummitDisplayArea,
+  page: number,
+): SummitDisplayField | undefined {
+  if (area.kind !== "pages") return undefined;
+  return area.pages
+    .find((candidate) => candidate.page === boundedDisplayPage(area, page))
+    ?.fields.find((field) => field.parameterId);
+}
 
 export function getDisplaySelection(parameterId?: string): DisplaySelection | undefined {
   if (!parameterId) return undefined;
   return displayLocationByParameterId.get(parameterId);
+}
+
+export function getMatrixAssignment(
+  proposal: SummitPatchProposal,
+  scope: PatchScope,
+  areaId: MatrixDisplayAreaId,
+  slot: number,
+) {
+  const part = getScopePart(proposal, scope);
+  const kind = areaId === "mod" ? "mod" : "fx";
+  const assignments = areaId === "mod" ? part.modulationMatrix : part.fxModulationMatrix;
+  return completeMatrixSlots(assignments, kind)[slot - 1];
+}
+
+export function getMatrixFieldValue(
+  proposal: SummitPatchProposal,
+  scope: PatchScope,
+  areaId: MatrixDisplayAreaId,
+  slot: number,
+  fieldId: MatrixDisplayFieldId,
+): MatrixDisplayValue {
+  const assignment = getMatrixAssignment(proposal, scope, areaId, slot);
+  if (!assignment) return fieldId === "depth" ? 0 : "direct";
+  if (fieldId === "sourceB") return assignment.sourceB ?? "direct";
+  return assignment[fieldId];
+}
+
+export function stepMatrixFieldValue(
+  proposal: SummitPatchProposal,
+  scope: PatchScope,
+  areaId: MatrixDisplayAreaId,
+  slot: number,
+  fieldId: MatrixDisplayFieldId,
+  direction: -1 | 1,
+  multiplier = 1,
+): MatrixDisplayValue {
+  const catalog = areaId === "mod" ? modulationCatalog : fxModulationCatalog;
+  const current = getMatrixFieldValue(proposal, scope, areaId, slot, fieldId);
+  if (fieldId === "depth") {
+    const [minimum, maximum] = catalog.depthRange;
+    const numeric = typeof current === "number" ? current : 0;
+    return Math.max(minimum, Math.min(maximum, numeric + direction * multiplier));
+  }
+  const entities = fieldId === "destination" ? catalog.destinations : catalog.sources;
+  const ids = entities
+    .filter((entity) => entity.verificationStatus === "verified")
+    .map((entity) => entity.id);
+  const currentIndex = Math.max(0, ids.indexOf(String(current)));
+  const nextIndex = Math.max(0, Math.min(ids.length - 1, currentIndex + direction * multiplier));
+  return ids[nextIndex] ?? String(current);
 }
 
 export function getDisplayFieldValue(

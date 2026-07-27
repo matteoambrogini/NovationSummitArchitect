@@ -23,6 +23,16 @@ export type LayoutSection = {
   height: number;
 };
 
+export type LayoutLandmark = LayoutSection;
+
+export type LayoutSerigraphy = {
+  id: string;
+  label: string;
+  x: number;
+  y: number;
+  width: number;
+};
+
 export const summitPanelLayout = layoutJson as {
   schemaVersion: string;
   viewBox: string;
@@ -33,10 +43,19 @@ export const summitPanelLayout = layoutJson as {
     page: number;
     sourceUrl: string;
     verifiedAt: string;
+    measurementMethod: string;
+    referenceWidth: number;
+    referenceHeight: number;
   };
+  landmarks: LayoutLandmark[];
+  serigraphy: LayoutSerigraphy[];
   sections: LayoutSection[];
   controls: LayoutControl[];
 };
+
+export const panelLandmarkById = new Map(
+  summitPanelLayout.landmarks.map((landmark) => [landmark.id, landmark]),
+);
 
 export const panelRenderStats = {
   total: summitPanelLayout.controls.length,

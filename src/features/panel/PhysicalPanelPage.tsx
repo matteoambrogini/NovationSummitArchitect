@@ -1,10 +1,18 @@
-import { useMemo, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
 import { SummitPanel } from "../../components/SummitPanel";
 import { panelRenderStats, summitPanelLayout } from "../../components/SummitPanelLayout";
-import { buildPatchSetupChecklist, type SetupFilter } from "../../domain/displayStructure";
+import { stepControlValue } from "../../components/panel-controls/controlMath";
+import { displayAreaById, parameterById } from "../../domain/catalog";
+import {
+  buildPatchSetupChecklist,
+  isMatrixDisplayAreaId,
+  isMatrixDisplayFieldId,
+  stepMatrixFieldValue,
+  type SetupFilter,
+} from "../../domain/displayStructure";
 import { changedParameterIds } from "../../domain/patchDelta";
-import { getScopePart } from "../../domain/patchUi";
+import { getScopePart, getSetting } from "../../domain/patchUi";
 import { selectActiveProposal, selectIsDirty, useAppStore } from "../../stores/useAppStore";
 import { ParameterInspector } from "./ParameterInspector";
 
@@ -16,6 +24,17 @@ export function PhysicalPanelPage() {
   const proposals = useAppStore((state) => state.proposals);
   const selectedParameterId = useAppStore((state) => state.selectedParameterId);
   const selectParameter = useAppStore((state) => state.selectParameter);
+  const activeDisplayAreaId = useAppStore((state) => state.activeDisplayAreaId);
+  const activeDisplayPage = useAppStore((state) => state.activeDisplayPage);
+  const selectedDisplayFieldId = useAppStore((state) => state.selectedDisplayFieldId);
+  const activeModulationSlot = useAppStore((state) => state.activeModulationSlot);
+  const activeFxModulationSlot = useAppStore((state) => state.activeFxModulationSlot);
+  const selectDisplayArea = useAppStore((state) => state.selectDisplayArea);
+  const stepDisplayPage = useAppStore((state) => state.stepDisplayPage);
+  const selectDisplayField = useAppStore((state) => state.selectDisplayField);
+  const setDisplaySlot = useAppStore((state) => state.setDisplaySlot);
+  const stepDisplaySlot = useAppStore((state) => state.stepDisplaySlot);
+  const setMatrixFieldValue = useAppStore((state) => state.setMatrixFieldValue);
   const setParameterValue = useAppStore((state) => state.setParameterValue);
   const activeScope = useAppStore((state) => state.activeScope);
   const setActiveScope = useAppStore((state) => state.setActiveScope);
@@ -52,6 +71,15 @@ export function PhysicalPanelPage() {
   const setupParameterId = instruction?.parameterIds[0];
   const effectiveSelectedParameterId =
     setupMode && setupParameterId ? setupParameterId : selectedParameterId;
+
+  useEffect(() => {
+    if (!setupMode || !instruction) return;
+    if (instruction.slot && (instruction.areaId === "mod" || instruction.areaId === "fx-mod")) {
+      setDisplaySlot(instruction.areaId, instruction.slot);
+      return;
+    }
+    if (setupParameterId) selectParameter(setupParameterId);
+  }, [instruction, selectParameter, setDisplaySlot, setupMode, setupParameterId]);
 
   if (!proposal) {
     return (
@@ -103,7 +131,10 @@ export function PhysicalPanelPage() {
     });
   };
   const beginPan = (event: PointerEvent<HTMLDivElement>) => {
-    if ((event.target as Element).closest(".panel-control")) return;
+    if (
+      (event.target as Element).closest(".panel-control, .hardware-control, .panel-display-cluster")
+    )
+      return;
     const current = viewport.current;
     if (!current) return;
     current.setPointerCapture(event.pointerId);
@@ -131,6 +162,50 @@ export function PhysicalPanelPage() {
   };
 
   const part = getScopePart(proposal, activeScope);
+  const activeDisplayArea = displayAreaById.get(activeDisplayAreaId);
+  const activeDisplayPageDefinition =
+    activeDisplayArea?.kind === "pages"
+      ? activeDisplayArea.pages.find((page) => page.page === activeDisplayPage)
+      : undefined;
+  const activeDisplayFields =
+    activeDisplayArea?.kind === "slots"
+      ? (activeDisplayArea.slotFields ?? [])
+      : (activeDisplayPageDefinition?.fields ?? []);
+  const activeDisplayField = activeDisplayFields.find(
+    (field) => field.id === selectedDisplayFieldId,
+  );
+  const stepDisplayValue = (steps: number) => {
+    if (!activeDisplayField || steps === 0) return;
+    const direction: -1 | 1 = steps > 0 ? 1 : -1;
+    const multiplier = Math.abs(steps);
+    if (
+      activeDisplayArea &&
+      isMatrixDisplayAreaId(activeDisplayArea.id) &&
+      isMatrixDisplayFieldId(activeDisplayField.id)
+    ) {
+      const slot = activeDisplayArea.id === "mod" ? activeModulationSlot : activeFxModulationSlot;
+      const fieldId = activeDisplayField.id;
+      const next = stepMatrixFieldValue(
+        proposal,
+        activeScope,
+        activeDisplayArea.id,
+        slot,
+        fieldId,
+        direction,
+        multiplier,
+      );
+      setMatrixFieldValue(activeDisplayArea.id, slot, fieldId, next);
+      return;
+    }
+    if (!activeDisplayField.parameterId) return;
+    const definition = parameterById.get(activeDisplayField.parameterId);
+    const setting = getSetting(proposal, activeDisplayField.parameterId, activeScope);
+    if (!definition || !setting || definition.scope === "global") return;
+    setParameterValue(
+      activeDisplayField.parameterId,
+      stepControlValue(definition, setting.value, direction, multiplier),
+    );
+  };
   const jsonPreview = JSON.stringify(
     {
       patch: proposal.patch,
@@ -267,6 +342,20 @@ export function PhysicalPanelPage() {
                 Reset zoom
               </button>
               <button
+                className="tool-button text"
+                aria-label="Zoom 125%"
+                onClick={() => setZoom(1.25)}
+              >
+                125%
+              </button>
+              <button
+                className="tool-button text"
+                aria-label="Zoom 150%"
+                onClick={() => setZoom(1.5)}
+              >
+                150%
+              </button>
+              <button
                 className={`tool-button text${showInfoOverlay ? " active" : ""}`}
                 aria-pressed={showInfoOverlay}
                 onClick={() => setShowInfoOverlay((value) => !value)}
@@ -332,6 +421,11 @@ export function PhysicalPanelPage() {
                   proposal={proposal}
                   scope={activeScope}
                   selectedParameterId={effectiveSelectedParameterId}
+                  activeDisplayAreaId={activeDisplayAreaId}
+                  activeDisplayPage={activeDisplayPage}
+                  selectedDisplayFieldId={selectedDisplayFieldId}
+                  activeModulationSlot={activeModulationSlot}
+                  activeFxModulationSlot={activeFxModulationSlot}
                   changedIds={changedIds}
                   highlightedIds={setupMode ? (instruction?.parameterIds ?? []) : []}
                   highlightedAreaId={
@@ -341,6 +435,16 @@ export function PhysicalPanelPage() {
                   showInfoOverlay={showInfoOverlay}
                   onSelect={selectParameter}
                   onChange={setParameterValue}
+                  onDisplayAreaSelect={selectDisplayArea}
+                  onDisplayStep={(direction) => {
+                    if (isMatrixDisplayAreaId(activeDisplayAreaId)) {
+                      stepDisplaySlot(direction);
+                    } else {
+                      stepDisplayPage(direction);
+                    }
+                  }}
+                  onDisplayFieldSelect={selectDisplayField}
+                  onDisplayValueStep={stepDisplayValue}
                 />
               </div>
             </div>

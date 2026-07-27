@@ -10,8 +10,8 @@ import {
 } from "../../domain/catalog";
 import {
   buildPatchSetupChecklist,
-  getDisplaySelection,
-  observedPageAreas,
+  isMatrixDisplayAreaId,
+  patchDisplayAreas,
   type SetupFilter,
 } from "../../domain/displayStructure";
 import {
@@ -36,19 +36,34 @@ export function MenusPage() {
   const activeScope = useAppStore((state) => state.activeScope);
   const setActiveScope = useAppStore((state) => state.setActiveScope);
   const selectedParameterId = useAppStore((state) => state.selectedParameterId);
-  const selectParameter = useAppStore((state) => state.selectParameter);
+  const activeDisplayAreaId = useAppStore((state) => state.activeDisplayAreaId);
+  const activeDisplayPage = useAppStore((state) => state.activeDisplayPage);
+  const selectedDisplayFieldId = useAppStore((state) => state.selectedDisplayFieldId);
+  const activeModulationSlot = useAppStore((state) => state.activeModulationSlot);
+  const activeFxModulationSlot = useAppStore((state) => state.activeFxModulationSlot);
+  const selectDisplayArea = useAppStore((state) => state.selectDisplayArea);
+  const setDisplayPage = useAppStore((state) => state.setDisplayPage);
+  const selectDisplayField = useAppStore((state) => state.selectDisplayField);
+  const setDisplaySlot = useAppStore((state) => state.setDisplaySlot);
   const [view, setView] = useState<MenuView>("browser");
-  const [fallbackAreaId, setFallbackAreaId] = useState("osc");
-  const [fallbackPageNumber, setFallbackPageNumber] = useState(1);
   const [checklistFilter, setChecklistFilter] = useState<SetupFilter>("all");
   const [checklistOnlyModified, setChecklistOnlyModified] = useState(false);
 
-  const selectedLocation = getDisplaySelection(selectedParameterId);
-  const selectedAreaId = selectedLocation?.area.id ?? fallbackAreaId;
-  const selectedPageNumber = selectedLocation?.page.page ?? fallbackPageNumber;
-  const selectedArea = displayAreaById.get(selectedAreaId) ?? observedPageAreas[0]!;
+  const selectedArea = displayAreaById.get(activeDisplayAreaId) ?? patchDisplayAreas[0]!;
   const selectedPage =
-    selectedArea.pages.find((page) => page.page === selectedPageNumber) ?? selectedArea.pages[0];
+    selectedArea.kind === "pages"
+      ? (selectedArea.pages.find((page) => page.page === activeDisplayPage) ??
+        selectedArea.pages[0])
+      : undefined;
+  const selectedSlot =
+    activeDisplayAreaId === "mod"
+      ? activeModulationSlot
+      : activeDisplayAreaId === "fx-mod"
+        ? activeFxModulationSlot
+        : undefined;
+  const selectedField = (
+    selectedArea.kind === "slots" ? selectedArea.slotFields : selectedPage?.fields
+  )?.find((field) => field.id === selectedDisplayFieldId);
 
   const selectedDefinition = selectedParameterId
     ? parameterById.get(selectedParameterId)
@@ -106,15 +121,12 @@ export function MenusPage() {
     ]),
   );
 
-  const changePage = (next: number) => {
-    const bounded = Math.max(1, Math.min(selectedArea.pages.length, next));
-    setFallbackAreaId(selectedArea.id);
-    setFallbackPageNumber(bounded);
-    const firstMapped = selectedArea.pages
-      .find((page) => page.page === bounded)
-      ?.fields.find((field) => field.parameterId);
-    if (firstMapped?.parameterId) selectParameter(firstMapped.parameterId);
-    else selectParameter(undefined);
+  const changeDisplayPosition = (next: number) => {
+    if (isMatrixDisplayAreaId(selectedArea.id)) {
+      setDisplaySlot(selectedArea.id, next);
+    } else {
+      setDisplayPage(next);
+    }
   };
 
   return (
@@ -124,8 +136,8 @@ export function MenusPage() {
           <span className="eyebrow accent">DISPLAY & MENU · FIRMWARE 2.1 OBSERVED MAP</span>
           <h1>Display, percorsi e checklist</h1>
           <p>
-            45 pagine osservate nell’intero video, 119 campi visibili e 20 slot di matrice.
-            Posizione OLED e identità del parametro restano modelli separati.
+            45 pagine osservate nell’intero video, 119 campi visibili e 20 slot di matrice. Pannello
+            fisico, OLED, browser e Setup Mode condividono un unico stato di navigazione.
           </p>
         </div>
         <div className="panel-heading-actions">
@@ -153,19 +165,18 @@ export function MenusPage() {
           <aside className="card display-area-browser">
             <span className="eyebrow">AREA BUTTON</span>
             <div className="display-area-list">
-              {observedPageAreas.map((area) => (
+              {patchDisplayAreas.map((area) => (
                 <button
                   key={area.id}
                   className={area.id === selectedArea.id ? "active" : ""}
-                  onClick={() => {
-                    setFallbackAreaId(area.id);
-                    setFallbackPageNumber(1);
-                    const first = area.pages[0]?.fields.find((field) => field.parameterId);
-                    if (first?.parameterId) selectParameter(first.parameterId);
-                  }}
+                  onClick={() => selectDisplayArea(area.id)}
                 >
                   <strong>{area.physicalButton}</strong>
-                  <span>{area.pages.length} pagine</span>
+                  <span>
+                    {area.kind === "slots"
+                      ? `${area.slotCount} slot`
+                      : `${area.pages.length} pagine`}
+                  </span>
                 </button>
               ))}
             </div>
@@ -184,38 +195,68 @@ export function MenusPage() {
               scope={activeScope}
               area={selectedArea}
               page={selectedPage}
+              activeSlot={selectedSlot}
+              selectedDisplayFieldId={selectedDisplayFieldId}
               selectedParameterId={selectedParameterId}
-              onSelect={selectParameter}
+              onFieldSelect={selectDisplayField}
             />
             <div className="oled-hardware-navigation">
               <button
-                aria-label="Pagina precedente"
-                disabled={selectedPageNumber <= 1}
-                onClick={() => changePage(selectedPageNumber - 1)}
+                aria-label={selectedArea.kind === "slots" ? "Slot precedente" : "Pagina precedente"}
+                disabled={
+                  selectedArea.kind === "slots" ? (selectedSlot ?? 1) <= 1 : activeDisplayPage <= 1
+                }
+                onClick={() =>
+                  changeDisplayPosition(
+                    selectedArea.kind === "slots" ? (selectedSlot ?? 1) - 1 : activeDisplayPage - 1,
+                  )
+                }
               >
-                PAGE ◀
+                {selectedArea.kind === "slots" ? "SLOT ◀" : "PAGE ◀"}
               </button>
               <span>
-                {selectedArea.displayLabel} · {selectedPageNumber}/{selectedArea.pages.length}
+                {selectedArea.displayLabel} ·{" "}
+                {selectedArea.kind === "slots"
+                  ? `${selectedSlot ?? 1}/${selectedArea.slotCount}`
+                  : `${activeDisplayPage}/${selectedArea.pages.length}`}
               </span>
               <button
-                aria-label="Pagina successiva"
-                disabled={selectedPageNumber >= selectedArea.pages.length}
-                onClick={() => changePage(selectedPageNumber + 1)}
+                aria-label={selectedArea.kind === "slots" ? "Slot successivo" : "Pagina successiva"}
+                disabled={
+                  selectedArea.kind === "slots"
+                    ? (selectedSlot ?? 1) >= (selectedArea.slotCount ?? 1)
+                    : activeDisplayPage >= selectedArea.pages.length
+                }
+                onClick={() =>
+                  changeDisplayPosition(
+                    selectedArea.kind === "slots" ? (selectedSlot ?? 1) + 1 : activeDisplayPage + 1,
+                  )
+                }
               >
-                PAGE ▶
+                {selectedArea.kind === "slots" ? "SLOT ▶" : "PAGE ▶"}
               </button>
             </div>
             <div
               className="display-page-dots"
-              aria-label={`Pagina ${selectedPageNumber} di ${selectedArea.pages.length}`}
+              aria-label={
+                selectedArea.kind === "slots"
+                  ? `Slot ${selectedSlot ?? 1} di ${selectedArea.slotCount}`
+                  : `Pagina ${activeDisplayPage} di ${selectedArea.pages.length}`
+              }
             >
-              {selectedArea.pages.map((page) => (
+              {(selectedArea.kind === "slots"
+                ? Array.from({ length: selectedArea.slotCount ?? 0 }, (_, index) => index + 1)
+                : selectedArea.pages.map((page) => page.page)
+              ).map((position) => (
                 <button
-                  key={page.page}
-                  aria-label={`Pagina ${page.page}`}
-                  className={page.page === selectedPageNumber ? "active" : ""}
-                  onClick={() => changePage(page.page)}
+                  key={position}
+                  aria-label={`${selectedArea.kind === "slots" ? "Slot" : "Pagina"} ${position}`}
+                  className={
+                    position === (selectedArea.kind === "slots" ? selectedSlot : activeDisplayPage)
+                      ? "active"
+                      : ""
+                  }
+                  onClick={() => changeDisplayPosition(position)}
                 />
               ))}
             </div>
@@ -225,7 +266,12 @@ export function MenusPage() {
             <span className="eyebrow">
               {navigation ? "PERCORSO OPERATIVO GENERATO" : "CAMPO NON ASSOCIATO"}
             </span>
-            <h2>{selectedDefinition?.label ?? selectedPage?.displayTitle ?? "—"}</h2>
+            <h2>
+              {selectedDefinition?.label ??
+                selectedField?.displayLabel ??
+                selectedPage?.displayTitle ??
+                selectedArea.displayLabel}
+            </h2>
             {navigation ? (
               <>
                 <p className="operation-instruction">
@@ -278,6 +324,12 @@ export function MenusPage() {
                   </div>
                 </dl>
               </>
+            ) : selectedArea.kind === "slots" ? (
+              <p>
+                {selectedArea.displayLabel} · slot {selectedSlot ?? 1} · campo{" "}
+                <strong>{selectedField?.displayLabel ?? "Source A"}</strong>. La stessa selezione è
+                attiva sul display incorporato e sul Value encoder del pannello fisico.
+              </p>
             ) : (
               <p>
                 Seleziona un campo catalog-bound. I campi Wave/Save di USER WAVES e Status di CLOCK
@@ -363,6 +415,8 @@ export function MenusPage() {
             slots={modSlots}
             sourceById={modSourceById}
             destinationById={modDestinationById}
+            activeSlot={activeModulationSlot}
+            onSelectSlot={(slot) => setDisplaySlot("mod", slot)}
           />
           <MatrixTable
             title="FX Mod Matrix"
@@ -370,6 +424,8 @@ export function MenusPage() {
             slots={fxSlots}
             sourceById={fxSourceById}
             destinationById={fxDestinationById}
+            activeSlot={activeFxModulationSlot}
+            onSelectSlot={(slot) => setDisplaySlot("fx-mod", slot)}
             fx
           />
         </div>
@@ -420,6 +476,8 @@ function MatrixTable({
   slots,
   sourceById,
   destinationById,
+  activeSlot,
+  onSelectSlot,
   fx = false,
 }: {
   title: string;
@@ -427,6 +485,8 @@ function MatrixTable({
   slots: ReturnType<typeof completeMatrixSlots>;
   sourceById: ReadonlyMap<string, string>;
   destinationById: ReadonlyMap<string, string>;
+  activeSlot: number;
+  onSelectSlot: (slot: number) => void;
   fx?: boolean;
 }) {
   return (
@@ -454,7 +514,16 @@ function MatrixTable({
             {slots.map((assignment) => {
               const active = assignment.depth !== 0;
               return (
-                <tr key={assignment.slot} className={active ? "matrix-active" : "matrix-empty"}>
+                <tr
+                  key={assignment.slot}
+                  className={[
+                    active ? "matrix-active" : "matrix-empty",
+                    activeSlot === assignment.slot ? "selected" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  onClick={() => onSelectSlot(assignment.slot)}
+                >
                   <td>
                     <span className={`slot-number${fx ? " purple" : ""}`}>{assignment.slot}</span>
                   </td>
