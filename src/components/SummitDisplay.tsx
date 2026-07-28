@@ -1,3 +1,4 @@
+import type { MouseEvent, PointerEvent } from "react";
 import type { SummitDisplayArea, SummitDisplayField, SummitDisplayPage } from "../domain/catalog";
 import {
   getDisplayFieldValue,
@@ -26,6 +27,19 @@ type DisplayRow = {
   selected: boolean;
 };
 
+export const OLED_MAX_ROWS = 4;
+
+function stopOledPointer(event: PointerEvent<SVGGElement>) {
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+function selectOledField(event: MouseEvent<SVGGElement>, select: () => void) {
+  event.preventDefault();
+  event.stopPropagation();
+  select();
+}
+
 function displayRows({
   proposal,
   scope,
@@ -36,7 +50,7 @@ function displayRows({
   selectedParameterId,
 }: DisplayProps): DisplayRow[] {
   const fields = area?.kind === "slots" ? (area.slotFields ?? []) : (page?.fields ?? []);
-  return fields.map((field) => {
+  return fields.slice(0, OLED_MAX_ROWS).map((field) => {
     const matrixValue =
       area &&
       area.kind === "slots" &&
@@ -129,8 +143,13 @@ export function SummitOledSvg({
       </g>
     );
   }
-  const rowStart = y + 24;
-  const rowGap = Math.min(12, (height - 26) / Math.max(1, rows.length));
+  const rowCount = Math.max(1, rows.length);
+  const rowX = x + 3;
+  const rowWidth = width - 6;
+  const rowTop = y + 15;
+  const rowHeight = Math.min(7, (height - 18) / rowCount);
+  const rowBaselineOffset = rowHeight * 0.76;
+  const rowClipId = `oled-row-clip-${x}-${y}`;
   return (
     <g
       className="panel-display-cluster"
@@ -139,6 +158,11 @@ export function SummitOledSvg({
       data-display-page={area.kind === "pages" ? page?.page : undefined}
       data-display-slot={area.kind === "slots" ? activeSlot : undefined}
     >
+      <defs>
+        <clipPath id={rowClipId}>
+          <rect x={rowX} y={rowTop} width={rowWidth} height={height - 18} rx="1" />
+        </clipPath>
+      </defs>
       <rect x={x} y={y} width={width} height={height} rx="3" className="oled" />
       <text x={x + 5} y={y + 11} className="oled-title-svg">
         {heading.title}
@@ -146,7 +170,7 @@ export function SummitOledSvg({
       <text x={x + width - 5} y={y + 11} textAnchor="end" className="oled-page-svg">
         {heading.position}
       </text>
-      {rows.slice(0, 4).map(({ field, value, selectable, selected }, index) => (
+      {rows.map(({ field, value, selectable, selected }, index) => (
         <g
           key={field.id}
           className={[
@@ -160,7 +184,16 @@ export function SummitOledSvg({
           tabIndex={selectable ? 0 : undefined}
           aria-label={selectable ? `${field.displayLabel}: ${value}` : undefined}
           data-display-field-id={field.id}
-          onClick={selectable ? () => onFieldSelect?.(field.id) : undefined}
+          data-row-index={index}
+          onPointerDown={selectable ? stopOledPointer : undefined}
+          onPointerMove={selectable ? stopOledPointer : undefined}
+          onPointerUp={selectable ? stopOledPointer : undefined}
+          onPointerCancel={selectable ? stopOledPointer : undefined}
+          onClick={
+            selectable
+              ? (event) => selectOledField(event, () => onFieldSelect?.(field.id))
+              : undefined
+          }
           onKeyDown={
             selectable
               ? (event) => {
@@ -174,30 +207,43 @@ export function SummitOledSvg({
         >
           {selectable ? (
             <rect
-              x={x + 3}
-              y={rowStart + index * rowGap - 8}
-              width={width - 6}
-              height={rowGap}
+              x={rowX}
+              y={rowTop + index * rowHeight}
+              width={rowWidth}
+              height={rowHeight}
               rx="1"
               className="oled-row-hitbox"
+              data-highlight-x={rowX}
+              data-highlight-width={rowWidth}
+              data-highlight-height={rowHeight}
+              data-highlight-step={rowHeight}
             />
           ) : null}
           {selected ? (
             <rect
-              x={x + 3}
-              y={rowStart + index * rowGap - 8}
-              width={width - 6}
-              height={rowGap}
+              x={rowX}
+              y={rowTop + index * rowHeight}
+              width={rowWidth}
+              height={rowHeight}
               rx="1"
               className="oled-row-selection"
+              clipPath={`url(#${rowClipId})`}
+              data-highlight-x={rowX}
+              data-highlight-width={rowWidth}
+              data-highlight-height={rowHeight}
+              data-highlight-step={rowHeight}
             />
           ) : null}
-          <text x={x + 6} y={rowStart + index * rowGap} className="oled-field-svg">
+          <text
+            x={x + 6}
+            y={rowTop + index * rowHeight + rowBaselineOffset}
+            className="oled-field-svg"
+          >
             {field.displayLabel}
           </text>
           <text
             x={x + width - 6}
-            y={rowStart + index * rowGap}
+            y={rowTop + index * rowHeight + rowBaselineOffset}
             textAnchor="end"
             className="oled-value-svg"
           >

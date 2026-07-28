@@ -1859,6 +1859,164 @@ td code {
   }
 }
 
+/* Physical hardware interaction contract and development reference calibration. */
+.panel-viewport,
+.panel-viewport * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.panel-viewport {
+  cursor: default;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+.panel-viewport:active {
+  cursor: default;
+}
+.panel-viewport.is-panning,
+.panel-viewport.is-panning:active {
+  cursor: grabbing;
+}
+.panel-viewport[data-interaction-mode="CONTROL"] {
+  cursor: default;
+}
+.panel-control {
+  cursor: ns-resize;
+  touch-action: none;
+}
+.panel-control[role="button"],
+.panel-control[role="switch"],
+.hardware-control[role="button"],
+.oled-svg-row.selectable {
+  cursor: pointer;
+}
+.panel-control.disabled,
+.hardware-control.disabled {
+  cursor: not-allowed;
+}
+.control-hit-target {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+.summit-panel .control-label,
+.summit-panel .control-value,
+.summit-panel .control-status-markers,
+.summit-panel .knob-arc,
+.summit-panel .knob-indicator,
+.summit-panel .bipolar-zero,
+.summit-panel .selector-tick,
+.summit-panel .panel-wordmark,
+.summit-panel .panel-submark,
+.summit-panel .panel-footnote,
+.panel-serigraphy-lines,
+.panel-serigraphy-labels {
+  pointer-events: none;
+}
+.inspector,
+.inspector *,
+.matrix-table,
+.matrix-table * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+.panel-interaction-mode {
+  min-width: 56px;
+  padding: 5px 8px;
+  border: 1px solid #34424b;
+  border-radius: 5px;
+  color: #8fcfff;
+  background: #0a1014;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+  text-align: center;
+}
+.panel-interaction-mode.panning {
+  color: #0b1419;
+  border-color: #79c9f7;
+  background: #79c9f7;
+}
+.panel-serigraphy-lines line {
+  stroke: #48acd4;
+  stroke-width: 0.8;
+  opacity: 0.92;
+}
+.panel-serigraphy-labels text {
+  fill: #d3d9dc;
+  font:
+    750 5px Inter,
+    sans-serif;
+  letter-spacing: 0.025em;
+}
+.panel-calibration-toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin: 0 0 8px;
+  padding: 8px 10px;
+  border: 1px dashed #4d8fb6;
+  border-radius: 7px;
+  color: #a5bac7;
+  background: #0a1116;
+  font-size: 8px;
+}
+.panel-calibration-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.panel-calibration-toolbar input {
+  accent-color: #67c7ff;
+}
+.panel-calibration-toolbar .calibration-opacity {
+  min-width: 250px;
+}
+.panel-calibration-toolbar .calibration-opacity input {
+  width: 130px;
+}
+.panel-calibration-toolbar code {
+  margin-left: auto;
+  color: #7bd4ff;
+}
+.calibration-reference-photo,
+.calibration-grid,
+.calibration-control-centers,
+.calibration-crosshair {
+  pointer-events: none;
+}
+.calibration-grid-small {
+  fill: none;
+  stroke: rgba(255, 214, 87, 0.27);
+  stroke-width: 0.35;
+}
+.calibration-grid-large {
+  fill: none;
+  stroke: rgba(255, 214, 87, 0.65);
+  stroke-width: 0.65;
+}
+.calibration-control-centers circle {
+  fill: rgba(255, 70, 150, 0.8);
+  stroke: #fff;
+  stroke-width: 0.45;
+}
+.calibration-control-centers line {
+  stroke: #ff4696;
+  stroke-width: 0.7;
+}
+.calibration-crosshair line {
+  stroke: rgba(255, 223, 96, 0.92);
+  stroke-width: 0.65;
+  stroke-dasharray: 4 2;
+}
+.calibration-crosshair circle {
+  fill: none;
+  stroke: #ffe064;
+  stroke-width: 0.9;
+}
+
 /* Photo-traced Summit fascia: silkscreen rules replace visual section cards. */
 .summit-panel .panel-section {
   display: none;

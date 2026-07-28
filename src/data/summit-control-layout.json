@@ -8,12 +8,28 @@
     "page": 1,
     "sourceUrl": "docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
     "verifiedAt": "2026-07-27",
-    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference; coordinates are stored without grid interpolation.",
+    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity; coordinates are stored without grid interpolation.",
     "referenceWidth": 1536,
     "referenceHeight": 539
   },
   "landmarks": [
     { "id": "panel", "label": "Complete chassis", "x": 14, "y": 41, "width": 1484, "height": 446 },
+    {
+      "id": "left-wood-cheek",
+      "label": "Left wood cheek",
+      "x": 14,
+      "y": 41,
+      "width": 21,
+      "height": 446
+    },
+    {
+      "id": "right-wood-cheek",
+      "label": "Right wood cheek",
+      "x": 1474,
+      "y": 41,
+      "width": 24,
+      "height": 446
+    },
     { "id": "display", "label": "OLED", "x": 164, "y": 135, "width": 110, "height": 44 },
     { "id": "pitch-wheel", "label": "Pitch wheel", "x": 63, "y": 329, "width": 30, "height": 84 },
     { "id": "mod-wheel", "label": "Mod wheel", "x": 114, "y": 329, "width": 30, "height": 84 },
@@ -52,6 +68,8 @@
       "width": 292,
       "height": 63
     },
+    { "id": "fm", "label": "FM", "x": 760, "y": 64, "width": 60, "height": 193 },
+    { "id": "mixer", "label": "Mixer", "x": 823, "y": 64, "width": 74, "height": 193 },
     { "id": "filter", "label": "Filter", "x": 900, "y": 64, "width": 120, "height": 193 },
     {
       "id": "amp-envelope",
@@ -68,6 +86,16 @@
       "y": 159,
       "width": 146,
       "height": 98
+    },
+    { "id": "lfo-1", "label": "LFO 1", "x": 1172, "y": 64, "width": 123, "height": 61 },
+    { "id": "lfo-2", "label": "LFO 2", "x": 1172, "y": 129, "width": 123, "height": 61 },
+    {
+      "id": "global-lfo",
+      "label": "Global LFO 3 & 4",
+      "x": 1172,
+      "y": 194,
+      "width": 123,
+      "height": 63
     },
     { "id": "effects", "label": "Effects", "x": 1297, "y": 64, "width": 168, "height": 193 }
   ],
@@ -427,10 +455,10 @@
       "sectionId": "voice-glide",
       "parameterId": "voice.mode",
       "label": "Mode",
-      "type": "selector",
-      "x": 340,
-      "y": 91,
-      "size": 19
+      "type": "button",
+      "x": 365,
+      "y": 111,
+      "size": 17
     },
     {
       "id": "glide-on",
@@ -438,8 +466,8 @@
       "parameterId": "glide.enabled",
       "label": "Glide",
       "type": "button",
-      "x": 381,
-      "y": 91,
+      "x": 405,
+      "y": 111,
       "size": 17
     },
     {
@@ -448,7 +476,7 @@
       "parameterId": "glide.time",
       "label": "Time",
       "type": "knob",
-      "x": 422,
+      "x": 441,
       "y": 91,
       "size": 19
     },
@@ -458,8 +486,8 @@
       "parameterId": "arp.enabled",
       "label": "On",
       "type": "button",
-      "x": 335,
-      "y": 128,
+      "x": 360,
+      "y": 244,
       "size": 16
     },
     {
@@ -468,8 +496,8 @@
       "parameterId": "arp.keyLatch",
       "label": "Latch",
       "type": "button",
-      "x": 375,
-      "y": 128,
+      "x": 360,
+      "y": 213,
       "size": 16
     },
     {
@@ -478,8 +506,8 @@
       "parameterId": "arp.tempo",
       "label": "Tempo",
       "type": "encoder",
-      "x": 416,
-      "y": 128,
+      "x": 360,
+      "y": 154,
       "size": 19
     },
     {
@@ -488,8 +516,8 @@
       "parameterId": "arp.type",
       "label": "Type",
       "type": "selector",
-      "x": 335,
-      "y": 180,
+      "x": 441,
+      "y": 225,
       "size": 19
     },
     {
@@ -498,8 +526,8 @@
       "parameterId": "arp.gate",
       "label": "Gate",
       "type": "knob",
-      "x": 375,
-      "y": 180,
+      "x": 441,
+      "y": 154,
       "size": 19
     },
     {
@@ -508,8 +536,8 @@
       "parameterId": "arp.octaves",
       "label": "Octaves",
       "type": "selector",
-      "x": 416,
-      "y": 180,
+      "x": 400,
+      "y": 225,
       "size": 19
     },
     {
@@ -518,8 +546,8 @@
       "parameterId": "arp.rhythm",
       "label": "Rhythm",
       "type": "selector",
-      "x": 375,
-      "y": 234,
+      "x": 401,
+      "y": 154,
       "size": 19
     },
 
@@ -898,8 +926,8 @@
       "parameterId": "filter.shape",
       "label": "Shape",
       "type": "selector",
-      "x": 936,
-      "y": 78,
+      "x": 1003,
+      "y": 245,
       "size": 17
     },
     {
@@ -908,8 +936,8 @@
       "parameterId": "filter.slope",
       "label": "Slope",
       "type": "selector",
-      "x": 970,
-      "y": 78,
+      "x": 923,
+      "y": 245,
       "size": 17
     },
     {
@@ -918,8 +946,8 @@
       "parameterId": "filter.frequency",
       "label": "Frequency",
       "type": "knob",
-      "x": 1005,
-      "y": 78,
+      "x": 963,
+      "y": 220,
       "size": 22
     },
     {
@@ -928,8 +956,8 @@
       "parameterId": "filter.resonance",
       "label": "Resonance",
       "type": "knob",
-      "x": 1040,
-      "y": 78,
+      "x": 963,
+      "y": 154,
       "size": 18
     },
     {
@@ -938,8 +966,8 @@
       "parameterId": "filter.overdrive",
       "label": "Drive",
       "type": "knob",
-      "x": 936,
-      "y": 145,
+      "x": 1003,
+      "y": 154,
       "size": 18
     },
     {
@@ -948,8 +976,8 @@
       "parameterId": "filter.keyTracking",
       "label": "Key Track",
       "type": "knob",
-      "x": 970,
-      "y": 145,
+      "x": 1003,
+      "y": 91,
       "size": 18
     },
     {
@@ -958,8 +986,8 @@
       "parameterId": "filter.lfo1Depth",
       "label": "LFO 1",
       "type": "knob",
-      "x": 1005,
-      "y": 145,
+      "x": 923,
+      "y": 91,
       "size": 18
     },
     {
@@ -968,8 +996,8 @@
       "parameterId": "filter.osc3Depth",
       "label": "Osc 3",
       "type": "knob",
-      "x": 1040,
-      "y": 145,
+      "x": 963,
+      "y": 91,
       "size": 18
     },
     {
@@ -979,8 +1007,8 @@
       "parameterIds": ["filter.ampEnvDepth", "filter.modEnv1Depth"],
       "label": "Env Depth",
       "type": "knob",
-      "x": 970,
-      "y": 212,
+      "x": 923,
+      "y": 154,
       "size": 18
     },
     {
@@ -989,8 +1017,8 @@
       "parameterId": "filter.envSource",
       "label": "Env Src",
       "type": "selector",
-      "x": 1023,
-      "y": 212,
+      "x": 923,
+      "y": 190,
       "size": 17
     },
 
@@ -1000,8 +1028,8 @@
       "parameterId": "amp.attack",
       "label": "A",
       "type": "slider",
-      "x": 1075,
-      "y": 110,
+      "x": 1068,
+      "y": 115,
       "size": 70
     },
     {
@@ -1010,8 +1038,8 @@
       "parameterId": "amp.decay",
       "label": "D",
       "type": "slider",
-      "x": 1103,
-      "y": 110,
+      "x": 1095,
+      "y": 115,
       "size": 70
     },
     {
@@ -1020,8 +1048,8 @@
       "parameterId": "amp.sustain",
       "label": "S",
       "type": "slider",
-      "x": 1131,
-      "y": 110,
+      "x": 1122,
+      "y": 115,
       "size": 70
     },
     {
@@ -1030,8 +1058,8 @@
       "parameterId": "amp.release",
       "label": "R",
       "type": "slider",
-      "x": 1159,
-      "y": 110,
+      "x": 1150,
+      "y": 115,
       "size": 70
     },
     {
@@ -1039,8 +1067,8 @@
       "sectionId": "mod-envelope",
       "label": "1 / 2",
       "type": "selector",
-      "x": 1077,
-      "y": 180,
+      "x": 1038,
+      "y": 246,
       "size": 16,
       "stateOnly": true
     },
@@ -1051,9 +1079,9 @@
       "parameterIds": ["modEnv1.attack", "modEnv2.attack"],
       "label": "A",
       "type": "slider",
-      "x": 1077,
-      "y": 210,
-      "size": 78
+      "x": 1068,
+      "y": 211,
+      "size": 88
     },
     {
       "id": "mod-envelope-decay",
@@ -1062,9 +1090,9 @@
       "parameterIds": ["modEnv1.decay", "modEnv2.decay"],
       "label": "D",
       "type": "slider",
-      "x": 1104,
-      "y": 210,
-      "size": 78
+      "x": 1095,
+      "y": 211,
+      "size": 88
     },
     {
       "id": "mod-envelope-sustain",
@@ -1073,9 +1101,9 @@
       "parameterIds": ["modEnv1.sustain", "modEnv2.sustain"],
       "label": "S",
       "type": "slider",
-      "x": 1131,
-      "y": 210,
-      "size": 78
+      "x": 1122,
+      "y": 211,
+      "size": 88
     },
     {
       "id": "mod-envelope-release",
@@ -1084,9 +1112,9 @@
       "parameterIds": ["modEnv1.release", "modEnv2.release"],
       "label": "R",
       "type": "slider",
-      "x": 1158,
-      "y": 210,
-      "size": 78
+      "x": 1150,
+      "y": 211,
+      "size": 88
     },
     {
       "id": "envelope-loop",
@@ -1095,8 +1123,8 @@
       "parameterIds": ["amp.loop", "modEnv1.loop", "modEnv2.loop"],
       "label": "Loop",
       "type": "button",
-      "x": 1157,
-      "y": 180,
+      "x": 1038,
+      "y": 190,
       "size": 14
     },
 

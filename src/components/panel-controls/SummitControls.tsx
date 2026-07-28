@@ -1,10 +1,12 @@
 import {
   memo,
+  useCallback,
+  useEffect,
   useRef,
   useState,
   type KeyboardEvent,
+  type MouseEvent,
   type PointerEvent,
-  type WheelEvent,
 } from "react";
 import { parameterById } from "../../domain/catalog";
 import { formatParameterValue, isParameterValue, type ParameterValue } from "../../domain/patchUi";
@@ -40,52 +42,154 @@ type Interaction = {
     onPointerMove: (event: PointerEvent<SVGGElement>) => void;
     onPointerUp: (event: PointerEvent<SVGGElement>) => void;
     onPointerCancel: (event: PointerEvent<SVGGElement>) => void;
-    onWheel: (event: WheelEvent<SVGGElement>) => void;
     onKeyDown: (event: KeyboardEvent<SVGGElement>) => void;
-    onDoubleClick: () => void;
+    onDoubleClick: (event: MouseEvent<SVGGElement>) => void;
     onFocus: () => void;
   };
 };
+
+function normalizedWheelSteps(event: WheelEvent) {
+  const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? 100 : 1;
+  const dominantDelta =
+    Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+  const normalized = dominantDelta * unit;
+  if (normalized === 0) return 0;
+  const magnitude = Math.min(10, Math.max(1, Math.round(Math.abs(normalized) / 40)));
+  return normalized < 0 ? magnitude : -magnitude;
+}
+
+function useNonPassiveControlWheel(
+  element: SVGGElement | null,
+  onStep: (steps: number) => void,
+  disabled = false,
+): void {
+  useEffect(() => {
+    if (!element || disabled) return;
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      event.stopPropagation();
+      onStep(normalizedWheelSteps(event));
+    };
+    element.addEventListener("wheel", handleWheel, { passive: false });
+    return () => element.removeEventListener("wheel", handleWheel);
+  }, [disabled, element, onStep]);
+}
+
+function useParameterWheel(
+  props: CommonProps,
+  definition: SummitParameterDefinition,
+  displayValue: ParameterValue,
+) {
+  const [element, setElement] = useState<SVGGElement | null>(null);
+  useNonPassiveControlWheel(element, (steps) => {
+    if (steps === 0) return;
+    props.onSelect(props.parameterId);
+    const direction: -1 | 1 = steps > 0 ? 1 : -1;
+    props.onChange(
+      props.parameterId,
+      stepControlValue(definition, displayValue, direction, Math.abs(steps)),
+    );
+  });
+  return setElement;
+}
+
+function stopControlPointer(event: PointerEvent<SVGGElement>) {
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+function focusControlPointer(event: PointerEvent<SVGGElement>) {
+  stopControlPointer(event);
+  if (event.button === 0) event.currentTarget.focus({ preventScroll: true });
+}
+
+function stopControlClick(event: MouseEvent<SVGGElement>) {
+  event.preventDefault();
+  event.stopPropagation();
+}
 
 function useControlInteraction(
   props: CommonProps,
   definition: SummitParameterDefinition,
 ): Interaction {
   const [localValue, setLocalValue] = useState<ParameterValue | undefined>(undefined);
+  const { onChange, parameterId } = props;
   const displayValue = localValue ?? props.value;
-  const drag = useRef<{ pointerId: number; y: number; normalized: number } | undefined>(undefined);
+  const drag = useRef<
+    | {
+        pointerId: number;
+        y: number;
+        normalized: number;
+        value: ParameterValue;
+        element: SVGGElement;
+        moved: boolean;
+      }
+    | undefined
+  >(undefined);
 
-  const commit = (next: ParameterValue) => {
-    setLocalValue(undefined);
-    props.onChange(props.parameterId, next);
-  };
+  const commit = useCallback(
+    (next: ParameterValue) => {
+      setLocalValue(undefined);
+      onChange(parameterId, next);
+    },
+    [onChange, parameterId],
+  );
+
+  useEffect(() => {
+    const finishInterruptedDrag = () => {
+      const current = drag.current;
+      if (!current) return;
+      drag.current = undefined;
+      if (current.element.hasPointerCapture(current.pointerId)) {
+        current.element.releasePointerCapture(current.pointerId);
+      }
+      if (current.moved && !Object.is(current.value, props.value)) commit(current.value);
+    };
+    window.addEventListener("blur", finishInterruptedDrag);
+    document.addEventListener("visibilitychange", finishInterruptedDrag);
+    return () => {
+      window.removeEventListener("blur", finishInterruptedDrag);
+      document.removeEventListener("visibilitychange", finishInterruptedDrag);
+    };
+  }, [commit, props.value]);
 
   const onPointerDown = (event: PointerEvent<SVGGElement>) => {
+    stopControlPointer(event);
+    if (event.button !== 0) return;
+    event.currentTarget.focus({ preventScroll: true });
     props.onSelect(props.parameterId);
     event.currentTarget.setPointerCapture(event.pointerId);
     drag.current = {
       pointerId: event.pointerId,
       y: event.clientY,
       normalized: normalizeControlValue(definition, displayValue),
+      value: displayValue,
+      element: event.currentTarget,
+      moved: false,
     };
   };
   const onPointerMove = (event: PointerEvent<SVGGElement>) => {
     if (!drag.current || drag.current.pointerId !== event.pointerId) return;
+    stopControlPointer(event);
     const normalized = drag.current.normalized + (drag.current.y - event.clientY) / 150;
-    setLocalValue(valueFromNormalized(definition, normalized));
+    const next = valueFromNormalized(definition, normalized);
+    if (!Object.is(next, drag.current.value)) drag.current.moved = true;
+    drag.current.value = next;
+    setLocalValue(next);
   };
   const finishPointer = (event: PointerEvent<SVGGElement>) => {
     if (!drag.current || drag.current.pointerId !== event.pointerId) return;
+    stopControlPointer(event);
+    const current = drag.current;
     drag.current = undefined;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
-    commit(localValue ?? props.value);
-  };
-  const onWheel = (event: WheelEvent<SVGGElement>) => {
-    event.preventDefault();
-    props.onSelect(props.parameterId);
-    commit(stepControlValue(definition, displayValue, event.deltaY < 0 ? 1 : -1));
+    if (current.moved && !Object.is(current.value, props.value)) {
+      commit(current.value);
+    } else {
+      setLocalValue(undefined);
+    }
   };
   const onKeyDown = (event: KeyboardEvent<SVGGElement>) => {
     const direction =
@@ -119,7 +223,8 @@ function useControlInteraction(
       }
     }
   };
-  const onDoubleClick = () => {
+  const onDoubleClick = (event: MouseEvent<SVGGElement>) => {
+    stopControlClick(event);
     if (isParameterValue(definition.defaultValue)) {
       commit(definition.defaultValue);
     }
@@ -132,7 +237,6 @@ function useControlInteraction(
       onPointerMove,
       onPointerUp: finishPointer,
       onPointerCancel: finishPointer,
-      onWheel,
       onKeyDown,
       onDoubleClick,
       onFocus: () => props.onSelect(props.parameterId),
@@ -204,12 +308,14 @@ function useDefinition(parameterId: string) {
 export const SummitKnob = memo(function SummitKnob(props: CommonProps) {
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
+  const wheelRef = useParameterWheel(props, definition, interaction.displayValue);
   const radius = (props.size ?? 20) / 2;
   const rotation = -135 + interaction.normalized * 270;
   const formatted = formatParameterValue(definition, interaction.displayValue);
   const bipolar = isBipolarDefinition(definition);
   return (
     <g
+      ref={wheelRef}
       className={controlClass("summit-knob", props.states, props.highlighted)}
       role="slider"
       tabIndex={0}
@@ -219,6 +325,12 @@ export const SummitKnob = memo(function SummitKnob(props: CommonProps) {
       {...interaction.handlers}
     >
       <title>{`${definition.label} · ${formatted} · trascina verticalmente, usa trackpad o frecce; doppio clic per il default`}</title>
+      <circle
+        cx={props.x}
+        cy={props.y}
+        r={Math.max(12, radius + 7)}
+        className="control-hit-target"
+      />
       <text x={props.x} y={props.y - radius - 6} textAnchor="middle" className="control-label">
         {props.label}
       </text>
@@ -257,6 +369,7 @@ export const SummitKnob = memo(function SummitKnob(props: CommonProps) {
 export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
+  const wheelRef = useParameterWheel(props, definition, interaction.displayValue);
   const formatted = formatParameterValue(definition, interaction.displayValue);
   const travel = props.size ?? 52;
   const top = props.y - travel / 2;
@@ -264,6 +377,7 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
   const handleY = bottom - interaction.normalized * (bottom - top);
   return (
     <g
+      ref={wheelRef}
       className={controlClass("summit-slider", props.states, props.highlighted)}
       role="slider"
       tabIndex={0}
@@ -274,6 +388,14 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
       {...interaction.handlers}
     >
       <title>{`${definition.label} · ${formatted} · trascina verticalmente, usa trackpad o frecce; doppio clic per il default`}</title>
+      <rect
+        x={props.x - 11}
+        y={top - 9}
+        width="22"
+        height={bottom - top + 18}
+        rx="5"
+        className="control-hit-target"
+      />
       <text x={props.x} y={top - 6} textAnchor="middle" className="control-label">
         {props.label}
       </text>
@@ -321,11 +443,13 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
 export const SteppedSelector = memo(function SteppedSelector(props: CommonProps) {
   const definition = useDefinition(props.parameterId);
   const interaction = useControlInteraction(props, definition);
+  const wheelRef = useParameterWheel(props, definition, interaction.displayValue);
   const radius = (props.size ?? 19) / 2;
   const formatted = formatParameterValue(definition, interaction.displayValue);
   const positions = Math.min(7, Math.max(2, definition.enumValues?.length ?? 3));
   return (
     <g
+      ref={wheelRef}
       className={controlClass("stepped-selector", props.states, props.highlighted)}
       role="slider"
       tabIndex={0}
@@ -335,6 +459,12 @@ export const SteppedSelector = memo(function SteppedSelector(props: CommonProps)
       {...interaction.handlers}
     >
       <title>{`${definition.label} · ${formatted} · selettore a scatti`}</title>
+      <circle
+        cx={props.x}
+        cy={props.y}
+        r={Math.max(12, radius + 7)}
+        className="control-hit-target"
+      />
       <text x={props.x} y={props.y - radius - 6} textAnchor="middle" className="control-label">
         {props.label}
       </text>
@@ -394,7 +524,14 @@ export const IlluminatedButton = memo(function IlluminatedButton(props: CommonPr
       aria-label={`${props.label}: ${formatted}`}
       aria-pressed={interaction.normalized > 0}
       data-parameter-id={props.parameterId}
-      onClick={activate}
+      onPointerDown={focusControlPointer}
+      onPointerMove={stopControlPointer}
+      onPointerUp={stopControlPointer}
+      onPointerCancel={stopControlPointer}
+      onClick={(event) => {
+        stopControlClick(event);
+        activate();
+      }}
       onFocus={() => props.onSelect(props.parameterId)}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -405,6 +542,14 @@ export const IlluminatedButton = memo(function IlluminatedButton(props: CommonPr
       onDoubleClick={interaction.handlers.onDoubleClick}
     >
       <title>{`${definition.label} · ${formatted}`}</title>
+      <rect
+        x={props.x - width / 2 - 4}
+        y={props.y - height / 2 - 4}
+        width={width + 8}
+        height={height + 8}
+        rx="4"
+        className="control-hit-target"
+      />
       <text x={props.x} y={props.y - height / 2 - 5} textAnchor="middle" className="control-label">
         {props.label}
       </text>
@@ -459,7 +604,14 @@ export const SummitToggle = memo(function SummitToggle(props: CommonProps) {
       aria-label={`${props.label}: ${formatted}`}
       aria-checked={interaction.normalized >= 0.5}
       data-parameter-id={props.parameterId}
-      onClick={activate}
+      onPointerDown={focusControlPointer}
+      onPointerMove={stopControlPointer}
+      onPointerUp={stopControlPointer}
+      onPointerCancel={stopControlPointer}
+      onClick={(event) => {
+        stopControlClick(event);
+        activate();
+      }}
       onFocus={() => props.onSelect(props.parameterId)}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -470,6 +622,14 @@ export const SummitToggle = memo(function SummitToggle(props: CommonProps) {
       onDoubleClick={interaction.handlers.onDoubleClick}
     >
       <title>{`${definition.label} · ${formatted}`}</title>
+      <rect
+        x={props.x - 15}
+        y={props.y - 10}
+        width="30"
+        height="20"
+        rx="6"
+        className="control-hit-target"
+      />
       <text x={props.x} y={props.y - 12} textAnchor="middle" className="control-label">
         {props.label}
       </text>
@@ -598,7 +758,18 @@ export const SummitButton = memo(function SummitButton({
       aria-disabled={interactive ? disabled : undefined}
       data-control-id={id}
       data-display-area-id={displayAreaId}
-      onClick={activate}
+      onPointerDown={interactive ? focusControlPointer : undefined}
+      onPointerMove={interactive ? stopControlPointer : undefined}
+      onPointerUp={interactive ? stopControlPointer : undefined}
+      onPointerCancel={interactive ? stopControlPointer : undefined}
+      onClick={
+        interactive
+          ? (event) => {
+              stopControlClick(event);
+              activate();
+            }
+          : undefined
+      }
       onKeyDown={
         interactive
           ? (event) => {
@@ -611,6 +782,16 @@ export const SummitButton = memo(function SummitButton({
       }
     >
       <title>{`${label} · controllo hardware o di navigazione, non salvato nella patch`}</title>
+      {interactive ? (
+        <rect
+          x={x - width / 2 - 4}
+          y={y - height / 2 - 4}
+          width={width + 8}
+          height={height + 8}
+          rx="4"
+          className="control-hit-target"
+        />
+      ) : null}
       <text x={x} y={y - height / 2 - 4} textAnchor="middle" className="control-label">
         {label}
       </text>
@@ -659,12 +840,39 @@ export const SummitValueEncoder = memo(function SummitValueEncoder({
   onStep: (steps: number) => void;
 }) {
   const drag = useRef<{ pointerId: number; y: number; steps: number } | undefined>(undefined);
+  const [element, setElement] = useState<SVGGElement | null>(null);
   const radius = size / 2;
   const step = (steps: number) => {
     if (!disabled && steps !== 0) onStep(steps);
   };
+  useNonPassiveControlWheel(
+    element,
+    (steps) => {
+      if (disabled || steps === 0) return;
+      onSelect();
+      step(steps);
+    },
+    disabled,
+  );
+  useEffect(() => {
+    const cancelDrag = () => {
+      const current = drag.current;
+      if (!current) return;
+      drag.current = undefined;
+      if (element?.hasPointerCapture(current.pointerId)) {
+        element.releasePointerCapture(current.pointerId);
+      }
+    };
+    window.addEventListener("blur", cancelDrag);
+    document.addEventListener("visibilitychange", cancelDrag);
+    return () => {
+      window.removeEventListener("blur", cancelDrag);
+      document.removeEventListener("visibilitychange", cancelDrag);
+    };
+  }, [element]);
   return (
     <g
+      ref={setElement}
       className={[
         "panel-control",
         "summit-value-encoder",
@@ -681,7 +889,10 @@ export const SummitValueEncoder = memo(function SummitValueEncoder({
       data-control-id={id}
       onFocus={onSelect}
       onPointerDown={(event) => {
+        stopControlPointer(event);
         if (disabled) return;
+        if (event.button !== 0) return;
+        event.currentTarget.focus({ preventScroll: true });
         onSelect();
         event.currentTarget.setPointerCapture(event.pointerId);
         drag.current = { pointerId: event.pointerId, y: event.clientY, steps: 0 };
@@ -689,6 +900,7 @@ export const SummitValueEncoder = memo(function SummitValueEncoder({
       onPointerMove={(event) => {
         const current = drag.current;
         if (!current || current.pointerId !== event.pointerId) return;
+        stopControlPointer(event);
         const nextSteps = Math.trunc((current.y - event.clientY) / 8);
         const delta = nextSteps - current.steps;
         if (delta !== 0) {
@@ -697,18 +909,18 @@ export const SummitValueEncoder = memo(function SummitValueEncoder({
         }
       }}
       onPointerUp={(event) => {
+        stopControlPointer(event);
         if (event.currentTarget.hasPointerCapture(event.pointerId)) {
           event.currentTarget.releasePointerCapture(event.pointerId);
         }
         drag.current = undefined;
       }}
-      onPointerCancel={() => {
+      onPointerCancel={(event) => {
+        stopControlPointer(event);
+        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+          event.currentTarget.releasePointerCapture(event.pointerId);
+        }
         drag.current = undefined;
-      }}
-      onWheel={(event) => {
-        event.preventDefault();
-        onSelect();
-        step(event.deltaY < 0 ? 1 : -1);
       }}
       onKeyDown={(event) => {
         const direction =
@@ -724,6 +936,7 @@ export const SummitValueEncoder = memo(function SummitValueEncoder({
       }}
     >
       <title>{`${label} · ${valueText} · trascina verticalmente, usa trackpad o frecce`}</title>
+      <circle cx={x} cy={y} r={Math.max(12, radius + 7)} className="control-hit-target" />
       <text x={x} y={y - radius - 5} textAnchor="middle" className="control-label">
         {label}
       </text>

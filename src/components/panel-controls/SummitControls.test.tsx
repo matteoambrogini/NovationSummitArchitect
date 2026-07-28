@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { SummitKnob, SummitSlider, SummitValueEncoder } from "./SummitControls";
 
 const common = {
@@ -10,6 +10,8 @@ const common = {
 };
 
 describe("reusable Summit controls", () => {
+  afterEach(cleanup);
+
   it("binds a knob to the catalog and supports keyboard plus reset", () => {
     const onChange = vi.fn();
     render(
@@ -49,6 +51,30 @@ describe("reusable Summit controls", () => {
     expect(slider).toHaveAttribute("aria-orientation", "vertical");
     fireEvent.keyDown(slider, { key: "ArrowDown" });
     expect(onChange).toHaveBeenCalledWith("filter.modEnv1Depth", -1);
+  });
+
+  it("focuses on pointer down without committing an unchanged click", () => {
+    const onChange = vi.fn();
+    render(
+      <svg>
+        <SummitKnob
+          {...common}
+          parameterId="filter.frequency"
+          label="Frequency"
+          value={185}
+          onChange={onChange}
+        />
+      </svg>,
+    );
+    const knob = screen.getByRole("slider", { name: "Frequency: 185" });
+    Object.assign(knob, {
+      setPointerCapture: vi.fn(),
+      hasPointerCapture: vi.fn(() => false),
+    });
+    fireEvent.pointerDown(knob, { pointerId: 1, button: 0, clientY: 100 });
+    expect(knob).toHaveFocus();
+    fireEvent.pointerUp(knob, { pointerId: 1, button: 0, clientY: 100 });
+    expect(onChange).not.toHaveBeenCalled();
   });
 
   it("supports Value encoder keyboard, wheel and vertical drag steps", () => {

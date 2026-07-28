@@ -35,6 +35,21 @@ import {
 } from "./panel-controls/SummitControls";
 import { panelLandmarkById, summitPanelLayout, type LayoutControl } from "./SummitPanelLayout";
 
+const SUMMIT_REFERENCE_IMAGE_URL = new URL(
+  "../../docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
+  import.meta.url,
+).href;
+
+export type PanelCalibrationState = {
+  showPhoto: boolean;
+  showVector: boolean;
+  showGrid: boolean;
+  showCrosshair: boolean;
+  showControlCenters: boolean;
+  photoOpacity: number;
+  crosshair: { x: number; y: number };
+};
+
 function controlStates(
   parameterId: string,
   value: ParameterValue,
@@ -212,6 +227,7 @@ export const SummitPanel = memo(function SummitPanel({
   highlightedAreaId,
   focusedSectionId,
   showInfoOverlay = false,
+  calibration,
   onSelect,
   onChange,
   onDisplayAreaSelect,
@@ -232,6 +248,7 @@ export const SummitPanel = memo(function SummitPanel({
   highlightedAreaId?: string | undefined;
   focusedSectionId?: string | undefined;
   showInfoOverlay?: boolean;
+  calibration?: PanelCalibrationState | undefined;
   onSelect: (parameterId: string) => void;
   onChange: (parameterId: string, value: ParameterValue) => void;
   onDisplayAreaSelect: (areaId: string) => void;
@@ -332,252 +349,320 @@ export const SummitPanel = memo(function SummitPanel({
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+        <pattern id="calibration-grid-small" width="10" height="10" patternUnits="userSpaceOnUse">
+          <path d="M 10 0 L 0 0 0 10" className="calibration-grid-small" />
+        </pattern>
+        <pattern id="calibration-grid-large" width="50" height="50" patternUnits="userSpaceOnUse">
+          <rect width="50" height="50" fill="url(#calibration-grid-small)" />
+          <path d="M 50 0 L 0 0 0 50" className="calibration-grid-large" />
+        </pattern>
       </defs>
 
-      <rect
-        x={panelBody?.x ?? 14}
-        y={panelBody?.y ?? 41}
-        width={panelBody?.width ?? 1484}
-        height={panelBody?.height ?? 446}
-        rx="7"
-        fill="#090b0c"
-      />
-      <path
-        d="M 14 49 Q 14 41 23 41 H 35 V 487 H 23 Q 14 487 14 478 Z"
-        fill="url(#wood)"
-        className="wood-cheek left"
-      />
-      <path
-        d="M 1474 41 H 1489 Q 1498 41 1498 50 V 478 Q 1498 487 1489 487 H 1474 Z"
-        fill="url(#wood)"
-        className="wood-cheek right"
-      />
-      <rect
-        x="35"
-        y="42"
-        width="1439"
-        height="243"
-        rx="1"
-        fill="url(#panel-bg)"
-        className="control-deck"
-      />
-      <rect x="35" y="285" width="150" height="202" fill="url(#panel-bg)" />
-      <path d="M 35 285 H 1474" className="panel-keyboard-rule" />
-      <text x="1459" y="61" textAnchor="end" className="panel-wordmark">
-        SUMMIT
-      </text>
-      <text x="184" y="278" className="panel-submark">
-        OXFORD OSCILLATORS
-      </text>
-      <text x="1457" y="276" textAnchor="end" className="panel-submark">
-        BI-TIMBRAL POLYPHONIC SYNTHESISER
-      </text>
+      <g
+        className="panel-vector-layer"
+        opacity={calibration?.showVector === false ? 0 : 1}
+        pointerEvents={calibration?.showVector === false ? "none" : "auto"}
+      >
+        <rect
+          x={panelBody?.x ?? 14}
+          y={panelBody?.y ?? 41}
+          width={panelBody?.width ?? 1484}
+          height={panelBody?.height ?? 446}
+          rx="7"
+          fill="#090b0c"
+        />
+        <path
+          d="M 14 49 Q 14 41 23 41 H 35 V 487 H 23 Q 14 487 14 478 Z"
+          fill="url(#wood)"
+          className="wood-cheek left"
+        />
+        <path
+          d="M 1474 41 H 1489 Q 1498 41 1498 50 V 478 Q 1498 487 1489 487 H 1474 Z"
+          fill="url(#wood)"
+          className="wood-cheek right"
+        />
+        <rect
+          x="35"
+          y="42"
+          width="1439"
+          height="243"
+          rx="1"
+          fill="url(#panel-bg)"
+          className="control-deck"
+        />
+        <rect x="35" y="285" width="150" height="202" fill="url(#panel-bg)" />
+        <path d="M 35 285 H 1474" className="panel-keyboard-rule" />
+        <text x="1459" y="61" textAnchor="end" className="panel-wordmark">
+          SUMMIT
+        </text>
+        <text x="184" y="278" className="panel-submark">
+          OXFORD OSCILLATORS
+        </text>
+        <text x="1457" y="276" textAnchor="end" className="panel-submark">
+          BI-TIMBRAL POLYPHONIC SYNTHESISER
+        </text>
 
-      {summitPanelLayout.sections.map((section) => (
-        <g
-          key={section.id}
-          className={`panel-section-group${focusedSectionId === section.id ? " focused" : ""}`}
-          data-section-id={section.id}
-        >
-          {focusedSectionId === section.id ? (
-            <rect
-              x={section.x}
-              y={section.y}
-              width={section.width}
-              height={section.height}
-              rx="1"
-              className="panel-focus-region"
+        {summitPanelLayout.sections.map((section) => (
+          <g
+            key={section.id}
+            className={`panel-section-group${focusedSectionId === section.id ? " focused" : ""}`}
+            data-section-id={section.id}
+          >
+            {focusedSectionId === section.id ? (
+              <rect
+                x={section.x}
+                y={section.y}
+                width={section.width}
+                height={section.height}
+                rx="1"
+                className="panel-focus-region"
+              />
+            ) : null}
+          </g>
+        ))}
+
+        <g className="panel-serigraphy-lines" aria-hidden="true">
+          {summitPanelLayout.serigraphy.map((mark) => (
+            <line
+              key={mark.id}
+              x1={mark.x + Math.min(mark.width - 3, Math.max(14, mark.label.length * 3.4 + 5))}
+              y1={mark.y}
+              x2={mark.x + mark.width}
+              y2={mark.y}
             />
-          ) : null}
+          ))}
         </g>
-      ))}
-
-      {summitPanelLayout.serigraphy.map((mark) => (
-        <g key={mark.id} className="panel-serigraphy" data-serigraphy-id={mark.id}>
-          <line x1={mark.x} y1={mark.y} x2={mark.x + mark.width} y2={mark.y} />
-          <text x={mark.x} y={mark.y - 4}>
-            {mark.label}
-          </text>
+        <g className="panel-serigraphy-labels" aria-hidden="true">
+          {summitPanelLayout.serigraphy.map((mark) => (
+            <g key={mark.id} className="panel-serigraphy" data-serigraphy-id={mark.id}>
+              <text x={mark.x} y={mark.y + 8}>
+                {mark.label}
+              </text>
+            </g>
+          ))}
         </g>
-      ))}
 
-      <SummitOledSvg
-        proposal={proposal}
-        scope={scope}
-        area={displayArea}
-        page={displayPage}
-        activeSlot={activeDisplaySlot}
-        selectedDisplayFieldId={selectedDisplayFieldId}
-        selectedParameterId={selectedParameterId}
-        onFieldSelect={onDisplayFieldSelect}
-        x={displayLandmark?.x ?? 164}
-        y={displayLandmark?.y ?? 135}
-        width={displayLandmark?.width ?? 110}
-        height={displayLandmark?.height ?? 44}
-      />
+        <SummitOledSvg
+          proposal={proposal}
+          scope={scope}
+          area={displayArea}
+          page={displayPage}
+          activeSlot={activeDisplaySlot}
+          selectedDisplayFieldId={selectedDisplayFieldId}
+          selectedParameterId={selectedParameterId}
+          onFieldSelect={onDisplayFieldSelect}
+          x={displayLandmark?.x ?? 164}
+          y={displayLandmark?.y ?? 135}
+          width={displayLandmark?.width ?? 110}
+          height={displayLandmark?.height ?? 44}
+        />
 
-      {summitPanelLayout.controls.map((control) => {
-        if (control.stateOnly) {
-          if (control.id === "menu-value") {
+        {summitPanelLayout.controls.map((control) => {
+          if (control.stateOnly) {
+            if (control.id === "menu-value") {
+              return (
+                <SummitValueEncoder
+                  key={control.id}
+                  id={control.id}
+                  label={control.label}
+                  valueText={valueEncoderText}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  active={!valueEncoderDisabled}
+                  disabled={valueEncoderDisabled}
+                  onSelect={() => {
+                    if (activeDisplayField) onDisplayFieldSelect(activeDisplayField.id);
+                  }}
+                  onStep={onDisplayValueStep}
+                />
+              );
+            }
+            const rowIndex = control.id.startsWith("menu-row-")
+              ? Number(control.id.replace("menu-row-", "")) - 1
+              : undefined;
+            const rowField =
+              rowIndex !== undefined && Number.isInteger(rowIndex)
+                ? displayFields[rowIndex]
+                : undefined;
+            const isPageLeft = control.id === "menu-page-left";
+            const isPageRight = control.id === "menu-page-right";
+            const displayAreaId = control.displayAreaId;
+            const onHardwareClick = displayAreaId
+              ? () => onDisplayAreaSelect(displayAreaId)
+              : isPageLeft
+                ? () => onDisplayStep(-1)
+                : isPageRight
+                  ? () => onDisplayStep(1)
+                  : rowField
+                    ? () => onDisplayFieldSelect(rowField.id)
+                    : undefined;
             return (
-              <SummitValueEncoder
+              <StateOnlyControl
                 key={control.id}
-                id={control.id}
-                label={control.label}
-                valueText={valueEncoderText}
-                x={control.x}
-                y={control.y}
-                size={control.size}
-                active={!valueEncoderDisabled}
-                disabled={valueEncoderDisabled}
-                onSelect={() => {
-                  if (activeDisplayField) onDisplayFieldSelect(activeDisplayField.id);
-                }}
-                onStep={onDisplayValueStep}
+                control={control}
+                highlighted={Boolean(
+                  highlightedAreaId && control.displayAreaId === highlightedAreaId,
+                )}
+                active={Boolean(
+                  (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
+                  (rowField && rowField.id === selectedDisplayFieldId),
+                )}
+                disabled={Boolean(
+                  (isPageLeft && displayAtFirst) ||
+                  (isPageRight && displayAtLast) ||
+                  (rowIndex !== undefined && !rowField),
+                )}
+                onClick={onHardwareClick}
               />
             );
           }
-          const rowIndex = control.id.startsWith("menu-row-")
-            ? Number(control.id.replace("menu-row-", "")) - 1
-            : undefined;
-          const rowField =
-            rowIndex !== undefined && Number.isInteger(rowIndex)
-              ? displayFields[rowIndex]
-              : undefined;
-          const isPageLeft = control.id === "menu-page-left";
-          const isPageRight = control.id === "menu-page-right";
-          const displayAreaId = control.displayAreaId;
-          const onHardwareClick = displayAreaId
-            ? () => onDisplayAreaSelect(displayAreaId)
-            : isPageLeft
-              ? () => onDisplayStep(-1)
-              : isPageRight
-                ? () => onDisplayStep(1)
-                : rowField
-                  ? () => onDisplayFieldSelect(rowField.id)
-                  : undefined;
+          const candidateIds = [control.parameterId, ...(control.parameterIds ?? [])].filter(
+            (candidate): candidate is string => Boolean(candidate),
+          );
+          const visibleCandidate = (candidate: string) => {
+            const definition = parameterById.get(candidate);
+            return definition && isDefinitionVisible(definition, scope);
+          };
+          const parameterId =
+            (selectedParameterId &&
+            candidateIds.includes(selectedParameterId) &&
+            visibleCandidate(selectedParameterId)
+              ? selectedParameterId
+              : undefined) ?? candidateIds.find(visibleCandidate);
+          if (!parameterId) {
+            return (
+              <UnavailableControl
+                key={control.id}
+                label={control.label}
+                type={control.type}
+                x={control.x}
+                y={control.y}
+                size={control.size}
+                reason="Nessun parametro patch applicabile allo scope attivo."
+              />
+            );
+          }
+          const definition = parameterById.get(parameterId);
+          if (
+            !definition ||
+            !isFirmwareApplicable(
+              definition,
+              proposal.targetFirmware ?? catalogTarget.primaryFirmware,
+            ) ||
+            definition.verificationStatus !== "verified"
+          ) {
+            return (
+              <UnavailableControl
+                key={control.id}
+                label={control.label}
+                type={control.type}
+                x={control.x}
+                y={control.y}
+                size={control.size}
+                reason={
+                  definition?.verificationNote ??
+                  "Parametro non verificato per il firmware selezionato."
+                }
+              />
+            );
+          }
+          const setting = getSetting(proposal, parameterId, scope);
+          if (!setting || definition.scope === "global") {
+            return (
+              <UnavailableControl
+                key={control.id}
+                label={control.label}
+                type={control.type}
+                x={control.x}
+                y={control.y}
+                size={control.size}
+                reason={
+                  definition.scope === "global"
+                    ? "Impostazione globale esclusa dalla patch."
+                    : "Default sicuro non documentato."
+                }
+              />
+            );
+          }
           return (
-            <StateOnlyControl
-              key={control.id}
+            <ParameterControl
+              key={`${control.id}:${parameterId}`}
               control={control}
-              highlighted={Boolean(
-                highlightedAreaId && control.displayAreaId === highlightedAreaId,
-              )}
-              active={Boolean(
-                (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
-                (rowField && rowField.id === selectedDisplayFieldId),
-              )}
-              disabled={Boolean(
-                (isPageLeft && displayAtFirst) ||
-                (isPageRight && displayAtLast) ||
-                (rowIndex !== undefined && !rowField),
-              )}
-              onClick={onHardwareClick}
+              parameterId={parameterId}
+              value={setting.value}
+              confidence={setting.confidence}
+              selectedParameterId={selectedParameterId}
+              modified={changed.has(parameterId)}
+              highlighted={highlighted.has(parameterId)}
+              onSelect={onSelect}
+              onChange={onChange}
             />
           );
-        }
-        const candidateIds = [control.parameterId, ...(control.parameterIds ?? [])].filter(
-          (candidate): candidate is string => Boolean(candidate),
-        );
-        const visibleCandidate = (candidate: string) => {
-          const definition = parameterById.get(candidate);
-          return definition && isDefinitionVisible(definition, scope);
-        };
-        const parameterId =
-          (selectedParameterId &&
-          candidateIds.includes(selectedParameterId) &&
-          visibleCandidate(selectedParameterId)
-            ? selectedParameterId
-            : undefined) ?? candidateIds.find(visibleCandidate);
-        if (!parameterId) {
-          return (
-            <UnavailableControl
-              key={control.id}
-              label={control.label}
-              type={control.type}
-              x={control.x}
-              y={control.y}
-              size={control.size}
-              reason="Nessun parametro patch applicabile allo scope attivo."
-            />
-          );
-        }
-        const definition = parameterById.get(parameterId);
-        if (
-          !definition ||
-          !isFirmwareApplicable(
-            definition,
-            proposal.targetFirmware ?? catalogTarget.primaryFirmware,
-          ) ||
-          definition.verificationStatus !== "verified"
-        ) {
-          return (
-            <UnavailableControl
-              key={control.id}
-              label={control.label}
-              type={control.type}
-              x={control.x}
-              y={control.y}
-              size={control.size}
-              reason={
-                definition?.verificationNote ??
-                "Parametro non verificato per il firmware selezionato."
-              }
-            />
-          );
-        }
-        const setting = getSetting(proposal, parameterId, scope);
-        if (!setting || definition.scope === "global") {
-          return (
-            <UnavailableControl
-              key={control.id}
-              label={control.label}
-              type={control.type}
-              x={control.x}
-              y={control.y}
-              size={control.size}
-              reason={
-                definition.scope === "global"
-                  ? "Impostazione globale esclusa dalla patch."
-                  : "Default sicuro non documentato."
-              }
-            />
-          );
-        }
-        return (
-          <ParameterControl
-            key={`${control.id}:${parameterId}`}
-            control={control}
-            parameterId={parameterId}
-            value={setting.value}
-            confidence={setting.confidence}
-            selectedParameterId={selectedParameterId}
-            modified={changed.has(parameterId)}
-            highlighted={highlighted.has(parameterId)}
-            onSelect={onSelect}
-            onChange={onChange}
-          />
-        );
-      })}
+        })}
 
-      <SummitPitchWheel
-        id="pitch-wheel"
-        label="Pitch wheel"
-        x={pitchWheel ? pitchWheel.x + pitchWheel.width / 2 : 78}
-        y={pitchWheel ? pitchWheel.y + pitchWheel.height / 2 : 372}
-        size={pitchWheel?.height ?? 84}
-      />
-      <SummitModWheel
-        id="mod-wheel"
-        label="Modulation wheel"
-        x={modWheel ? modWheel.x + modWheel.width / 2 : 130}
-        y={modWheel ? modWheel.y + modWheel.height / 2 : 372}
-        size={modWheel?.height ?? 84}
-      />
-      <SummitKeyboard />
-      <text x="38" y="483" className="panel-footnote">
-        FIRMWARE {catalogTarget.primaryFirmware} · PATCH ARCHITECT OPERATIONAL MAP
-      </text>
+        <SummitPitchWheel
+          id="pitch-wheel"
+          label="Pitch wheel"
+          x={pitchWheel ? pitchWheel.x + pitchWheel.width / 2 : 78}
+          y={pitchWheel ? pitchWheel.y + pitchWheel.height / 2 : 372}
+          size={pitchWheel?.height ?? 84}
+        />
+        <SummitModWheel
+          id="mod-wheel"
+          label="Modulation wheel"
+          x={modWheel ? modWheel.x + modWheel.width / 2 : 130}
+          y={modWheel ? modWheel.y + modWheel.height / 2 : 372}
+          size={modWheel?.height ?? 84}
+        />
+        <SummitKeyboard />
+        <text x="38" y="483" className="panel-footnote">
+          FIRMWARE {catalogTarget.primaryFirmware} · PATCH ARCHITECT OPERATIONAL MAP
+        </text>
+      </g>
+
+      {calibration?.showPhoto ? (
+        <image
+          href={SUMMIT_REFERENCE_IMAGE_URL}
+          x="0"
+          y="0"
+          width="1536"
+          height="539"
+          opacity={calibration.photoOpacity}
+          preserveAspectRatio="none"
+          className="calibration-reference-photo"
+          data-testid="calibration-reference-photo"
+        />
+      ) : null}
+      {calibration?.showGrid ? (
+        <rect
+          x="0"
+          y="0"
+          width="1536"
+          height="539"
+          fill="url(#calibration-grid-large)"
+          className="calibration-grid"
+          aria-hidden="true"
+        />
+      ) : null}
+      {calibration?.showControlCenters ? (
+        <g className="calibration-control-centers" aria-hidden="true">
+          {summitPanelLayout.controls.map((control) => (
+            <g key={control.id}>
+              <circle cx={control.x} cy={control.y} r="2.5" />
+              <line x1={control.x - 5} y1={control.y} x2={control.x + 5} y2={control.y} />
+              <line x1={control.x} y1={control.y - 5} x2={control.x} y2={control.y + 5} />
+            </g>
+          ))}
+        </g>
+      ) : null}
+      {calibration?.showCrosshair ? (
+        <g className="calibration-crosshair" aria-hidden="true">
+          <line x1="0" y1={calibration.crosshair.y} x2="1536" y2={calibration.crosshair.y} />
+          <line x1={calibration.crosshair.x} y1="0" x2={calibration.crosshair.x} y2="539" />
+          <circle cx={calibration.crosshair.x} cy={calibration.crosshair.y} r="5" />
+        </g>
+      ) : null}
     </svg>
   );
 });

@@ -13,6 +13,7 @@ import {
 } from "../../domain/displayStructure";
 import { changedParameterIds } from "../../domain/patchDelta";
 import { getScopePart, getSetting } from "../../domain/patchUi";
+import { copy } from "../../i18n/it";
 import { selectActiveProposal, selectIsDirty, useAppStore } from "../../stores/useAppStore";
 import { ParameterInspector } from "./ParameterInspector";
 
@@ -56,6 +57,21 @@ export function PhysicalPanelPage() {
   const [zoom, setZoom] = useState(0.6);
   const [focusedSectionId, setFocusedSectionId] = useState<string>();
   const [showInfoOverlay, setShowInfoOverlay] = useState(false);
+  const [activeControlInteraction, setActiveControlInteraction] = useState<string>();
+  const activeControlPointerId = useRef<number | undefined>(undefined);
+  const spacePressed = useRef(false);
+  const [panning, setPanning] = useState(false);
+  const [calibrationOpen, setCalibrationOpen] = useState(false);
+  const [calibrationPhoto, setCalibrationPhoto] = useState(true);
+  const [calibrationVector, setCalibrationVector] = useState(true);
+  const [calibrationGrid, setCalibrationGrid] = useState(false);
+  const [calibrationCrosshairVisible, setCalibrationCrosshairVisible] = useState(true);
+  const [calibrationCenters, setCalibrationCenters] = useState(true);
+  const [calibrationOpacity, setCalibrationOpacity] = useState(0.5);
+  const [calibrationCrosshair, setCalibrationCrosshair] = useState({
+    x: PANEL_WIDTH / 2,
+    y: PANEL_HEIGHT / 2,
+  });
 
   const baseline = proposals[0];
   const changedIds = useMemo(
@@ -80,6 +96,53 @@ export function PhysicalPanelPage() {
     }
     if (setupParameterId) selectParameter(setupParameterId);
   }, [instruction, selectParameter, setDisplaySlot, setupMode, setupParameterId]);
+
+  useEffect(() => {
+    const endControlInteraction = () => {
+      activeControlPointerId.current = undefined;
+      setActiveControlInteraction(undefined);
+    };
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      const target = event.target;
+      if (
+        event.code === "Space" &&
+        !(target instanceof HTMLInputElement) &&
+        !(target instanceof HTMLTextAreaElement) &&
+        !(target instanceof HTMLSelectElement) &&
+        !(target instanceof HTMLButtonElement)
+      ) {
+        event.preventDefault();
+        spacePressed.current = true;
+      }
+    };
+    const onKeyUp = (event: globalThis.KeyboardEvent) => {
+      if (event.code === "Space") spacePressed.current = false;
+    };
+    const onWindowBlur = () => {
+      const activePan = panStart.current;
+      if (activePan && viewport.current?.hasPointerCapture(activePan.pointerId)) {
+        viewport.current.releasePointerCapture(activePan.pointerId);
+      }
+      spacePressed.current = false;
+      panStart.current = undefined;
+      setPanning(false);
+      endControlInteraction();
+    };
+    window.addEventListener("pointerup", endControlInteraction, true);
+    window.addEventListener("pointercancel", endControlInteraction, true);
+    window.addEventListener("keydown", onKeyDown, true);
+    window.addEventListener("keyup", onKeyUp, true);
+    window.addEventListener("blur", onWindowBlur);
+    document.addEventListener("visibilitychange", onWindowBlur);
+    return () => {
+      window.removeEventListener("pointerup", endControlInteraction, true);
+      window.removeEventListener("pointercancel", endControlInteraction, true);
+      window.removeEventListener("keydown", onKeyDown, true);
+      window.removeEventListener("keyup", onKeyUp, true);
+      window.removeEventListener("blur", onWindowBlur);
+      document.removeEventListener("visibilitychange", onWindowBlur);
+    };
+  }, []);
 
   if (!proposal) {
     return (
@@ -131,12 +194,19 @@ export function PhysicalPanelPage() {
     });
   };
   const beginPan = (event: PointerEvent<HTMLDivElement>) => {
+    const target = event.target as Element;
     if (
-      (event.target as Element).closest(".panel-control, .hardware-control, .panel-display-cluster")
-    )
+      activeControlInteraction ||
+      target.closest(".panel-control, .hardware-control, .panel-display-cluster")
+    ) {
       return;
+    }
+    const explicitPanGesture = event.button === 1 || (event.button === 0 && spacePressed.current);
+    if (!explicitPanGesture) return;
     const current = viewport.current;
     if (!current) return;
+    event.preventDefault();
+    event.stopPropagation();
     current.setPointerCapture(event.pointerId);
     panStart.current = {
       pointerId: event.pointerId,
@@ -145,20 +215,63 @@ export function PhysicalPanelPage() {
       left: current.scrollLeft,
       top: current.scrollTop,
     };
+    setPanning(true);
   };
   const movePan = (event: PointerEvent<HTMLDivElement>) => {
     const start = panStart.current;
     const current = viewport.current;
-    if (!start || !current || start.pointerId !== event.pointerId) return;
+    if (activeControlInteraction || !start || !current || start.pointerId !== event.pointerId) {
+      return;
+    }
+    event.preventDefault();
+    event.stopPropagation();
     current.scrollLeft = start.left - (event.clientX - start.x);
     current.scrollTop = start.top - (event.clientY - start.y);
   };
   const finishPan = (event: PointerEvent<HTMLDivElement>) => {
+    if (panStart.current?.pointerId !== event.pointerId) return;
+    event.preventDefault();
+    event.stopPropagation();
     const current = viewport.current;
     if (current?.hasPointerCapture(event.pointerId)) {
       current.releasePointerCapture(event.pointerId);
     }
     panStart.current = undefined;
+    setPanning(false);
+  };
+  const trackControlPointer = (event: PointerEvent<HTMLDivElement>) => {
+    const target = (event.target as Element).closest<SVGElement>(
+      ".panel-control, .hardware-control[role='button'], .oled-svg-row.selectable",
+    );
+    if (!target || event.button !== 0) return;
+    activeControlPointerId.current = event.pointerId;
+    setActiveControlInteraction(
+      target.dataset.parameterId ??
+        target.dataset.controlId ??
+        target.dataset.displayFieldId ??
+        "control",
+    );
+  };
+  const releaseControlPointer = (event: PointerEvent<HTMLDivElement>) => {
+    if (activeControlPointerId.current !== event.pointerId) return;
+    activeControlPointerId.current = undefined;
+    setActiveControlInteraction(undefined);
+  };
+  const updateCalibrationCrosshair = (event: PointerEvent<HTMLDivElement>) => {
+    if (!import.meta.env.DEV || !calibrationOpen) return;
+    const svg = viewport.current?.querySelector<SVGSVGElement>(".summit-panel");
+    const bounds = svg?.getBoundingClientRect();
+    if (!bounds || bounds.width === 0 || bounds.height === 0) return;
+    setCalibrationCrosshair({
+      x: Math.max(
+        0,
+        Math.min(PANEL_WIDTH, ((event.clientX - bounds.left) / bounds.width) * PANEL_WIDTH),
+      ),
+      y: Math.max(
+        0,
+        Math.min(PANEL_HEIGHT, ((event.clientY - bounds.top) / bounds.height) * PANEL_HEIGHT),
+      ),
+    });
   };
 
   const part = getScopePart(proposal, activeScope);
@@ -320,6 +433,17 @@ export function PhysicalPanelPage() {
         <section className="card panel-card">
           <div className="panel-toolbar">
             <div className="panel-tool-group">
+              <output
+                className={`panel-interaction-mode${panning ? " panning" : ""}`}
+                aria-label={copy.panel.interactionMode}
+                data-active-control={activeControlInteraction}
+              >
+                {panning
+                  ? copy.panel.pan
+                  : activeControlInteraction
+                    ? copy.panel.control
+                    : copy.panel.interact}
+              </output>
               <button
                 className="tool-button"
                 aria-label="Riduci zoom"
@@ -376,6 +500,15 @@ export function PhysicalPanelPage() {
                   </option>
                 ))}
               </select>
+              {import.meta.env.DEV ? (
+                <button
+                  className={`tool-button text${calibrationOpen ? " active" : ""}`}
+                  aria-pressed={calibrationOpen}
+                  onClick={() => setCalibrationOpen((value) => !value)}
+                >
+                  {calibrationOpen ? copy.panel.calibrationClose : copy.panel.calibrationOpen}
+                </button>
+              ) : null}
             </div>
             <div className="panel-state-legend" aria-label="Legenda stati">
               <span>
@@ -398,13 +531,95 @@ export function PhysicalPanelPage() {
               </span>
             </div>
           </div>
+          {import.meta.env.DEV && calibrationOpen ? (
+            <div
+              className="panel-calibration-toolbar"
+              role="region"
+              aria-label={copy.panel.calibration}
+            >
+              <label>
+                <input
+                  type="checkbox"
+                  checked={calibrationPhoto}
+                  onChange={(event) => setCalibrationPhoto(event.target.checked)}
+                />
+                {copy.panel.referencePhoto}
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={calibrationVector}
+                  onChange={(event) => setCalibrationVector(event.target.checked)}
+                />
+                {copy.panel.vectorPanel}
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={calibrationGrid}
+                  onChange={(event) => setCalibrationGrid(event.target.checked)}
+                />
+                {copy.panel.grid}
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={calibrationCrosshairVisible}
+                  onChange={(event) => setCalibrationCrosshairVisible(event.target.checked)}
+                />
+                {copy.panel.crosshair}
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={calibrationCenters}
+                  onChange={(event) => setCalibrationCenters(event.target.checked)}
+                />
+                {copy.panel.controlCenters}
+              </label>
+              <label className="calibration-opacity">
+                {copy.panel.photoOpacity}
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={calibrationOpacity}
+                  onChange={(event) => setCalibrationOpacity(event.target.valueAsNumber)}
+                />
+                <output>{Math.round(calibrationOpacity * 100)}%</output>
+              </label>
+              <code>
+                x {Math.round(calibrationCrosshair.x)} · y {Math.round(calibrationCrosshair.y)}
+              </code>
+            </div>
+          ) : null}
           <div
             ref={viewport}
-            className="panel-viewport"
+            className={`panel-viewport${panning ? " is-panning" : ""}`}
+            data-interaction-mode={
+              panning
+                ? copy.panel.pan
+                : activeControlInteraction
+                  ? copy.panel.control
+                  : copy.panel.interact
+            }
+            data-active-control-interaction={activeControlInteraction}
+            aria-description={copy.panel.panHint}
+            onPointerDownCapture={trackControlPointer}
+            onPointerUpCapture={releaseControlPointer}
+            onPointerCancelCapture={releaseControlPointer}
             onPointerDown={beginPan}
-            onPointerMove={movePan}
+            onPointerMove={(event) => {
+              updateCalibrationCrosshair(event);
+              movePan(event);
+            }}
             onPointerUp={finishPan}
             onPointerCancel={finishPan}
+            onLostPointerCapture={() => {
+              panStart.current = undefined;
+              setPanning(false);
+            }}
           >
             <div
               className="panel-canvas"
@@ -433,6 +648,19 @@ export function PhysicalPanelPage() {
                   }
                   focusedSectionId={focusedSectionId}
                   showInfoOverlay={showInfoOverlay}
+                  calibration={
+                    import.meta.env.DEV && calibrationOpen
+                      ? {
+                          showPhoto: calibrationPhoto,
+                          showVector: calibrationVector,
+                          showGrid: calibrationGrid,
+                          showCrosshair: calibrationCrosshairVisible,
+                          showControlCenters: calibrationCenters,
+                          photoOpacity: calibrationOpacity,
+                          crosshair: calibrationCrosshair,
+                        }
+                      : undefined
+                  }
                   onSelect={selectParameter}
                   onChange={setParameterValue}
                   onDisplayAreaSelect={selectDisplayArea}

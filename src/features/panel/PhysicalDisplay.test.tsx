@@ -124,4 +124,32 @@ describe("physical display navigation", () => {
     expect(screen.getByTestId("panel-oled")).toHaveAttribute("data-display-slot", "4");
     expect(useAppStore.getState().activeFxModulationSlot).toBe(4);
   });
+
+  it("uses constant horizontal OLED highlight geometry without transforms", () => {
+    renderPanel();
+    fireEvent.click(screen.getByRole("button", { name: "OSC: controllo menu hardware" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Diverge:/ }));
+    const oled = screen.getByTestId("panel-oled");
+    const hitboxes = [...oled.querySelectorAll<SVGRectElement>(".oled-row-hitbox")];
+    expect(hitboxes.length).toBeGreaterThanOrEqual(1);
+    expect(hitboxes.length).toBeLessThanOrEqual(4);
+
+    const geometry = hitboxes.map((rect) => ({
+      x: rect.getAttribute("x"),
+      width: rect.getAttribute("width"),
+      height: rect.getAttribute("height"),
+      step: rect.getAttribute("data-highlight-step"),
+      transform: rect.getAttribute("transform"),
+    }));
+    expect(new Set(geometry.map((row) => row.x)).size).toBe(1);
+    expect(new Set(geometry.map((row) => row.width)).size).toBe(1);
+    expect(new Set(geometry.map((row) => row.height)).size).toBe(1);
+    expect(new Set(geometry.map((row) => row.step)).size).toBe(1);
+    expect(geometry.every((row) => row.transform === null)).toBe(true);
+
+    const selected = oled.querySelector<SVGRectElement>(".oled-row-selection");
+    expect(selected).not.toBeNull();
+    expect(selected).toHaveAttribute("clip-path");
+    expect(selected).not.toHaveAttribute("transform");
+  });
 });
