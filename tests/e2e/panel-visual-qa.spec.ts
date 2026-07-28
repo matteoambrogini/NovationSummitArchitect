@@ -51,6 +51,31 @@ test("capture calibrated Summit panel visual evidence", async ({ page }) => {
   });
   await screenshotReferenceRegion(
     page,
+    { x: 142, y: 52, width: 188, height: 154 },
+    "display-menu-area-zoom.png",
+  );
+  await screenshotReferenceRegion(
+    page,
+    { x: 452, y: 52, width: 310, height: 218 },
+    "oscillator-area-zoom.png",
+  );
+  await screenshotReferenceRegion(
+    page,
+    { x: 310, y: 52, width: 155, height: 218 },
+    "voice-arp-area-zoom.png",
+  );
+  await screenshotReferenceRegion(
+    page,
+    { x: 895, y: 52, width: 282, height: 218 },
+    "filter-envelopes-area-zoom.png",
+  );
+  await screenshotReferenceRegion(
+    page,
+    { x: 1165, y: 52, width: 310, height: 218 },
+    "lfo-effects-area-zoom.png",
+  );
+  await screenshotReferenceRegion(
+    page,
     { x: 300, y: 48, width: 180, height: 92 },
     "voice-area-150.png",
   );
@@ -74,7 +99,7 @@ test("capture calibrated Summit panel visual evidence", async ({ page }) => {
   await page.getByRole("button", { name: /^Diverge:/ }).click();
   await screenshotReferenceRegion(
     page,
-    { x: 154, y: 126, width: 132, height: 62 },
+    { x: 176, y: 126, width: 132, height: 64 },
     "oled-row-highlight.png",
   );
 
@@ -83,6 +108,11 @@ test("capture calibrated Summit panel visual evidence", async ({ page }) => {
   await page.locator(".summit-panel").screenshot({
     path: "/private/tmp/summit-overlay-150.png",
   });
+  await screenshotReferenceRegion(
+    page,
+    { x: 142, y: 52, width: 188, height: 154 },
+    "reference-overlay-display-menu.png",
+  );
   await screenshotReferenceRegion(
     page,
     { x: 300, y: 48, width: 180, height: 92 },

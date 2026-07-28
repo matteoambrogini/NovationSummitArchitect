@@ -33,7 +33,13 @@ import {
   UnavailableControl,
   type ControlVisualState,
 } from "./panel-controls/SummitControls";
-import { panelLandmarkById, summitPanelLayout, type LayoutControl } from "./SummitPanelLayout";
+import {
+  panelLandmarkById,
+  SERIGRAPHY_LABEL_BASELINE_OFFSET,
+  serigraphyLineStartX,
+  summitPanelLayout,
+  type LayoutControl,
+} from "./SummitPanelLayout";
 
 const SUMMIT_REFERENCE_IMAGE_URL = new URL(
   "../../docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
@@ -143,6 +149,7 @@ function StateOnlyControl({
         displayAreaId={control.displayAreaId}
         active={active}
         disabled={disabled}
+        showLabel={!control.id.startsWith("menu-page-")}
         onClick={onClick}
       />
     );
@@ -425,7 +432,8 @@ export const SummitPanel = memo(function SummitPanel({
           {summitPanelLayout.serigraphy.map((mark) => (
             <line
               key={mark.id}
-              x1={mark.x + Math.min(mark.width - 3, Math.max(14, mark.label.length * 3.4 + 5))}
+              data-serigraphy-id={mark.id}
+              x1={serigraphyLineStartX(mark)}
               y1={mark.y}
               x2={mark.x + mark.width}
               y2={mark.y}
@@ -435,7 +443,7 @@ export const SummitPanel = memo(function SummitPanel({
         <g className="panel-serigraphy-labels" aria-hidden="true">
           {summitPanelLayout.serigraphy.map((mark) => (
             <g key={mark.id} className="panel-serigraphy" data-serigraphy-id={mark.id}>
-              <text x={mark.x} y={mark.y + 8}>
+              <text x={mark.x} y={mark.y + SERIGRAPHY_LABEL_BASELINE_OFFSET}>
                 {mark.label}
               </text>
             </g>
@@ -451,11 +459,14 @@ export const SummitPanel = memo(function SummitPanel({
           selectedDisplayFieldId={selectedDisplayFieldId}
           selectedParameterId={selectedParameterId}
           onFieldSelect={onDisplayFieldSelect}
-          x={displayLandmark?.x ?? 164}
-          y={displayLandmark?.y ?? 135}
+          x={displayLandmark?.x ?? 183}
+          y={displayLandmark?.y ?? 133}
           width={displayLandmark?.width ?? 110}
-          height={displayLandmark?.height ?? 44}
+          height={displayLandmark?.height ?? 47}
         />
+        <text x="236.5" y="201" textAnchor="middle" className="control-label display-page-label">
+          ◀ PAGE ▶
+        </text>
 
         {summitPanelLayout.controls.map((control) => {
           if (control.stateOnly) {

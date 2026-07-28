@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { panelRenderStats, summitPanelLayout } from "./SummitPanelLayout";
+import {
+  panelRenderStats,
+  SERIGRAPHY_LABEL_BASELINE_OFFSET,
+  serigraphyLineStartX,
+  summitPanelLayout,
+} from "./SummitPanelLayout";
 
 describe("photo-derived Summit panel layout", () => {
   it("keeps every registered control unique, in bounds and assigned to a section", () => {
@@ -46,7 +51,7 @@ describe("photo-derived Summit panel layout", () => {
     expect(summitPanelLayout.geometry).toMatchObject({
       referenceWidth: 1536,
       referenceHeight: 539,
-      verifiedAt: "2026-07-27",
+      verifiedAt: "2026-07-28",
     });
     const landmarkIds = new Set(summitPanelLayout.landmarks.map((landmark) => landmark.id));
     for (const id of [
@@ -78,6 +83,38 @@ describe("photo-derived Summit panel layout", () => {
       "reverb",
     ]) {
       expect(silkscreenIds.has(id)).toBe(true);
+    }
+  });
+
+  it("keeps section titles above cyan rules with a measured exclusion gap", () => {
+    expect(SERIGRAPHY_LABEL_BASELINE_OFFSET).toBeLessThan(0);
+    for (const mark of summitPanelLayout.serigraphy) {
+      const lineStart = serigraphyLineStartX(mark);
+      expect(lineStart).toBeGreaterThanOrEqual(mark.x + 18);
+      expect(lineStart).toBeLessThanOrEqual(mark.x + mark.width - 3);
+    }
+  });
+
+  it("matches the calibrated display cluster and repeated control rows", () => {
+    expect(summitPanelLayout.landmarks.find(({ id }) => id === "display")).toMatchObject({
+      x: 183,
+      y: 133,
+      width: 110,
+      height: 47,
+    });
+    expect(summitPanelLayout.controls.find(({ id }) => id === "menu-row-1")).toMatchObject({
+      x: 164,
+      y: 143,
+    });
+    expect(summitPanelLayout.controls.find(({ id }) => id === "menu-value")).toMatchObject({
+      x: 312,
+      y: 155,
+    });
+    for (const row of [1, 2, 3]) {
+      const expectedY = [91, 157, 222][row - 1];
+      expect(summitPanelLayout.controls.find(({ id }) => id === `osc${row}-coarse`)?.y).toBe(
+        expectedY,
+      );
     }
   });
 });

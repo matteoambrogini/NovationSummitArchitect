@@ -147,4 +147,32 @@ test.describe("physical panel pointer hardening", () => {
         .evaluate((element) => getComputedStyle(element).userSelect),
     ).toBe("text");
   });
+
+  test("cyan section rules leave every macro-label clear", async ({ page }) => {
+    await openPhysicalPanel(page);
+
+    const conflicts = await page.locator(".panel-serigraphy-labels text").evaluateAll((labels) =>
+      labels.flatMap((label) => {
+        if (!(label instanceof SVGGraphicsElement)) return ["invalid-label"];
+        const id = label.parentElement?.getAttribute("data-serigraphy-id");
+        if (!id) return ["missing-id"];
+        const line = document.querySelector(
+          `.panel-serigraphy-lines line[data-serigraphy-id="${id}"]`,
+        );
+        if (!(line instanceof SVGLineElement)) return [`${id}:missing-line`];
+        const bounds = label.getBBox();
+        const lineStart = line.x1.baseVal.value;
+        const lineY = line.y1.baseVal.value;
+        const clearsTextHorizontally = lineStart >= bounds.x + bounds.width + 2;
+        const labelSitsAboveRule = bounds.y + bounds.height <= lineY + 0.5;
+        return clearsTextHorizontally && labelSitsAboveRule
+          ? []
+          : [
+              `${id}: text=${bounds.x},${bounds.y},${bounds.width},${bounds.height}; line=${lineStart},${lineY}`,
+            ];
+      }),
+    );
+
+    expect(conflicts).toEqual([]);
+  });
 });

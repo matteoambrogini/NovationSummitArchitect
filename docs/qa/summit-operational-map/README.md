@@ -1,6 +1,6 @@
 # Summit operational map — visual QA
 
-Captured on 2026-07-27 with the Playwright Chromium Retina project at
+Captured on 2026-07-28 with the Playwright Chromium Retina project at
 1440 CSS px wide (2880 physical px) unless otherwise noted.
 
 | Evidence              | File                                                           | What it verifies                                                                                          |
@@ -18,7 +18,13 @@ Captured on 2026-07-27 with the Playwright Chromium Retina project at
 | Final · ENV/LFO       | `envelopes-lfo-area-150.png`                                   | Corrected envelope slider columns, LFO 1/2 and Global LFO 3&4 at 150%                                     |
 | Final · Effects       | `effects-area-150.png`                                         | Distortion, Chorus, Delay, Effects and Reverb zones without card backgrounds                              |
 | Final · OLED row      | `oled-row-highlight.png`                                       | Horizontal clipped highlight with constant x, width, height and step                                      |
+| Cleanup · display     | `display-menu-area-zoom.png`                                   | OLED, row buttons 1/2/3, PAGE controls and VALUE aligned to the HR photo                                  |
+| Cleanup · oscillators | `oscillator-area-zoom.png`                                     | OSCILLATOR 1/2/3 titles clear of cyan rules and controls on y 91/157/222                                  |
+| Cleanup · voice/arp   | `voice-arp-area-zoom.png`                                      | VOICE and ARP macro-label spacing after the common title-line rule                                        |
+| Cleanup · filter/env  | `filter-envelopes-area-zoom.png`                               | FILTER, AMP ENVELOPE and MOD ENVELOPES with clear ADSR labels                                             |
+| Cleanup · LFO/FX      | `lfo-effects-area-zoom.png`                                    | LFO 1/2, GLOBAL LFO 3&4 and all FX titles without line intersections                                      |
 | Calibration · VOICE   | `reference-overlay-voice.png`, `voice-reference-vs-vector.png` | Photo/vector comparison at 50% opacity with measured control-centre markers                               |
+| Calibration · display | `reference-overlay-display-menu.png`                           | HR photo/vector comparison for OLED, 1/2/3 and VALUE                                                      |
 | Calibration · full    | `reference-overlay-full-panel.png`                             | Shared 1536 × 539 photo/vector viewBox, crosshair and all control centres                                 |
 | After · OLED browser  | `after-display-browser.png`                                    | Area/page browser, LFO page 10/10 and exact generated `PAGE ▶ × 9` path                                   |
 | After · checklist     | `after-patch-checklist.png`                                    | Complete Single checklist with physical/menu/matrix filters                                               |
@@ -33,18 +39,18 @@ Coordinates use the shared 1536 × 539 reference space.
 | Landmark                   | Reference                   | Final render assessment                                                               |
 | -------------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
 | Complete chassis           | x 14, y 41, w 1484, h 446   | Aligned; continuous deck and wood cheeks retained                                     |
-| OLED                       | x 164, y 135, w 110, h 44   | Aligned; interactive four-row display replaces the former browser-only representation |
+| OLED                       | x 183, y 133, w 110, h 47   | Aligned; interactive four-row display replaces the former browser-only representation |
 | Pitch wheel                | x 63, y 329, w 30, h 84     | Aligned in the left performance bay                                                   |
 | Mod wheel                  | x 114, y 329, w 30, h 84    | Aligned beside pitch                                                                  |
 | Keyboard                   | x 185, y 285, w 1275, h 202 | Aligned; 61-key span and deck boundary retained                                       |
 | Voice                      | x 321, y 64, w 139, h 58    | Section retained; Mode +25/+20, Glide On +24/+20 and Glide Time +19/+0 px             |
 | Arpeggiator                | x 321, y 128, w 139, h 140  | Aligned as a vertical block                                                           |
-| Oscillator 1               | x 465, y 64, w 292, h 61    | Aligned as the first horizontal oscillator row                                        |
-| Oscillator 2               | x 465, y 129, w 292, h 61   | Aligned as the second horizontal oscillator row                                       |
-| Oscillator 3               | x 465, y 194, w 292, h 63   | Aligned as the third horizontal oscillator row                                        |
+| Oscillator 1               | x 465, y 64, w 292, h 61    | Controls moved to observed y 91; title remains above its cyan rule                    |
+| Oscillator 2               | x 465, y 129, w 292, h 61   | Controls moved to observed y 157; title remains above its cyan rule                   |
+| Oscillator 3               | x 465, y 194, w 292, h 63   | Controls moved to observed y 222; title remains above its cyan rule                   |
 | Filter                     | x 900, y 64, w 120, h 193   | Columns corrected to x 923/963/1003; no control extends into Amp Envelope             |
 | Amp Envelope               | x 1023, y 64, w 146, h 91   | Slider centres corrected to x 1068/1095/1122/1150                                     |
-| Mod Envelopes              | x 1023, y 159, w 146, h 98  | Same columns; travel corrected to 88 px and Loop/selector returned to the left        |
+| Mod Envelopes              | x 1023, y 159, w 146, h 98  | Same columns; 78 px travel separates ADSR labels from the title rule                  |
 | Effects                    | x 1297, y 64, w 168, h 193  | Aligned; Distortion, Chorus, Delay, Effects and Reverb remain distinct                |
 | SUMMIT wordmark            | upper-right deck            | Corrected to the observed upper-right position                                        |
 | Oxford / bi-timbral labels | keyboard boundary           | Both labels restored at the observed left/right positions                             |
@@ -57,6 +63,8 @@ Coordinates use the shared 1536 × 539 reference space.
   photographic perspective and soft edges prevent a meaningful sub-pixel claim.
 - Small knob legends are normalized for screen legibility; cyan rules are broken before each
   section label so they never cross text.
+- The HR photograph has soft edges and mild perspective; the display cluster and repeated control
+  rows are therefore reported to a 2 px visual tolerance rather than a sub-pixel claim.
 - The keyboard is a geometric 61-key representation and does not reproduce individual key wear or
   camera distortion.
 

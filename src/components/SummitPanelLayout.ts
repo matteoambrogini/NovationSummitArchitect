@@ -33,6 +33,13 @@ export type LayoutSerigraphy = {
   width: number;
 };
 
+export const SERIGRAPHY_LABEL_BASELINE_OFFSET = -2.5;
+
+export function serigraphyLineStartX(mark: LayoutSerigraphy): number {
+  const measuredLabelClearance = mark.label.length * 4.5 + 8;
+  return mark.x + Math.min(mark.width - 3, Math.max(18, measuredLabelClearance));
+}
+
 export const summitPanelLayout = layoutJson as {
   schemaVersion: string;
   viewBox: string;

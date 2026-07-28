@@ -7,7 +7,7 @@
 - Page: 1
 - Local source: `docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg`
 - Reference raster: 1536 × 539 px
-- Verified: 2026-07-27
+- Verified: 2026-07-28
 
 ## Reproducible coordinate procedure
 
@@ -20,6 +20,8 @@
 7. Validate coordinates, source metadata and required landmarks with `pnpm validate:catalogs`.
 8. In development, enable **Reference calibration**, keep photo and vector visible at 50% opacity,
    and check the same 1536 × 539 coordinate space with grid, crosshair and control-centre markers.
+9. For title rules, verify the rendered SVG text bounding box: the title baseline stays above the
+   cyan rule and the rule starts at least 2 px after the final glyph.
 
 ## Principal measured landmarks
 
@@ -28,7 +30,7 @@
 | Complete chassis | x 14, y 41, w 1484, h 446   |
 | Left wood cheek  | x 14, y 41, w 21, h 446     |
 | Right wood cheek | x 1474, y 41, w 24, h 446   |
-| OLED display     | x 164, y 135, w 110, h 44   |
+| OLED display     | x 183, y 133, w 110, h 47   |
 | Pitch wheel      | x 63, y 329, w 30, h 84     |
 | Mod wheel        | x 114, y 329, w 30, h 84    |
 | Keyboard         | x 185, y 285, w 1275, h 202 |
@@ -52,18 +54,25 @@
 The reference overlay exposed three concentrated errors; the remaining named landmarks above stayed
 within the retained one-pixel tracing tolerance.
 
-| Area                | Previous vector                    | Corrected reference coordinate        | Residual |
-| ------------------- | ---------------------------------- | ------------------------------------- | -------- |
-| VOICE · Mode        | centre x 340, y 91                 | x 365, y 111                          | ≤ 2 px   |
-| VOICE · Glide On    | centre x 381, y 91                 | x 405, y 111                          | ≤ 2 px   |
-| VOICE · Glide Time  | centre x 422, y 91                 | x 441, y 91                           | ≤ 2 px   |
-| ARP controls        | synthetic 3 × 3 grid               | observed centres x 360–441, y 154–244 | ≤ 3 px   |
-| FILTER controls     | synthetic rows extending to x 1040 | observed columns x 923, 963, 1003     | ≤ 3 px   |
-| AMP / MOD envelopes | slider columns x 1075–1159         | x 1068, 1095, 1122, 1150              | ≤ 2 px   |
+| Area                     | Previous vector                    | Corrected reference coordinate         | Residual |
+| ------------------------ | ---------------------------------- | -------------------------------------- | -------- |
+| DISPLAY · OLED           | x 164, y 135, w 110, h 44          | x 183, y 133, w 110, h 47              | ≤ 2 px   |
+| DISPLAY · row buttons    | column x 153, rows 139/156/173     | x 164, rows 143/160/177                | ≤ 2 px   |
+| DISPLAY · VALUE          | centre x 295, y 155                | x 312, y 155                           | ≤ 2 px   |
+| VOICE · Mode             | centre x 340, y 91                 | x 365, y 111                           | ≤ 2 px   |
+| VOICE · Glide On         | centre x 381, y 91                 | x 405, y 111                           | ≤ 2 px   |
+| VOICE · Glide Time       | centre x 422, y 91                 | x 441, y 91                            | ≤ 2 px   |
+| ARP controls             | synthetic 3 × 3 grid               | observed centres x 360–441, y 154–244  | ≤ 3 px   |
+| OSC / FM / MIXER rows    | y 78/145/212                       | observed rows y 91/157/222             | ≤ 2 px   |
+| FILTER controls          | synthetic rows extending to x 1040 | observed columns x 923, 963, 1003      | ≤ 3 px   |
+| AMP / MOD envelopes      | slider columns x 1075–1159         | x 1068, 1095, 1122, 1150               | ≤ 2 px   |
+| MOD envelope label space | slider travel 88 px                | 78 px, preserving the observed centres | ≤ 3 px   |
 
-The cyan serigraphy is rendered as a line layer followed by a label layer. Each rule starts after
-its label-width gap, so no line is painted through a section title and no card-like background is
-introduced.
+The cyan serigraphy is rendered as a line layer followed by a label exclusion/paint layer and then
+the local control labels. Every macro-label uses one baseline rule 2.5 px above its section line.
+Each cyan rule starts after a conservative measured-width clearance, and the text paint masks only
+the immediate glyph edge rather than drawing a box or card. The Playwright geometry check compares
+the real SVG bounding boxes and fails if a rule reaches a title or if a title drops onto its rule.
 
 ## Rendering contract
 
@@ -71,4 +80,5 @@ introduced.
 - The visible grouping comes from measured cyan rules and silkscreen labels.
 - OSCILLATOR 1, 2 and 3 are distinct rows.
 - Distortion, Chorus, Delay, Effects and Reverb retain their separate observed zones.
+- The OLED, row-button column, page controls and VALUE encoder retain their measured relative spacing.
 - Software values are hidden in clean hardware mode and shown only for hover, selection, Setup Mode or explicit overlay.

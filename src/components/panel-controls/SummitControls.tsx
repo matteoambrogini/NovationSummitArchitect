@@ -717,6 +717,7 @@ type HardwareElementProps = {
   displayAreaId?: string | undefined;
   active?: boolean;
   disabled?: boolean;
+  showLabel?: boolean;
   onClick?: (() => void) | undefined;
 };
 
@@ -730,6 +731,7 @@ export const SummitButton = memo(function SummitButton({
   displayAreaId,
   active = false,
   disabled = false,
+  showLabel = true,
   onClick,
 }: HardwareElementProps) {
   const width = Math.max(13, size * 1.55);
@@ -792,9 +794,11 @@ export const SummitButton = memo(function SummitButton({
           className="control-hit-target"
         />
       ) : null}
-      <text x={x} y={y - height / 2 - 4} textAnchor="middle" className="control-label">
-        {label}
-      </text>
+      {showLabel ? (
+        <text x={x} y={y - height / 2 - 4} textAnchor="middle" className="control-label">
+          {label}
+        </text>
+      ) : null}
       <rect
         x={x - width / 2}
         y={y - height / 2}
