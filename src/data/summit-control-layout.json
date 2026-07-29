@@ -645,8 +645,8 @@
       "label": "Layer",
       "type": "button",
       "x": 68,
-      "y": 247,
-      "size": 15
+      "y": 248,
+      "size": 12
     },
     {
       "id": "multi-split",
@@ -656,8 +656,8 @@
       "label": "Split",
       "type": "button",
       "x": 97,
-      "y": 247,
-      "size": 15
+      "y": 248,
+      "size": 12
     },
     {
       "id": "multi-dual",
@@ -666,8 +666,8 @@
       "label": "Dual",
       "type": "button",
       "x": 126,
-      "y": 247,
-      "size": 15
+      "y": 248,
+      "size": 12
     },
     {
       "id": "animate-1",
@@ -675,8 +675,8 @@
       "label": "Animate 1",
       "type": "button",
       "x": 68,
-      "y": 276,
-      "size": 18,
+      "y": 279,
+      "size": 16,
       "stateOnly": true
     },
     {
@@ -685,8 +685,8 @@
       "label": "Animate 2",
       "type": "button",
       "x": 98,
-      "y": 276,
-      "size": 18,
+      "y": 279,
+      "size": 16,
       "stateOnly": true
     },
 

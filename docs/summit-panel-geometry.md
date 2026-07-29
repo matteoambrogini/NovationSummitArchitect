@@ -96,6 +96,8 @@ intersections and horizontal overflow.
 - Oscillator, FM, Mixer, LFO and Effects rows move down by 4–5 px; the first Range selectors move
   right to x 481 and the FM depth knobs to x 776 so their complete visual boxes remain inside their
   section segments.
-- Master, Multi, Animate and envelope controls move only enough to create an unambiguous label band.
+- Master and envelope controls move only enough to create an unambiguous label band. MULTI MODE
+  uses 12 px controls at y 248 and ANIMATES uses 16 px controls at y 279 so the 1 px collision guard
+  remains portable across macOS and Linux font metrics without crossing the following cyan rule.
   OLED geometry, menu row buttons, interaction state, display behavior and catalog bindings are
   unchanged.

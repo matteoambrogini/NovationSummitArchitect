@@ -155,6 +155,9 @@ test.describe("physical panel pointer hardening", () => {
       const allText = [...document.querySelectorAll(".panel-vector-layer text")].filter(
         (element): element is SVGTextElement => element instanceof SVGTextElement,
       );
+      const allControls = [...document.querySelectorAll("[data-layout-control-id]")].filter(
+        (element): element is SVGGElement => element instanceof SVGGElement,
+      );
       const intersects = (
         left: { x: number; y: number; width: number; height: number },
         right: { x: number; y: number; width: number; height: number },
@@ -164,6 +167,27 @@ test.describe("physical panel pointer hardening", () => {
         left.x + left.width + padding > right.x &&
         left.y < right.y + right.height + padding &&
         left.y + left.height + padding > right.y;
+      const visibleControlBounds = (control: SVGGElement) => {
+        const visibleElements = [
+          ...control.querySelectorAll<SVGGraphicsElement>(
+            "circle, ellipse, line, path, polygon, polyline, rect, text",
+          ),
+        ].filter((element) => {
+          const style = getComputedStyle(element);
+          return (
+            !element.classList.contains("control-hit-target") &&
+            style.display !== "none" &&
+            style.visibility !== "hidden"
+          );
+        });
+        if (visibleElements.length === 0) return undefined;
+        const boxes = visibleElements.map((element) => element.getBBox());
+        const left = Math.min(...boxes.map((box) => box.x));
+        const top = Math.min(...boxes.map((box) => box.y));
+        const right = Math.max(...boxes.map((box) => box.x + box.width));
+        const bottom = Math.max(...boxes.map((box) => box.y + box.height));
+        return { x: left, y: top, width: right - left, height: bottom - top };
+      };
 
       return headers.flatMap((header) => {
         const id = header.getAttribute("data-section-header-id");
@@ -196,7 +220,8 @@ test.describe("physical panel pointer hardening", () => {
             element instanceof SVGGElement && element.hasAttribute("data-layout-control-id"),
         );
         for (const control of memberControls) {
-          const controlBounds = control.getBBox();
+          const controlBounds = visibleControlBounds(control);
+          if (!controlBounds) continue;
           const controlId = control.getAttribute("data-layout-control-id") ?? "unknown-control";
           if (
             controlBounds.x < lineStart - 0.5 ||
@@ -218,6 +243,14 @@ test.describe("physical panel pointer hardening", () => {
         for (const text of allText) {
           if (intersects(lineBounds, text.getBBox())) {
             issues.push(`line-text-intersection:${text.textContent?.trim() ?? "text"}`);
+          }
+        }
+        for (const control of allControls) {
+          const controlBounds = visibleControlBounds(control);
+          if (controlBounds && intersects(lineBounds, controlBounds)) {
+            issues.push(
+              `line-control-intersection:${control.getAttribute("data-layout-control-id") ?? "control"}`,
+            );
           }
         }
         return issues.map((issue) => `${id}:${issue}`);
