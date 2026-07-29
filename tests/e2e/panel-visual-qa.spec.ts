@@ -94,6 +94,13 @@ test("capture calibrated Summit panel visual evidence", async ({ page }) => {
     { x: 1286, y: 48, width: 198, height: 224 },
     "effects-area-150.png",
   );
+  await page.getByRole("button", { name: "Mostra overlay" }).click();
+  await screenshotReferenceRegion(
+    page,
+    { x: 1012, y: 48, width: 165, height: 224 },
+    "amp-mod-info-overlay.png",
+  );
+  await page.getByRole("button", { name: "Nascondi overlay" }).click();
 
   await page.getByRole("button", { name: "OSC: controllo menu hardware" }).click();
   await page.getByRole("button", { name: /^Diverge:/ }).click();

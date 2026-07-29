@@ -18,6 +18,7 @@ describe("SummitPanel", () => {
         activeModulationSlot={1}
         activeFxModulationSlot={1}
         activeGlobalLfo={3}
+        activeModEnvelope={1}
         onSelect={onSelect}
         onChange={onChange}
         onDisplayAreaSelect={vi.fn()}
@@ -25,6 +26,7 @@ describe("SummitPanel", () => {
         onDisplayFieldSelect={vi.fn()}
         onDisplayValueStep={vi.fn()}
         onGlobalLfoSelect={vi.fn()}
+        onModEnvelopeSelect={vi.fn()}
       />,
     );
     const control = screen.getByRole("slider", { name: "Frequency: 185" });
@@ -46,6 +48,7 @@ describe("SummitPanel", () => {
       selectedDisplayFieldId: "diverge",
       activeModulationSlot: 1,
       activeFxModulationSlot: 1,
+      activeModEnvelope: 1 as const,
       onSelect,
       onChange: vi.fn(),
       onDisplayAreaSelect: vi.fn(),
@@ -53,6 +56,7 @@ describe("SummitPanel", () => {
       onDisplayFieldSelect: vi.fn(),
       onDisplayValueStep: vi.fn(),
       onGlobalLfoSelect,
+      onModEnvelopeSelect: vi.fn(),
     };
     const { container, rerender } = render(<SummitPanel {...commonProps} activeGlobalLfo={3} />);
 
@@ -73,5 +77,55 @@ describe("SummitPanel", () => {
     expect(rate).not.toBeNull();
     fireEvent.focus(rate!);
     expect(onSelect).toHaveBeenCalledWith("lfo4.rate");
+  });
+
+  it("switches the Mod Envelope 1/2 context and routes its shared controls", () => {
+    const onSelect = vi.fn();
+    const onModEnvelopeSelect = vi.fn();
+    const commonProps = {
+      proposal: demoProposals[0]!,
+      scope: "single" as const,
+      selectedParameterId: undefined,
+      activeDisplayAreaId: "osc",
+      activeDisplayPage: 1,
+      selectedDisplayFieldId: "diverge",
+      activeModulationSlot: 1,
+      activeFxModulationSlot: 1,
+      activeGlobalLfo: 3 as const,
+      onSelect,
+      onChange: vi.fn(),
+      onDisplayAreaSelect: vi.fn(),
+      onDisplayStep: vi.fn(),
+      onDisplayFieldSelect: vi.fn(),
+      onDisplayValueStep: vi.fn(),
+      onGlobalLfoSelect: vi.fn(),
+      onModEnvelopeSelect,
+    };
+    const { container, rerender } = render(<SummitPanel {...commonProps} activeModEnvelope={1} />);
+
+    const selector = container.querySelector<SVGGElement>(
+      '[data-control-id="mod-envelope-select"][aria-label="1 / 2: Envelope 1"]',
+    );
+    expect(selector).not.toBeNull();
+    fireEvent.click(selector!);
+    expect(onModEnvelopeSelect).toHaveBeenCalledWith(2);
+
+    rerender(<SummitPanel {...commonProps} activeModEnvelope={2} />);
+    expect(
+      container.querySelector(
+        '[data-control-id="mod-envelope-select"][aria-label="1 / 2: Envelope 2"]',
+      ),
+    ).not.toBeNull();
+    const attack = container.querySelector<SVGGElement>(
+      '[data-layout-control-id="mod-envelope-attack"] [role="slider"]',
+    );
+    expect(attack).not.toBeNull();
+    fireEvent.focus(attack!);
+    expect(onSelect).toHaveBeenCalledWith("modEnv2.attack");
+    expect(
+      container.querySelector(
+        '[data-layout-control-id="envelope-loop"] [data-parameter-id="modEnv2.loop"]',
+      ),
+    ).not.toBeNull();
   });
 });

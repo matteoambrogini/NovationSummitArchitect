@@ -11,6 +11,7 @@ export type LayoutControl = {
   x: number;
   y: number;
   size?: number;
+  valueOffsetY?: number;
   stateOnly?: boolean;
 };
 

@@ -101,6 +101,7 @@ const ParameterControl = memo(function ParameterControl({
     x: control.x,
     y: control.y,
     size: control.size,
+    valueOffsetY: control.valueOffsetY,
     states,
     highlighted,
     onSelect,
@@ -129,6 +130,7 @@ function StateOnlyControl({
   active = false,
   disabled = false,
   selectedOption,
+  selectedContextLabel,
   onClick,
 }: {
   control: LayoutControl;
@@ -136,6 +138,7 @@ function StateOnlyControl({
   active?: boolean;
   disabled?: boolean;
   selectedOption?: string | undefined;
+  selectedContextLabel?: string | undefined;
   onClick?: (() => void) | undefined;
 }) {
   if (control.type === "button" || control.type === "toggle") {
@@ -151,7 +154,7 @@ function StateOnlyControl({
         active={active}
         disabled={disabled}
         showLabel={!control.id.startsWith("menu-page-")}
-        labelGap={control.id.startsWith("menu-row-") ? 6 : undefined}
+        labelGap={control.id.startsWith("menu-row-") ? 2.5 : undefined}
         onClick={onClick}
       />
     );
@@ -161,8 +164,8 @@ function StateOnlyControl({
   const activate = () => {
     if (!disabled) onClick?.();
   };
-  const accessibleLabel = selectedOption
-    ? `${control.label}: LFO ${selectedOption}`
+  const accessibleLabel = selectedContextLabel
+    ? `${control.label}: ${selectedContextLabel}`
     : `${control.label}: controllo hardware`;
   return (
     <g
@@ -226,7 +229,8 @@ function StateOnlyControl({
         y1={control.y}
         x2={
           selectedOption
-            ? control.x + (selectedOption === "4" ? radius * 0.45 : -radius * 0.45)
+            ? control.x +
+              (selectedOption === "2" || selectedOption === "4" ? radius * 0.45 : -radius * 0.45)
             : control.x
         }
         y2={control.y - Math.max(3, radius - 3)}
@@ -306,6 +310,7 @@ export const SummitPanel = memo(function SummitPanel({
   activeModulationSlot,
   activeFxModulationSlot,
   activeGlobalLfo,
+  activeModEnvelope,
   changedIds = [],
   highlightedIds = [],
   highlightedAreaId,
@@ -319,6 +324,7 @@ export const SummitPanel = memo(function SummitPanel({
   onDisplayFieldSelect,
   onDisplayValueStep,
   onGlobalLfoSelect,
+  onModEnvelopeSelect,
 }: {
   proposal: SummitPatchProposal;
   scope: PatchScope;
@@ -329,6 +335,7 @@ export const SummitPanel = memo(function SummitPanel({
   activeModulationSlot: number;
   activeFxModulationSlot: number;
   activeGlobalLfo: 3 | 4;
+  activeModEnvelope: 1 | 2;
   changedIds?: string[];
   highlightedIds?: string[];
   highlightedAreaId?: string | undefined;
@@ -342,6 +349,7 @@ export const SummitPanel = memo(function SummitPanel({
   onDisplayFieldSelect: (fieldId: string) => void;
   onDisplayValueStep: (steps: number) => void;
   onGlobalLfoSelect: (lfo: 3 | 4) => void;
+  onModEnvelopeSelect: (envelope: 1 | 2) => void;
 }) {
   const changed = useMemo(() => new Set(changedIds), [changedIds]);
   const highlighted = useMemo(() => new Set(highlightedIds), [highlightedIds]);
@@ -581,6 +589,7 @@ export const SummitPanel = memo(function SummitPanel({
             const isPageLeft = control.id === "menu-page-left";
             const isPageRight = control.id === "menu-page-right";
             const isGlobalLfoSelector = control.id === "lfo34-select";
+            const isModEnvelopeSelector = control.id === "mod-envelope-select";
             const displayAreaId = control.displayAreaId;
             const onHardwareClick = displayAreaId
               ? () => onDisplayAreaSelect(displayAreaId)
@@ -592,7 +601,9 @@ export const SummitPanel = memo(function SummitPanel({
                     ? () => onDisplayFieldSelect(rowField.id)
                     : isGlobalLfoSelector
                       ? () => onGlobalLfoSelect(activeGlobalLfo === 3 ? 4 : 3)
-                      : undefined;
+                      : isModEnvelopeSelector
+                        ? () => onModEnvelopeSelect(activeModEnvelope === 1 ? 2 : 1)
+                        : undefined;
             return (
               <LayoutControlGroup key={control.id} control={control}>
                 <StateOnlyControl
@@ -603,14 +614,28 @@ export const SummitPanel = memo(function SummitPanel({
                   active={Boolean(
                     (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
                     (rowField && rowField.id === selectedDisplayFieldId) ||
-                    (isGlobalLfoSelector && activeGlobalLfo === 4),
+                    (isGlobalLfoSelector && activeGlobalLfo === 4) ||
+                    (isModEnvelopeSelector && activeModEnvelope === 2),
                   )}
                   disabled={Boolean(
                     (isPageLeft && displayAtFirst) ||
                     (isPageRight && displayAtLast) ||
                     (rowIndex !== undefined && !rowField),
                   )}
-                  selectedOption={isGlobalLfoSelector ? String(activeGlobalLfo) : undefined}
+                  selectedOption={
+                    isGlobalLfoSelector
+                      ? String(activeGlobalLfo)
+                      : isModEnvelopeSelector
+                        ? String(activeModEnvelope)
+                        : undefined
+                  }
+                  selectedContextLabel={
+                    isGlobalLfoSelector
+                      ? `LFO ${activeGlobalLfo}`
+                      : isModEnvelopeSelector
+                        ? `Envelope ${activeModEnvelope}`
+                        : undefined
+                  }
                   onClick={onHardwareClick}
                 />
               </LayoutControlGroup>
@@ -631,7 +656,9 @@ export const SummitPanel = memo(function SummitPanel({
               : undefined;
           const activeContextPrefix = control.id.startsWith("lfo34-")
             ? `lfo${activeGlobalLfo}.`
-            : undefined;
+            : control.sectionId === "mod-envelope"
+              ? `modEnv${activeModEnvelope}.`
+              : undefined;
           const contextualCandidate = activeContextPrefix
             ? candidateIds.find(
                 (candidate) =>

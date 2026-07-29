@@ -7,6 +7,7 @@
 - Page: 1
 - Local source: `docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg`
 - Reference raster: 1536 × 539 px
+- Layout schema: 2.4.0
 - Verified: 2026-07-29
 
 ## Reproducible coordinate procedure
@@ -79,11 +80,11 @@ control groups:
 | Area                | Final coordinate or spacing contract                                                                 |
 | ------------------- | ---------------------------------------------------------------------------------------------------- |
 | MULTI / ANIMATES    | MULTI controls y 249; ANIMATES rule/label/content y 255/262/265 and buttons y 280.5, size 13         |
-| DISPLAY row numbers | Button centres remain x 164 at y 143/160/177; the number-to-button gap increases from 4 to 6 px      |
+| DISPLAY row numbers | Button centres remain x 164 at y 143/160/177; label gap 6 → 2.5 px moves 1/2/3 down without overlap  |
 | OSC 1/2/3 Range     | x 479, size 14; the conservative left visual bound is exactly x 465, inside each cyan segment        |
 | MIXER               | columns x 842/881; rows read Osc 1–VCA Gain, Osc 2–Ring 1*2, Osc 3–Noise at y 96/161/226             |
 | MIXER / FILTER      | MIXER segment ends at x 897 and FILTER starts at x 900, leaving a distinct 3 px cyan-segment gap     |
-| AMP / MOD envelopes | MOD rule/label/content y 163/170/173; MOD faders y 220 with 66 px travel, below the AMP control band |
+| AMP / MOD envelopes | AMP values use bottom + 5 px (baseline y 160); MOD rule remains y 163 and clears every visible value |
 | EFFECTS / REVERB    | Bypass x 1322; Reverb/Time/Size x 1363/1401/1440, each inside its matching bottom-row segment        |
 
 The cyan hierarchy is data-driven rather than inferred from independent serigraphy marks. Every
@@ -101,6 +102,8 @@ intersections and horizontal overflow.
 - Distortion, Chorus, Delay, Effects and Reverb retain their separate observed zones.
 - The Global LFO `3 / 4` selector is keyboard- and pointer-operable; its UI state routes Type, Rate
   and Sync to the verified `lfo3.*` or `lfo4.*` patch binding.
+- The Mod Envelope `1 / 2` selector uses the same pointer/keyboard contract and routes Loop plus
+  ADSR to the verified `modEnv1.*` or `modEnv2.*` patch binding.
 - The OLED, row-button column, page controls and VALUE encoder retain their measured relative spacing.
 - Software values are hidden in clean hardware mode and shown only for hover, selection, Setup Mode or explicit overlay.
 
@@ -111,4 +114,5 @@ intersections and horizontal overflow.
 - Oscillator, FM, Mixer, LFO and Effects rows retain the established y 96/161/226 rhythm. The Range
   selectors use x 479 and size 14, so their full conservative bound remains inside x 465.
 - MULTI MODE uses 12 px controls at y 249; ANIMATES begins at y 255 and uses 13 px buttons at
-  y 280.5. The OLED and menu-button centres remain unchanged; only the 1/2/3 label gap changes.
+  y 280.5. The OLED and menu-button centres remain unchanged; the 1/2/3 baselines move down 3.5 px
+  while preserving a measured positive gap from both adjacent buttons.

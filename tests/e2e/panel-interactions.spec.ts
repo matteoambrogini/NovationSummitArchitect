@@ -269,4 +269,67 @@ test.describe("physical panel pointer hardening", () => {
     await page.locator('[data-layout-control-id="lfo34-rate"] [role="slider"]').focus();
     await expect(page.getByText("lfo4.rate", { exact: true })).toBeVisible();
   });
+
+  test("display row labels and AMP overlay clear adjacent hardware", async ({ page }) => {
+    await openPhysicalPanel(page);
+    await page.getByRole("button", { name: "Mostra overlay" }).click();
+
+    const conflicts = await page.locator(".summit-panel").evaluate(() => {
+      const issues: string[] = [];
+      let previousButtonBottom: number | undefined;
+      for (const index of [1, 2, 3]) {
+        const group = document.querySelector(`[data-layout-control-id="menu-row-${index}"]`);
+        const label = group?.querySelector(".control-label");
+        const button = group?.querySelector(".button-bezel");
+        if (!(label instanceof SVGGraphicsElement) || !(button instanceof SVGGraphicsElement)) {
+          issues.push(`menu-row-${index}:missing-geometry`);
+          continue;
+        }
+        const labelBounds = label.getBBox();
+        const buttonBounds = button.getBBox();
+        const ownGap = buttonBounds.y - (labelBounds.y + labelBounds.height);
+        if (ownGap < 0.5) issues.push(`menu-row-${index}:label-button-overlap`);
+        if (previousButtonBottom !== undefined && labelBounds.y - previousButtonBottom < 0.5) {
+          issues.push(`menu-row-${index}:previous-button-overlap`);
+        }
+        previousButtonBottom = buttonBounds.y + buttonBounds.height;
+      }
+
+      const modHeader = document.querySelector(
+        '[data-section-header-id="mod-envelopes"] .panel-section-header-line',
+      );
+      if (!(modHeader instanceof SVGLineElement)) {
+        issues.push("mod-envelopes:missing-line");
+        return issues;
+      }
+      const modLineY = modHeader.y1.baseVal.value;
+      for (const id of ["amp-attack", "amp-decay", "amp-sustain", "amp-release"]) {
+        const value = document.querySelector(`[data-layout-control-id="${id}"] .control-value`);
+        if (!(value instanceof SVGGraphicsElement)) {
+          issues.push(`${id}:missing-value`);
+          continue;
+        }
+        const bounds = value.getBBox();
+        if (bounds.y + bounds.height > modLineY - 0.5) {
+          issues.push(`${id}:mod-line-overlap`);
+        }
+      }
+      return issues;
+    });
+
+    expect(conflicts).toEqual([]);
+  });
+
+  test("Mod Envelope 1/2 selector changes context and routes shared controls", async ({ page }) => {
+    await openPhysicalPanel(page);
+
+    await page.getByRole("button", { name: "1 / 2: Envelope 1" }).click();
+    await expect(page.getByRole("button", { name: "1 / 2: Envelope 2" })).toBeVisible();
+
+    await page.locator('[data-layout-control-id="mod-envelope-attack"] [role="slider"]').focus();
+    await expect(page.getByText("modEnv2.attack", { exact: true })).toBeVisible();
+    await expect(
+      page.locator('[data-layout-control-id="envelope-loop"] [data-parameter-id="modEnv2.loop"]'),
+    ).toBeVisible();
+  });
 });

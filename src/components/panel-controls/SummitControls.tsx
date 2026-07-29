@@ -28,6 +28,7 @@ type CommonProps = {
   x: number;
   y: number;
   size?: number | undefined;
+  valueOffsetY?: number | undefined;
   states: readonly ControlVisualState[];
   highlighted?: boolean;
   onSelect: (parameterId: string) => void;
@@ -432,7 +433,12 @@ export const SummitSlider = memo(function SummitSlider(props: CommonProps) {
         y2={handleY}
         className="slider-handle-line"
       />
-      <text x={props.x} y={bottom + 10} textAnchor="middle" className="control-value">
+      <text
+        x={props.x}
+        y={bottom + (props.valueOffsetY ?? 10)}
+        textAnchor="middle"
+        className="control-value"
+      >
         {formatted}
       </text>
       <StatusMarkers x={props.x + 8} y={top - 4} states={props.states} />

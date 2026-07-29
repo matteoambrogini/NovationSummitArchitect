@@ -16,9 +16,10 @@ Captured on 2026-07-29 with the Playwright Chromium Retina project at
 | Final · VOICE 150%    | `voice-area-150.png`                                           | Corrected VOICE and ARP control centres, relative knob/button sizes and broken cyan title rules           |
 | Final · OSC/FILTER    | `osc-filter-area-150.png`                                      | Range clearance, photo-order Mixer, Mixer/Filter gap and filter columns at 150%                           |
 | Final · ENV/LFO       | `envelopes-lfo-area-150.png`                                   | AMP/MOD band clearance and the operable Global LFO 3/4 selector at 150%                                   |
+| Overlay · AMP/MOD     | `amp-mod-info-overlay.png`                                     | AMP numeric values clear the MOD segment; MOD label, faders and 1/2 selector remain readable              |
 | Final · Effects       | `effects-area-150.png`                                         | Bypass under Effects and Reverb/Time/Size under Reverb                                                    |
 | Final · OLED row      | `oled-row-highlight.png`                                       | Horizontal clipped highlight with constant x, width, height and step                                      |
-| Cleanup · display     | `display-menu-area-zoom.png`                                   | OLED and compact 1/2/3 label gaps, with unchanged button centres, aligned to the HR photo                 |
+| Cleanup · display     | `display-menu-area-zoom.png`                                   | 1/2/3 moved down with positive gaps from both adjacent buttons; button centres remain unchanged           |
 | Header · display      | `display-menu-area-zoom.png`                                   | Full MENU segment, label below it, then OLED, row buttons, PAGE controls and VALUE                        |
 | Header · oscillators  | `oscillator-area-zoom.png`                                     | OSCILLATOR 1/2/3 use the common segment → label → controls rhythm on y 96/161/226                         |
 | Header · voice/arp    | `voice-arp-area-zoom.png`                                      | VOICE and ARP labels sit fully below their complete cyan segments                                         |
@@ -83,6 +84,8 @@ Coordinates use the shared 1536 × 539 reference space.
   constant horizontal highlight geometry clipped to the OLED bounds.
 - The Global LFO `3 / 4` selector accepts pointer and keyboard activation; changing it updates the
   visible indicator and routes Type, Rate and Sync to the selected LFO’s verified patch parameters.
+- The Mod Envelope `1 / 2` selector follows the same contract and routes Loop plus ADSR to the
+  selected `modEnv1.*` or `modEnv2.*` parameters.
 
 The reference photo, complete menu video and original screenshots are preserved
 in `docs/references/summit-ui/summit-ui-reference-pack/`.

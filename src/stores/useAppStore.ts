@@ -62,6 +62,7 @@ type AppState = {
   activeModulationSlot: number;
   activeFxModulationSlot: number;
   activeGlobalLfo: 3 | 4;
+  activeModEnvelope: 1 | 2;
   setupMode: boolean;
   setupStep: number;
   setupOnlyModified: boolean;
@@ -86,6 +87,7 @@ type AppState = {
     value: MatrixDisplayValue,
   ) => void;
   setActiveGlobalLfo: (lfo: 3 | 4) => void;
+  setActiveModEnvelope: (envelope: 1 | 2) => void;
   setActiveScope: (scope: PatchScope) => void;
   toggleSetupMode: () => void;
   nextSetupStep: () => void;
@@ -139,6 +141,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   activeModulationSlot: 1,
   activeFxModulationSlot: 1,
   activeGlobalLfo: 3,
+  activeModEnvelope: 1,
   setupMode: false,
   setupStep: 0,
   setupOnlyModified: true,
@@ -302,6 +305,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   },
   selectParameter: (selectedParameterId) => set(displayStateForParameter(selectedParameterId)),
   setActiveGlobalLfo: (activeGlobalLfo) => set({ activeGlobalLfo }),
+  setActiveModEnvelope: (activeModEnvelope) => set({ activeModEnvelope }),
   selectDisplayArea: (areaId) => {
     const area = displayAreaById.get(areaId);
     if (!area) return;

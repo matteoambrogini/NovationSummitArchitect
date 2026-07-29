@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.3.0",
+  "schemaVersion": "2.4.0",
   "viewBox": "0 0 1536 539",
   "geometry": {
     "coordinateSystem": "Summit front elevation, normalized to the 1536 × 539 reference image",
@@ -8,7 +8,7 @@
     "page": 1,
     "sourceUrl": "docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
     "verifiedAt": "2026-07-29",
-    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity and dedicated display/section-header crops. Each section header stores the full cyan segment, a label baseline below it, a content start and an explicit content bounding box; the final pass also verifies compact control labels, Mixer reading order, envelope-band clearance and Effects/Reverb grouping without grid interpolation.",
+    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity and dedicated display/section-header crops. Each section header stores the full cyan segment, a label baseline below it, a content start and an explicit content bounding box; the final pass also verifies compact display-row labels, Mixer reading order, envelope-band clearance including visible value overlays, and Effects/Reverb grouping without grid interpolation.",
     "referenceWidth": 1536,
     "referenceHeight": 539
   },
@@ -1270,7 +1270,8 @@
       "type": "slider",
       "x": 1068,
       "y": 120,
-      "size": 70
+      "size": 70,
+      "valueOffsetY": 5
     },
     {
       "id": "amp-decay",
@@ -1280,7 +1281,8 @@
       "type": "slider",
       "x": 1095,
       "y": 120,
-      "size": 70
+      "size": 70,
+      "valueOffsetY": 5
     },
     {
       "id": "amp-sustain",
@@ -1290,7 +1292,8 @@
       "type": "slider",
       "x": 1122,
       "y": 120,
-      "size": 70
+      "size": 70,
+      "valueOffsetY": 5
     },
     {
       "id": "amp-release",
@@ -1300,7 +1303,8 @@
       "type": "slider",
       "x": 1150,
       "y": 120,
-      "size": 70
+      "size": 70,
+      "valueOffsetY": 5
     },
     {
       "id": "mod-envelope-select",
