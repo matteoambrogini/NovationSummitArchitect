@@ -30,6 +30,8 @@ export function PhysicalPanelPage() {
   const selectedDisplayFieldId = useAppStore((state) => state.selectedDisplayFieldId);
   const activeModulationSlot = useAppStore((state) => state.activeModulationSlot);
   const activeFxModulationSlot = useAppStore((state) => state.activeFxModulationSlot);
+  const activeGlobalLfo = useAppStore((state) => state.activeGlobalLfo);
+  const setActiveGlobalLfo = useAppStore((state) => state.setActiveGlobalLfo);
   const selectDisplayArea = useAppStore((state) => state.selectDisplayArea);
   const stepDisplayPage = useAppStore((state) => state.stepDisplayPage);
   const selectDisplayField = useAppStore((state) => state.selectDisplayField);
@@ -641,6 +643,7 @@ export function PhysicalPanelPage() {
                   selectedDisplayFieldId={selectedDisplayFieldId}
                   activeModulationSlot={activeModulationSlot}
                   activeFxModulationSlot={activeFxModulationSlot}
+                  activeGlobalLfo={activeGlobalLfo}
                   changedIds={changedIds}
                   highlightedIds={setupMode ? (instruction?.parameterIds ?? []) : []}
                   highlightedAreaId={
@@ -673,6 +676,7 @@ export function PhysicalPanelPage() {
                   }}
                   onDisplayFieldSelect={selectDisplayField}
                   onDisplayValueStep={stepDisplayValue}
+                  onGlobalLfoSelect={setActiveGlobalLfo}
                 />
               </div>
             </div>

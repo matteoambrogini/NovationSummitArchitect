@@ -128,12 +128,14 @@ function StateOnlyControl({
   highlighted,
   active = false,
   disabled = false,
+  selectedOption,
   onClick,
 }: {
   control: LayoutControl;
   highlighted: boolean;
   active?: boolean;
   disabled?: boolean;
+  selectedOption?: string | undefined;
   onClick?: (() => void) | undefined;
 }) {
   if (control.type === "button" || control.type === "toggle") {
@@ -149,20 +151,71 @@ function StateOnlyControl({
         active={active}
         disabled={disabled}
         showLabel={!control.id.startsWith("menu-page-")}
+        labelGap={control.id.startsWith("menu-row-") ? 6 : undefined}
         onClick={onClick}
       />
     );
   }
   const radius = (control.size ?? 18) / 2;
+  const interactive = Boolean(onClick);
+  const activate = () => {
+    if (!disabled) onClick?.();
+  };
+  const accessibleLabel = selectedOption
+    ? `${control.label}: LFO ${selectedOption}`
+    : `${control.label}: controllo hardware`;
   return (
     <g
-      className={`hardware-control hardware-${control.type}${highlighted ? " setup-highlight" : ""}`}
-      role="img"
-      aria-label={`${control.label}: controllo hardware`}
+      className={[
+        "hardware-control",
+        `hardware-${control.type}`,
+        highlighted ? "setup-highlight" : "",
+        active ? "active" : "",
+        disabled ? "disabled" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role={interactive ? "button" : "img"}
+      tabIndex={interactive && !disabled ? 0 : undefined}
+      aria-label={accessibleLabel}
+      aria-disabled={interactive ? disabled : undefined}
       data-control-id={control.id}
       data-display-area-id={control.displayAreaId}
+      onPointerDown={
+        interactive
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (!disabled && event.button === 0) {
+                event.currentTarget.focus({ preventScroll: true });
+              }
+            }
+          : undefined
+      }
+      onClick={
+        interactive
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              activate();
+            }
+          : undefined
+      }
+      onKeyDown={
+        interactive
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                activate();
+              }
+            }
+          : undefined
+      }
     >
-      <title>{`${control.label} · controllo hardware, non salvato nella patch`}</title>
+      <title>{accessibleLabel}</title>
+      {interactive ? (
+        <circle cx={control.x} cy={control.y} r={radius + 6} className="control-hit-target" />
+      ) : null}
       <text x={control.x} y={control.y - radius - 5} textAnchor="middle" className="control-label">
         {control.label}
       </text>
@@ -171,7 +224,11 @@ function StateOnlyControl({
       <line
         x1={control.x}
         y1={control.y}
-        x2={control.x}
+        x2={
+          selectedOption
+            ? control.x + (selectedOption === "4" ? radius * 0.45 : -radius * 0.45)
+            : control.x
+        }
         y2={control.y - Math.max(3, radius - 3)}
         className="knob-indicator"
       />
@@ -248,6 +305,7 @@ export const SummitPanel = memo(function SummitPanel({
   selectedDisplayFieldId,
   activeModulationSlot,
   activeFxModulationSlot,
+  activeGlobalLfo,
   changedIds = [],
   highlightedIds = [],
   highlightedAreaId,
@@ -260,6 +318,7 @@ export const SummitPanel = memo(function SummitPanel({
   onDisplayStep,
   onDisplayFieldSelect,
   onDisplayValueStep,
+  onGlobalLfoSelect,
 }: {
   proposal: SummitPatchProposal;
   scope: PatchScope;
@@ -269,6 +328,7 @@ export const SummitPanel = memo(function SummitPanel({
   selectedDisplayFieldId: string | undefined;
   activeModulationSlot: number;
   activeFxModulationSlot: number;
+  activeGlobalLfo: 3 | 4;
   changedIds?: string[];
   highlightedIds?: string[];
   highlightedAreaId?: string | undefined;
@@ -281,6 +341,7 @@ export const SummitPanel = memo(function SummitPanel({
   onDisplayStep: (direction: -1 | 1) => void;
   onDisplayFieldSelect: (fieldId: string) => void;
   onDisplayValueStep: (steps: number) => void;
+  onGlobalLfoSelect: (lfo: 3 | 4) => void;
 }) {
   const changed = useMemo(() => new Set(changedIds), [changedIds]);
   const highlighted = useMemo(() => new Set(highlightedIds), [highlightedIds]);
@@ -519,6 +580,7 @@ export const SummitPanel = memo(function SummitPanel({
                 : undefined;
             const isPageLeft = control.id === "menu-page-left";
             const isPageRight = control.id === "menu-page-right";
+            const isGlobalLfoSelector = control.id === "lfo34-select";
             const displayAreaId = control.displayAreaId;
             const onHardwareClick = displayAreaId
               ? () => onDisplayAreaSelect(displayAreaId)
@@ -528,7 +590,9 @@ export const SummitPanel = memo(function SummitPanel({
                   ? () => onDisplayStep(1)
                   : rowField
                     ? () => onDisplayFieldSelect(rowField.id)
-                    : undefined;
+                    : isGlobalLfoSelector
+                      ? () => onGlobalLfoSelect(activeGlobalLfo === 3 ? 4 : 3)
+                      : undefined;
             return (
               <LayoutControlGroup key={control.id} control={control}>
                 <StateOnlyControl
@@ -538,13 +602,15 @@ export const SummitPanel = memo(function SummitPanel({
                   )}
                   active={Boolean(
                     (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
-                    (rowField && rowField.id === selectedDisplayFieldId),
+                    (rowField && rowField.id === selectedDisplayFieldId) ||
+                    (isGlobalLfoSelector && activeGlobalLfo === 4),
                   )}
                   disabled={Boolean(
                     (isPageLeft && displayAtFirst) ||
                     (isPageRight && displayAtLast) ||
                     (rowIndex !== undefined && !rowField),
                   )}
+                  selectedOption={isGlobalLfoSelector ? String(activeGlobalLfo) : undefined}
                   onClick={onHardwareClick}
                 />
               </LayoutControlGroup>
@@ -557,12 +623,28 @@ export const SummitPanel = memo(function SummitPanel({
             const definition = parameterById.get(candidate);
             return definition && isDefinitionVisible(definition, scope);
           };
-          const parameterId =
-            (selectedParameterId &&
+          const selectedCandidate =
+            selectedParameterId &&
             candidateIds.includes(selectedParameterId) &&
             visibleCandidate(selectedParameterId)
               ? selectedParameterId
-              : undefined) ?? candidateIds.find(visibleCandidate);
+              : undefined;
+          const activeContextPrefix = control.id.startsWith("lfo34-")
+            ? `lfo${activeGlobalLfo}.`
+            : undefined;
+          const contextualCandidate = activeContextPrefix
+            ? candidateIds.find(
+                (candidate) =>
+                  candidate.startsWith(activeContextPrefix) && visibleCandidate(candidate),
+              )
+            : undefined;
+          const parameterId =
+            (activeContextPrefix && selectedCandidate?.startsWith(activeContextPrefix)
+              ? selectedCandidate
+              : undefined) ??
+            contextualCandidate ??
+            selectedCandidate ??
+            candidateIds.find(visibleCandidate);
           if (!parameterId) {
             return (
               <LayoutControlGroup key={control.id} control={control}>

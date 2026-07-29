@@ -14,11 +14,11 @@ Captured on 2026-07-29 with the Playwright Chromium Retina project at
 | Tauri · 150%          | `native-zoom-150.jpeg`                                         | Packaged macOS app reporting a 150% zoom state                                                            |
 | Final · OLED sequence | `oled-osc-1.png`, `oled-osc-2.png`, `oled-osc-3.png`           | Physical OSC selection and PAGE 1 → 2 → 3 with shared field/value state                                   |
 | Final · VOICE 150%    | `voice-area-150.png`                                           | Corrected VOICE and ARP control centres, relative knob/button sizes and broken cyan title rules           |
-| Final · OSC/FILTER    | `osc-filter-area-150.png`                                      | Three oscillator rows, FM, mixer and photo-measured filter columns at 150%                                |
-| Final · ENV/LFO       | `envelopes-lfo-area-150.png`                                   | Corrected envelope slider columns, LFO 1/2 and Global LFO 3&4 at 150%                                     |
-| Final · Effects       | `effects-area-150.png`                                         | Distortion, Chorus, Delay, Effects and Reverb zones without card backgrounds                              |
+| Final · OSC/FILTER    | `osc-filter-area-150.png`                                      | Range clearance, photo-order Mixer, Mixer/Filter gap and filter columns at 150%                           |
+| Final · ENV/LFO       | `envelopes-lfo-area-150.png`                                   | AMP/MOD band clearance and the operable Global LFO 3/4 selector at 150%                                   |
+| Final · Effects       | `effects-area-150.png`                                         | Bypass under Effects and Reverb/Time/Size under Reverb                                                    |
 | Final · OLED row      | `oled-row-highlight.png`                                       | Horizontal clipped highlight with constant x, width, height and step                                      |
-| Cleanup · display     | `display-menu-area-zoom.png`                                   | OLED, row buttons 1/2/3, PAGE controls and VALUE aligned to the HR photo                                  |
+| Cleanup · display     | `display-menu-area-zoom.png`                                   | OLED and compact 1/2/3 label gaps, with unchanged button centres, aligned to the HR photo                 |
 | Header · display      | `display-menu-area-zoom.png`                                   | Full MENU segment, label below it, then OLED, row buttons, PAGE controls and VALUE                        |
 | Header · oscillators  | `oscillator-area-zoom.png`                                     | OSCILLATOR 1/2/3 use the common segment → label → controls rhythm on y 96/161/226                         |
 | Header · voice/arp    | `voice-arp-area-zoom.png`                                      | VOICE and ARP labels sit fully below their complete cyan segments                                         |
@@ -51,8 +51,8 @@ Coordinates use the shared 1536 × 539 reference space.
 | Oscillator 3               | x 465, y 194, w 292, h 63   | Full segment y 195, label below at y 202, controls centred at y 226                   |
 | Filter                     | x 900, y 64, w 120, h 193   | Columns corrected to x 923/963/1003; no control extends into Amp Envelope             |
 | Amp Envelope               | x 1023, y 64, w 146, h 91   | Slider centres corrected to x 1068/1095/1122/1150                                     |
-| Mod Envelopes              | x 1023, y 159, w 146, h 98  | Same columns; 78 px travel separates ADSR labels from the title rule                  |
-| Effects                    | x 1297, y 64, w 168, h 193  | Aligned; Distortion, Chorus, Delay, Effects and Reverb remain distinct                |
+| Mod Envelopes              | x 1023, y 159, w 146, h 98  | Header y 163; same columns at y 220 with 66 px travel                                 |
+| Effects                    | x 1297, y 64, w 168, h 193  | Distinct zones; Bypass and Reverb trio follow the photographed bottom-row grouping    |
 | SUMMIT wordmark            | upper-right deck            | Corrected to the observed upper-right position                                        |
 | Oxford / bi-timbral labels | keyboard boundary           | Both labels restored at the observed left/right positions                             |
 
@@ -81,6 +81,8 @@ Coordinates use the shared 1536 × 539 reference space.
   visibility change.
 - OLED rows share their source order with the Display & menu view, are limited to 1–4 rows, and use
   constant horizontal highlight geometry clipped to the OLED bounds.
+- The Global LFO `3 / 4` selector accepts pointer and keyboard activation; changing it updates the
+  visible indicator and routes Type, Rate and Sync to the selected LFO’s verified patch parameters.
 
 The reference photo, complete menu video and original screenshots are preserved
 in `docs/references/summit-ui/summit-ui-reference-pack/`.

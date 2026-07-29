@@ -73,6 +73,19 @@ within the retained one-pixel tracing tolerance.
 | AMP header clearance  | slider centre y 115                | y 120, preserving 70 px travel        | ≤ 5 px   |
 | MOD header clearance  | centre y 211, slider travel 78 px  | centre y 218, travel 72 px            | ≤ 7 px   |
 
+The final optical pass keeps the same dated source and narrows the corrections to the requested
+control groups:
+
+| Area                | Final coordinate or spacing contract                                                                 |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| MULTI / ANIMATES    | MULTI controls y 249; ANIMATES rule/label/content y 255/262/265 and buttons y 280.5, size 13         |
+| DISPLAY row numbers | Button centres remain x 164 at y 143/160/177; the number-to-button gap increases from 4 to 6 px      |
+| OSC 1/2/3 Range     | x 479, size 14; the conservative left visual bound is exactly x 465, inside each cyan segment        |
+| MIXER               | columns x 842/881; rows read Osc 1–VCA Gain, Osc 2–Ring 1*2, Osc 3–Noise at y 96/161/226             |
+| MIXER / FILTER      | MIXER segment ends at x 897 and FILTER starts at x 900, leaving a distinct 3 px cyan-segment gap     |
+| AMP / MOD envelopes | MOD rule/label/content y 163/170/173; MOD faders y 220 with 66 px travel, below the AMP control band |
+| EFFECTS / REVERB    | Bypass x 1322; Reverb/Time/Size x 1363/1401/1440, each inside its matching bottom-row segment        |
+
 The cyan hierarchy is data-driven rather than inferred from independent serigraphy marks. Every
 header renders its complete cyan segment first, then a label baseline 7 px lower, then a content
 band beginning another 3 px lower. `contentBounds` shares the segment's horizontal limits. Catalog
@@ -86,6 +99,8 @@ intersections and horizontal overflow.
 - The visible grouping comes from explicit cyan segment → section label → content records.
 - OSCILLATOR 1, 2 and 3 are distinct rows.
 - Distortion, Chorus, Delay, Effects and Reverb retain their separate observed zones.
+- The Global LFO `3 / 4` selector is keyboard- and pointer-operable; its UI state routes Type, Rate
+  and Sync to the verified `lfo3.*` or `lfo4.*` patch binding.
 - The OLED, row-button column, page controls and VALUE encoder retain their measured relative spacing.
 - Software values are hidden in clean hardware mode and shown only for hover, selection, Setup Mode or explicit overlay.
 
@@ -93,11 +108,7 @@ intersections and horizontal overflow.
 
 - The structural 7 px line-to-baseline rhythm is deliberately uniform; the photograph uses small,
   inconsistent optical offsets and places some labels inline with the segment.
-- Oscillator, FM, Mixer, LFO and Effects rows move down by 4–5 px; the first Range selectors move
-  right to x 481 and the FM depth knobs to x 776 so their complete visual boxes remain inside their
-  section segments.
-- Master and envelope controls move only enough to create an unambiguous label band. MULTI MODE
-  uses 12 px controls at y 248 and ANIMATES uses 16 px controls at y 279 so the 1 px collision guard
-  remains portable across macOS and Linux font metrics without crossing the following cyan rule.
-  OLED geometry, menu row buttons, interaction state, display behavior and catalog bindings are
-  unchanged.
+- Oscillator, FM, Mixer, LFO and Effects rows retain the established y 96/161/226 rhythm. The Range
+  selectors use x 479 and size 14, so their full conservative bound remains inside x 465.
+- MULTI MODE uses 12 px controls at y 249; ANIMATES begins at y 255 and uses 13 px buttons at
+  y 280.5. The OLED and menu-button centres remain unchanged; only the 1/2/3 label gap changes.

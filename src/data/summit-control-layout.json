@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.2.0",
+  "schemaVersion": "2.3.0",
   "viewBox": "0 0 1536 539",
   "geometry": {
     "coordinateSystem": "Summit front elevation, normalized to the 1536 × 539 reference image",
@@ -8,7 +8,7 @@
     "page": 1,
     "sourceUrl": "docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
     "verifiedAt": "2026-07-29",
-    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity and dedicated display/section-header crops. Each section header stores the full cyan segment, a label baseline below it, a content start and an explicit content bounding box; coordinates are stored without grid interpolation.",
+    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity and dedicated display/section-header crops. Each section header stores the full cyan segment, a label baseline below it, a content start and an explicit content bounding box; the final pass also verifies compact control labels, Mixer reading order, envelope-band clearance and Effects/Reverb grouping without grid interpolation.",
     "referenceWidth": 1536,
     "referenceHeight": 539
   },
@@ -160,11 +160,11 @@
       "label": "ANIMATES",
       "headerLineStartX": 50,
       "headerLineEndX": 144,
-      "headerY": 253,
+      "headerY": 255,
       "labelX": 52,
-      "labelY": 260,
-      "contentTopY": 263,
-      "contentBounds": { "x": 50, "y": 263, "width": 94, "height": 22 }
+      "labelY": 262,
+      "contentTopY": 265,
+      "contentBounds": { "x": 50, "y": 265, "width": 94, "height": 20 }
     },
     {
       "id": "voice",
@@ -236,12 +236,12 @@
       "id": "mixer",
       "label": "MIXER",
       "headerLineStartX": 823,
-      "headerLineEndX": 910,
+      "headerLineEndX": 897,
       "headerY": 65,
       "labelX": 823,
       "labelY": 72,
       "contentTopY": 75,
-      "contentBounds": { "x": 823, "y": 75, "width": 87, "height": 182 }
+      "contentBounds": { "x": 823, "y": 75, "width": 74, "height": 182 }
     },
     {
       "id": "filter",
@@ -270,11 +270,11 @@
       "label": "MOD ENVELOPES",
       "headerLineStartX": 1023,
       "headerLineEndX": 1169,
-      "headerY": 160,
+      "headerY": 163,
       "labelX": 1023,
-      "labelY": 167,
-      "contentTopY": 170,
-      "contentBounds": { "x": 1023, "y": 170, "width": 146, "height": 87 }
+      "labelY": 170,
+      "contentTopY": 173,
+      "contentBounds": { "x": 1023, "y": 173, "width": 146, "height": 84 }
     },
     {
       "id": "lfo-1",
@@ -645,7 +645,7 @@
       "label": "Layer",
       "type": "button",
       "x": 68,
-      "y": 248,
+      "y": 249,
       "size": 12
     },
     {
@@ -656,7 +656,7 @@
       "label": "Split",
       "type": "button",
       "x": 97,
-      "y": 248,
+      "y": 249,
       "size": 12
     },
     {
@@ -666,7 +666,7 @@
       "label": "Dual",
       "type": "button",
       "x": 126,
-      "y": 248,
+      "y": 249,
       "size": 12
     },
     {
@@ -675,8 +675,8 @@
       "label": "Animate 1",
       "type": "button",
       "x": 68,
-      "y": 279,
-      "size": 16,
+      "y": 280.5,
+      "size": 13,
       "stateOnly": true
     },
     {
@@ -685,8 +685,8 @@
       "label": "Animate 2",
       "type": "button",
       "x": 98,
-      "y": 279,
-      "size": 16,
+      "y": 280.5,
+      "size": 13,
       "stateOnly": true
     },
 
@@ -797,9 +797,9 @@
       "parameterId": "osc1.range",
       "label": "Range",
       "type": "selector",
-      "x": 481,
+      "x": 479,
       "y": 96,
-      "size": 17
+      "size": 14
     },
     {
       "id": "osc1-coarse",
@@ -878,9 +878,9 @@
       "parameterId": "osc2.range",
       "label": "Range",
       "type": "selector",
-      "x": 481,
+      "x": 479,
       "y": 161,
-      "size": 17
+      "size": 14
     },
     {
       "id": "osc2-coarse",
@@ -959,9 +959,9 @@
       "parameterId": "osc3.range",
       "label": "Range",
       "type": "selector",
-      "x": 481,
+      "x": 479,
       "y": 226,
-      "size": 17
+      "size": 14
     },
     {
       "id": "osc3-coarse",
@@ -1105,7 +1105,7 @@
       "parameterId": "mixer.osc1.level",
       "label": "Osc 1",
       "type": "knob",
-      "x": 845,
+      "x": 842,
       "y": 96,
       "size": 18
     },
@@ -1115,8 +1115,8 @@
       "parameterId": "mixer.osc2.level",
       "label": "Osc 2",
       "type": "knob",
-      "x": 890,
-      "y": 96,
+      "x": 842,
+      "y": 161,
       "size": 18
     },
     {
@@ -1125,17 +1125,17 @@
       "parameterId": "mixer.osc3.level",
       "label": "Osc 3",
       "type": "knob",
-      "x": 845,
-      "y": 161,
+      "x": 842,
+      "y": 226,
       "size": 18
     },
     {
       "id": "mixer-ring",
       "sectionId": "mixer",
       "parameterId": "mixer.ring.level",
-      "label": "Ring",
+      "label": "Ring 1*2",
       "type": "knob",
-      "x": 890,
+      "x": 881,
       "y": 161,
       "size": 18
     },
@@ -1145,7 +1145,7 @@
       "parameterId": "mixer.noise.level",
       "label": "Noise",
       "type": "knob",
-      "x": 845,
+      "x": 881,
       "y": 226,
       "size": 18
     },
@@ -1153,10 +1153,10 @@
       "id": "mixer-vca-gain",
       "sectionId": "mixer",
       "parameterId": "mixer.vcaGain",
-      "label": "VCA",
+      "label": "VCA Gain",
       "type": "knob",
-      "x": 890,
-      "y": 226,
+      "x": 881,
+      "y": 96,
       "size": 18
     },
 
@@ -1320,8 +1320,8 @@
       "label": "A",
       "type": "slider",
       "x": 1068,
-      "y": 218,
-      "size": 72
+      "y": 220,
+      "size": 66
     },
     {
       "id": "mod-envelope-decay",
@@ -1331,8 +1331,8 @@
       "label": "D",
       "type": "slider",
       "x": 1095,
-      "y": 218,
-      "size": 72
+      "y": 220,
+      "size": 66
     },
     {
       "id": "mod-envelope-sustain",
@@ -1342,8 +1342,8 @@
       "label": "S",
       "type": "slider",
       "x": 1122,
-      "y": 218,
-      "size": 72
+      "y": 220,
+      "size": 66
     },
     {
       "id": "mod-envelope-release",
@@ -1353,8 +1353,8 @@
       "label": "R",
       "type": "slider",
       "x": 1150,
-      "y": 218,
-      "size": 72
+      "y": 220,
+      "size": 66
     },
     {
       "id": "envelope-loop",
@@ -1578,7 +1578,7 @@
       "parameterId": "fx.reverb.level",
       "label": "Reverb",
       "type": "knob",
-      "x": 1323,
+      "x": 1363,
       "y": 226,
       "size": 18
     },
@@ -1588,7 +1588,7 @@
       "parameterId": "fx.reverb.time",
       "label": "Time",
       "type": "knob",
-      "x": 1362,
+      "x": 1401,
       "y": 226,
       "size": 18
     },
@@ -1598,7 +1598,7 @@
       "parameterId": "fx.reverb.size",
       "label": "Size",
       "type": "selector",
-      "x": 1401,
+      "x": 1440,
       "y": 226,
       "size": 17
     },
@@ -1608,7 +1608,7 @@
       "parameterId": "fx.bypass",
       "label": "Bypass",
       "type": "button",
-      "x": 1440,
+      "x": 1322,
       "y": 226,
       "size": 15
     },

@@ -259,4 +259,14 @@ test.describe("physical panel pointer hardening", () => {
 
     expect(conflicts).toEqual([]);
   });
+
+  test("Global LFO 3/4 selector changes context and routes shared controls", async ({ page }) => {
+    await openPhysicalPanel(page);
+
+    await page.getByRole("button", { name: "3 / 4: LFO 3" }).click();
+    await expect(page.getByRole("button", { name: "3 / 4: LFO 4" })).toBeVisible();
+
+    await page.locator('[data-layout-control-id="lfo34-rate"] [role="slider"]').focus();
+    await expect(page.getByText("lfo4.rate", { exact: true })).toBeVisible();
+  });
 });

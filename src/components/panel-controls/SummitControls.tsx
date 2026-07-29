@@ -718,6 +718,7 @@ type HardwareElementProps = {
   active?: boolean;
   disabled?: boolean;
   showLabel?: boolean;
+  labelGap?: number | undefined;
   onClick?: (() => void) | undefined;
 };
 
@@ -732,6 +733,7 @@ export const SummitButton = memo(function SummitButton({
   active = false,
   disabled = false,
   showLabel = true,
+  labelGap = 4,
   onClick,
 }: HardwareElementProps) {
   const width = Math.max(13, size * 1.55);
@@ -795,7 +797,7 @@ export const SummitButton = memo(function SummitButton({
         />
       ) : null}
       {showLabel ? (
-        <text x={x} y={y - height / 2 - 4} textAnchor="middle" className="control-label">
+        <text x={x} y={y - height / 2 - labelGap} textAnchor="middle" className="control-label">
           {label}
         </text>
       ) : null}

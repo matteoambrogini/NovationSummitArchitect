@@ -61,6 +61,7 @@ type AppState = {
   selectedDisplayFieldId: string | undefined;
   activeModulationSlot: number;
   activeFxModulationSlot: number;
+  activeGlobalLfo: 3 | 4;
   setupMode: boolean;
   setupStep: number;
   setupOnlyModified: boolean;
@@ -84,6 +85,7 @@ type AppState = {
     fieldId: MatrixDisplayFieldId,
     value: MatrixDisplayValue,
   ) => void;
+  setActiveGlobalLfo: (lfo: 3 | 4) => void;
   setActiveScope: (scope: PatchScope) => void;
   toggleSetupMode: () => void;
   nextSetupStep: () => void;
@@ -136,6 +138,7 @@ export const useAppStore = create<AppState>((set, get) => ({
   selectedDisplayFieldId: "diverge",
   activeModulationSlot: 1,
   activeFxModulationSlot: 1,
+  activeGlobalLfo: 3,
   setupMode: false,
   setupStep: 0,
   setupOnlyModified: true,
@@ -298,6 +301,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     });
   },
   selectParameter: (selectedParameterId) => set(displayStateForParameter(selectedParameterId)),
+  setActiveGlobalLfo: (activeGlobalLfo) => set({ activeGlobalLfo }),
   selectDisplayArea: (areaId) => {
     const area = displayAreaById.get(areaId);
     if (!area) return;
