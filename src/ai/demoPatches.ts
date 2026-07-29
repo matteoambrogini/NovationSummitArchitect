@@ -1,191 +1,393 @@
+import {
+  applySettingOverrides,
+  buildDefaultPartSettings,
+  type ParameterValue,
+} from "../domain/patchUi";
 import { summitPatchProposalSchema, type SummitPatchProposal } from "../domain/schemas";
 
-type DemoConfig = {
+export type DemoConfig = {
   id: string;
+  displayName: string;
+  patchName: string;
   name: string;
   category: SummitPatchProposal["patch"]["category"];
   description: string;
   keywords: string[];
-  values: {
-    wave: "Sine" | "Triangle" | "Sawtooth" | "Square/Pulse" | "more";
-    shape: number;
-    osc1: number;
-    osc2: number;
-    osc3: number;
-    noise: number;
-    cutoff: number;
-    resonance: number;
-    overdrive: number;
-    attack: number;
-    decay: number;
-    sustain: number;
-    release: number;
-    chorus: number;
-    delay: number;
-    reverb: number;
-    drift: number;
-  };
+  values: Readonly<Record<string, ParameterValue>>;
 };
+
+const shared = {
+  "filter.shape": "LP",
+  "filter.slope": "24 dB",
+  "amp.delay": 0,
+} as const;
 
 export const demoConfigs: DemoConfig[] = [
   {
-    id: "progressive-pluck",
-    name: "Aurora Pluck",
+    id: "progressive-house-pluck",
+    displayName: "Progressive House Pluck",
+    patchName: "Prog House Plk",
+    name: "Progressive House Pluck",
     category: "pluck",
     description: "Pluck progressive-house brillante, corto e largo.",
     keywords: ["pluck", "progressive", "sharp", "brillante", "transient"],
-    values: { wave: "Sawtooth", shape: 8, osc1: 235, osc2: 172, osc3: 64, noise: 14, cutoff: 185, resonance: 42, overdrive: 18, attack: 0, decay: 42, sustain: 18, release: 28, chorus: 45, delay: 36, reverb: 31, drift: 7 },
+    values: {
+      ...shared,
+      "osc1.range": "8'",
+      "osc1.wave": "Sawtooth",
+      "osc1.shape": 8,
+      "osc2.range": "8'",
+      "osc2.wave": "Sawtooth",
+      "osc2.fine": 9,
+      "osc3.range": "4'",
+      "osc3.wave": "Square/Pulse",
+      "osc3.fine": -6,
+      "mixer.osc1.level": 235,
+      "mixer.osc2.level": 172,
+      "mixer.osc3.level": 64,
+      "mixer.noise.level": 14,
+      "filter.frequency": 185,
+      "filter.resonance": 42,
+      "filter.overdrive": 18,
+      "filter.modEnv1Depth": 42,
+      "amp.attack": 0,
+      "amp.decay": 42,
+      "amp.sustain": 18,
+      "amp.release": 28,
+      "modEnv1.attack": 0,
+      "modEnv1.decay": 38,
+      "modEnv1.sustain": 0,
+      "modEnv1.release": 19,
+      "lfo1.rate": 92,
+      "fx.chorus.level": 45,
+      "fx.delay.level": 36,
+      "fx.reverb.level": 31,
+      "osc.common.drift": 7,
+      "osc1.bendRange": 12,
+      "voice.mode": "Poly",
+      "voice.unison": "2",
+      "voice.unisonDetune": 31,
+      "voice.spread": 48,
+    },
   },
   {
-    id: "cinematic-pad",
-    name: "Cinder Pad",
+    id: "warm-analogue-pad",
+    displayName: "Warm Analogue Pad",
+    patchName: "Warm Analog Pad",
+    name: "Warm Analogue Pad",
     category: "pad",
-    description: "Pad analogico cinematografico caldo, lento e instabile.",
-    keywords: ["pad", "cinematic", "blade", "warm", "caldo", "lento"],
-    values: { wave: "Sawtooth", shape: -9, osc1: 212, osc2: 188, osc3: 105, noise: 20, cutoff: 118, resonance: 19, overdrive: 12, attack: 82, decay: 76, sustain: 108, release: 101, chorus: 69, delay: 22, reverb: 76, drift: 29 },
+    description: "Pad analogico caldo, lento e delicatamente instabile.",
+    keywords: ["pad", "cinematic", "warm", "caldo", "lento"],
+    values: {
+      ...shared,
+      "osc1.range": "8'",
+      "osc1.wave": "Sawtooth",
+      "osc1.shape": -9,
+      "osc2.range": "8'",
+      "osc2.wave": "Triangle",
+      "osc2.fine": -11,
+      "osc3.range": "16'",
+      "osc3.wave": "Sawtooth",
+      "osc3.fine": 7,
+      "mixer.osc1.level": 212,
+      "mixer.osc2.level": 188,
+      "mixer.osc3.level": 105,
+      "mixer.noise.level": 20,
+      "filter.frequency": 118,
+      "filter.resonance": 19,
+      "filter.overdrive": 12,
+      "filter.modEnv1Depth": 17,
+      "filter.lfo1Depth": 22,
+      "amp.attack": 82,
+      "amp.decay": 76,
+      "amp.sustain": 108,
+      "amp.release": 101,
+      "modEnv1.attack": 69,
+      "modEnv1.decay": 80,
+      "modEnv1.sustain": 61,
+      "modEnv1.release": 92,
+      "lfo1.rate": 43,
+      "lfo1.fadeTime": 54,
+      "lfo2.rate": 31,
+      "fx.chorus.level": 69,
+      "fx.delay.level": 22,
+      "fx.reverb.level": 76,
+      "osc.common.drift": 29,
+      "voice.unison": "4",
+      "voice.unisonDetune": 44,
+      "voice.spread": 92,
+    },
   },
   {
-    id: "dark-reese",
-    name: "Obsidian Reese",
+    id: "reese-bass",
+    displayName: "Reese Bass",
+    patchName: "Reese Bass",
+    name: "Reese Bass",
     category: "bass",
     description: "Reese bass scuro con centro mono controllato.",
     keywords: ["reese", "bass", "basso", "dark", "scuro", "mono"],
-    values: { wave: "Sawtooth", shape: -14, osc1: 255, osc2: 220, osc3: 96, noise: 6, cutoff: 83, resonance: 31, overdrive: 55, attack: 2, decay: 70, sustain: 112, release: 24, chorus: 18, delay: 0, reverb: 7, drift: 14 },
+    values: {
+      ...shared,
+      "osc1.range": "16'",
+      "osc1.wave": "Sawtooth",
+      "osc1.shape": -14,
+      "osc2.range": "16'",
+      "osc2.wave": "Sawtooth",
+      "osc2.fine": -18,
+      "osc3.range": "16'",
+      "osc3.wave": "Square/Pulse",
+      "osc3.fine": 13,
+      "mixer.osc1.level": 255,
+      "mixer.osc2.level": 220,
+      "mixer.osc3.level": 96,
+      "mixer.noise.level": 6,
+      "filter.frequency": 83,
+      "filter.resonance": 31,
+      "filter.overdrive": 55,
+      "filter.modEnv1Depth": 24,
+      "amp.attack": 2,
+      "amp.decay": 70,
+      "amp.sustain": 112,
+      "amp.release": 24,
+      "fx.chorus.level": 18,
+      "fx.delay.level": 0,
+      "fx.reverb.level": 7,
+      "fx.distortion.level": 63,
+      "osc.common.drift": 14,
+      "voice.mode": "MonoLG",
+      "voice.unison": "2",
+      "voice.unisonDetune": 37,
+      "voice.spread": 18,
+      "glide.time": 42,
+    },
   },
   {
-    id: "metallic-bell",
-    name: "Alloy Bell",
+    id: "fm-bell",
+    displayName: "FM Bell",
+    patchName: "FM Bell",
+    name: "FM Bell",
     category: "bell",
     description: "Campana FM metallica con brillantezza sensibile alla velocity.",
     keywords: ["bell", "campana", "metal", "metallic", "fm", "velocity"],
-    values: { wave: "Sine", shape: 0, osc1: 220, osc2: 128, osc3: 86, noise: 2, cutoff: 221, resonance: 49, overdrive: 5, attack: 0, decay: 89, sustain: 4, release: 74, chorus: 12, delay: 30, reverb: 58, drift: 2 },
+    values: {
+      ...shared,
+      "osc1.range": "8'",
+      "osc1.wave": "Sine",
+      "osc2.range": "4'",
+      "osc2.wave": "Sine",
+      "osc2.coarse": 7,
+      "osc3.range": "2'",
+      "osc3.wave": "Sine",
+      "osc3.coarse": 12,
+      "mixer.osc1.level": 220,
+      "mixer.osc2.level": 128,
+      "mixer.osc3.level": 86,
+      "mixer.noise.level": 2,
+      "filter.frequency": 221,
+      "filter.resonance": 49,
+      "filter.overdrive": 5,
+      "amp.attack": 0,
+      "amp.decay": 89,
+      "amp.sustain": 4,
+      "amp.release": 74,
+      "modEnv2.attack": 0,
+      "modEnv2.decay": 64,
+      "modEnv2.sustain": 0,
+      "modEnv2.release": 82,
+      "fx.chorus.level": 12,
+      "fx.delay.level": 30,
+      "fx.reverb.level": 58,
+      "osc.common.drift": 2,
+      "voice.mode": "Poly",
+    },
   },
   {
-    id: "wide-supersaw",
-    name: "Skyline Saw",
+    id: "supersaw-lead",
+    displayName: "Supersaw Lead",
+    patchName: "Supersaw Lead",
+    name: "Supersaw Lead",
     category: "lead",
     description: "Lead supersaw ampio e presente con movimento stereo.",
     keywords: ["supersaw", "lead", "wide", "ampio", "stereo", "saw"],
-    values: { wave: "Sawtooth", shape: 22, osc1: 255, osc2: 232, osc3: 198, noise: 10, cutoff: 204, resonance: 28, overdrive: 26, attack: 5, decay: 58, sustain: 103, release: 46, chorus: 78, delay: 42, reverb: 37, drift: 11 },
+    values: {
+      ...shared,
+      "osc1.range": "8'",
+      "osc1.wave": "Sawtooth",
+      "osc1.shape": 22,
+      "osc2.range": "8'",
+      "osc2.wave": "Sawtooth",
+      "osc2.fine": -14,
+      "osc3.range": "8'",
+      "osc3.wave": "Sawtooth",
+      "osc3.fine": 17,
+      "mixer.osc1.level": 255,
+      "mixer.osc2.level": 232,
+      "mixer.osc3.level": 198,
+      "mixer.noise.level": 10,
+      "filter.frequency": 204,
+      "filter.resonance": 28,
+      "filter.overdrive": 26,
+      "filter.modEnv1Depth": 31,
+      "amp.attack": 5,
+      "amp.decay": 58,
+      "amp.sustain": 103,
+      "amp.release": 46,
+      "lfo1.rate": 74,
+      "fx.chorus.level": 78,
+      "fx.delay.level": 42,
+      "fx.reverb.level": 37,
+      "osc.common.drift": 11,
+      "voice.mode": "Poly2",
+      "voice.unison": "8",
+      "voice.unisonDetune": 55,
+      "voice.spread": 112,
+    },
   },
 ];
 
-function control(
-  parameterId: string,
-  value: string | number | boolean,
-  confidence: number,
-  rationale: string,
-) {
-  return {
-    parameterId,
-    value,
-    displayValue: String(value),
-    confidence,
-    rationale,
-  };
+function setupInstructions(settings: ReturnType<typeof buildDefaultPartSettings>) {
+  const value = (parameterId: string) =>
+    [...settings.panelControls, ...settings.menuSettings].find(
+      (setting) => setting.parameterId === parameterId,
+    )?.displayValue ?? "—";
+  return [
+    {
+      order: 1,
+      area: "Oscillators",
+      instruction: `Oscillator 1 → Range → ${value("osc1.range")}; Wave → ${value("osc1.wave")}.`,
+      parameterIds: ["osc1.range", "osc1.wave"],
+    },
+    {
+      order: 2,
+      area: "Mixer",
+      instruction: `Mixer → Osc 1 ${value("mixer.osc1.level")}, Osc 2 ${value("mixer.osc2.level")}, Osc 3 ${value("mixer.osc3.level")}.`,
+      parameterIds: ["mixer.osc1.level", "mixer.osc2.level", "mixer.osc3.level"],
+    },
+    {
+      order: 3,
+      area: "Filter",
+      instruction: `Filter → Frequency → ${value("filter.frequency")}; Resonance → ${value("filter.resonance")}.`,
+      parameterIds: ["filter.frequency", "filter.resonance", "filter.overdrive"],
+    },
+    {
+      order: 4,
+      area: "Envelopes",
+      instruction: `Amp Envelope → A ${value("amp.attack")}, D ${value("amp.decay")}, S ${value("amp.sustain")}, R ${value("amp.release")}.`,
+      parameterIds: ["amp.attack", "amp.decay", "amp.sustain", "amp.release"],
+    },
+    {
+      order: 5,
+      area: "LFO",
+      instruction: `LFO 1 → Rate → ${value("lfo1.rate")}.`,
+      parameterIds: ["lfo1.rate", "lfo1.fadeTime"],
+    },
+    {
+      order: 6,
+      area: "Modulation",
+      instruction: "Apri Mod Matrix e configura soltanto gli slot evidenziati.",
+      parameterIds: ["filter.modEnv1Depth", "filter.lfo1Depth"],
+    },
+    {
+      order: 7,
+      area: "Effects",
+      instruction: `Effects → Chorus ${value("fx.chorus.level")}, Delay ${value("fx.delay.level")}, Reverb ${value("fx.reverb.level")}.`,
+      parameterIds: ["fx.chorus.level", "fx.delay.level", "fx.reverb.level"],
+    },
+    {
+      order: 8,
+      area: "Voice / other",
+      instruction: `Voice → Mode → ${value("voice.mode")}; verifica Glide e Arpeggiator.`,
+      parameterIds: ["voice.mode", "glide.time", "arp.on"],
+    },
+  ];
 }
 
 export function buildDemoProposal(config: DemoConfig, targetSound?: string): SummitPatchProposal {
-  const v = config.values;
-  const proposal = {
-    schemaVersion: "1.0.0" as const,
+  const settings = applySettingOverrides(buildDefaultPartSettings(), config.values);
+  return summitPatchProposalSchema.parse({
+    schemaVersion: "1.0.0",
     proposalId: `demo-${config.id}-${Date.now()}`,
     createdAt: new Date().toISOString(),
+    targetFirmware: "2.1",
     patch: {
-      name: config.name,
-      mode: "single" as const,
+      name: config.patchName,
+      mode: "single",
       category: config.category,
       description: config.description,
       targetSound: targetSound || config.description,
     },
     analysis: {
       soundRole: config.category,
-      synthesisHypothesis: `Sintesi sottrattiva con ${v.wave.toLowerCase()} e inviluppo calibrato per un carattere ${config.category}.`,
-      oscillatorStrategy: "Oscillatore 1 dominante, oscillatori 2 e 3 dosati per corpo e densità.",
-      filterStrategy: `Filtro passa-basso a 24 dB con cutoff ${v.cutoff} e risonanza ${v.resonance}.`,
-      envelopeStrategy: `Amp envelope A ${v.attack}, D ${v.decay}, S ${v.sustain}, R ${v.release}.`,
-      modulationStrategy: "Velocity sul filtro e modulazione lenta della forma per movimento controllato.",
-      effectsStrategy: "Effetti dosati per profondità, preservando la leggibilità del centro.",
-      overallConfidence: 0.68,
-      assumptions: [
-        "La proposta parte da un Init Patch e usa il firmware Summit 2.1.",
-        "Il livello percepito dipende da velocity, ottava e catena di ascolto.",
-      ],
-      uncertainties: [
-        "Il mock provider non analizza direttamente audio commerciale o mix completi.",
-        "La taratura finale va eseguita all'ascolto sullo strumento reale.",
-      ],
+      synthesisHypothesis: `Patch ${config.displayName} costruita da valori catalogati e controlli fisici verificati.`,
+      oscillatorStrategy: "Tre oscillatori bilanciati secondo il ruolo timbrico della demo.",
+      filterStrategy: "Filtro e inviluppo sono coordinati per preservare attacco e leggibilità.",
+      envelopeStrategy: "Amp e Mod Envelope definiscono il profilo dinamico della patch.",
+      modulationStrategy: "Routing espressivi limitati a sorgenti e destinazioni ufficialmente verificate.",
+      effectsStrategy: "Chorus, delay e reverb sono dosati per profondità senza coprire il centro.",
+      overallConfidence: 0.82,
+      assumptions: ["Init Patch e firmware Summit 2.1.", "Taratura finale all'ascolto sullo strumento."],
+      uncertainties: ["La demo non sostituisce il confronto sul Summit fisico."],
     },
     parts: [
       {
-        part: "A" as const,
-        panelControls: [
-          control("osc1.range", config.category === "bass" ? "16'" : "8'", 0.88, "Registro coerente con il ruolo sonoro."),
-          control("osc1.coarse", 0, 0.94, "Centro tonale non trasposto."),
-          control("osc1.fine", config.category === "pad" ? -7 : 0, 0.76, "Micro-detune controllato."),
-          control("osc1.wave", v.wave, 0.86, "Forma d'onda primaria dell'ipotesi timbrica."),
-          control("osc1.shape", v.shape, 0.69, "Aggiusta il contenuto armonico della sorgente."),
-          control("mixer.osc1.level", v.osc1, 0.9, "Sorgente principale."),
-          control("mixer.osc2.level", v.osc2, 0.72, "Corpo e battimenti."),
-          control("mixer.osc3.level", v.osc3, 0.64, "Densità secondaria."),
-          control("mixer.noise.level", v.noise, 0.67, "Aria o attacco senza dominare il tono."),
-          control("filter.shape", "LP", 0.85, "Strategia sottrattiva principale."),
-          control("filter.slope", "24 dB", 0.81, "Controllo armonico deciso."),
-          control("filter.frequency", v.cutoff, 0.74, "Bilanciamento di brillantezza."),
-          control("filter.resonance", v.resonance, 0.71, "Definisce il bordo del filtro."),
-          control("filter.overdrive", v.overdrive, 0.68, "Aggiunge densità pre-filtro."),
-          control("amp.attack", v.attack, 0.82, "Profilo di ingresso del suono."),
-          control("amp.decay", v.decay, 0.82, "Durata del corpo iniziale."),
-          control("amp.sustain", v.sustain, 0.82, "Livello mantenuto."),
-          control("amp.release", v.release, 0.8, "Coda dopo il rilascio."),
-          control("fx.chorus.level", v.chorus, 0.66, "Movimento e larghezza."),
-          control("fx.delay.level", v.delay, 0.62, "Profondità ritmica controllata."),
-          control("fx.reverb.level", v.reverb, 0.65, "Ambiente proporzionato al ruolo."),
-        ],
-        menuSettings: [
-          { ...control("osc.common.drift", v.drift, 0.68, "Instabilità analogica controllata."), menu: "Osc", page: 1 },
-          { ...control("osc1.bendRange", 12, 0.77, "Escursione performativa standard di un'ottava."), menu: "Osc", page: 3 },
-          { ...control("amp.delay", 0, 0.91, "L'inviluppo parte insieme alla nota."), menu: "Env", page: 2 },
-        ],
+        part: "A",
+        ...settings,
         modulationMatrix: [
-          { slot: 1, sourceA: "velocity", destination: "filter.frequency", depth: config.category === "bell" ? 38 : 18, rationale: "La dinamica apre il timbro senza cambiare la struttura della patch." },
-          { slot: 2, sourceA: "lfo1.bipolar", destination: "osc1.shape", depth: config.category === "pad" ? 16 : 7, rationale: "Movimento timbrico lento e misurato." },
+          {
+            slot: 1,
+            sourceA: "velocity",
+            destination: "filter.frequency",
+            depth: config.category === "bell" ? 38 : 18,
+            rationale: "La dinamica apre il filtro.",
+          },
+          {
+            slot: 2,
+            sourceA: "lfo1.bipolar",
+            destination: "osc1.shape",
+            depth: config.category === "pad" ? 16 : 7,
+            rationale: "Movimento timbrico misurato.",
+          },
         ],
         fxModulationMatrix: [
-          { slot: 1, sourceA: "lfo3.bipolar", destination: "fx.chorus.level", depth: config.category === "lead" ? 18 : 8, rationale: "Movimento stereo senza automatizzare parametri non verificati." },
+          {
+            slot: 1,
+            sourceA: "lfo3.bipolar",
+            destination: "fx.chorus.level",
+            depth: config.category === "lead" ? 18 : 8,
+            rationale: "Movimento stereo controllato.",
+          },
         ],
       },
     ],
-    setupInstructions: [
-      { order: 1, area: "Oscillators", instruction: `Imposta Osc 1 su ${v.wave}, range ${config.category === "bass" ? "16'" : "8'"}.`, parameterIds: ["osc1.wave", "osc1.range"] },
-      { order: 2, area: "Mixer", instruction: "Bilancia i tre oscillatori e aggiungi solo la quantità indicata di Noise.", parameterIds: ["mixer.osc1.level", "mixer.osc2.level", "mixer.osc3.level", "mixer.noise.level"] },
-      { order: 3, area: "Filter", instruction: `Seleziona LP 24 dB; imposta Frequency ${v.cutoff} e Resonance ${v.resonance}.`, parameterIds: ["filter.shape", "filter.slope", "filter.frequency", "filter.resonance"] },
-      { order: 4, area: "Amp Envelope", instruction: `Imposta A ${v.attack}, D ${v.decay}, S ${v.sustain}, R ${v.release}.`, parameterIds: ["amp.attack", "amp.decay", "amp.sustain", "amp.release"] },
-      { order: 5, area: "Effects", instruction: "Aggiungi chorus, delay e reverb, poi confronta a volume compensato.", parameterIds: ["fx.chorus.level", "fx.delay.level", "fx.reverb.level"] },
-    ],
+    setupInstructions: setupInstructions(settings),
     auditionGuide: {
       recommendedNotes: config.category === "bass" ? ["C1", "G1", "C2"] : ["C3", "E3", "G3", "C4"],
       recommendedVelocity: "Prova 50, 90 e 120",
       recommendedPlayingStyle: config.category === "pluck" ? "Note corte e accordi sincopati" : "Note singole e accordi sostenuti",
-      whatToListenFor: ["Attacco", "equilibrio del centro", "coda degli effetti", "risposta alla velocity"],
+      whatToListenFor: ["Attacco", "centro", "coda degli effetti", "risposta alla velocity"],
     },
     refinements: [
-      { problem: "Troppo brillante", suggestedChanges: [{ parameterId: "filter.frequency", operation: "decrease" as const, amount: 20 }] },
-      { problem: "Attacco troppo lento", suggestedChanges: [{ parameterId: "amp.attack", operation: "decrease" as const, amount: 12 }] },
+      {
+        problem: "Troppo brillante",
+        suggestedChanges: [{ parameterId: "filter.frequency", operation: "decrease", amount: 20 }],
+      },
     ],
     alternatives: [
-      { name: "Più scura", explanation: "Riduci il cutoff e il rumore.", changedParameterIds: ["filter.frequency", "mixer.noise.level"] },
-      { name: "Più larga", explanation: "Aumenta chorus con cautela, controllando il centro.", changedParameterIds: ["fx.chorus.level"] },
+      {
+        name: "Più scura",
+        explanation: "Riduci il cutoff.",
+        changedParameterIds: ["filter.frequency"],
+      },
     ],
-  };
-  return summitPatchProposalSchema.parse(proposal);
+  });
 }
 
 export function chooseDemo(description: string): DemoConfig {
   const normalized = description.toLowerCase();
   return (
-    demoConfigs.find((demo) => demo.keywords.some((keyword) => normalized.includes(keyword))) ??
-    demoConfigs[0]!
+    demoConfigs.find((demo) =>
+      demo.keywords.some((keyword) => normalized.includes(keyword)),
+    ) ?? demoConfigs[0]!
   );
 }
 

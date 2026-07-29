@@ -10,6 +10,22 @@ export const copy = {
     compare: "Confronta",
     settings: "Impostazioni",
   },
+  panel: {
+    interactionMode: "Modalità interazione",
+    interact: "INTERACT",
+    control: "CONTROL",
+    pan: "PAN",
+    panHint: "Trascina un controllo · Spazio + trascina o tasto centrale per spostare",
+    calibration: "Calibrazione reference",
+    calibrationOpen: "Apri calibrazione",
+    calibrationClose: "Chiudi calibrazione",
+    referencePhoto: "Foto",
+    vectorPanel: "Vettore",
+    grid: "Griglia",
+    crosshair: "Mirino",
+    controlCenters: "Centri controlli",
+    photoOpacity: "Opacità foto",
+  },
   modes: {
     text: "Patch dedotta dalla descrizione",
     reference:

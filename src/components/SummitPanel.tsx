@@ -1,118 +1,836 @@
-import layoutJson from "../data/summit-control-layout.json";
-import { parameterById } from "../domain/catalog";
+import { memo, useMemo, type ReactNode } from "react";
+import {
+  catalogTarget,
+  displayAreaById,
+  isFirmwareApplicable,
+  parameterById,
+} from "../domain/catalog";
+import {
+  getMatrixFieldValue,
+  isMatrixDisplayAreaId,
+  isMatrixDisplayFieldId,
+} from "../domain/displayStructure";
+import {
+  formatParameterValue,
+  getSetting,
+  isDefinitionVisible,
+  type ParameterValue,
+  type PatchScope,
+} from "../domain/patchUi";
 import type { SummitPatchProposal } from "../domain/schemas";
+import { SummitOledSvg } from "./SummitDisplay";
+import {
+  IlluminatedButton,
+  RotarySelector,
+  SteppedSelector,
+  SummitButton,
+  SummitKnob,
+  SummitModWheel,
+  SummitPitchWheel,
+  SummitSlider,
+  SummitToggle,
+  SummitValueEncoder,
+  UnavailableControl,
+  type ControlVisualState,
+} from "./panel-controls/SummitControls";
+import {
+  panelLandmarkById,
+  sectionHeaderForControl,
+  summitPanelLayout,
+  type LayoutControl,
+} from "./SummitPanelLayout";
 
-type LayoutControl = {
-  id: string;
-  parameterId?: string;
-  parameterIds?: string[];
-  label: string;
-  type: "knob" | "slider" | "selector" | "button" | "toggle" | "encoder" | "led";
-  x: number;
-  y: number;
-  size?: number;
-  stateOnly?: boolean;
+const SUMMIT_REFERENCE_IMAGE_URL = new URL(
+  "../../docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
+  import.meta.url,
+).href;
+
+export type PanelCalibrationState = {
+  showPhoto: boolean;
+  showVector: boolean;
+  showGrid: boolean;
+  showCrosshair: boolean;
+  showControlCenters: boolean;
+  photoOpacity: number;
+  crosshair: { x: number; y: number };
 };
 
-const layout = layoutJson as {
-  viewBox: string;
-  sections: Array<{ id: string; label: string; x: number; y: number; width: number; height: number }>;
-  controls: LayoutControl[];
-};
-
-function normalizedValue(parameterId: string, value: string | number | boolean): number {
+function controlStates(
+  parameterId: string,
+  value: ParameterValue,
+  confidence: number,
+  selectedParameterId: string | undefined,
+  modified: boolean,
+): ControlVisualState[] {
   const definition = parameterById.get(parameterId);
-  if (typeof value === "number" && definition?.minimum !== undefined && definition.maximum !== undefined) {
-    return (value - definition.minimum) / (definition.maximum - definition.minimum);
-  }
-  if (definition?.enumValues) {
-    const index = definition.enumValues.indexOf(String(value));
-    return index / Math.max(1, definition.enumValues.length - 1);
-  }
-  return value ? 1 : 0;
+  const states: ControlVisualState[] = [];
+  if (selectedParameterId === parameterId) states.push("selected");
+  if (modified) states.push("modified");
+  if (confidence < 1) states.push("suggested");
+  if (confidence < 0.7) states.push("low-confidence");
+  if (definition?.defaultValue === value) states.push("default");
+  return states;
 }
 
-export function SummitPanel({
-  proposal,
+const ParameterControl = memo(function ParameterControl({
+  control,
+  parameterId,
+  value,
+  confidence,
   selectedParameterId,
+  modified,
+  highlighted,
+  onSelect,
+  onChange,
+}: {
+  control: LayoutControl;
+  parameterId: string;
+  value: ParameterValue;
+  confidence: number;
+  selectedParameterId: string | undefined;
+  modified: boolean;
+  highlighted: boolean;
+  onSelect: (parameterId: string) => void;
+  onChange: (parameterId: string, value: ParameterValue) => void;
+}) {
+  const states = controlStates(parameterId, value, confidence, selectedParameterId, modified);
+  const props = {
+    parameterId,
+    label: control.label,
+    value,
+    x: control.x,
+    y: control.y,
+    size: control.size,
+    valueOffsetY: control.valueOffsetY,
+    states,
+    highlighted,
+    onSelect,
+    onChange,
+  };
+  switch (control.type) {
+    case "slider":
+      return <SummitSlider {...props} />;
+    case "selector":
+      return <SteppedSelector {...props} />;
+    case "encoder":
+      return <RotarySelector {...props} />;
+    case "button":
+      return <IlluminatedButton {...props} />;
+    case "toggle":
+    case "led":
+      return <SummitToggle {...props} />;
+    default:
+      return <SummitKnob {...props} />;
+  }
+});
+
+function StateOnlyControl({
+  control,
+  highlighted,
+  active = false,
+  disabled = false,
+  selectedOption,
+  selectedContextLabel,
+  onClick,
+}: {
+  control: LayoutControl;
+  highlighted: boolean;
+  active?: boolean;
+  disabled?: boolean;
+  selectedOption?: string | undefined;
+  selectedContextLabel?: string | undefined;
+  onClick?: (() => void) | undefined;
+}) {
+  if (control.type === "button" || control.type === "toggle") {
+    return (
+      <SummitButton
+        id={control.id}
+        label={control.label}
+        x={control.x}
+        y={control.y}
+        size={control.size}
+        highlighted={highlighted}
+        displayAreaId={control.displayAreaId}
+        active={active}
+        disabled={disabled}
+        showLabel={!control.id.startsWith("menu-page-")}
+        labelGap={control.id.startsWith("menu-row-") ? 2.5 : undefined}
+        onClick={onClick}
+      />
+    );
+  }
+  const radius = (control.size ?? 18) / 2;
+  const interactive = Boolean(onClick);
+  const activate = () => {
+    if (!disabled) onClick?.();
+  };
+  const accessibleLabel = selectedContextLabel
+    ? `${control.label}: ${selectedContextLabel}`
+    : `${control.label}: controllo hardware`;
+  return (
+    <g
+      className={[
+        "hardware-control",
+        `hardware-${control.type}`,
+        highlighted ? "setup-highlight" : "",
+        active ? "active" : "",
+        disabled ? "disabled" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      role={interactive ? "button" : "img"}
+      tabIndex={interactive && !disabled ? 0 : undefined}
+      aria-label={accessibleLabel}
+      aria-disabled={interactive ? disabled : undefined}
+      data-control-id={control.id}
+      data-display-area-id={control.displayAreaId}
+      onPointerDown={
+        interactive
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              if (!disabled && event.button === 0) {
+                event.currentTarget.focus({ preventScroll: true });
+              }
+            }
+          : undefined
+      }
+      onClick={
+        interactive
+          ? (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              activate();
+            }
+          : undefined
+      }
+      onKeyDown={
+        interactive
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                activate();
+              }
+            }
+          : undefined
+      }
+    >
+      <title>{accessibleLabel}</title>
+      {interactive ? (
+        <circle cx={control.x} cy={control.y} r={radius + 6} className="control-hit-target" />
+      ) : null}
+      <text x={control.x} y={control.y - radius - 5} textAnchor="middle" className="control-label">
+        {control.label}
+      </text>
+      <circle cx={control.x} cy={control.y} r={radius + 2} className="knob-rim" />
+      <circle cx={control.x} cy={control.y} r={Math.max(3, radius - 1.5)} className="knob-body" />
+      <line
+        x1={control.x}
+        y1={control.y}
+        x2={
+          selectedOption
+            ? control.x +
+              (selectedOption === "2" || selectedOption === "4" ? radius * 0.45 : -radius * 0.45)
+            : control.x
+        }
+        y2={control.y - Math.max(3, radius - 3)}
+        className="knob-indicator"
+      />
+    </g>
+  );
+}
+
+function LayoutControlGroup({
+  control,
+  children,
+}: {
+  control: LayoutControl;
+  children: ReactNode;
+}) {
+  const sectionHeader = sectionHeaderForControl(control);
+  return (
+    <g
+      data-layout-control-id={control.id}
+      data-section-header-id={sectionHeader?.id}
+      data-control-center-x={control.x}
+      data-control-center-y={control.y}
+    >
+      {children}
+    </g>
+  );
+}
+
+function SummitKeyboard() {
+  const keyboard = panelLandmarkById.get("keyboard");
+  const x = keyboard?.x ?? 185;
+  const y = keyboard?.y ?? 285;
+  const width = keyboard?.width ?? 1275;
+  const height = keyboard?.height ?? 202;
+  const whiteCount = 36;
+  const whiteWidth = width / whiteCount;
+  const blackAfter = new Set<number>();
+  for (let octave = 0; octave < 5; octave += 1) {
+    const base = octave * 7;
+    [0, 1, 3, 4, 5].forEach((offset) => blackAfter.add(base + offset));
+  }
+  return (
+    <g className="summit-keyboard" aria-label="Tastiera Summit a 61 tasti" role="img">
+      {Array.from({ length: whiteCount }, (_, index) => (
+        <rect
+          key={`white-${index}`}
+          x={x + index * whiteWidth}
+          y={y}
+          width={whiteWidth + 0.4}
+          height={height}
+          className="white-key"
+        />
+      ))}
+      {[...blackAfter].map((index) => (
+        <rect
+          key={`black-${index}`}
+          x={x + (index + 0.7) * whiteWidth}
+          y={y}
+          width={whiteWidth * 0.6}
+          height={height * 0.61}
+          rx="2"
+          className="black-key"
+        />
+      ))}
+    </g>
+  );
+}
+
+export const SummitPanel = memo(function SummitPanel({
+  proposal,
+  scope,
+  selectedParameterId,
+  activeDisplayAreaId,
+  activeDisplayPage,
+  selectedDisplayFieldId,
+  activeModulationSlot,
+  activeFxModulationSlot,
+  activeGlobalLfo,
+  activeModEnvelope,
   changedIds = [],
   highlightedIds = [],
+  highlightedAreaId,
+  focusedSectionId,
+  showInfoOverlay = false,
+  calibration,
   onSelect,
+  onChange,
+  onDisplayAreaSelect,
+  onDisplayStep,
+  onDisplayFieldSelect,
+  onDisplayValueStep,
+  onGlobalLfoSelect,
+  onModEnvelopeSelect,
 }: {
   proposal: SummitPatchProposal;
+  scope: PatchScope;
   selectedParameterId: string | undefined;
+  activeDisplayAreaId: string;
+  activeDisplayPage: number;
+  selectedDisplayFieldId: string | undefined;
+  activeModulationSlot: number;
+  activeFxModulationSlot: number;
+  activeGlobalLfo: 3 | 4;
+  activeModEnvelope: 1 | 2;
   changedIds?: string[];
   highlightedIds?: string[];
+  highlightedAreaId?: string | undefined;
+  focusedSectionId?: string | undefined;
+  showInfoOverlay?: boolean;
+  calibration?: PanelCalibrationState | undefined;
   onSelect: (parameterId: string) => void;
+  onChange: (parameterId: string, value: ParameterValue) => void;
+  onDisplayAreaSelect: (areaId: string) => void;
+  onDisplayStep: (direction: -1 | 1) => void;
+  onDisplayFieldSelect: (fieldId: string) => void;
+  onDisplayValueStep: (steps: number) => void;
+  onGlobalLfoSelect: (lfo: 3 | 4) => void;
+  onModEnvelopeSelect: (envelope: 1 | 2) => void;
 }) {
-  const settings = new Map(
-    proposal.parts.flatMap((part) =>
-      part.panelControls.map((setting) => [setting.parameterId, setting] as const),
-    ),
-  );
+  const changed = useMemo(() => new Set(changedIds), [changedIds]);
+  const highlighted = useMemo(() => new Set(highlightedIds), [highlightedIds]);
+  const displayArea = displayAreaById.get(activeDisplayAreaId);
+  const displayPage =
+    displayArea?.kind === "pages"
+      ? displayArea.pages.find((page) => page.page === activeDisplayPage)
+      : undefined;
+  const activeDisplaySlot =
+    activeDisplayAreaId === "mod"
+      ? activeModulationSlot
+      : activeDisplayAreaId === "fx-mod"
+        ? activeFxModulationSlot
+        : undefined;
+  const displayFields =
+    displayArea?.kind === "slots" ? (displayArea.slotFields ?? []) : (displayPage?.fields ?? []);
+  const activeDisplayField = displayFields.find((field) => field.id === selectedDisplayFieldId);
+  const selectedDisplayParameterId = activeDisplayField?.parameterId;
+  const selectedDisplayDefinition = selectedDisplayParameterId
+    ? parameterById.get(selectedDisplayParameterId)
+    : undefined;
+  const selectedDisplaySetting =
+    selectedDisplayParameterId && selectedDisplayDefinition
+      ? getSetting(proposal, selectedDisplayParameterId, scope)
+      : undefined;
+  const matrixDisplayValue =
+    displayArea &&
+    isMatrixDisplayAreaId(displayArea.id) &&
+    activeDisplaySlot &&
+    activeDisplayField &&
+    isMatrixDisplayFieldId(activeDisplayField.id)
+      ? getMatrixFieldValue(
+          proposal,
+          scope,
+          displayArea.id,
+          activeDisplaySlot,
+          activeDisplayField.id,
+        )
+      : undefined;
+  const valueEncoderText =
+    matrixDisplayValue !== undefined
+      ? String(matrixDisplayValue)
+      : selectedDisplayDefinition && selectedDisplaySetting
+        ? formatParameterValue(selectedDisplayDefinition, selectedDisplaySetting.value)
+        : "—";
+  const valueEncoderDisabled =
+    matrixDisplayValue === undefined &&
+    (!selectedDisplayDefinition ||
+      !selectedDisplaySetting ||
+      selectedDisplayDefinition.scope === "global");
+  const displayAtFirst =
+    displayArea?.kind === "slots" ? activeDisplaySlot === 1 : activeDisplayPage <= 1;
+  const displayAtLast =
+    displayArea?.kind === "slots"
+      ? activeDisplaySlot === displayArea.slotCount
+      : displayArea?.kind === "pages"
+        ? activeDisplayPage >= displayArea.pages.length
+        : true;
+  const panelBody = panelLandmarkById.get("panel");
+  const displayLandmark = panelLandmarkById.get("display");
+  const pitchWheel = panelLandmarkById.get("pitch-wheel");
+  const modWheel = panelLandmarkById.get("mod-wheel");
 
   return (
-    <div className="panel-scroll">
-      <svg className="summit-panel" viewBox={layout.viewBox} role="group" aria-label="Rappresentazione funzionale del pannello Novation Summit">
-        <defs>
-          <linearGradient id="panel-bg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#252a2e" /><stop offset="1" stopColor="#111416" /></linearGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="4" result="coloredBlur" /><feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-        </defs>
-        <rect x="8" y="8" width="1584" height="544" rx="22" fill="url(#panel-bg)" stroke="#3a4146" strokeWidth="2" />
-        <text x="42" y="34" className="panel-wordmark">SUMMIT</text>
-        <text x="1555" y="34" textAnchor="end" className="panel-submark">PATCH ARCHITECT · FUNCTIONAL VIEW</text>
-        {layout.sections.map((section) => (
-          <g key={section.id}>
-            <rect x={section.x} y={section.y} width={section.width} height={section.height} rx="9" className="panel-section" />
-            <text x={section.x + 12} y={section.y + 22} className="panel-section-label">{section.label}</text>
+    <svg
+      className={`summit-panel${showInfoOverlay ? " info-overlay-visible" : ""}`}
+      viewBox={summitPanelLayout.viewBox}
+      role="group"
+      aria-label="Pannello vettoriale interattivo Novation Summit"
+      data-scope={scope}
+    >
+      <defs>
+        <linearGradient id="panel-bg" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#34393d" />
+          <stop offset=".5" stopColor="#24282b" />
+          <stop offset="1" stopColor="#141719" />
+        </linearGradient>
+        <linearGradient id="wood" x1="0" x2="1">
+          <stop offset="0" stopColor="#4d2312" />
+          <stop offset=".48" stopColor="#a65a2a" />
+          <stop offset="1" stopColor="#3a190c" />
+        </linearGradient>
+        <linearGradient id="key-white" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#fbfaf2" />
+          <stop offset=".72" stopColor="#e7e2d5" />
+          <stop offset="1" stopColor="#b6afa2" />
+        </linearGradient>
+        <filter id="control-glow" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2.2" result="coloredBlur" />
+          <feMerge>
+            <feMergeNode in="coloredBlur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        <pattern id="calibration-grid-small" width="10" height="10" patternUnits="userSpaceOnUse">
+          <path d="M 10 0 L 0 0 0 10" className="calibration-grid-small" />
+        </pattern>
+        <pattern id="calibration-grid-large" width="50" height="50" patternUnits="userSpaceOnUse">
+          <rect width="50" height="50" fill="url(#calibration-grid-small)" />
+          <path d="M 50 0 L 0 0 0 50" className="calibration-grid-large" />
+        </pattern>
+      </defs>
+
+      <g
+        className="panel-vector-layer"
+        opacity={calibration?.showVector === false ? 0 : 1}
+        pointerEvents={calibration?.showVector === false ? "none" : "auto"}
+      >
+        <rect
+          x={panelBody?.x ?? 14}
+          y={panelBody?.y ?? 41}
+          width={panelBody?.width ?? 1484}
+          height={panelBody?.height ?? 446}
+          rx="7"
+          fill="#090b0c"
+        />
+        <path
+          d="M 14 49 Q 14 41 23 41 H 35 V 487 H 23 Q 14 487 14 478 Z"
+          fill="url(#wood)"
+          className="wood-cheek left"
+        />
+        <path
+          d="M 1474 41 H 1489 Q 1498 41 1498 50 V 478 Q 1498 487 1489 487 H 1474 Z"
+          fill="url(#wood)"
+          className="wood-cheek right"
+        />
+        <rect
+          x="35"
+          y="42"
+          width="1439"
+          height="243"
+          rx="1"
+          fill="url(#panel-bg)"
+          className="control-deck"
+        />
+        <rect x="35" y="285" width="150" height="202" fill="url(#panel-bg)" />
+        <path d="M 35 285 H 1474" className="panel-keyboard-rule" />
+        <text x="1459" y="61" textAnchor="end" className="panel-wordmark">
+          SUMMIT
+        </text>
+        <text x="184" y="278" className="panel-submark">
+          OXFORD OSCILLATORS
+        </text>
+        <text x="1457" y="276" textAnchor="end" className="panel-submark">
+          BI-TIMBRAL POLYPHONIC SYNTHESISER
+        </text>
+
+        {summitPanelLayout.sections.map((section) => (
+          <g
+            key={section.id}
+            className={`panel-section-group${focusedSectionId === section.id ? " focused" : ""}`}
+            data-section-id={section.id}
+          >
+            {focusedSectionId === section.id ? (
+              <rect
+                x={section.x}
+                y={section.y}
+                width={section.width}
+                height={section.height}
+                rx="1"
+                className="panel-focus-region"
+              />
+            ) : null}
           </g>
         ))}
-        <rect x="58" y="110" width="122" height="74" rx="5" className="oled" />
-        <text x="119" y="137" textAnchor="middle" className="oled-text">{proposal.patch.name}</text>
-        <text x="119" y="158" textAnchor="middle" className="oled-small">{proposal.patch.category.toUpperCase()} · PART A</text>
-        <rect x="66" y="216" width="106" height="18" rx="9" className="voice-meter-bg" />
-        <rect x="66" y="216" width={Math.max(20, proposal.analysis.overallConfidence * 106)} height="18" rx="9" className="voice-meter" />
-        <text x="119" y="270" textAnchor="middle" className="panel-small">CONFIDENCE</text>
-        <text x="119" y="301" textAnchor="middle" className="panel-value">{Math.round(proposal.analysis.overallConfidence * 100)}%</text>
-        {layout.controls.map((control) => {
-          const parameterId = [control.parameterId, ...(control.parameterIds ?? [])]
-            .filter((candidate): candidate is string => Boolean(candidate))
-            .find((candidate) => settings.has(candidate));
-          if (!parameterId || control.stateOnly) return null;
-          const setting = settings.get(parameterId);
-          if (!setting) return null;
-          const normalized = normalizedValue(parameterId, setting.value);
-          const selected = selectedParameterId === parameterId;
-          const changed = changedIds.includes(parameterId);
-          const highlighted = highlightedIds.includes(parameterId);
-          const classes = ["panel-control", selected ? "selected" : "", changed ? "changed" : "", highlighted ? "highlighted" : ""].filter(Boolean).join(" ");
-          const activate = () => onSelect(parameterId);
-          if (control.type === "slider") {
-            const y = control.y + 78 - normalized * 132;
+
+        <g className="panel-section-headers" aria-hidden="true">
+          {summitPanelLayout.sectionHeaders.map((header) => (
+            <g
+              key={header.id}
+              className="panel-section-header"
+              data-section-header-id={header.id}
+              data-content-top-y={header.contentTopY}
+            >
+              <line
+                className="panel-section-header-line"
+                x1={header.headerLineStartX}
+                y1={header.headerY}
+                x2={header.headerLineEndX}
+                y2={header.headerY}
+              />
+              <text className="panel-section-header-label" x={header.labelX} y={header.labelY}>
+                {header.label}
+              </text>
+            </g>
+          ))}
+        </g>
+
+        <SummitOledSvg
+          proposal={proposal}
+          scope={scope}
+          area={displayArea}
+          page={displayPage}
+          activeSlot={activeDisplaySlot}
+          selectedDisplayFieldId={selectedDisplayFieldId}
+          selectedParameterId={selectedParameterId}
+          onFieldSelect={onDisplayFieldSelect}
+          x={displayLandmark?.x ?? 183}
+          y={displayLandmark?.y ?? 133}
+          width={displayLandmark?.width ?? 110}
+          height={displayLandmark?.height ?? 47}
+        />
+        <text x="236.5" y="201" textAnchor="middle" className="control-label display-page-label">
+          ◀ PAGE ▶
+        </text>
+
+        {summitPanelLayout.controls.map((control) => {
+          if (control.stateOnly) {
+            if (control.id === "menu-value") {
+              return (
+                <LayoutControlGroup key={control.id} control={control}>
+                  <SummitValueEncoder
+                    key={control.id}
+                    id={control.id}
+                    label={control.label}
+                    valueText={valueEncoderText}
+                    x={control.x}
+                    y={control.y}
+                    size={control.size}
+                    active={!valueEncoderDisabled}
+                    disabled={valueEncoderDisabled}
+                    onSelect={() => {
+                      if (activeDisplayField) onDisplayFieldSelect(activeDisplayField.id);
+                    }}
+                    onStep={onDisplayValueStep}
+                  />
+                </LayoutControlGroup>
+              );
+            }
+            const rowIndex = control.id.startsWith("menu-row-")
+              ? Number(control.id.replace("menu-row-", "")) - 1
+              : undefined;
+            const rowField =
+              rowIndex !== undefined && Number.isInteger(rowIndex)
+                ? displayFields[rowIndex]
+                : undefined;
+            const isPageLeft = control.id === "menu-page-left";
+            const isPageRight = control.id === "menu-page-right";
+            const isGlobalLfoSelector = control.id === "lfo34-select";
+            const isModEnvelopeSelector = control.id === "mod-envelope-select";
+            const displayAreaId = control.displayAreaId;
+            const onHardwareClick = displayAreaId
+              ? () => onDisplayAreaSelect(displayAreaId)
+              : isPageLeft
+                ? () => onDisplayStep(-1)
+                : isPageRight
+                  ? () => onDisplayStep(1)
+                  : rowField
+                    ? () => onDisplayFieldSelect(rowField.id)
+                    : isGlobalLfoSelector
+                      ? () => onGlobalLfoSelect(activeGlobalLfo === 3 ? 4 : 3)
+                      : isModEnvelopeSelector
+                        ? () => onModEnvelopeSelect(activeModEnvelope === 1 ? 2 : 1)
+                        : undefined;
             return (
-              <g key={control.id} className={classes} role="button" tabIndex={0} aria-label={`${control.label}: ${setting.displayValue}`} onClick={activate} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") activate(); }}>
-                <text x={control.x} y={control.y - 112} textAnchor="middle" className="control-label">{control.label}</text>
-                <line x1={control.x} y1={control.y - 82} x2={control.x} y2={control.y + 78} className="slider-track" />
-                <rect x={control.x - 14} y={y - 5} width="28" height="10" rx="3" className="slider-handle" />
-                <text x={control.x} y={control.y + 103} textAnchor="middle" className="control-value">{setting.displayValue}</text>
-              </g>
+              <LayoutControlGroup key={control.id} control={control}>
+                <StateOnlyControl
+                  control={control}
+                  highlighted={Boolean(
+                    highlightedAreaId && control.displayAreaId === highlightedAreaId,
+                  )}
+                  active={Boolean(
+                    (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
+                    (rowField && rowField.id === selectedDisplayFieldId) ||
+                    (isGlobalLfoSelector && activeGlobalLfo === 4) ||
+                    (isModEnvelopeSelector && activeModEnvelope === 2),
+                  )}
+                  disabled={Boolean(
+                    (isPageLeft && displayAtFirst) ||
+                    (isPageRight && displayAtLast) ||
+                    (rowIndex !== undefined && !rowField),
+                  )}
+                  selectedOption={
+                    isGlobalLfoSelector
+                      ? String(activeGlobalLfo)
+                      : isModEnvelopeSelector
+                        ? String(activeModEnvelope)
+                        : undefined
+                  }
+                  selectedContextLabel={
+                    isGlobalLfoSelector
+                      ? `LFO ${activeGlobalLfo}`
+                      : isModEnvelopeSelector
+                        ? `Envelope ${activeModEnvelope}`
+                        : undefined
+                  }
+                  onClick={onHardwareClick}
+                />
+              </LayoutControlGroup>
             );
           }
-          const size = control.size ?? 64;
-          const radius = size / 2;
-          const rotation = -135 + normalized * 270;
+          const candidateIds = [control.parameterId, ...(control.parameterIds ?? [])].filter(
+            (candidate): candidate is string => Boolean(candidate),
+          );
+          const visibleCandidate = (candidate: string) => {
+            const definition = parameterById.get(candidate);
+            return definition && isDefinitionVisible(definition, scope);
+          };
+          const selectedCandidate =
+            selectedParameterId &&
+            candidateIds.includes(selectedParameterId) &&
+            visibleCandidate(selectedParameterId)
+              ? selectedParameterId
+              : undefined;
+          const activeContextPrefix = control.id.startsWith("lfo34-")
+            ? `lfo${activeGlobalLfo}.`
+            : control.sectionId === "mod-envelope"
+              ? `modEnv${activeModEnvelope}.`
+              : undefined;
+          const contextualCandidate = activeContextPrefix
+            ? candidateIds.find(
+                (candidate) =>
+                  candidate.startsWith(activeContextPrefix) && visibleCandidate(candidate),
+              )
+            : undefined;
+          const parameterId =
+            (activeContextPrefix && selectedCandidate?.startsWith(activeContextPrefix)
+              ? selectedCandidate
+              : undefined) ??
+            contextualCandidate ??
+            selectedCandidate ??
+            candidateIds.find(visibleCandidate);
+          if (!parameterId) {
+            return (
+              <LayoutControlGroup key={control.id} control={control}>
+                <UnavailableControl
+                  label={control.label}
+                  type={control.type}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  reason="Nessun parametro patch applicabile allo scope attivo."
+                />
+              </LayoutControlGroup>
+            );
+          }
+          const definition = parameterById.get(parameterId);
+          if (
+            !definition ||
+            !isFirmwareApplicable(
+              definition,
+              proposal.targetFirmware ?? catalogTarget.primaryFirmware,
+            ) ||
+            definition.verificationStatus !== "verified"
+          ) {
+            return (
+              <LayoutControlGroup key={control.id} control={control}>
+                <UnavailableControl
+                  label={control.label}
+                  type={control.type}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  reason={
+                    definition?.verificationNote ??
+                    "Parametro non verificato per il firmware selezionato."
+                  }
+                />
+              </LayoutControlGroup>
+            );
+          }
+          const setting = getSetting(proposal, parameterId, scope);
+          if (!setting || definition.scope === "global") {
+            return (
+              <LayoutControlGroup key={control.id} control={control}>
+                <UnavailableControl
+                  label={control.label}
+                  type={control.type}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  reason={
+                    definition.scope === "global"
+                      ? "Impostazione globale esclusa dalla patch."
+                      : "Default sicuro non documentato."
+                  }
+                />
+              </LayoutControlGroup>
+            );
+          }
           return (
-            <g key={control.id} className={classes} role="button" tabIndex={0} aria-label={`${control.label}: ${setting.displayValue}`} onClick={activate} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") activate(); }}>
-              <text x={control.x} y={control.y - radius - 17} textAnchor="middle" className="control-label">{control.label}</text>
-              <circle cx={control.x} cy={control.y} r={radius + 8} className="control-halo" />
-              <circle cx={control.x} cy={control.y} r={radius} className={control.type === "selector" ? "selector-body" : "knob-body"} />
-              <line x1={control.x} y1={control.y} x2={control.x} y2={control.y - radius + 10} className="knob-indicator" transform={`rotate(${rotation} ${control.x} ${control.y})`} />
-              <text x={control.x} y={control.y + radius + 28} textAnchor="middle" className="control-value">{setting.displayValue}</text>
-              <circle cx={control.x + radius - 3} cy={control.y - radius + 2} r="4" className="control-led" filter={highlighted ? "url(#glow)" : undefined} />
-            </g>
+            <LayoutControlGroup key={`${control.id}:${parameterId}`} control={control}>
+              <ParameterControl
+                control={control}
+                parameterId={parameterId}
+                value={setting.value}
+                confidence={setting.confidence}
+                selectedParameterId={selectedParameterId}
+                modified={changed.has(parameterId)}
+                highlighted={highlighted.has(parameterId)}
+                onSelect={onSelect}
+                onChange={onChange}
+              />
+            </LayoutControlGroup>
           );
         })}
-      </svg>
-    </div>
+
+        <SummitPitchWheel
+          id="pitch-wheel"
+          label="Pitch wheel"
+          x={pitchWheel ? pitchWheel.x + pitchWheel.width / 2 : 78}
+          y={pitchWheel ? pitchWheel.y + pitchWheel.height / 2 : 372}
+          size={pitchWheel?.height ?? 84}
+        />
+        <SummitModWheel
+          id="mod-wheel"
+          label="Modulation wheel"
+          x={modWheel ? modWheel.x + modWheel.width / 2 : 130}
+          y={modWheel ? modWheel.y + modWheel.height / 2 : 372}
+          size={modWheel?.height ?? 84}
+        />
+        <SummitKeyboard />
+        <text x="38" y="483" className="panel-footnote">
+          FIRMWARE {catalogTarget.primaryFirmware} · PATCH ARCHITECT OPERATIONAL MAP
+        </text>
+      </g>
+
+      {calibration?.showPhoto ? (
+        <image
+          href={SUMMIT_REFERENCE_IMAGE_URL}
+          x="0"
+          y="0"
+          width="1536"
+          height="539"
+          opacity={calibration.photoOpacity}
+          preserveAspectRatio="none"
+          className="calibration-reference-photo"
+          data-testid="calibration-reference-photo"
+        />
+      ) : null}
+      {calibration?.showGrid ? (
+        <rect
+          x="0"
+          y="0"
+          width="1536"
+          height="539"
+          fill="url(#calibration-grid-large)"
+          className="calibration-grid"
+          aria-hidden="true"
+        />
+      ) : null}
+      {calibration?.showControlCenters ? (
+        <g className="calibration-section-geometry" aria-hidden="true">
+          {summitPanelLayout.sectionHeaders.map((header) => (
+            <g key={header.id}>
+              <rect
+                x={header.contentBounds.x}
+                y={header.contentBounds.y}
+                width={header.contentBounds.width}
+                height={header.contentBounds.height}
+              />
+              <circle cx={header.headerLineStartX} cy={header.headerY} r="1.7" />
+              <circle cx={header.headerLineEndX} cy={header.headerY} r="1.7" />
+              <line
+                x1={header.contentBounds.x}
+                y1={header.contentTopY}
+                x2={header.contentBounds.x + header.contentBounds.width}
+                y2={header.contentTopY}
+              />
+            </g>
+          ))}
+        </g>
+      ) : null}
+      {calibration?.showControlCenters ? (
+        <g className="calibration-control-centers" aria-hidden="true">
+          {summitPanelLayout.controls.map((control) => (
+            <g key={control.id}>
+              <circle cx={control.x} cy={control.y} r="2.5" />
+              <line x1={control.x - 5} y1={control.y} x2={control.x + 5} y2={control.y} />
+              <line x1={control.x} y1={control.y - 5} x2={control.x} y2={control.y + 5} />
+            </g>
+          ))}
+        </g>
+      ) : null}
+      {calibration?.showCrosshair ? (
+        <g className="calibration-crosshair" aria-hidden="true">
+          <line x1="0" y1={calibration.crosshair.y} x2="1536" y2={calibration.crosshair.y} />
+          <line x1={calibration.crosshair.x} y1="0" x2={calibration.crosshair.x} y2="539" />
+          <circle cx={calibration.crosshair.x} cy={calibration.crosshair.y} r="5" />
+        </g>
+      ) : null}
+    </svg>
   );
-}
+});

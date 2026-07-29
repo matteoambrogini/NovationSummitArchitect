@@ -10,5 +10,14 @@ export default defineConfig({
     url: "http://127.0.0.1:1420",
     reuseExistingServer: true,
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    {
+      name: "chromium-retina",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1440, height: 900 },
+        deviceScaleFactor: 2,
+      },
+    },
+  ],
 });

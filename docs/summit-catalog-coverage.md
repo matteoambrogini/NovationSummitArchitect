@@ -39,7 +39,7 @@ Le eccezioni sotto soglia sono circoscritte e non vengono colmate con inferenze:
 | Catalogo            | Totale | Verified | Unverified | Conflict | Firmware 2.1 verified | Unknown/undocumented | AI usable @2.1 | Copertura AI |
 | ------------------- | -----: | -------: | ---------: | -------: | --------------------: | -------------------: | -------------: | -----------: |
 | Parametri           |    232 |      222 |          7 |        1 |                    17 |                    2 |            213 |        91.8% |
-| Controlli fisici    |     89 |       87 |          0 |        2 |                     0 |                    0 |             87 |        97.8% |
+| Controlli fisici    |     89 |       89 |          0 |        0 |                     0 |                    0 |             89 |       100.0% |
 | Menu                |     10 |        7 |          0 |        3 |                     0 |                    0 |              7 |        70.0% |
 | Sorgenti Mod        |     24 |       24 |          0 |        0 |                     1 |                    0 |             24 |       100.0% |
 | Destinazioni Mod    |     49 |       49 |          0 |        0 |                    11 |                    0 |             49 |       100.0% |

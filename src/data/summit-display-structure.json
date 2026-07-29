@@ -1,0 +1,1033 @@
+{
+  "schemaVersion": "1.0.0",
+  "targetFirmware": "2.1",
+  "observedAt": "2026-07-27",
+  "documentation": {
+    "document": "Summit display/menu structure video",
+    "section": "Complete 00:00–02:25 pass",
+    "sourceUrl": "docs/references/summit-ui/summit-ui-reference-pack/summit-display-menu-structure.mp4",
+    "verifiedAt": "2026-07-27"
+  },
+  "areas": [
+    {
+      "id": "osc",
+      "displayLabel": "OSC",
+      "physicalButton": "OSC",
+      "kind": "pages",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 18, "endSeconds": 27 },
+      "pages": [
+        {
+          "page": 1,
+          "displayTitle": "OSC COMM 1",
+          "fields": [
+            {
+              "id": "diverge",
+              "displayLabel": "Diverge",
+              "line": 1,
+              "parameterId": "osc.common.diverge"
+            },
+            {
+              "id": "drift",
+              "displayLabel": "Drift",
+              "line": 2,
+              "parameterId": "osc.common.drift"
+            },
+            {
+              "id": "tuning-table",
+              "displayLabel": "TuningTable",
+              "line": 3,
+              "parameterId": "osc.common.tuningTable"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "displayTitle": "OSC COMM 2",
+          "fields": [
+            {
+              "id": "key-sync",
+              "displayLabel": "KeySync",
+              "line": 1,
+              "parameterId": "osc.common.keySync"
+            },
+            {
+              "id": "noise-lpf",
+              "displayLabel": "Noise LPF",
+              "line": 2,
+              "parameterId": "noise.lowPass"
+            },
+            {
+              "id": "noise-hpf",
+              "displayLabel": "Noise HPF",
+              "line": 3,
+              "parameterId": "noise.highPass"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "displayTitle": "OSCILLATOR 1",
+          "fields": [
+            {
+              "id": "osc1-wave-more",
+              "displayLabel": "WaveMore",
+              "line": 1,
+              "parameterId": "osc1.waveMore"
+            },
+            {
+              "id": "osc1-fixed-note",
+              "displayLabel": "FixedNote",
+              "line": 2,
+              "parameterId": "osc1.fixedNote"
+            },
+            {
+              "id": "osc1-bend-range",
+              "displayLabel": "BendRange",
+              "line": 3,
+              "parameterId": "osc1.bendRange"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "displayTitle": "OSCILLATOR 1",
+          "fields": [
+            { "id": "osc1-vsync", "displayLabel": "Vsync", "line": 1, "parameterId": "osc1.vsync" },
+            {
+              "id": "osc1-saw-density",
+              "displayLabel": "SawDense",
+              "line": 2,
+              "parameterId": "osc1.sawDensity"
+            },
+            {
+              "id": "osc1-density-detune",
+              "displayLabel": "DenseDet",
+              "line": 3,
+              "parameterId": "osc1.densityDetune"
+            }
+          ]
+        },
+        {
+          "page": 5,
+          "displayTitle": "OSCILLATOR 2",
+          "fields": [
+            {
+              "id": "osc2-wave-more",
+              "displayLabel": "WaveMore",
+              "line": 1,
+              "parameterId": "osc2.waveMore"
+            },
+            {
+              "id": "osc2-fixed-note",
+              "displayLabel": "FixedNote",
+              "line": 2,
+              "parameterId": "osc2.fixedNote"
+            },
+            {
+              "id": "osc2-bend-range",
+              "displayLabel": "BendRange",
+              "line": 3,
+              "parameterId": "osc2.bendRange"
+            }
+          ]
+        },
+        {
+          "page": 6,
+          "displayTitle": "OSCILLATOR 2",
+          "fields": [
+            { "id": "osc2-vsync", "displayLabel": "Vsync", "line": 1, "parameterId": "osc2.vsync" },
+            {
+              "id": "osc2-saw-density",
+              "displayLabel": "SawDense",
+              "line": 2,
+              "parameterId": "osc2.sawDensity"
+            },
+            {
+              "id": "osc2-density-detune",
+              "displayLabel": "DenseDet",
+              "line": 3,
+              "parameterId": "osc2.densityDetune"
+            }
+          ]
+        },
+        {
+          "page": 7,
+          "displayTitle": "OSCILLATOR 3",
+          "fields": [
+            {
+              "id": "osc3-wave-more",
+              "displayLabel": "WaveMore",
+              "line": 1,
+              "parameterId": "osc3.waveMore"
+            },
+            {
+              "id": "osc3-fixed-note",
+              "displayLabel": "FixedNote",
+              "line": 2,
+              "parameterId": "osc3.fixedNote"
+            },
+            {
+              "id": "osc3-bend-range",
+              "displayLabel": "BendRange",
+              "line": 3,
+              "parameterId": "osc3.bendRange"
+            }
+          ]
+        },
+        {
+          "page": 8,
+          "displayTitle": "OSCILLATOR 3",
+          "fields": [
+            { "id": "osc3-vsync", "displayLabel": "Vsync", "line": 1, "parameterId": "osc3.vsync" },
+            {
+              "id": "osc3-saw-density",
+              "displayLabel": "SawDense",
+              "line": 2,
+              "parameterId": "osc3.sawDensity"
+            },
+            {
+              "id": "osc3-density-detune",
+              "displayLabel": "DenseDet",
+              "line": 3,
+              "parameterId": "osc3.densityDetune"
+            }
+          ]
+        },
+        {
+          "page": 9,
+          "displayTitle": "USER WAVES",
+          "fields": [
+            {
+              "id": "user-wave",
+              "displayLabel": "Wave",
+              "line": 1,
+              "unmappedReason": "No verified patch parameter identity exists in the current catalog."
+            },
+            {
+              "id": "save-user-wave",
+              "displayLabel": "Save",
+              "line": 2,
+              "fieldKind": "action",
+              "unmappedReason": "Observed display action, not a patch parameter."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "env",
+      "displayLabel": "ENV",
+      "physicalButton": "ENV",
+      "kind": "pages",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 28, "endSeconds": 39 },
+      "pages": [
+        {
+          "page": 1,
+          "displayTitle": "AMP ENVELOPE",
+          "fields": [
+            {
+              "id": "amp-velocity",
+              "displayLabel": "Velocity",
+              "line": 1,
+              "parameterId": "amp.velocity"
+            },
+            {
+              "id": "amp-mono-trigger",
+              "displayLabel": "MonoTrig",
+              "line": 2,
+              "parameterId": "amp.monoTrigger"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "displayTitle": "AMP ENVELOPE",
+          "fields": [
+            { "id": "amp-delay", "displayLabel": "Delay", "line": 1, "parameterId": "amp.delay" },
+            { "id": "amp-hold", "displayLabel": "HoldTime", "line": 2, "parameterId": "amp.hold" },
+            {
+              "id": "amp-repeats",
+              "displayLabel": "Repeats",
+              "line": 3,
+              "parameterId": "amp.repeats"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "displayTitle": "MOD ENVELOPE 1",
+          "fields": [
+            {
+              "id": "mod-env1-velocity",
+              "displayLabel": "Velocity",
+              "line": 1,
+              "parameterId": "modEnv1.velocity"
+            },
+            {
+              "id": "mod-env1-mono-trigger",
+              "displayLabel": "MonoTrig",
+              "line": 2,
+              "parameterId": "modEnv1.monoTrigger"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "displayTitle": "MOD ENVELOPE 1",
+          "fields": [
+            {
+              "id": "mod-env1-delay",
+              "displayLabel": "Delay",
+              "line": 1,
+              "parameterId": "modEnv1.delay"
+            },
+            {
+              "id": "mod-env1-hold",
+              "displayLabel": "HoldTime",
+              "line": 2,
+              "parameterId": "modEnv1.hold"
+            },
+            {
+              "id": "mod-env1-repeats",
+              "displayLabel": "Repeats",
+              "line": 3,
+              "parameterId": "modEnv1.repeats"
+            }
+          ]
+        },
+        {
+          "page": 5,
+          "displayTitle": "MOD ENVELOPE 2",
+          "fields": [
+            {
+              "id": "mod-env2-velocity",
+              "displayLabel": "Velocity",
+              "line": 1,
+              "parameterId": "modEnv2.velocity"
+            },
+            {
+              "id": "mod-env2-mono-trigger",
+              "displayLabel": "MonoTrig",
+              "line": 2,
+              "parameterId": "modEnv2.monoTrigger"
+            }
+          ]
+        },
+        {
+          "page": 6,
+          "displayTitle": "MOD ENVELOPE 2",
+          "fields": [
+            {
+              "id": "mod-env2-delay",
+              "displayLabel": "Delay",
+              "line": 1,
+              "parameterId": "modEnv2.delay"
+            },
+            {
+              "id": "mod-env2-hold",
+              "displayLabel": "HoldTime",
+              "line": 2,
+              "parameterId": "modEnv2.hold"
+            },
+            {
+              "id": "mod-env2-repeats",
+              "displayLabel": "Repeats",
+              "line": 3,
+              "parameterId": "modEnv2.repeats"
+            }
+          ]
+        },
+        {
+          "page": 7,
+          "displayTitle": "ANIMATE 1 ENVS",
+          "fields": [
+            {
+              "id": "animate1-attack",
+              "displayLabel": "Anim1Att",
+              "line": 1,
+              "parameterId": "animate1.attack"
+            },
+            {
+              "id": "animate1-release",
+              "displayLabel": "Anim1Rel",
+              "line": 2,
+              "parameterId": "animate1.release"
+            }
+          ]
+        },
+        {
+          "page": 8,
+          "displayTitle": "ANIMATE 2 ENVS",
+          "fields": [
+            {
+              "id": "animate2-attack",
+              "displayLabel": "Anim2Att",
+              "line": 1,
+              "parameterId": "animate2.attack"
+            },
+            {
+              "id": "animate2-release",
+              "displayLabel": "Anim2Rel",
+              "line": 2,
+              "parameterId": "animate2.release"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "lfo",
+      "displayLabel": "LFO",
+      "physicalButton": "LFO",
+      "kind": "pages",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 40, "endSeconds": 60 },
+      "pages": [
+        {
+          "page": 1,
+          "displayTitle": "LFO 1",
+          "fields": [
+            { "id": "lfo1-phase", "displayLabel": "Phase", "line": 1, "parameterId": "lfo1.phase" },
+            {
+              "id": "lfo1-mono-trigger",
+              "displayLabel": "MonoTrig",
+              "line": 2,
+              "parameterId": "lfo1.monoTrigger"
+            },
+            { "id": "lfo1-slew", "displayLabel": "Slew", "line": 3, "parameterId": "lfo1.slew" }
+          ]
+        },
+        {
+          "page": 2,
+          "displayTitle": "LFO 1",
+          "fields": [
+            {
+              "id": "lfo1-fade-mode",
+              "displayLabel": "FadeMode",
+              "line": 1,
+              "parameterId": "lfo1.fadeMode"
+            },
+            {
+              "id": "lfo1-fade-sync",
+              "displayLabel": "FadeSync",
+              "line": 2,
+              "parameterId": "lfo1.fadeSync"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "displayTitle": "LFO 1",
+          "fields": [
+            {
+              "id": "lfo1-repeats",
+              "displayLabel": "Repeats",
+              "line": 1,
+              "parameterId": "lfo1.repeats"
+            },
+            {
+              "id": "lfo1-common",
+              "displayLabel": "Common",
+              "line": 2,
+              "parameterId": "lfo1.common"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "displayTitle": "LFO 2",
+          "fields": [
+            { "id": "lfo2-phase", "displayLabel": "Phase", "line": 1, "parameterId": "lfo2.phase" },
+            {
+              "id": "lfo2-mono-trigger",
+              "displayLabel": "MonoTrig",
+              "line": 2,
+              "parameterId": "lfo2.monoTrigger"
+            },
+            { "id": "lfo2-slew", "displayLabel": "Slew", "line": 3, "parameterId": "lfo2.slew" }
+          ]
+        },
+        {
+          "page": 5,
+          "displayTitle": "LFO 2",
+          "fields": [
+            {
+              "id": "lfo2-fade-mode",
+              "displayLabel": "FadeMode",
+              "line": 1,
+              "parameterId": "lfo2.fadeMode"
+            },
+            {
+              "id": "lfo2-fade-sync",
+              "displayLabel": "FadeSync",
+              "line": 2,
+              "parameterId": "lfo2.fadeSync"
+            }
+          ]
+        },
+        {
+          "page": 6,
+          "displayTitle": "LFO 2",
+          "fields": [
+            {
+              "id": "lfo2-repeats",
+              "displayLabel": "Repeats",
+              "line": 1,
+              "parameterId": "lfo2.repeats"
+            },
+            {
+              "id": "lfo2-common",
+              "displayLabel": "Common",
+              "line": 2,
+              "parameterId": "lfo2.common"
+            }
+          ]
+        },
+        {
+          "page": 7,
+          "displayTitle": "LFO 3",
+          "fields": [
+            {
+              "id": "lfo3-waveform",
+              "displayLabel": "L3Waveform",
+              "line": 1,
+              "parameterId": "lfo3.waveform"
+            },
+            { "id": "lfo3-rate", "displayLabel": "L3Rate", "line": 2, "parameterId": "lfo3.rate" },
+            {
+              "id": "lfo3-rate-sync",
+              "displayLabel": "L3RateSync",
+              "line": 3,
+              "parameterId": "lfo3.rateSync"
+            }
+          ]
+        },
+        {
+          "page": 8,
+          "displayTitle": "LFO 3",
+          "fields": [
+            { "id": "lfo3-phase", "displayLabel": "Phase", "line": 1, "parameterId": "lfo3.phase" },
+            { "id": "lfo3-slew", "displayLabel": "Slew", "line": 2, "parameterId": "lfo3.slew" },
+            {
+              "id": "lfo3-fade-time",
+              "displayLabel": "FadeTime",
+              "line": 3,
+              "parameterId": "lfo3.fadeTime"
+            }
+          ]
+        },
+        {
+          "page": 9,
+          "displayTitle": "LFO 4",
+          "fields": [
+            {
+              "id": "lfo4-waveform",
+              "displayLabel": "L4Waveform",
+              "line": 1,
+              "parameterId": "lfo4.waveform"
+            },
+            { "id": "lfo4-rate", "displayLabel": "L4Rate", "line": 2, "parameterId": "lfo4.rate" },
+            {
+              "id": "lfo4-rate-sync",
+              "displayLabel": "L4RateSync",
+              "line": 3,
+              "parameterId": "lfo4.rateSync"
+            }
+          ]
+        },
+        {
+          "page": 10,
+          "displayTitle": "LFO 4",
+          "fields": [
+            { "id": "lfo4-phase", "displayLabel": "Phase", "line": 1, "parameterId": "lfo4.phase" },
+            { "id": "lfo4-slew", "displayLabel": "Slew", "line": 2, "parameterId": "lfo4.slew" },
+            {
+              "id": "lfo4-fade-time",
+              "displayLabel": "FadeTime",
+              "line": 3,
+              "parameterId": "lfo4.fadeTime"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arp-clock",
+      "displayLabel": "ARP/CLOCK",
+      "physicalButton": "ARP",
+      "kind": "pages",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 62, "endSeconds": 71 },
+      "pages": [
+        {
+          "page": 1,
+          "displayTitle": "CLOCK",
+          "fields": [
+            {
+              "id": "clock-rate",
+              "displayLabel": "ClockRate",
+              "line": 1,
+              "parameterId": "arp.tempo"
+            },
+            {
+              "id": "clock-source",
+              "displayLabel": "Source",
+              "line": 2,
+              "parameterId": "arp.clockSource"
+            },
+            {
+              "id": "clock-status",
+              "displayLabel": "Status",
+              "line": 3,
+              "fieldKind": "status",
+              "unmappedReason": "Runtime clock status; not stored in a patch."
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "displayTitle": "ARP",
+          "fields": [
+            { "id": "arp-type", "displayLabel": "Type", "line": 1, "parameterId": "arp.type" },
+            {
+              "id": "arp-rhythm",
+              "displayLabel": "Rhythm",
+              "line": 2,
+              "parameterId": "arp.rhythm"
+            },
+            {
+              "id": "arp-octaves",
+              "displayLabel": "Octaves",
+              "line": 3,
+              "parameterId": "arp.octaves"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "displayTitle": "ARP",
+          "fields": [
+            { "id": "arp-swing", "displayLabel": "Swing", "line": 1, "parameterId": "arp.swing" },
+            {
+              "id": "arp-sync-rate",
+              "displayLabel": "SyncRate",
+              "line": 2,
+              "parameterId": "arp.syncRate"
+            },
+            {
+              "id": "arp-key-sync",
+              "displayLabel": "KeySync",
+              "line": 3,
+              "parameterId": "arp.keySync"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "displayTitle": "ARP",
+          "fields": [
+            {
+              "id": "arp-velocity-mode",
+              "displayLabel": "ArpVelMode",
+              "line": 1,
+              "parameterId": "arp.velocityMode"
+            },
+            {
+              "id": "arp-chance",
+              "displayLabel": "ArpChance",
+              "line": 2,
+              "parameterId": "arp.chance"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mod",
+      "displayLabel": "MOD",
+      "physicalButton": "MOD",
+      "kind": "slots",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 72, "endSeconds": 103 },
+      "slotCount": 16,
+      "slotFields": [
+        { "id": "sourceA", "displayLabel": "Source A", "line": 1, "fieldKind": "matrix-field" },
+        { "id": "sourceB", "displayLabel": "Source B", "line": 2, "fieldKind": "matrix-field" },
+        {
+          "id": "destination",
+          "displayLabel": "Destination",
+          "line": 3,
+          "fieldKind": "matrix-field"
+        },
+        { "id": "depth", "displayLabel": "Depth", "line": 4, "fieldKind": "matrix-field" }
+      ]
+    },
+    {
+      "id": "voice-filter",
+      "displayLabel": "VOICE/FILTER",
+      "physicalButton": "VOICE",
+      "kind": "pages",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 106, "endSeconds": 116 },
+      "pages": [
+        {
+          "page": 1,
+          "displayTitle": "VOICE",
+          "fields": [
+            {
+              "id": "voice-unison",
+              "displayLabel": "Unison",
+              "line": 1,
+              "parameterId": "voice.unison"
+            },
+            {
+              "id": "voice-unison-detune",
+              "displayLabel": "UniDeTune",
+              "line": 2,
+              "parameterId": "voice.unisonDetune"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "displayTitle": "VOICE",
+          "fields": [
+            {
+              "id": "voice-spread",
+              "displayLabel": "Spread",
+              "line": 1,
+              "parameterId": "voice.spread"
+            },
+            {
+              "id": "voice-spread-mode",
+              "displayLabel": "SpreadMode",
+              "line": 2,
+              "parameterId": "voice.spreadMode"
+            },
+            {
+              "id": "voice-pan-position",
+              "displayLabel": "PanPosn",
+              "line": 3,
+              "parameterId": "voice.panPosition"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "displayTitle": "VOICE",
+          "fields": [
+            {
+              "id": "voice-pre-glide",
+              "displayLabel": "PreGlide",
+              "line": 1,
+              "parameterId": "voice.preGlide"
+            },
+            {
+              "id": "voice-patch-level",
+              "displayLabel": "PatchLevel",
+              "line": 2,
+              "parameterId": "mixer.patchLevel"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "displayTitle": "VOICE",
+          "fields": [
+            {
+              "id": "filter-post-drive",
+              "displayLabel": "FiltPostDrv",
+              "line": 1,
+              "parameterId": "filter.postDrive"
+            },
+            {
+              "id": "filter-diverge",
+              "displayLabel": "FiltDiverge",
+              "line": 2,
+              "parameterId": "filter.divergence"
+            },
+            {
+              "id": "voice-audio-input",
+              "displayLabel": "AudioInput",
+              "line": 3,
+              "parameterId": "voice.audioInput"
+            }
+          ]
+        },
+        {
+          "page": 5,
+          "displayTitle": "VOICE",
+          "fields": [
+            {
+              "id": "filter-dual-shape",
+              "displayLabel": "FiltShpDual",
+              "line": 1,
+              "parameterId": "filter.dualShape"
+            },
+            {
+              "id": "filter-frequency-separation",
+              "displayLabel": "FltFreqSep",
+              "line": 2,
+              "parameterId": "filter.frequencySeparation"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx",
+      "displayLabel": "FX",
+      "physicalButton": "FX",
+      "kind": "pages",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 117, "endSeconds": 134 },
+      "pages": [
+        {
+          "page": 1,
+          "displayTitle": "FX GLOBAL",
+          "fields": [
+            {
+              "id": "fx-wet-level",
+              "displayLabel": "WetLevel",
+              "line": 1,
+              "parameterId": "fx.wetLevel"
+            },
+            {
+              "id": "fx-dry-level",
+              "displayLabel": "DryLevel",
+              "line": 2,
+              "parameterId": "fx.dryLevel"
+            },
+            {
+              "id": "fx-routing",
+              "displayLabel": "Routing",
+              "line": 3,
+              "parameterId": "fx.routing"
+            }
+          ]
+        },
+        {
+          "page": 2,
+          "displayTitle": "CHORUS",
+          "fields": [
+            {
+              "id": "chorus-depth",
+              "displayLabel": "ChorDepth",
+              "line": 1,
+              "parameterId": "fx.chorus.depth"
+            },
+            {
+              "id": "chorus-feedback",
+              "displayLabel": "ChorFback",
+              "line": 2,
+              "parameterId": "fx.chorus.feedback"
+            },
+            {
+              "id": "chorus-mode",
+              "displayLabel": "Mode",
+              "line": 3,
+              "parameterId": "fx.chorus.mode"
+            }
+          ]
+        },
+        {
+          "page": 3,
+          "displayTitle": "CHORUS",
+          "fields": [
+            {
+              "id": "chorus-low-pass",
+              "displayLabel": "LoPass",
+              "line": 1,
+              "parameterId": "fx.chorus.lowPass"
+            },
+            {
+              "id": "chorus-high-pass",
+              "displayLabel": "HiPass",
+              "line": 2,
+              "parameterId": "fx.chorus.highPass"
+            }
+          ]
+        },
+        {
+          "page": 4,
+          "displayTitle": "DELAY",
+          "fields": [
+            {
+              "id": "delay-sync",
+              "displayLabel": "DelaySync",
+              "line": 1,
+              "parameterId": "fx.delay.syncRate"
+            },
+            {
+              "id": "delay-low-pass-damping",
+              "displayLabel": "LP Damp",
+              "line": 2,
+              "parameterId": "fx.delay.lowPassDamping"
+            },
+            {
+              "id": "delay-high-pass-damping",
+              "displayLabel": "HP Damp",
+              "line": 3,
+              "parameterId": "fx.delay.highPassDamping"
+            }
+          ]
+        },
+        {
+          "page": 5,
+          "displayTitle": "DELAY",
+          "fields": [
+            {
+              "id": "delay-left-right-ratio",
+              "displayLabel": "LR Ratio",
+              "line": 1,
+              "parameterId": "fx.delay.leftRightRatio"
+            },
+            {
+              "id": "delay-slew-rate",
+              "displayLabel": "SlewRate",
+              "line": 2,
+              "parameterId": "fx.delay.slewRate"
+            },
+            {
+              "id": "delay-width",
+              "displayLabel": "Width",
+              "line": 3,
+              "parameterId": "fx.delay.width"
+            }
+          ]
+        },
+        {
+          "page": 6,
+          "displayTitle": "DELAY",
+          "fields": [
+            {
+              "id": "delay-time-mode",
+              "displayLabel": "TimeMode",
+              "line": 1,
+              "parameterId": "fx.delay.timeMode"
+            },
+            {
+              "id": "delay-type",
+              "displayLabel": "Type",
+              "line": 2,
+              "parameterId": "fx.delay.type"
+            },
+            {
+              "id": "delay-output",
+              "displayLabel": "Output",
+              "line": 3,
+              "parameterId": "fx.delay.output"
+            }
+          ]
+        },
+        {
+          "page": 7,
+          "displayTitle": "REVERB",
+          "fields": [
+            {
+              "id": "reverb-pre-delay",
+              "displayLabel": "PreDelay",
+              "line": 1,
+              "parameterId": "fx.reverb.preDelay"
+            },
+            {
+              "id": "reverb-low-pass-damping",
+              "displayLabel": "LP Damp",
+              "line": 2,
+              "parameterId": "fx.reverb.lowPassDamping"
+            },
+            {
+              "id": "reverb-high-pass-damping",
+              "displayLabel": "HP Damp",
+              "line": 3,
+              "parameterId": "fx.reverb.highPassDamping"
+            }
+          ]
+        },
+        {
+          "page": 8,
+          "displayTitle": "REVERB",
+          "fields": [
+            {
+              "id": "reverb-size",
+              "displayLabel": "RevSize",
+              "line": 1,
+              "parameterId": "fx.reverb.size"
+            },
+            {
+              "id": "reverb-mod-depth",
+              "displayLabel": "ModDepth",
+              "line": 2,
+              "parameterId": "fx.reverb.modDepth"
+            },
+            {
+              "id": "reverb-mod-rate",
+              "displayLabel": "ModRate",
+              "line": 3,
+              "parameterId": "fx.reverb.modRate"
+            }
+          ]
+        },
+        {
+          "page": 9,
+          "displayTitle": "REVERB",
+          "fields": [
+            {
+              "id": "reverb-low-pass",
+              "displayLabel": "LoPass",
+              "line": 1,
+              "parameterId": "fx.reverb.lowPass"
+            },
+            {
+              "id": "reverb-high-pass",
+              "displayLabel": "HiPass",
+              "line": 2,
+              "parameterId": "fx.reverb.highPass"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx-mod",
+      "displayLabel": "FX MOD",
+      "physicalButton": "FX MOD",
+      "kind": "slots",
+      "patchRelevant": true,
+      "verificationStatus": "observed",
+      "evidence": { "startSeconds": 135, "endSeconds": 142 },
+      "slotCount": 4,
+      "slotFields": [
+        { "id": "sourceA", "displayLabel": "Source A", "line": 1, "fieldKind": "matrix-field" },
+        { "id": "sourceB", "displayLabel": "Source B", "line": 2, "fieldKind": "matrix-field" },
+        {
+          "id": "destination",
+          "displayLabel": "FX Destination",
+          "line": 3,
+          "fieldKind": "matrix-field"
+        },
+        { "id": "depth", "displayLabel": "Depth", "line": 4, "fieldKind": "matrix-field" }
+      ]
+    },
+    {
+      "id": "settings",
+      "displayLabel": "SETTINGS",
+      "physicalButton": "SETTINGS",
+      "kind": "unobserved",
+      "patchRelevant": false,
+      "verificationStatus": "not-traversed",
+      "evidence": { "startSeconds": 0, "endSeconds": 145 },
+      "pages": [],
+      "note": "The physical Settings button is visible, but its pages are never entered in the supplied video. Global settings stay outside patch setup and completeness counts."
+    }
+  ]
+}
