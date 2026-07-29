@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "2.1.0",
+  "schemaVersion": "2.2.0",
   "viewBox": "0 0 1536 539",
   "geometry": {
     "coordinateSystem": "Summit front elevation, normalized to the 1536 × 539 reference image",
@@ -7,8 +7,8 @@
     "section": "Complete front elevation",
     "page": 1,
     "sourceUrl": "docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg",
-    "verifiedAt": "2026-07-28",
-    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity and dedicated display/serigraphy crops; coordinates are stored without grid interpolation.",
+    "verifiedAt": "2026-07-29",
+    "measurementMethod": "Pixel centres and bounding boxes traced directly on the uncropped 1536 × 539 reference, then checked with the development reference overlay at 50% opacity and dedicated display/section-header crops. Each section header stores the full cyan segment, a label baseline below it, a content start and an explicit content bounding box; coordinates are stored without grid interpolation.",
     "referenceWidth": 1536,
     "referenceHeight": 539
   },
@@ -99,31 +99,271 @@
     },
     { "id": "effects", "label": "Effects", "x": 1297, "y": 64, "width": 168, "height": 193 }
   ],
-  "serigraphy": [
-    { "id": "master", "label": "MASTER", "x": 52, "y": 65, "width": 92 },
-    { "id": "menu", "label": "MENU", "x": 149, "y": 65, "width": 169 },
-    { "id": "active-voices", "label": "ACTIVE VOICES", "x": 52, "y": 139, "width": 92 },
-    { "id": "multi-part", "label": "MULTI PART CONTROL", "x": 52, "y": 181, "width": 92 },
-    { "id": "multi-mode", "label": "MULTI MODE", "x": 52, "y": 221, "width": 92 },
-    { "id": "animates", "label": "ANIMATES", "x": 52, "y": 253, "width": 92 },
-    { "id": "voice", "label": "VOICE", "x": 321, "y": 65, "width": 139 },
-    { "id": "arp", "label": "ARP", "x": 321, "y": 129, "width": 139 },
-    { "id": "oscillator-1", "label": "OSCILLATOR 1", "x": 465, "y": 65, "width": 292 },
-    { "id": "oscillator-2", "label": "OSCILLATOR 2", "x": 465, "y": 130, "width": 292 },
-    { "id": "oscillator-3", "label": "OSCILLATOR 3", "x": 465, "y": 195, "width": 292 },
-    { "id": "fm", "label": "FM", "x": 760, "y": 65, "width": 60 },
-    { "id": "mixer", "label": "MIXER", "x": 823, "y": 65, "width": 74 },
-    { "id": "filter", "label": "FILTER", "x": 900, "y": 65, "width": 120 },
-    { "id": "amp-envelope", "label": "AMP ENVELOPE", "x": 1023, "y": 65, "width": 146 },
-    { "id": "mod-envelopes", "label": "MOD ENVELOPES", "x": 1023, "y": 160, "width": 146 },
-    { "id": "lfo-1", "label": "LFO 1", "x": 1172, "y": 65, "width": 123 },
-    { "id": "lfo-2", "label": "LFO 2", "x": 1172, "y": 130, "width": 123 },
-    { "id": "global-lfo", "label": "GLOBAL LFO 3&4", "x": 1172, "y": 195, "width": 123 },
-    { "id": "distortion", "label": "DISTORTION", "x": 1298, "y": 65, "width": 70 },
-    { "id": "chorus", "label": "CHORUS", "x": 1371, "y": 65, "width": 94 },
-    { "id": "delay", "label": "DELAY", "x": 1298, "y": 130, "width": 167 },
-    { "id": "effects", "label": "EFFECTS", "x": 1298, "y": 195, "width": 70 },
-    { "id": "reverb", "label": "REVERB", "x": 1371, "y": 195, "width": 94 }
+  "sectionHeaders": [
+    {
+      "id": "master",
+      "label": "MASTER",
+      "headerLineStartX": 52,
+      "headerLineEndX": 151,
+      "headerY": 65,
+      "labelX": 52,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 52, "y": 75, "width": 99, "height": 56 }
+    },
+    {
+      "id": "menu",
+      "label": "MENU",
+      "headerLineStartX": 149,
+      "headerLineEndX": 332,
+      "headerY": 65,
+      "labelX": 151,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 149, "y": 75, "width": 183, "height": 132 }
+    },
+    {
+      "id": "active-voices",
+      "label": "ACTIVE VOICES",
+      "headerLineStartX": 52,
+      "headerLineEndX": 144,
+      "headerY": 139,
+      "labelX": 52,
+      "labelY": 146,
+      "contentTopY": 149,
+      "contentBounds": { "x": 52, "y": 149, "width": 92, "height": 30 }
+    },
+    {
+      "id": "multi-part",
+      "label": "MULTI PART CONTROL",
+      "headerLineStartX": 52,
+      "headerLineEndX": 144,
+      "headerY": 181,
+      "labelX": 52,
+      "labelY": 188,
+      "contentTopY": 191,
+      "contentBounds": { "x": 52, "y": 191, "width": 92, "height": 27 }
+    },
+    {
+      "id": "multi-mode",
+      "label": "MULTI MODE",
+      "headerLineStartX": 52,
+      "headerLineEndX": 144,
+      "headerY": 221,
+      "labelX": 52,
+      "labelY": 228,
+      "contentTopY": 231,
+      "contentBounds": { "x": 52, "y": 231, "width": 92, "height": 20 }
+    },
+    {
+      "id": "animates",
+      "label": "ANIMATES",
+      "headerLineStartX": 50,
+      "headerLineEndX": 144,
+      "headerY": 253,
+      "labelX": 52,
+      "labelY": 260,
+      "contentTopY": 263,
+      "contentBounds": { "x": 50, "y": 263, "width": 94, "height": 22 }
+    },
+    {
+      "id": "voice",
+      "label": "VOICE",
+      "headerLineStartX": 321,
+      "headerLineEndX": 460,
+      "headerY": 65,
+      "labelX": 321,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 321, "y": 75, "width": 139, "height": 48 }
+    },
+    {
+      "id": "arp",
+      "label": "ARP",
+      "headerLineStartX": 321,
+      "headerLineEndX": 460,
+      "headerY": 129,
+      "labelX": 321,
+      "labelY": 136,
+      "contentTopY": 139,
+      "contentBounds": { "x": 321, "y": 139, "width": 139, "height": 129 }
+    },
+    {
+      "id": "oscillator-1",
+      "label": "OSCILLATOR 1",
+      "headerLineStartX": 465,
+      "headerLineEndX": 757,
+      "headerY": 65,
+      "labelX": 465,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 465, "y": 75, "width": 292, "height": 52 }
+    },
+    {
+      "id": "oscillator-2",
+      "label": "OSCILLATOR 2",
+      "headerLineStartX": 465,
+      "headerLineEndX": 757,
+      "headerY": 130,
+      "labelX": 465,
+      "labelY": 137,
+      "contentTopY": 140,
+      "contentBounds": { "x": 465, "y": 140, "width": 292, "height": 52 }
+    },
+    {
+      "id": "oscillator-3",
+      "label": "OSCILLATOR 3",
+      "headerLineStartX": 465,
+      "headerLineEndX": 757,
+      "headerY": 195,
+      "labelX": 465,
+      "labelY": 202,
+      "contentTopY": 205,
+      "contentBounds": { "x": 465, "y": 205, "width": 292, "height": 52 }
+    },
+    {
+      "id": "fm",
+      "label": "FM",
+      "headerLineStartX": 760,
+      "headerLineEndX": 820,
+      "headerY": 65,
+      "labelX": 760,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 760, "y": 75, "width": 60, "height": 182 }
+    },
+    {
+      "id": "mixer",
+      "label": "MIXER",
+      "headerLineStartX": 823,
+      "headerLineEndX": 910,
+      "headerY": 65,
+      "labelX": 823,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 823, "y": 75, "width": 87, "height": 182 }
+    },
+    {
+      "id": "filter",
+      "label": "FILTER",
+      "headerLineStartX": 900,
+      "headerLineEndX": 1020,
+      "headerY": 65,
+      "labelX": 900,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 900, "y": 75, "width": 120, "height": 182 }
+    },
+    {
+      "id": "amp-envelope",
+      "label": "AMP ENVELOPE",
+      "headerLineStartX": 1023,
+      "headerLineEndX": 1169,
+      "headerY": 65,
+      "labelX": 1023,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 1023, "y": 75, "width": 146, "height": 82 }
+    },
+    {
+      "id": "mod-envelopes",
+      "label": "MOD ENVELOPES",
+      "headerLineStartX": 1023,
+      "headerLineEndX": 1169,
+      "headerY": 160,
+      "labelX": 1023,
+      "labelY": 167,
+      "contentTopY": 170,
+      "contentBounds": { "x": 1023, "y": 170, "width": 146, "height": 87 }
+    },
+    {
+      "id": "lfo-1",
+      "label": "LFO 1",
+      "headerLineStartX": 1172,
+      "headerLineEndX": 1297,
+      "headerY": 65,
+      "labelX": 1172,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 1172, "y": 75, "width": 125, "height": 52 }
+    },
+    {
+      "id": "lfo-2",
+      "label": "LFO 2",
+      "headerLineStartX": 1172,
+      "headerLineEndX": 1297,
+      "headerY": 130,
+      "labelX": 1172,
+      "labelY": 137,
+      "contentTopY": 140,
+      "contentBounds": { "x": 1172, "y": 140, "width": 125, "height": 52 }
+    },
+    {
+      "id": "global-lfo",
+      "label": "GLOBAL LFO 3&4",
+      "headerLineStartX": 1172,
+      "headerLineEndX": 1297,
+      "headerY": 195,
+      "labelX": 1172,
+      "labelY": 202,
+      "contentTopY": 205,
+      "contentBounds": { "x": 1172, "y": 205, "width": 125, "height": 52 }
+    },
+    {
+      "id": "distortion",
+      "label": "DISTORTION",
+      "headerLineStartX": 1298,
+      "headerLineEndX": 1343,
+      "headerY": 65,
+      "labelX": 1298,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 1298, "y": 75, "width": 45, "height": 52 }
+    },
+    {
+      "id": "chorus",
+      "label": "CHORUS",
+      "headerLineStartX": 1344,
+      "headerLineEndX": 1465,
+      "headerY": 65,
+      "labelX": 1346,
+      "labelY": 72,
+      "contentTopY": 75,
+      "contentBounds": { "x": 1344, "y": 75, "width": 121, "height": 52 }
+    },
+    {
+      "id": "delay",
+      "label": "DELAY",
+      "headerLineStartX": 1298,
+      "headerLineEndX": 1465,
+      "headerY": 130,
+      "labelX": 1298,
+      "labelY": 137,
+      "contentTopY": 140,
+      "contentBounds": { "x": 1298, "y": 140, "width": 167, "height": 52 }
+    },
+    {
+      "id": "effects",
+      "label": "EFFECTS",
+      "headerLineStartX": 1298,
+      "headerLineEndX": 1343,
+      "headerY": 195,
+      "labelX": 1298,
+      "labelY": 202,
+      "contentTopY": 205,
+      "contentBounds": { "x": 1298, "y": 205, "width": 45, "height": 52 }
+    },
+    {
+      "id": "reverb",
+      "label": "REVERB",
+      "headerLineStartX": 1344,
+      "headerLineEndX": 1465,
+      "headerY": 195,
+      "labelX": 1346,
+      "labelY": 202,
+      "contentTopY": 205,
+      "contentBounds": { "x": 1344, "y": 205, "width": 121, "height": 52 }
+    }
   ],
   "sections": [
     { "id": "master", "label": "MASTER", "x": 51, "y": 64, "width": 93, "height": 67 },
@@ -192,8 +432,8 @@
       "sectionId": "master",
       "label": "Volume",
       "type": "knob",
-      "x": 70,
-      "y": 96,
+      "x": 71,
+      "y": 103,
       "size": 23,
       "stateOnly": true
     },
@@ -202,8 +442,8 @@
       "sectionId": "master",
       "label": "Initialise",
       "type": "button",
-      "x": 108,
-      "y": 80,
+      "x": 104,
+      "y": 89,
       "size": 18,
       "stateOnly": true
     },
@@ -212,8 +452,8 @@
       "sectionId": "master",
       "label": "Compare",
       "type": "button",
-      "x": 136,
-      "y": 80,
+      "x": 132,
+      "y": 89,
       "size": 18,
       "stateOnly": true
     },
@@ -224,7 +464,7 @@
       "label": "OSC",
       "type": "button",
       "x": 198,
-      "y": 87,
+      "y": 91,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "osc"
@@ -235,7 +475,7 @@
       "label": "ENV",
       "type": "button",
       "x": 225,
-      "y": 87,
+      "y": 91,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "env"
@@ -246,7 +486,7 @@
       "label": "LFO",
       "type": "button",
       "x": 252,
-      "y": 87,
+      "y": 91,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "lfo"
@@ -257,7 +497,7 @@
       "label": "ARP",
       "type": "button",
       "x": 279,
-      "y": 87,
+      "y": 91,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "arp-clock"
@@ -268,7 +508,7 @@
       "label": "VOICE",
       "type": "button",
       "x": 225,
-      "y": 108,
+      "y": 112,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "voice-filter"
@@ -279,7 +519,7 @@
       "label": "FX",
       "type": "button",
       "x": 252,
-      "y": 108,
+      "y": 112,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "fx"
@@ -290,7 +530,7 @@
       "label": "SETTINGS",
       "type": "button",
       "x": 316,
-      "y": 108,
+      "y": 112,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "settings"
@@ -301,7 +541,7 @@
       "label": "MOD",
       "type": "button",
       "x": 198,
-      "y": 108,
+      "y": 112,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "mod"
@@ -372,7 +612,7 @@
       "label": "FX MOD",
       "type": "button",
       "x": 279,
-      "y": 108,
+      "y": 112,
       "size": 14,
       "stateOnly": true,
       "displayAreaId": "fx-mod"
@@ -384,7 +624,7 @@
       "label": "A",
       "type": "button",
       "x": 68,
-      "y": 167,
+      "y": 207,
       "size": 15,
       "stateOnly": true
     },
@@ -394,7 +634,7 @@
       "label": "B",
       "type": "button",
       "x": 97,
-      "y": 167,
+      "y": 207,
       "size": 15,
       "stateOnly": true
     },
@@ -405,7 +645,7 @@
       "label": "Layer",
       "type": "button",
       "x": 68,
-      "y": 211,
+      "y": 247,
       "size": 15
     },
     {
@@ -416,7 +656,7 @@
       "label": "Split",
       "type": "button",
       "x": 97,
-      "y": 211,
+      "y": 247,
       "size": 15
     },
     {
@@ -426,7 +666,7 @@
       "label": "Dual",
       "type": "button",
       "x": 126,
-      "y": 211,
+      "y": 247,
       "size": 15
     },
     {
@@ -435,8 +675,8 @@
       "label": "Animate 1",
       "type": "button",
       "x": 68,
-      "y": 271,
-      "size": 22,
+      "y": 276,
+      "size": 18,
       "stateOnly": true
     },
     {
@@ -445,8 +685,8 @@
       "label": "Animate 2",
       "type": "button",
       "x": 98,
-      "y": 271,
-      "size": 22,
+      "y": 276,
+      "size": 18,
       "stateOnly": true
     },
 
@@ -477,7 +717,7 @@
       "label": "Time",
       "type": "knob",
       "x": 441,
-      "y": 91,
+      "y": 96,
       "size": 19
     },
     {
@@ -507,7 +747,7 @@
       "label": "Tempo",
       "type": "encoder",
       "x": 360,
-      "y": 154,
+      "y": 160,
       "size": 19
     },
     {
@@ -527,7 +767,7 @@
       "label": "Gate",
       "type": "knob",
       "x": 441,
-      "y": 154,
+      "y": 160,
       "size": 19
     },
     {
@@ -547,7 +787,7 @@
       "label": "Rhythm",
       "type": "selector",
       "x": 401,
-      "y": 154,
+      "y": 160,
       "size": 19
     },
 
@@ -557,8 +797,8 @@
       "parameterId": "osc1.range",
       "label": "Range",
       "type": "selector",
-      "x": 462,
-      "y": 91,
+      "x": 481,
+      "y": 96,
       "size": 17
     },
     {
@@ -568,7 +808,7 @@
       "label": "Coarse",
       "type": "knob",
       "x": 501,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -578,7 +818,7 @@
       "label": "Fine",
       "type": "knob",
       "x": 540,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -588,7 +828,7 @@
       "label": "Wave",
       "type": "selector",
       "x": 579,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -598,7 +838,7 @@
       "label": "Env 2",
       "type": "knob",
       "x": 618,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -608,7 +848,7 @@
       "label": "LFO 2",
       "type": "knob",
       "x": 657,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -619,7 +859,7 @@
       "label": "Shape",
       "type": "knob",
       "x": 696,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -629,7 +869,7 @@
       "label": "Source",
       "type": "selector",
       "x": 735,
-      "y": 91,
+      "y": 96,
       "size": 17
     },
     {
@@ -638,8 +878,8 @@
       "parameterId": "osc2.range",
       "label": "Range",
       "type": "selector",
-      "x": 462,
-      "y": 157,
+      "x": 481,
+      "y": 161,
       "size": 17
     },
     {
@@ -649,7 +889,7 @@
       "label": "Coarse",
       "type": "knob",
       "x": 501,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -659,7 +899,7 @@
       "label": "Fine",
       "type": "knob",
       "x": 540,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -669,7 +909,7 @@
       "label": "Wave",
       "type": "selector",
       "x": 579,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -679,7 +919,7 @@
       "label": "Env 2",
       "type": "knob",
       "x": 618,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -689,7 +929,7 @@
       "label": "LFO 2",
       "type": "knob",
       "x": 657,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -700,7 +940,7 @@
       "label": "Shape",
       "type": "knob",
       "x": 696,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -710,7 +950,7 @@
       "label": "Source",
       "type": "selector",
       "x": 735,
-      "y": 157,
+      "y": 161,
       "size": 17
     },
     {
@@ -719,8 +959,8 @@
       "parameterId": "osc3.range",
       "label": "Range",
       "type": "selector",
-      "x": 462,
-      "y": 222,
+      "x": 481,
+      "y": 226,
       "size": 17
     },
     {
@@ -730,7 +970,7 @@
       "label": "Coarse",
       "type": "knob",
       "x": 501,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -740,7 +980,7 @@
       "label": "Fine",
       "type": "knob",
       "x": 540,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -750,7 +990,7 @@
       "label": "Wave",
       "type": "selector",
       "x": 579,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -760,7 +1000,7 @@
       "label": "Env 2",
       "type": "knob",
       "x": 618,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -770,7 +1010,7 @@
       "label": "LFO 2",
       "type": "knob",
       "x": 657,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -781,7 +1021,7 @@
       "label": "Shape",
       "type": "knob",
       "x": 696,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -791,7 +1031,7 @@
       "label": "Source",
       "type": "selector",
       "x": 735,
-      "y": 222,
+      "y": 226,
       "size": 17
     },
 
@@ -802,8 +1042,8 @@
       "parameterIds": ["fm.osc3ToOsc1.manual", "fm.osc3ToOsc1.modEnv2", "fm.osc3ToOsc1.lfo2"],
       "label": "3 > 1",
       "type": "knob",
-      "x": 774,
-      "y": 91,
+      "x": 776,
+      "y": 96,
       "size": 18
     },
     {
@@ -812,7 +1052,7 @@
       "label": "Src",
       "type": "selector",
       "x": 804,
-      "y": 91,
+      "y": 96,
       "size": 16,
       "stateOnly": true
     },
@@ -823,8 +1063,8 @@
       "parameterIds": ["fm.osc1ToOsc2.manual", "fm.osc1ToOsc2.modEnv2", "fm.osc1ToOsc2.lfo2"],
       "label": "1 > 2",
       "type": "knob",
-      "x": 774,
-      "y": 157,
+      "x": 776,
+      "y": 161,
       "size": 18
     },
     {
@@ -833,7 +1073,7 @@
       "label": "Src",
       "type": "selector",
       "x": 804,
-      "y": 157,
+      "y": 161,
       "size": 16,
       "stateOnly": true
     },
@@ -844,8 +1084,8 @@
       "parameterIds": ["fm.osc2ToOsc3.manual", "fm.osc2ToOsc3.modEnv2", "fm.osc2ToOsc3.lfo2"],
       "label": "2 > 3",
       "type": "knob",
-      "x": 774,
-      "y": 222,
+      "x": 776,
+      "y": 226,
       "size": 18
     },
     {
@@ -854,7 +1094,7 @@
       "label": "Src",
       "type": "selector",
       "x": 804,
-      "y": 222,
+      "y": 226,
       "size": 16,
       "stateOnly": true
     },
@@ -866,7 +1106,7 @@
       "label": "Osc 1",
       "type": "knob",
       "x": 845,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -876,7 +1116,7 @@
       "label": "Osc 2",
       "type": "knob",
       "x": 890,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -886,7 +1126,7 @@
       "label": "Osc 3",
       "type": "knob",
       "x": 845,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -896,7 +1136,7 @@
       "label": "Ring",
       "type": "knob",
       "x": 890,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -906,7 +1146,7 @@
       "label": "Noise",
       "type": "knob",
       "x": 845,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -916,7 +1156,7 @@
       "label": "VCA",
       "type": "knob",
       "x": 890,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
 
@@ -977,7 +1217,7 @@
       "label": "Key Track",
       "type": "knob",
       "x": 1003,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -987,7 +1227,7 @@
       "label": "LFO 1",
       "type": "knob",
       "x": 923,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -997,7 +1237,7 @@
       "label": "Osc 3",
       "type": "knob",
       "x": 963,
-      "y": 91,
+      "y": 96,
       "size": 18
     },
     {
@@ -1029,7 +1269,7 @@
       "label": "A",
       "type": "slider",
       "x": 1068,
-      "y": 115,
+      "y": 120,
       "size": 70
     },
     {
@@ -1039,7 +1279,7 @@
       "label": "D",
       "type": "slider",
       "x": 1095,
-      "y": 115,
+      "y": 120,
       "size": 70
     },
     {
@@ -1049,7 +1289,7 @@
       "label": "S",
       "type": "slider",
       "x": 1122,
-      "y": 115,
+      "y": 120,
       "size": 70
     },
     {
@@ -1059,7 +1299,7 @@
       "label": "R",
       "type": "slider",
       "x": 1150,
-      "y": 115,
+      "y": 120,
       "size": 70
     },
     {
@@ -1080,8 +1320,8 @@
       "label": "A",
       "type": "slider",
       "x": 1068,
-      "y": 211,
-      "size": 78
+      "y": 218,
+      "size": 72
     },
     {
       "id": "mod-envelope-decay",
@@ -1091,8 +1331,8 @@
       "label": "D",
       "type": "slider",
       "x": 1095,
-      "y": 211,
-      "size": 78
+      "y": 218,
+      "size": 72
     },
     {
       "id": "mod-envelope-sustain",
@@ -1102,8 +1342,8 @@
       "label": "S",
       "type": "slider",
       "x": 1122,
-      "y": 211,
-      "size": 78
+      "y": 218,
+      "size": 72
     },
     {
       "id": "mod-envelope-release",
@@ -1113,8 +1353,8 @@
       "label": "R",
       "type": "slider",
       "x": 1150,
-      "y": 211,
-      "size": 78
+      "y": 218,
+      "size": 72
     },
     {
       "id": "envelope-loop",
@@ -1135,7 +1375,7 @@
       "label": "Type 1",
       "type": "selector",
       "x": 1195,
-      "y": 92,
+      "y": 96,
       "size": 17
     },
     {
@@ -1145,7 +1385,7 @@
       "label": "Fade 1",
       "type": "knob",
       "x": 1224,
-      "y": 92,
+      "y": 96,
       "size": 17
     },
     {
@@ -1155,7 +1395,7 @@
       "label": "Range 1",
       "type": "selector",
       "x": 1254,
-      "y": 92,
+      "y": 96,
       "size": 17
     },
     {
@@ -1165,8 +1405,8 @@
       "parameterIds": ["lfo1.rate", "lfo1.rateSync"],
       "label": "Rate 1",
       "type": "knob",
-      "x": 1284,
-      "y": 92,
+      "x": 1278,
+      "y": 96,
       "size": 18
     },
     {
@@ -1176,7 +1416,7 @@
       "label": "Type 2",
       "type": "selector",
       "x": 1195,
-      "y": 157,
+      "y": 161,
       "size": 17
     },
     {
@@ -1186,7 +1426,7 @@
       "label": "Fade 2",
       "type": "knob",
       "x": 1224,
-      "y": 157,
+      "y": 161,
       "size": 17
     },
     {
@@ -1196,7 +1436,7 @@
       "label": "Range 2",
       "type": "selector",
       "x": 1254,
-      "y": 157,
+      "y": 161,
       "size": 17
     },
     {
@@ -1206,8 +1446,8 @@
       "parameterIds": ["lfo2.rate", "lfo2.rateSync"],
       "label": "Rate 2",
       "type": "knob",
-      "x": 1284,
-      "y": 157,
+      "x": 1278,
+      "y": 161,
       "size": 18
     },
     {
@@ -1216,7 +1456,7 @@
       "label": "3 / 4",
       "type": "selector",
       "x": 1195,
-      "y": 222,
+      "y": 226,
       "size": 16,
       "stateOnly": true
     },
@@ -1227,7 +1467,7 @@
       "label": "Type",
       "type": "selector",
       "x": 1225,
-      "y": 222,
+      "y": 226,
       "size": 17
     },
     {
@@ -1237,7 +1477,7 @@
       "label": "Rate",
       "type": "knob",
       "x": 1255,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -1246,8 +1486,8 @@
       "parameterIds": ["lfo3.sync", "lfo4.sync"],
       "label": "Sync",
       "type": "button",
-      "x": 1285,
-      "y": 222,
+      "x": 1278,
+      "y": 226,
       "size": 15
     },
 
@@ -1258,7 +1498,7 @@
       "label": "Distortion",
       "type": "knob",
       "x": 1323,
-      "y": 92,
+      "y": 96,
       "size": 18
     },
     {
@@ -1268,7 +1508,7 @@
       "label": "Chorus",
       "type": "knob",
       "x": 1362,
-      "y": 92,
+      "y": 96,
       "size": 18
     },
     {
@@ -1278,7 +1518,7 @@
       "label": "Rate",
       "type": "knob",
       "x": 1401,
-      "y": 92,
+      "y": 96,
       "size": 18
     },
     {
@@ -1288,7 +1528,7 @@
       "label": "Type",
       "type": "selector",
       "x": 1440,
-      "y": 92,
+      "y": 96,
       "size": 17
     },
     {
@@ -1298,7 +1538,7 @@
       "label": "Delay",
       "type": "knob",
       "x": 1323,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -1309,7 +1549,7 @@
       "label": "Time",
       "type": "knob",
       "x": 1362,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -1319,7 +1559,7 @@
       "label": "Feedback",
       "type": "knob",
       "x": 1401,
-      "y": 157,
+      "y": 161,
       "size": 18
     },
     {
@@ -1329,7 +1569,7 @@
       "label": "Sync",
       "type": "button",
       "x": 1440,
-      "y": 157,
+      "y": 161,
       "size": 15
     },
     {
@@ -1339,7 +1579,7 @@
       "label": "Reverb",
       "type": "knob",
       "x": 1323,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -1349,7 +1589,7 @@
       "label": "Time",
       "type": "knob",
       "x": 1362,
-      "y": 222,
+      "y": 226,
       "size": 18
     },
     {
@@ -1359,7 +1599,7 @@
       "label": "Size",
       "type": "selector",
       "x": 1401,
-      "y": 222,
+      "y": 226,
       "size": 17
     },
     {
@@ -1369,7 +1609,7 @@
       "label": "Bypass",
       "type": "button",
       "x": 1440,
-      "y": 222,
+      "y": 226,
       "size": 15
     },
 

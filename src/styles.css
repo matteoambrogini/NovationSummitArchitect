@@ -1910,8 +1910,7 @@ td code {
 .summit-panel .panel-wordmark,
 .summit-panel .panel-submark,
 .summit-panel .panel-footnote,
-.panel-serigraphy-lines,
-.panel-serigraphy-labels {
+.panel-section-headers {
   pointer-events: none;
 }
 .inspector,
@@ -1938,12 +1937,12 @@ td code {
   border-color: #79c9f7;
   background: #79c9f7;
 }
-.panel-serigraphy-lines line {
+.panel-section-header-line {
   stroke: #48acd4;
   stroke-width: 0.8;
   opacity: 0.92;
 }
-.panel-serigraphy-labels text {
+.panel-section-header-label {
   fill: #d3d9dc;
   stroke: #292e31;
   stroke-width: 2.2px;
@@ -1993,6 +1992,7 @@ td code {
 }
 .calibration-reference-photo,
 .calibration-grid,
+.calibration-section-geometry,
 .calibration-control-centers,
 .calibration-crosshair {
   pointer-events: none;
@@ -2016,6 +2016,22 @@ td code {
   stroke: #ff4696;
   stroke-width: 0.7;
 }
+.calibration-section-geometry rect {
+  fill: rgba(93, 225, 255, 0.035);
+  stroke: rgba(93, 225, 255, 0.72);
+  stroke-width: 0.55;
+  stroke-dasharray: 3 2;
+}
+.calibration-section-geometry line {
+  stroke: rgba(255, 211, 89, 0.86);
+  stroke-width: 0.65;
+  stroke-dasharray: 2 1;
+}
+.calibration-section-geometry circle {
+  fill: #ffd359;
+  stroke: #111;
+  stroke-width: 0.4;
+}
 .calibration-crosshair line {
   stroke: rgba(255, 223, 96, 0.92);
   stroke-width: 0.65;
@@ -2038,20 +2054,8 @@ td code {
   stroke-dasharray: 4 2;
   pointer-events: none;
 }
-.panel-serigraphy {
+.panel-section-header {
   pointer-events: none;
-}
-.panel-serigraphy line {
-  stroke: #48acd4;
-  stroke-width: 0.8;
-  opacity: 0.9;
-}
-.panel-serigraphy text {
-  fill: #d3d9dc;
-  font:
-    750 5px Inter,
-    sans-serif;
-  letter-spacing: 0.025em;
 }
 .panel-wordmark {
   font-size: 14px;

@@ -1,4 +1,4 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, type ReactNode } from "react";
 import {
   catalogTarget,
   displayAreaById,
@@ -35,8 +35,7 @@ import {
 } from "./panel-controls/SummitControls";
 import {
   panelLandmarkById,
-  SERIGRAPHY_LABEL_BASELINE_OFFSET,
-  serigraphyLineStartX,
+  sectionHeaderForControl,
   summitPanelLayout,
   type LayoutControl,
 } from "./SummitPanelLayout";
@@ -176,6 +175,26 @@ function StateOnlyControl({
         y2={control.y - Math.max(3, radius - 3)}
         className="knob-indicator"
       />
+    </g>
+  );
+}
+
+function LayoutControlGroup({
+  control,
+  children,
+}: {
+  control: LayoutControl;
+  children: ReactNode;
+}) {
+  const sectionHeader = sectionHeaderForControl(control);
+  return (
+    <g
+      data-layout-control-id={control.id}
+      data-section-header-id={sectionHeader?.id}
+      data-control-center-x={control.x}
+      data-control-center-y={control.y}
+    >
+      {children}
     </g>
   );
 }
@@ -428,23 +447,23 @@ export const SummitPanel = memo(function SummitPanel({
           </g>
         ))}
 
-        <g className="panel-serigraphy-lines" aria-hidden="true">
-          {summitPanelLayout.serigraphy.map((mark) => (
-            <line
-              key={mark.id}
-              data-serigraphy-id={mark.id}
-              x1={serigraphyLineStartX(mark)}
-              y1={mark.y}
-              x2={mark.x + mark.width}
-              y2={mark.y}
-            />
-          ))}
-        </g>
-        <g className="panel-serigraphy-labels" aria-hidden="true">
-          {summitPanelLayout.serigraphy.map((mark) => (
-            <g key={mark.id} className="panel-serigraphy" data-serigraphy-id={mark.id}>
-              <text x={mark.x} y={mark.y + SERIGRAPHY_LABEL_BASELINE_OFFSET}>
-                {mark.label}
+        <g className="panel-section-headers" aria-hidden="true">
+          {summitPanelLayout.sectionHeaders.map((header) => (
+            <g
+              key={header.id}
+              className="panel-section-header"
+              data-section-header-id={header.id}
+              data-content-top-y={header.contentTopY}
+            >
+              <line
+                className="panel-section-header-line"
+                x1={header.headerLineStartX}
+                y1={header.headerY}
+                x2={header.headerLineEndX}
+                y2={header.headerY}
+              />
+              <text className="panel-section-header-label" x={header.labelX} y={header.labelY}>
+                {header.label}
               </text>
             </g>
           ))}
@@ -472,21 +491,23 @@ export const SummitPanel = memo(function SummitPanel({
           if (control.stateOnly) {
             if (control.id === "menu-value") {
               return (
-                <SummitValueEncoder
-                  key={control.id}
-                  id={control.id}
-                  label={control.label}
-                  valueText={valueEncoderText}
-                  x={control.x}
-                  y={control.y}
-                  size={control.size}
-                  active={!valueEncoderDisabled}
-                  disabled={valueEncoderDisabled}
-                  onSelect={() => {
-                    if (activeDisplayField) onDisplayFieldSelect(activeDisplayField.id);
-                  }}
-                  onStep={onDisplayValueStep}
-                />
+                <LayoutControlGroup key={control.id} control={control}>
+                  <SummitValueEncoder
+                    key={control.id}
+                    id={control.id}
+                    label={control.label}
+                    valueText={valueEncoderText}
+                    x={control.x}
+                    y={control.y}
+                    size={control.size}
+                    active={!valueEncoderDisabled}
+                    disabled={valueEncoderDisabled}
+                    onSelect={() => {
+                      if (activeDisplayField) onDisplayFieldSelect(activeDisplayField.id);
+                    }}
+                    onStep={onDisplayValueStep}
+                  />
+                </LayoutControlGroup>
               );
             }
             const rowIndex = control.id.startsWith("menu-row-")
@@ -509,23 +530,24 @@ export const SummitPanel = memo(function SummitPanel({
                     ? () => onDisplayFieldSelect(rowField.id)
                     : undefined;
             return (
-              <StateOnlyControl
-                key={control.id}
-                control={control}
-                highlighted={Boolean(
-                  highlightedAreaId && control.displayAreaId === highlightedAreaId,
-                )}
-                active={Boolean(
-                  (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
-                  (rowField && rowField.id === selectedDisplayFieldId),
-                )}
-                disabled={Boolean(
-                  (isPageLeft && displayAtFirst) ||
-                  (isPageRight && displayAtLast) ||
-                  (rowIndex !== undefined && !rowField),
-                )}
-                onClick={onHardwareClick}
-              />
+              <LayoutControlGroup key={control.id} control={control}>
+                <StateOnlyControl
+                  control={control}
+                  highlighted={Boolean(
+                    highlightedAreaId && control.displayAreaId === highlightedAreaId,
+                  )}
+                  active={Boolean(
+                    (control.displayAreaId && control.displayAreaId === activeDisplayAreaId) ||
+                    (rowField && rowField.id === selectedDisplayFieldId),
+                  )}
+                  disabled={Boolean(
+                    (isPageLeft && displayAtFirst) ||
+                    (isPageRight && displayAtLast) ||
+                    (rowIndex !== undefined && !rowField),
+                  )}
+                  onClick={onHardwareClick}
+                />
+              </LayoutControlGroup>
             );
           }
           const candidateIds = [control.parameterId, ...(control.parameterIds ?? [])].filter(
@@ -543,15 +565,16 @@ export const SummitPanel = memo(function SummitPanel({
               : undefined) ?? candidateIds.find(visibleCandidate);
           if (!parameterId) {
             return (
-              <UnavailableControl
-                key={control.id}
-                label={control.label}
-                type={control.type}
-                x={control.x}
-                y={control.y}
-                size={control.size}
-                reason="Nessun parametro patch applicabile allo scope attivo."
-              />
+              <LayoutControlGroup key={control.id} control={control}>
+                <UnavailableControl
+                  label={control.label}
+                  type={control.type}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  reason="Nessun parametro patch applicabile allo scope attivo."
+                />
+              </LayoutControlGroup>
             );
           }
           const definition = parameterById.get(parameterId);
@@ -564,51 +587,54 @@ export const SummitPanel = memo(function SummitPanel({
             definition.verificationStatus !== "verified"
           ) {
             return (
-              <UnavailableControl
-                key={control.id}
-                label={control.label}
-                type={control.type}
-                x={control.x}
-                y={control.y}
-                size={control.size}
-                reason={
-                  definition?.verificationNote ??
-                  "Parametro non verificato per il firmware selezionato."
-                }
-              />
+              <LayoutControlGroup key={control.id} control={control}>
+                <UnavailableControl
+                  label={control.label}
+                  type={control.type}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  reason={
+                    definition?.verificationNote ??
+                    "Parametro non verificato per il firmware selezionato."
+                  }
+                />
+              </LayoutControlGroup>
             );
           }
           const setting = getSetting(proposal, parameterId, scope);
           if (!setting || definition.scope === "global") {
             return (
-              <UnavailableControl
-                key={control.id}
-                label={control.label}
-                type={control.type}
-                x={control.x}
-                y={control.y}
-                size={control.size}
-                reason={
-                  definition.scope === "global"
-                    ? "Impostazione globale esclusa dalla patch."
-                    : "Default sicuro non documentato."
-                }
-              />
+              <LayoutControlGroup key={control.id} control={control}>
+                <UnavailableControl
+                  label={control.label}
+                  type={control.type}
+                  x={control.x}
+                  y={control.y}
+                  size={control.size}
+                  reason={
+                    definition.scope === "global"
+                      ? "Impostazione globale esclusa dalla patch."
+                      : "Default sicuro non documentato."
+                  }
+                />
+              </LayoutControlGroup>
             );
           }
           return (
-            <ParameterControl
-              key={`${control.id}:${parameterId}`}
-              control={control}
-              parameterId={parameterId}
-              value={setting.value}
-              confidence={setting.confidence}
-              selectedParameterId={selectedParameterId}
-              modified={changed.has(parameterId)}
-              highlighted={highlighted.has(parameterId)}
-              onSelect={onSelect}
-              onChange={onChange}
-            />
+            <LayoutControlGroup key={`${control.id}:${parameterId}`} control={control}>
+              <ParameterControl
+                control={control}
+                parameterId={parameterId}
+                value={setting.value}
+                confidence={setting.confidence}
+                selectedParameterId={selectedParameterId}
+                modified={changed.has(parameterId)}
+                highlighted={highlighted.has(parameterId)}
+                onSelect={onSelect}
+                onChange={onChange}
+              />
+            </LayoutControlGroup>
           );
         })}
 
@@ -655,6 +681,28 @@ export const SummitPanel = memo(function SummitPanel({
           className="calibration-grid"
           aria-hidden="true"
         />
+      ) : null}
+      {calibration?.showControlCenters ? (
+        <g className="calibration-section-geometry" aria-hidden="true">
+          {summitPanelLayout.sectionHeaders.map((header) => (
+            <g key={header.id}>
+              <rect
+                x={header.contentBounds.x}
+                y={header.contentBounds.y}
+                width={header.contentBounds.width}
+                height={header.contentBounds.height}
+              />
+              <circle cx={header.headerLineStartX} cy={header.headerY} r="1.7" />
+              <circle cx={header.headerLineEndX} cy={header.headerY} r="1.7" />
+              <line
+                x1={header.contentBounds.x}
+                y1={header.contentTopY}
+                x2={header.contentBounds.x + header.contentBounds.width}
+                y2={header.contentTopY}
+              />
+            </g>
+          ))}
+        </g>
       ) : null}
       {calibration?.showControlCenters ? (
         <g className="calibration-control-centers" aria-hidden="true">

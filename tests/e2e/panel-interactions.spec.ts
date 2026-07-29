@@ -148,30 +148,81 @@ test.describe("physical panel pointer hardening", () => {
     ).toBe("text");
   });
 
-  test("cyan section rules leave every macro-label clear", async ({ page }) => {
+  test("section headers enforce line, label and bounded-content hierarchy", async ({ page }) => {
     await openPhysicalPanel(page);
 
-    const conflicts = await page.locator(".panel-serigraphy-labels text").evaluateAll((labels) =>
-      labels.flatMap((label) => {
-        if (!(label instanceof SVGGraphicsElement)) return ["invalid-label"];
-        const id = label.parentElement?.getAttribute("data-serigraphy-id");
-        if (!id) return ["missing-id"];
-        const line = document.querySelector(
-          `.panel-serigraphy-lines line[data-serigraphy-id="${id}"]`,
-        );
-        if (!(line instanceof SVGLineElement)) return [`${id}:missing-line`];
-        const bounds = label.getBBox();
+    const conflicts = await page.locator(".panel-section-header").evaluateAll((headers) => {
+      const allText = [...document.querySelectorAll(".panel-vector-layer text")].filter(
+        (element): element is SVGTextElement => element instanceof SVGTextElement,
+      );
+      const intersects = (
+        left: { x: number; y: number; width: number; height: number },
+        right: { x: number; y: number; width: number; height: number },
+        padding = 0,
+      ) =>
+        left.x < right.x + right.width + padding &&
+        left.x + left.width + padding > right.x &&
+        left.y < right.y + right.height + padding &&
+        left.y + left.height + padding > right.y;
+
+      return headers.flatMap((header) => {
+        const id = header.getAttribute("data-section-header-id");
+        const line = header.querySelector(".panel-section-header-line");
+        const label = header.querySelector(".panel-section-header-label");
+        const contentTop = Number(header.getAttribute("data-content-top-y"));
+        if (
+          !id ||
+          !(line instanceof SVGLineElement) ||
+          !(label instanceof SVGTextElement) ||
+          !Number.isFinite(contentTop)
+        ) {
+          return [`${id ?? "unknown"}:header-structure`];
+        }
+
+        const issues: string[] = [];
+        const labelBounds = label.getBBox();
         const lineStart = line.x1.baseVal.value;
+        const lineEnd = line.x2.baseVal.value;
         const lineY = line.y1.baseVal.value;
-        const clearsTextHorizontally = lineStart >= bounds.x + bounds.width + 2;
-        const labelSitsAboveRule = bounds.y + bounds.height <= lineY + 0.5;
-        return clearsTextHorizontally && labelSitsAboveRule
-          ? []
-          : [
-              `${id}: text=${bounds.x},${bounds.y},${bounds.width},${bounds.height}; line=${lineStart},${lineY}`,
-            ];
-      }),
-    );
+        if (labelBounds.y <= lineY + 1) issues.push("label-not-below-line");
+        if (contentTop <= labelBounds.y + labelBounds.height + 1) {
+          issues.push("contentTop-without-label-margin");
+        }
+
+        const memberControls = [
+          ...document.querySelectorAll(`[data-layout-control-id][data-section-header-id="${id}"]`),
+        ].filter(
+          (element): element is SVGGElement =>
+            element instanceof SVGGElement && element.hasAttribute("data-layout-control-id"),
+        );
+        for (const control of memberControls) {
+          const controlBounds = control.getBBox();
+          const controlId = control.getAttribute("data-layout-control-id") ?? "unknown-control";
+          if (
+            controlBounds.x < lineStart - 0.5 ||
+            controlBounds.x + controlBounds.width > lineEnd + 0.5
+          ) {
+            issues.push(`${controlId}:outside-line`);
+          }
+          if (intersects(labelBounds, controlBounds, 1)) {
+            issues.push(`${controlId}:label-control-intersection`);
+          }
+        }
+
+        const lineBounds = {
+          x: lineStart,
+          y: lineY - 0.4,
+          width: lineEnd - lineStart,
+          height: 0.8,
+        };
+        for (const text of allText) {
+          if (intersects(lineBounds, text.getBBox())) {
+            issues.push(`line-text-intersection:${text.textContent?.trim() ?? "text"}`);
+          }
+        }
+        return issues.map((issue) => `${id}:${issue}`);
+      });
+    });
 
     expect(conflicts).toEqual([]);
   });

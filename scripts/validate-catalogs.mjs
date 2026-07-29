@@ -145,7 +145,7 @@ if (
 ) {
   errors.push("Metadati della geometria del pannello incompleti");
 }
-for (const item of [...(layout.landmarks ?? []), ...(layout.serigraphy ?? [])]) {
+for (const item of layout.landmarks ?? []) {
   if (![item.x, item.y, item.width].every(Number.isFinite)) {
     errors.push(`Geometria tracciata non valida: ${item.id}`);
   }
@@ -156,11 +156,81 @@ for (const item of [...(layout.landmarks ?? []), ...(layout.serigraphy ?? [])]) 
 if (!(layout.landmarks ?? []).some((landmark) => landmark.id === "display")) {
   errors.push("Landmark display assente dal tracciato");
 }
-if (!(layout.serigraphy ?? []).some((mark) => mark.id === "oscillator-3")) {
-  errors.push("Serigrafia delle tre righe oscillatore incompleta");
+
+const sectionHeaderIds = new Set();
+for (const header of layout.sectionHeaders ?? []) {
+  if (sectionHeaderIds.has(header.id)) {
+    errors.push(`Header di sezione duplicato: ${header.id}`);
+  }
+  sectionHeaderIds.add(header.id);
+  const bounds = header.contentBounds;
+  if (
+    ![
+      header.headerLineStartX,
+      header.headerLineEndX,
+      header.headerY,
+      header.labelX,
+      header.labelY,
+      header.contentTopY,
+      bounds?.x,
+      bounds?.y,
+      bounds?.width,
+      bounds?.height,
+    ].every(Number.isFinite)
+  ) {
+    errors.push(`Geometria header di sezione non valida: ${header.id}`);
+    continue;
+  }
+  if (
+    header.headerLineStartX < 0 ||
+    header.headerLineEndX > 1536 ||
+    header.headerLineStartX >= header.headerLineEndX ||
+    header.headerY < 0 ||
+    header.headerY > 539 ||
+    bounds.x < 0 ||
+    bounds.y < 0 ||
+    bounds.width <= 0 ||
+    bounds.height <= 0 ||
+    bounds.x + bounds.width > 1536 ||
+    bounds.y + bounds.height > 539
+  ) {
+    errors.push(`Header di sezione fuori riferimento: ${header.id}`);
+  }
+  if (header.labelY - 5 <= header.headerY + 1) {
+    errors.push(`Label non completamente sotto la linea: ${header.id}`);
+  }
+  if (header.contentTopY <= header.labelY + 2) {
+    errors.push(`Margine label/contenuti insufficiente: ${header.id}`);
+  }
+  if (
+    bounds.x !== header.headerLineStartX ||
+    bounds.x + bounds.width !== header.headerLineEndX ||
+    bounds.y !== header.contentTopY
+  ) {
+    errors.push(`Content bounds non allineati al segmento di sezione: ${header.id}`);
+  }
+}
+if (!(layout.sectionHeaders ?? []).some((header) => header.id === "oscillator-3")) {
+  errors.push("Header delle tre righe oscillatore incompleto");
 }
 const sectionIds = new Set(layout.sections.map((section) => section.id));
 const controlIds = new Set();
+const controlHorizontalBounds = (control) => {
+  const size = control.size ?? 18;
+  const labelHalfWidth = control.label.length * 1.35;
+  const visualHalfWidth =
+    control.type === "button"
+      ? Math.max(labelHalfWidth, Math.max(14, size * 1.55) / 2 + 4)
+      : control.type === "toggle"
+        ? Math.max(labelHalfWidth, 15)
+        : control.type === "slider"
+          ? Math.max(labelHalfWidth, 11)
+          : Math.max(labelHalfWidth, 12, size / 2 + 7);
+  return {
+    left: control.x - visualHalfWidth,
+    right: control.x + visualHalfWidth,
+  };
+};
 for (const control of layout.controls) {
   if (controlIds.has(control.id)) errors.push(`Controllo UI duplicato: ${control.id}`);
   controlIds.add(control.id);
@@ -169,6 +239,35 @@ for (const control of layout.controls) {
   }
   if (![control.x, control.y].every(Number.isFinite)) {
     errors.push(`Coordinate layout non valide: ${control.id}`);
+  }
+  if (control.y < 285) {
+    const matchingHeaders = (layout.sectionHeaders ?? []).filter((header) => {
+      const bounds = header.contentBounds;
+      return (
+        control.x >= bounds.x &&
+        control.x <= bounds.x + bounds.width &&
+        control.y >= bounds.y &&
+        control.y <= bounds.y + bounds.height
+      );
+    });
+    if (matchingHeaders.length !== 1) {
+      errors.push(
+        `Controllo senza un solo header strutturale: ${control.id} (${matchingHeaders
+          .map((header) => header.id)
+          .join(", ")})`,
+      );
+    } else {
+      const [header] = matchingHeaders;
+      const visualBounds = controlHorizontalBounds(control);
+      if (
+        visualBounds.left < header.headerLineStartX ||
+        visualBounds.right > header.headerLineEndX
+      ) {
+        errors.push(
+          `Bounding box controllo oltre il segmento: ${control.id} -> ${header.id} (${visualBounds.left.toFixed(2)}–${visualBounds.right.toFixed(2)} vs ${header.headerLineStartX}–${header.headerLineEndX})`,
+        );
+      }
+    }
   }
 }
 

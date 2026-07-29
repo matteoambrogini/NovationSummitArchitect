@@ -1,6 +1,6 @@
 # Summit operational map — visual QA
 
-Captured on 2026-07-28 with the Playwright Chromium Retina project at
+Captured on 2026-07-29 with the Playwright Chromium Retina project at
 1440 CSS px wide (2880 physical px) unless otherwise noted.
 
 | Evidence              | File                                                           | What it verifies                                                                                          |
@@ -19,10 +19,11 @@ Captured on 2026-07-28 with the Playwright Chromium Retina project at
 | Final · Effects       | `effects-area-150.png`                                         | Distortion, Chorus, Delay, Effects and Reverb zones without card backgrounds                              |
 | Final · OLED row      | `oled-row-highlight.png`                                       | Horizontal clipped highlight with constant x, width, height and step                                      |
 | Cleanup · display     | `display-menu-area-zoom.png`                                   | OLED, row buttons 1/2/3, PAGE controls and VALUE aligned to the HR photo                                  |
-| Cleanup · oscillators | `oscillator-area-zoom.png`                                     | OSCILLATOR 1/2/3 titles clear of cyan rules and controls on y 91/157/222                                  |
-| Cleanup · voice/arp   | `voice-arp-area-zoom.png`                                      | VOICE and ARP macro-label spacing after the common title-line rule                                        |
-| Cleanup · filter/env  | `filter-envelopes-area-zoom.png`                               | FILTER, AMP ENVELOPE and MOD ENVELOPES with clear ADSR labels                                             |
-| Cleanup · LFO/FX      | `lfo-effects-area-zoom.png`                                    | LFO 1/2, GLOBAL LFO 3&4 and all FX titles without line intersections                                      |
+| Header · display      | `display-menu-area-zoom.png`                                   | Full MENU segment, label below it, then OLED, row buttons, PAGE controls and VALUE                        |
+| Header · oscillators  | `oscillator-area-zoom.png`                                     | OSCILLATOR 1/2/3 use the common segment → label → controls rhythm on y 96/161/226                         |
+| Header · voice/arp    | `voice-arp-area-zoom.png`                                      | VOICE and ARP labels sit fully below their complete cyan segments                                         |
+| Header · filter/env   | `filter-envelopes-area-zoom.png`                               | FILTER, AMP ENVELOPE and MOD ENVELOPES retain clear label/content bands                                   |
+| Header · LFO/FX       | `lfo-effects-area-zoom.png`                                    | LFO 1/2/GLOBAL and Distortion/Chorus/Delay/Effects/Reverb have independently bounded header geometry      |
 | Calibration · VOICE   | `reference-overlay-voice.png`, `voice-reference-vs-vector.png` | Photo/vector comparison at 50% opacity with measured control-centre markers                               |
 | Calibration · display | `reference-overlay-display-menu.png`                           | HR photo/vector comparison for OLED, 1/2/3 and VALUE                                                      |
 | Calibration · full    | `reference-overlay-full-panel.png`                             | Shared 1536 × 539 photo/vector viewBox, crosshair and all control centres                                 |
@@ -45,9 +46,9 @@ Coordinates use the shared 1536 × 539 reference space.
 | Keyboard                   | x 185, y 285, w 1275, h 202 | Aligned; 61-key span and deck boundary retained                                       |
 | Voice                      | x 321, y 64, w 139, h 58    | Section retained; Mode +25/+20, Glide On +24/+20 and Glide Time +19/+0 px             |
 | Arpeggiator                | x 321, y 128, w 139, h 140  | Aligned as a vertical block                                                           |
-| Oscillator 1               | x 465, y 64, w 292, h 61    | Controls moved to observed y 91; title remains above its cyan rule                    |
-| Oscillator 2               | x 465, y 129, w 292, h 61   | Controls moved to observed y 157; title remains above its cyan rule                   |
-| Oscillator 3               | x 465, y 194, w 292, h 63   | Controls moved to observed y 222; title remains above its cyan rule                   |
+| Oscillator 1               | x 465, y 64, w 292, h 61    | Full segment y 65, label below at y 72, controls centred at y 96                      |
+| Oscillator 2               | x 465, y 129, w 292, h 61   | Full segment y 130, label below at y 137, controls centred at y 161                   |
+| Oscillator 3               | x 465, y 194, w 292, h 63   | Full segment y 195, label below at y 202, controls centred at y 226                   |
 | Filter                     | x 900, y 64, w 120, h 193   | Columns corrected to x 923/963/1003; no control extends into Amp Envelope             |
 | Amp Envelope               | x 1023, y 64, w 146, h 91   | Slider centres corrected to x 1068/1095/1122/1150                                     |
 | Mod Envelopes              | x 1023, y 159, w 146, h 98  | Same columns; 78 px travel separates ADSR labels from the title rule                  |
@@ -59,10 +60,11 @@ Coordinates use the shared 1536 × 539 reference space.
 
 - The renderer intentionally uses clean vector controls rather than reproducing photographic glare,
   cable shadows, wood grain and lens perspective.
-- Measured control centres remain within 2 px in VOICE/envelopes and within 3 px in ARP/filter;
-  photographic perspective and soft edges prevent a meaningful sub-pixel claim.
+- The hierarchy pass moves the repeated control rows by up to 5 px and the MOD envelope slider
+  centres by 7 px; this is the documented cost of a constant, intersection-free label band.
 - Small knob legends are normalized for screen legibility; cyan rules are broken before each
-  section label so they never cross text.
+  section in the photograph, while the vector hierarchy deliberately shows the complete segment
+  above the label.
 - The HR photograph has soft edges and mild perspective; the display cluster and repeated control
   rows are therefore reported to a 2 px visual tolerance rather than a sub-pixel claim.
 - The keyboard is a geometric 61-key representation and does not reproduce individual key wear or

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  layoutControlHorizontalBounds,
   panelRenderStats,
-  SERIGRAPHY_LABEL_BASELINE_OFFSET,
-  serigraphyLineStartX,
+  sectionHeadersForControl,
   summitPanelLayout,
 } from "./SummitPanelLayout";
 
@@ -47,11 +47,11 @@ describe("photo-derived Summit panel layout", () => {
     expect(panelRenderStats.physicalElements).toBe(panelRenderStats.total + 63);
   });
 
-  it("stores photo-space landmarks and distinct silkscreen rows instead of section cards", () => {
+  it("stores photo-space landmarks and explicit section-header geometry", () => {
     expect(summitPanelLayout.geometry).toMatchObject({
       referenceWidth: 1536,
       referenceHeight: 539,
-      verifiedAt: "2026-07-28",
+      verifiedAt: "2026-07-29",
     });
     const landmarkIds = new Set(summitPanelLayout.landmarks.map((landmark) => landmark.id));
     for (const id of [
@@ -71,27 +71,55 @@ describe("photo-derived Summit panel layout", () => {
     ]) {
       expect(landmarkIds.has(id)).toBe(true);
     }
-    const silkscreenIds = new Set(summitPanelLayout.serigraphy.map((mark) => mark.id));
+    const sectionHeaderIds = new Set(summitPanelLayout.sectionHeaders.map((header) => header.id));
     for (const id of [
+      "master",
+      "menu",
+      "voice",
+      "arp",
       "oscillator-1",
       "oscillator-2",
       "oscillator-3",
+      "fm",
+      "mixer",
+      "filter",
+      "amp-envelope",
+      "mod-envelopes",
+      "lfo-1",
+      "lfo-2",
+      "global-lfo",
       "distortion",
       "chorus",
       "delay",
       "effects",
       "reverb",
     ]) {
-      expect(silkscreenIds.has(id)).toBe(true);
+      expect(sectionHeaderIds.has(id)).toBe(true);
+    }
+    expect(sectionHeaderIds.size).toBe(24);
+  });
+
+  it("orders every section as full cyan segment, label below, then bounded content", () => {
+    for (const header of summitPanelLayout.sectionHeaders) {
+      expect(header.headerLineEndX).toBeGreaterThan(header.headerLineStartX);
+      expect(header.labelY - 5).toBeGreaterThan(header.headerY + 1);
+      expect(header.contentTopY).toBeGreaterThan(header.labelY + 2);
+      expect(header.contentBounds).toMatchObject({
+        x: header.headerLineStartX,
+        y: header.contentTopY,
+        width: header.headerLineEndX - header.headerLineStartX,
+      });
     }
   });
 
-  it("keeps section titles above cyan rules with a measured exclusion gap", () => {
-    expect(SERIGRAPHY_LABEL_BASELINE_OFFSET).toBeLessThan(0);
-    for (const mark of summitPanelLayout.serigraphy) {
-      const lineStart = serigraphyLineStartX(mark);
-      expect(lineStart).toBeGreaterThanOrEqual(mark.x + 18);
-      expect(lineStart).toBeLessThanOrEqual(mark.x + mark.width - 3);
+  it("assigns every deck control to one header and keeps its visual bounds inside the segment", () => {
+    for (const control of summitPanelLayout.controls.filter(({ y }) => y < 285)) {
+      const headers = sectionHeadersForControl(control);
+      expect(headers, control.id).toHaveLength(1);
+      const header = headers[0];
+      const bounds = layoutControlHorizontalBounds(control);
+      expect(bounds.left, control.id).toBeGreaterThanOrEqual(header?.headerLineStartX ?? Infinity);
+      expect(bounds.right, control.id).toBeLessThanOrEqual(header?.headerLineEndX ?? -Infinity);
     }
   });
 
@@ -111,7 +139,7 @@ describe("photo-derived Summit panel layout", () => {
       y: 155,
     });
     for (const row of [1, 2, 3]) {
-      const expectedY = [91, 157, 222][row - 1];
+      const expectedY = [96, 161, 226][row - 1];
       expect(summitPanelLayout.controls.find(({ id }) => id === `osc${row}-coarse`)?.y).toBe(
         expectedY,
       );

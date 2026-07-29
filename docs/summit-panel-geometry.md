@@ -7,7 +7,7 @@
 - Page: 1
 - Local source: `docs/references/summit-ui/summit-ui-reference-pack/summit-front-panel-highres.jpeg`
 - Reference raster: 1536 × 539 px
-- Verified: 2026-07-28
+- Verified: 2026-07-29
 
 ## Reproducible coordinate procedure
 
@@ -20,8 +20,12 @@
 7. Validate coordinates, source metadata and required landmarks with `pnpm validate:catalogs`.
 8. In development, enable **Reference calibration**, keep photo and vector visible at 50% opacity,
    and check the same 1536 × 539 coordinate space with grid, crosshair and control-centre markers.
-9. For title rules, verify the rendered SVG text bounding box: the title baseline stays above the
-   cyan rule and the rule starts at least 2 px after the final glyph.
+9. Model each visible group as a `sectionHeader` with `headerLineStartX`, `headerLineEndX`,
+   `headerY`, `labelY`, `contentTopY` and `contentBounds`.
+10. Verify the rendered SVG bounding boxes: the complete cyan segment comes first, the section
+    label is fully below it, and every visual control bound remains horizontally inside the segment.
+11. Keep at least 1 px between the rendered section-label bottom and `contentTopY`; fail validation
+    if a control maps to zero or more than one content rectangle.
 
 ## Principal measured landmarks
 
@@ -54,31 +58,44 @@
 The reference overlay exposed three concentrated errors; the remaining named landmarks above stayed
 within the retained one-pixel tracing tolerance.
 
-| Area                     | Previous vector                    | Corrected reference coordinate         | Residual |
-| ------------------------ | ---------------------------------- | -------------------------------------- | -------- |
-| DISPLAY · OLED           | x 164, y 135, w 110, h 44          | x 183, y 133, w 110, h 47              | ≤ 2 px   |
-| DISPLAY · row buttons    | column x 153, rows 139/156/173     | x 164, rows 143/160/177                | ≤ 2 px   |
-| DISPLAY · VALUE          | centre x 295, y 155                | x 312, y 155                           | ≤ 2 px   |
-| VOICE · Mode             | centre x 340, y 91                 | x 365, y 111                           | ≤ 2 px   |
-| VOICE · Glide On         | centre x 381, y 91                 | x 405, y 111                           | ≤ 2 px   |
-| VOICE · Glide Time       | centre x 422, y 91                 | x 441, y 91                            | ≤ 2 px   |
-| ARP controls             | synthetic 3 × 3 grid               | observed centres x 360–441, y 154–244  | ≤ 3 px   |
-| OSC / FM / MIXER rows    | y 78/145/212                       | observed rows y 91/157/222             | ≤ 2 px   |
-| FILTER controls          | synthetic rows extending to x 1040 | observed columns x 923, 963, 1003      | ≤ 3 px   |
-| AMP / MOD envelopes      | slider columns x 1075–1159         | x 1068, 1095, 1122, 1150               | ≤ 2 px   |
-| MOD envelope label space | slider travel 88 px                | 78 px, preserving the observed centres | ≤ 3 px   |
+| Area                  | Previous vector                    | Corrected reference coordinate        | Residual |
+| --------------------- | ---------------------------------- | ------------------------------------- | -------- |
+| DISPLAY · OLED        | x 164, y 135, w 110, h 44          | x 183, y 133, w 110, h 47             | ≤ 2 px   |
+| DISPLAY · row buttons | column x 153, rows 139/156/173     | x 164, rows 143/160/177               | ≤ 2 px   |
+| DISPLAY · VALUE       | centre x 295, y 155                | x 312, y 155                          | ≤ 2 px   |
+| VOICE · Mode          | centre x 340, y 91                 | x 365, y 111                          | ≤ 2 px   |
+| VOICE · Glide On      | centre x 381, y 91                 | x 405, y 111                          | ≤ 2 px   |
+| VOICE · Glide Time    | centre x 422, y 91                 | x 441, y 91                           | ≤ 2 px   |
+| ARP controls          | synthetic 3 × 3 grid               | observed centres x 360–441, y 154–244 | ≤ 3 px   |
+| OSC / FM / MIXER rows | y 78/145/212                       | hierarchy rows y 96/161/226           | ≤ 7 px   |
+| FILTER controls       | synthetic rows extending to x 1040 | observed columns x 923, 963, 1003     | ≤ 3 px   |
+| AMP / MOD envelopes   | slider columns x 1075–1159         | x 1068, 1095, 1122, 1150              | ≤ 2 px   |
+| AMP header clearance  | slider centre y 115                | y 120, preserving 70 px travel        | ≤ 5 px   |
+| MOD header clearance  | centre y 211, slider travel 78 px  | centre y 218, travel 72 px            | ≤ 7 px   |
 
-The cyan serigraphy is rendered as a line layer followed by a label exclusion/paint layer and then
-the local control labels. Every macro-label uses one baseline rule 2.5 px above its section line.
-Each cyan rule starts after a conservative measured-width clearance, and the text paint masks only
-the immediate glyph edge rather than drawing a box or card. The Playwright geometry check compares
-the real SVG bounding boxes and fails if a rule reaches a title or if a title drops onto its rule.
+The cyan hierarchy is data-driven rather than inferred from independent serigraphy marks. Every
+header renders its complete cyan segment first, then a label baseline 7 px lower, then a content
+band beginning another 3 px lower. `contentBounds` shares the segment's horizontal limits. Catalog
+validation assigns every deck control to exactly one rectangle and checks a conservative visual
+bounding box; Playwright then checks the real SVG boxes for line/text intersections, label/control
+intersections and horizontal overflow.
 
 ## Rendering contract
 
 - Section records remain available for focus and accessibility, but are not rendered as cards.
-- The visible grouping comes from measured cyan rules and silkscreen labels.
+- The visible grouping comes from explicit cyan segment → section label → content records.
 - OSCILLATOR 1, 2 and 3 are distinct rows.
 - Distortion, Chorus, Delay, Effects and Reverb retain their separate observed zones.
 - The OLED, row-button column, page controls and VALUE encoder retain their measured relative spacing.
 - Software values are hidden in clean hardware mode and shown only for hover, selection, Setup Mode or explicit overlay.
+
+## Header-geometry residuals
+
+- The structural 7 px line-to-baseline rhythm is deliberately uniform; the photograph uses small,
+  inconsistent optical offsets and places some labels inline with the segment.
+- Oscillator, FM, Mixer, LFO and Effects rows move down by 4–5 px; the first Range selectors move
+  right to x 481 and the FM depth knobs to x 776 so their complete visual boxes remain inside their
+  section segments.
+- Master, Multi, Animate and envelope controls move only enough to create an unambiguous label band.
+  OLED geometry, menu row buttons, interaction state, display behavior and catalog bindings are
+  unchanged.
