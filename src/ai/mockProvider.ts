@@ -1,7 +1,8 @@
 import { parameterById, validateProposalAgainstCatalog } from "../domain/catalog";
-import { summitPatchDeltaSchema, type SummitPatchDelta, type SummitPatchProposal } from "../domain/schemas";
+import { applyPatchDelta } from "../domain/patchDelta";
+import { summitPatchDeltaSchema, type SummitPatchProposal } from "../domain/schemas";
 import { buildDemoProposal, chooseDemo } from "./demoPatches";
-import type { PatchGenerationRequest, PatchProvider } from "./provider";
+import type { PatchGenerationRequest, PatchGenerationResult, PatchProvider } from "./provider";
 
 const wait = (milliseconds: number) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -25,7 +26,7 @@ export class MockPatchProvider implements PatchProvider {
   readonly displayName = "Demo locale";
   readonly requiresCredentials = false;
 
-  async generate(request: PatchGenerationRequest): Promise<SummitPatchProposal> {
+  async generate(request: PatchGenerationRequest): Promise<PatchGenerationResult> {
     await wait(280);
     const proposal = buildDemoProposal(
       chooseDemo(`${request.description} ${request.targetSound ?? ""}`),
@@ -33,13 +34,21 @@ export class MockPatchProvider implements PatchProvider {
     );
     const issues = validateProposalAgainstCatalog(proposal);
     if (issues.length > 0) throw new Error(`Fixture demo non valida: ${issues[0]?.message}`);
-    return proposal;
+    return {
+      proposal,
+      insight: {
+        provider: this.id,
+        summary: proposal.analysis.synthesisHypothesis,
+        sectionConfidence: [],
+        assumptions: proposal.analysis.assumptions,
+        warnings: proposal.analysis.uncertainties,
+        repaired: false,
+        partial: false,
+      },
+    };
   }
 
-  async refine(
-    proposal: SummitPatchProposal,
-    instruction: string,
-  ): Promise<SummitPatchDelta> {
+  async refine(proposal: SummitPatchProposal, instruction: string): Promise<PatchGenerationResult> {
     await wait(180);
     const text = instruction.toLowerCase();
     let parameterId = "filter.frequency";
@@ -72,12 +81,25 @@ export class MockPatchProvider implements PatchProvider {
       throw new Error("Il mock refinement supporta solo variazioni numeriche");
     }
     const newValue = clamp(parameterId, previousValue + amount);
-    return summitPatchDeltaSchema.parse({
+    const delta = summitPatchDeltaSchema.parse({
       baseProposalId: proposal.proposalId,
       userInstruction: instruction,
       changes: [{ parameterId, previousValue, newValue, rationale }],
       unchangedStrategy: ["Oscillatori", "Bilanciamento mixer", "Routing di modulazione"],
       warnings: ["Raffinamento demo deterministico: verificare il risultato all'ascolto."],
     });
+    const next = applyPatchDelta(proposal, delta);
+    return {
+      proposal: next,
+      insight: {
+        provider: this.id,
+        summary: delta.changes[0]?.rationale ?? instruction,
+        sectionConfidence: [],
+        assumptions: delta.unchangedStrategy,
+        warnings: delta.warnings,
+        repaired: false,
+        partial: false,
+      },
+    };
   }
 }

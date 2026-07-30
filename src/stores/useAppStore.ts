@@ -1,7 +1,7 @@
 import { create } from "zustand";
-import { MockPatchProvider } from "../ai/mockProvider";
 import { buildDemoProposal, demoConfigs } from "../ai/demoPatches";
-import type { AnalysisMode } from "../ai/provider";
+import { OpenAiPatchProvider } from "../ai/openAiProvider";
+import type { AnalysisMode, GenerationInsight } from "../ai/provider";
 import {
   displayAreaById,
   fxModulationCatalog,
@@ -10,7 +10,6 @@ import {
   validateProposalAgainstCatalog,
   validateUiParameterValue,
 } from "../domain/catalog";
-import { applyPatchDelta } from "../domain/patchDelta";
 import {
   boundedDisplayPage,
   buildPatchSetupChecklist,
@@ -51,6 +50,7 @@ type SoundInput = {
 type AppState = {
   input: SoundInput;
   proposals: SummitPatchProposal[];
+  generationInsights: Array<GenerationInsight | null>;
   activeIndex: number;
   generationStatus: GenerationStatus;
   statusMessage: string;
@@ -101,7 +101,7 @@ type AppState = {
   toProject: () => SummitProjectFile;
 };
 
-const provider = new MockPatchProvider();
+const provider = new OpenAiPatchProvider();
 
 const initialInput: SoundInput = {
   description:
@@ -130,9 +130,10 @@ function displayStateForParameter(parameterId?: string) {
 export const useAppStore = create<AppState>((set, get) => ({
   input: initialInput,
   proposals: [],
+  generationInsights: [],
   activeIndex: -1,
   generationStatus: "idle",
-  statusMessage: "Modalità demo pronta: nessuna credenziale necessaria.",
+  statusMessage: "OpenAI pronto nell'app desktop. La credenziale resta nel backend.",
   selectedParameterId: undefined,
   activeScope: "single",
   activeDisplayAreaId: "osc",
@@ -166,46 +167,41 @@ export const useAppStore = create<AppState>((set, get) => ({
     }),
   generate: async () => {
     const { input } = get();
-    if (!input.description.trim() && !input.referenceUrl.trim()) {
+    if (input.description.trim().length < 3) {
       set({
         generationStatus: "error",
-        statusMessage: "Descrivi il suono o inserisci un riferimento.",
+        statusMessage: "Descrivi il suono con almeno tre caratteri.",
       });
       return;
     }
     try {
       set({ generationStatus: "analysing", statusMessage: "Analisi dell'intento sonoro…" });
-      const reference = parseReferenceUrl(input.referenceUrl);
-      if (reference && !input.targetSound.trim())
-        throw new Error("Indica quale suono vuoi riprodurre dal riferimento.");
-      const timestampSeconds = parseTimestamp(input.timestamp);
       set({
         generationStatus: "validating",
-        statusMessage: "Validazione contro il catalogo Summit…",
+        statusMessage: "Generazione OpenAI e validazione contro il catalogo Summit…",
       });
-      const request = {
+      const result = await provider.generate({
         description: input.description,
-        mode: input.analysisMode,
-        ...(input.targetSound ? { targetSound: input.targetSound } : {}),
-        ...(reference
-          ? {
-              reference: {
-                platform: reference.platform,
-                url: reference.originalUrl,
-                ...(timestampSeconds === undefined ? {} : { timestampSeconds }),
-              },
-            }
-          : {}),
-      };
-      const proposal = await provider.generate(request);
-      const issues = validateProposalAgainstCatalog(proposal);
+        mode: "text",
+      });
+      const issues = validateProposalAgainstCatalog(result.proposal);
       if (issues.length) throw new Error(`Proposta rifiutata: ${issues[0]?.message}`);
+      const state = get();
+      const proposals = state.proposals.slice(0, state.activeIndex + 1);
+      const generationInsights = state.generationInsights.slice(0, state.activeIndex + 1);
+      proposals.push(result.proposal);
+      generationInsights.push(result.insight);
       set({
-        proposals: [proposal],
-        activeIndex: 0,
+        proposals,
+        generationInsights,
+        activeIndex: proposals.length - 1,
         generationStatus: "ready",
-        statusMessage: "Proposta demo validata. Regola i controlli e prova un raffinamento.",
-        ...displayStateForParameter(proposal.parts[0]?.panelControls[0]?.parameterId),
+        statusMessage: result.insight.partial
+          ? "Patch sicura applicata parzialmente: controlla gli avvisi."
+          : result.insight.repaired
+            ? "Patch OpenAI riparata e validata localmente."
+            : "Patch OpenAI validata e applicata al pannello.",
+        ...displayStateForParameter(result.proposal.parts[0]?.panelControls[0]?.parameterId),
         activeScope: "single",
         setupStep: 0,
       });
@@ -224,6 +220,7 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (issues.length) throw new Error(issues[0]?.message ?? "Demo non valida");
     set({
       proposals: [proposal],
+      generationInsights: [null],
       activeIndex: 0,
       activeScope: "single",
       generationStatus: "ready",
@@ -239,15 +236,21 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (!active) throw new Error("Genera prima una proposta");
     set({ generationStatus: "analysing", statusMessage: "Calcolo del delta…" });
     try {
-      const delta = await provider.refine(active, instruction);
-      const next = applyPatchDelta(active, delta);
+      const result = await provider.refine(active, instruction);
+      const issues = validateProposalAgainstCatalog(result.proposal);
+      if (issues.length) throw new Error(`Proposta rifiutata: ${issues[0]?.message}`);
       const proposals = state.proposals.slice(0, state.activeIndex + 1);
-      proposals.push(next);
+      const generationInsights = state.generationInsights.slice(0, state.activeIndex + 1);
+      proposals.push(result.proposal);
+      generationInsights.push(result.insight);
       set({
         proposals,
+        generationInsights,
         activeIndex: proposals.length - 1,
         generationStatus: "ready",
-        statusMessage: `Delta applicato: ${delta.changes[0]?.rationale ?? instruction}`,
+        statusMessage: result.insight.partial
+          ? "Raffinamento applicato parzialmente con fallback sicuro."
+          : `Raffinamento OpenAI applicato: ${result.insight.summary}`,
       });
     } catch (error) {
       set({
@@ -296,9 +299,12 @@ export const useAppStore = create<AppState>((set, get) => ({
     if (!found) throw new Error(`Parametro ${parameterId} non presente nella proposta`);
     summitPatchProposalSchema.parse(next);
     const proposals = state.proposals.slice(0, state.activeIndex + 1);
+    const generationInsights = state.generationInsights.slice(0, state.activeIndex + 1);
     proposals.push(next);
+    generationInsights.push(state.generationInsights[state.activeIndex] ?? null);
     set({
       proposals,
+      generationInsights,
       activeIndex: proposals.length - 1,
       statusMessage: "Patch modificata · stato non salvato.",
     });
@@ -423,9 +429,12 @@ export const useAppStore = create<AppState>((set, get) => ({
     const issues = validateProposalAgainstCatalog(valid);
     if (issues.length) throw new Error(issues[0]?.message ?? "Matrice non valida");
     const proposals = state.proposals.slice(0, state.activeIndex + 1);
+    const generationInsights = state.generationInsights.slice(0, state.activeIndex + 1);
     proposals.push(valid);
+    generationInsights.push(state.generationInsights[state.activeIndex] ?? null);
     set({
       proposals,
+      generationInsights,
       activeIndex: proposals.length - 1,
       statusMessage: "Matrice modificata · stato non salvato.",
     });
@@ -457,13 +466,16 @@ export const useAppStore = create<AppState>((set, get) => ({
       if (!next.parts.some((part) => part.part === "B")) {
         next.parts.push({ ...structuredClone(partA), part: "B" });
       }
-      next.multiSetup ??= buildDefaultMultiSettings();
+      next.multiSetup ??= buildDefaultMultiSettings(next.targetFirmware);
     }
     const valid = summitPatchProposalSchema.parse(next);
     const proposals = state.proposals.slice(0, state.activeIndex + 1);
+    const generationInsights = state.generationInsights.slice(0, state.activeIndex + 1);
     proposals.push(valid);
+    generationInsights.push(state.generationInsights[state.activeIndex] ?? null);
     set({
       proposals,
+      generationInsights,
       activeIndex: proposals.length - 1,
       activeScope: scope,
       statusMessage:
@@ -520,6 +532,7 @@ export const useAppStore = create<AppState>((set, get) => ({
       valid.proposals[activeIndex]?.parts[0]?.panelControls[0]?.parameterId;
     set({
       proposals: valid.proposals,
+      generationInsights: valid.proposals.map(() => null),
       activeIndex,
       activeScope: valid.proposals[activeIndex]?.patch.mode === "multi" ? "multi-a" : "single",
       ...displayStateForParameter(selectedParameterId),
@@ -576,5 +589,7 @@ export const useAppStore = create<AppState>((set, get) => ({
 }));
 
 export const selectActiveProposal = (state: AppState) => state.proposals[state.activeIndex];
+export const selectActiveGenerationInsight = (state: AppState) =>
+  state.generationInsights[state.activeIndex] ?? undefined;
 export const selectIsDirty = (state: AppState) =>
   state.proposals.length > 1 && state.activeIndex > 0;

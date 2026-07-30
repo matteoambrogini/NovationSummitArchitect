@@ -1,8 +1,10 @@
-# Product requirements — Milestone 1
+# Product requirements — Milestone generazione AI
 
 ## Obiettivo
 
-Permettere a un musicista di descrivere un suono e ottenere una proposta Summit trasparente, modificabile e riproducibile manualmente, senza credenziali e senza dichiarare di avere analizzato audio non ricevuto.
+Permettere a un musicista di descrivere un suono e ottenere tramite OpenAI una
+proposta Summit trasparente, validata, modificabile e riproducibile manualmente,
+senza dichiarare di avere analizzato audio non ricevuto.
 
 ## Persona e job-to-be-done
 
@@ -11,20 +13,19 @@ Il musicista conosce il proprio Summit ma vuole accorciare la traduzione tra lin
 ## Flusso MVP
 
 1. Inserimento descrizione sonora.
-2. Link Spotify/YouTube opzionale, con timestamp e suono target obbligatorio.
-3. Estratto locale opzionale con selezione della regione.
-4. Selezione automatica della modalità text, reference-only o audio-assisted.
-5. Generazione tramite provider mock.
-6. Validazione Zod e catalogo.
-7. Visualizzazione pannello, menu, modulazioni, assunzioni e confidenza.
-8. Modifica manuale o raffinamento naturale a delta.
-9. Confronto versioni e salvataggio progetto.
+2. Generazione via Responses API con Structured Outputs strict e `store: false`.
+3. Validazione Zod e cataloghi Summit.
+4. Un repair automatico o fallback parziale sicuro.
+5. Visualizzazione pannello, menu, modulazioni, assunzioni e confidenza.
+6. Modifica manuale o raffinamento naturale a delta.
+7. Cronologia, confronto versioni e salvataggio progetto.
 
 ## Criteri implementati
 
 - UI italiana e copy centralizzato di base.
-- Nessuna API key richiesta.
+- Credenziale disponibile soltanto al backend Tauri.
 - Cinque fixture demo.
+- Provider OpenAI operativo con modello configurabile.
 - Parametri mostrati solo se verificati.
 - Pannello SVG originale; nessuna fotografia Novation redistribuita.
 - Link streaming mai scaricati.
@@ -35,7 +36,7 @@ Il musicista conosce il proprio Summit ma vuole accorciare la traduzione tra lin
 
 - catalogo completo;
 - DSP reale e waveform estratta dai campioni;
-- provider OpenAI/Spotify/YouTube operativo;
+- provider Spotify/YouTube operativo;
 - keychain, autosave recovery e migrazioni oltre la versione iniziale;
 - invio MIDI o trasferimento patch;
 - packaging firmato/notarizzato.

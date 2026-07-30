@@ -59,7 +59,7 @@ function defaultSetting(
   };
 }
 
-export function buildDefaultPartSettings() {
+export function buildDefaultPartSettings(targetFirmware = catalogTarget.primaryFirmware) {
   const panelControls: SummitPatchProposal["parts"][number]["panelControls"] = [];
   const menuSettings: SummitPatchProposal["parts"][number]["menuSettings"] = [];
   for (const definition of parameterCatalog) {
@@ -67,7 +67,7 @@ export function buildDefaultPartSettings() {
       definition.scope !== "part" ||
       definition.verificationStatus !== "verified" ||
       !definition.aiExposed ||
-      !isFirmwareApplicable(definition, catalogTarget.primaryFirmware) ||
+      !isFirmwareApplicable(definition, targetFirmware) ||
       !isParameterValue(definition.defaultValue)
     ) {
       continue;
@@ -86,7 +86,7 @@ export function buildDefaultPartSettings() {
   return { panelControls, menuSettings };
 }
 
-export function buildDefaultMultiSettings() {
+export function buildDefaultMultiSettings(targetFirmware = catalogTarget.primaryFirmware) {
   const panelControls: SummitPatchProposal["multiSetup"] extends infer Setup
     ? Setup extends { panelControls: infer Controls }
       ? Controls
@@ -102,6 +102,7 @@ export function buildDefaultMultiSettings() {
       definition.scope !== "multi" ||
       definition.verificationStatus !== "verified" ||
       !definition.aiExposed ||
+      !isFirmwareApplicable(definition, targetFirmware) ||
       !isParameterValue(definition.defaultValue)
     ) {
       continue;
