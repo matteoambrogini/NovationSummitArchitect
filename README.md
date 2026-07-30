@@ -1,6 +1,6 @@
 # Summit Patch Architect
 
-Summit Patch Architect è un companion non ufficiale per progettare patch approssimative per Novation Summit a partire da una descrizione sonora. La vertical slice corrente funziona in modalità demo con un provider mock deterministico e non richiede credenziali.
+Summit Patch Architect è un companion non ufficiale per progettare patch approssimative per Novation Summit a partire da una descrizione sonora. La build desktop usa OpenAI per proporre un delta che viene validato localmente e applicato a una Init Patch deterministica.
 
 > Il progetto non è affiliato, approvato o sponsorizzato da Novation o Focusrite. Non scarica audio da Spotify o YouTube e non invia messaggi MIDI non documentati.
 
@@ -9,7 +9,9 @@ Summit Patch Architect è un companion non ufficiale per progettare patch appros
 Sono disponibili:
 
 - shell React/TypeScript in italiano, eseguibile nel browser e predisposta per Tauri 2;
-- creazione di un progetto da una descrizione testuale e generazione tramite mock provider;
+- creazione di una patch da una descrizione testuale tramite OpenAI Responses API;
+- Structured Outputs con JSON Schema strict, `store: false`, validazione Zod e cataloghi;
+- repair automatico singolo e fallback parziale sicuro;
 - pannello fisico Summit originale, inspector dei controlli e modifica manuale dei valori;
 - pagine Display & menu, Mod Matrix e FX Mod Matrix;
 - raffinamenti a delta, cronologia e confronto tra versioni;
@@ -18,7 +20,7 @@ Sono disponibili:
 - enumerazione MIDI nativa Rust in sola lettura, implementata ma ancora da provare con la shell desktop e hardware reale;
 - test unitari, component test ed E2E Chromium.
 
-Restano simulate o incomplete l'analisi audio DSP, l'uso effettivo di link Spotify/YouTube, il provider OpenAI e l'invio MIDI alla macchina.
+Restano simulate o incomplete l'analisi audio DSP, l'uso effettivo di link Spotify/YouTube e l'invio MIDI alla macchina.
 
 ## Versioni consigliate
 
@@ -197,37 +199,18 @@ Le build non hanno ancora una firma attendibile per la distribuzione. Windows pu
 - Se il job è verde ma la sezione **Artifacts** è vuota, controlla il passo **Upload ... bundles** e le quote/retention Actions del repository.
 - Il workflow carica soltanto installer, app bundle compressi ed essenziali log di build: non include audio, documenti Novation, `.env` o sorgenti come artefatti.
 
-## Demo senza API key
+## Configurazione OpenAI
 
-Non creare alcun file `.env`: il mock provider è il provider operativo predefinito e non effettua chiamate di rete.
+La generazione è disponibile soltanto nella shell Tauri: la WebView non legge né riceve la credenziale. Il backend cerca `OPENAI_API_KEY` prima nell'ambiente di processo e, solo nelle build di sviluppo, in `.env.local` nella root del repository. Il file è ignorato da Git.
 
-Il comando più semplice è:
+1. copia `.env.example` in `.env.local`;
+2. assegna `OPENAI_API_KEY` senza prefisso `VITE_`;
+3. opzionalmente imposta `OPENAI_MODEL`; il default è `gpt-5.4-mini`;
+4. avvia `pnpm desktop:dev`.
 
-```text
-pnpm start:local
-```
+Non committare, stampare nei log o salvare la chiave in `localStorage`. Il browser può mostrare e modificare le fixture demo, ma la chiamata OpenAI richiede il comando nativo Tauri.
 
-Nel browser puoi creare una patch, modificarla, salvarla come `.summitproject`, ricaricare la pagina e usare **Apri** per importare il file appena salvato. Con i prerequisiti nativi installati, usa `pnpm desktop:dev` per verificare lo stesso flusso nella finestra Tauri e i dialoghi file nativi.
-
-## Configurazione futura della chiave OpenAI
-
-Il provider OpenAI **non è ancora implementato**: impostare oggi una chiave non cambia il comportamento dell'app, che continuerà a usare il mock provider.
-
-Quando verrà aggiunto l'adapter, la chiave dovrà essere letta soltanto dal backend Rust o da un archivio credenziali del sistema operativo. Non usare il prefisso `VITE_`, perché renderebbe il valore accessibile al codice frontend. Per una futura sessione di sviluppo locale:
-
-```powershell
-# Windows PowerShell, solo per la sessione corrente
-$env:OPENAI_API_KEY="sk-..."
-pnpm desktop:dev
-```
-
-```bash
-# macOS, solo per la sessione corrente
-export OPENAI_API_KEY="sk-..."
-pnpm desktop:dev
-```
-
-Non committare, mostrare nei log o salvare la chiave in `localStorage`. `.env.example` documenta soltanto il nome previsto della variabile; la vertical slice corrente non lo legge.
+Il backend invia soltanto descrizione, firmware target, un eventuale riepilogo compatto della patch corrente e l'insieme AI-usable dei cataloghi. Non invia file, percorsi locali o progetti completi. Dei risultati conserva nello stato UI solo metadati operativi sicuri: modello, request ID, durata, uso token, esito e categoria d'errore.
 
 ## Test e controlli
 

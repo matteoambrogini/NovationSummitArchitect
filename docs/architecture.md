@@ -3,45 +3,68 @@
 ## Vista d'insieme
 
 ```text
-React routes + SVG UI
+React routes + SVG panel/menu UI
         |
-Zustand application store
+Zustand: patch versions + safe AI insight
         |
-domain schemas / catalog validation / patch delta
+OpenAI provider adapter
         |
-provider interfaces ---- mock provider (MVP)
+Zod contract -> Summit catalogs -> full proposal
         |
-Tauri invoke boundary
+Tauri invoke: generate_summit_patch
         |
-Rust: project I/O + native MIDI diagnostics
+Rust: credential gate + Responses API (store: false)
 ```
 
-## Domini
+## Frontiere
 
-### Desktop shell
+### Backend Tauri
 
-`src-tauri` possiede la frontiera nativa. I comandi espongono operazioni piccole e validate: lettura/scrittura `.summitproject` e enumerazione MIDI. Il frontend funziona anche in browser con fallback di esportazione JSON.
+`src-tauri` possiede credenziali, rete e API native. Il comando
+`generate_summit_patch` valida l'input, carica la configurazione backend-only, invia
+la richiesta HTTPS e traduce stato HTTP, refusal e incomplete response in errori
+applicativi tipizzati. Il backend non interpreta il dominio Summit oltre a limitare
+lo Structured Output al catalogo compatto ricevuto.
 
-### Summit knowledge base
+### Provider AI
 
-I file JSON sotto `src/data` sono dati, non logica UI. `src/domain/catalog.ts` li valida e applica vincoli incrociati alle proposte. Il catalogo MVP è incompleto per scelta: un parametro non verificato viene omesso.
+`src/ai/openAiProvider.ts` dipende dal comando Tauri ma non modifica direttamente lo
+store. Coordina prima risposta, validazione, un singolo repair e fallback. I tipi
+OpenAI non raggiungono `src/domain`.
 
-### Sound-analysis pipeline
+### Dominio Summit
 
-Il contratto è definito da `PatchGenerationRequest` e da `AudioFeatureSummary`. Il Milestone 1 usa descrizione e fixture deterministiche. Il workbench audio raccoglie regione/gain/loop senza simulare feature DSP reali.
+I JSON sotto `src/data` sono la knowledge base verificata.
+`src/ai/catalogContext.ts` ne produce una proiezione minima per il provider.
+`src/ai/patchAssembler.ts` applica il delta a default locali verificati e usa
+`src/domain/catalog.ts` come autorità finale.
 
-### Patch editor
+### Stato e UI
 
-Il componente SVG consuma `summit-control-layout.json`; l'inspector consuma le definizioni. Modifiche manuali e raffinamenti producono nuove versioni, conservando il confronto.
+Zustand conserva proposte complete, indice attivo e insight sicuri. Ogni generazione,
+raffinamento o modifica manuale crea una versione; pannello fisico, Display & Menus,
+Setup Mode e confronto leggono la stessa `SummitPatchProposal`.
 
-### AI provider layer
+La cronologia AI non viene aggiunta al formato `.summitproject` 1.0.0, evitando una
+modifica silenziosa del formato. I progetti esistenti continuano ad aprirsi e
+ricevono insight vuoti.
 
-`PatchProvider` impedisce al dominio di dipendere dal formato di un singolo vendor. Ogni output attraversa schema Zod e validazione contro cataloghi. I prompt sono versionati sotto `src/ai/prompts`.
+## Dati inviati e conservati
 
-## Stato e persistenza
+Vengono inviati:
 
-Zustand conserva input, versioni e selezione UI; grandi buffer audio non entrano nello store. Il file progetto contiene riferimenti e proposte, mai l'audio automaticamente. L'estensione nativa è `.summitproject`.
+- descrizione testuale e istruzione di raffinamento;
+- firmware e scope;
+- solo valori non-default della patch corrente;
+- ID, range, default, posizione e descrizione sonora dei parametri AI-usable;
+- entità Mod/FX Mod verificate.
 
-## Sicurezza
+Non vengono inviati audio, link streaming, file progetto, percorsi, documenti Summit
+o credenziali. Nello stato applicativo restano solo modello, request ID, durata,
+token usage, esito, confidenza, assunzioni e warning.
 
-La superficie Tauri espone solo i comandi necessari. Nessun segreto è salvato nel frontend. Nessuna chiamata di rete è necessaria per la demo.
+## Compatibilità
+
+Il client usa `reqwest` con TLS Rustls, evitando dipendenze da OpenSSL e mantenendo la
+stessa implementazione su Windows 10/11 e macOS Intel/Apple Silicon. Le chiamate
+OpenAI non sono disponibili nella build browser-only.

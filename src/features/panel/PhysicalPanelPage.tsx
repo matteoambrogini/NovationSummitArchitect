@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { Link } from "react-router-dom";
+import { AiGenerationSummary } from "../../components/AiGenerationSummary";
 import { SummitPanel } from "../../components/SummitPanel";
 import { panelRenderStats, summitPanelLayout } from "../../components/SummitPanelLayout";
 import { stepControlValue } from "../../components/panel-controls/controlMath";
@@ -14,7 +15,12 @@ import {
 import { changedParameterIds } from "../../domain/patchDelta";
 import { getScopePart, getSetting } from "../../domain/patchUi";
 import { copy } from "../../i18n/it";
-import { selectActiveProposal, selectIsDirty, useAppStore } from "../../stores/useAppStore";
+import {
+  selectActiveGenerationInsight,
+  selectActiveProposal,
+  selectIsDirty,
+  useAppStore,
+} from "../../stores/useAppStore";
 import { ParameterInspector } from "./ParameterInspector";
 
 const PANEL_WIDTH = 1536;
@@ -22,6 +28,7 @@ const PANEL_HEIGHT = 539;
 
 export function PhysicalPanelPage() {
   const proposal = useAppStore(selectActiveProposal);
+  const generationInsight = useAppStore(selectActiveGenerationInsight);
   const proposals = useAppStore((state) => state.proposals);
   const selectedParameterId = useAppStore((state) => state.selectedParameterId);
   const selectParameter = useAppStore((state) => state.selectParameter);
@@ -377,6 +384,8 @@ export function PhysicalPanelPage() {
           </button>
         </div>
       </header>
+
+      {generationInsight ? <AiGenerationSummary insight={generationInsight} /> : null}
 
       {setupMode ? (
         <section className="setup-banner" aria-label="Setup Mode">
