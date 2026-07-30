@@ -68,16 +68,20 @@ prompt, output, cataloghi, percorsi o segreti.
 ## Errori
 
 Il backend distingue configurazione mancante, autenticazione, permessi, rate limit,
-quota/credito, modello non disponibile, timeout, rete, refusal, risposta incompleta,
-output malformato e indisponibilità del provider. Gli errori esposti alla UI sono
-tipizzati, localizzati e non includono il corpo grezzo della risposta.
+credito esaurito, limiti di spesa di organizzazione o progetto, limite di utilizzo
+dell'organizzazione, quota generica, modello non disponibile, timeout, rete, refusal,
+risposta incompleta, output malformato e indisponibilità del provider. Per gli errori
+di fatturazione usa il campo `error.code`, non il più generico `error.type`. Gli
+errori esposti alla UI sono tipizzati, localizzati e non includono il corpo grezzo
+della risposta.
 
 ## Fonti OpenAI ufficiali
 
-Verificate il 2026-07-29:
+Verificate il 2026-07-30:
 
 - [Responses API](https://platform.openai.com/docs/api-reference/responses/create)
 - [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
 - [Conversation state e `store: false`](https://developers.openai.com/api/docs/guides/conversation-state)
 - [Error codes](https://developers.openai.com/api/docs/guides/error-codes)
+- [Spend limits](https://developers.openai.com/api/docs/guides/spend-limits)
 - [GPT-5.4 mini](https://developers.openai.com/api/docs/models/gpt-5.4-mini)

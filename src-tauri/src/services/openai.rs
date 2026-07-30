@@ -141,7 +141,7 @@ pub struct GenerateSummitPatchResponse {
     pub metadata: GenerationMetadata,
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize)]
+#[derive(Debug, Clone, Copy, Deserialize, Eq, PartialEq, Serialize)]
 #[serde(rename_all = "snake_case")]
 pub enum OpenAiErrorCode {
     MissingApiKey,
@@ -149,6 +149,10 @@ pub enum OpenAiErrorCode {
     Authentication,
     PermissionDenied,
     RateLimit,
+    CreditBalanceExhausted,
+    OrganizationSpendLimitExceeded,
+    ProjectSpendLimitExceeded,
+    OrganizationUsageLimitExceeded,
     InsufficientQuota,
     ModelUnavailable,
     NetworkFailure,
@@ -700,6 +704,11 @@ fn classify_network_error(error: reqwest::Error) -> OpenAiApplicationError {
 
 fn classify_http_error(status: StatusCode, payload: &Value) -> OpenAiApplicationError {
     let error = payload.get("error").unwrap_or(payload);
+    let error_code = error
+        .get("code")
+        .and_then(Value::as_str)
+        .unwrap_or_default()
+        .to_ascii_lowercase();
     let category = [
         error.get("code").and_then(Value::as_str),
         error.get("type").and_then(Value::as_str),
@@ -726,6 +735,34 @@ fn classify_http_error(status: StatusCode, payload: &Value) -> OpenAiApplication
             "Il modello OpenAI configurato non è disponibile per questo progetto.",
             false,
         ),
+        StatusCode::TOO_MANY_REQUESTS if error_code == "credit_balance_exhausted" => {
+            OpenAiApplicationError::new(
+                OpenAiErrorCode::CreditBalanceExhausted,
+                "Il credito prepagato dell'organizzazione OpenAI è esaurito.",
+                false,
+            )
+        }
+        StatusCode::TOO_MANY_REQUESTS if error_code == "organization_spend_limit_exceeded" => {
+            OpenAiApplicationError::new(
+                OpenAiErrorCode::OrganizationSpendLimitExceeded,
+                "È stato raggiunto il limite di spesa dell'organizzazione OpenAI.",
+                false,
+            )
+        }
+        StatusCode::TOO_MANY_REQUESTS if error_code == "project_spend_limit_exceeded" => {
+            OpenAiApplicationError::new(
+                OpenAiErrorCode::ProjectSpendLimitExceeded,
+                "È stato raggiunto il limite di spesa del progetto OpenAI.",
+                false,
+            )
+        }
+        StatusCode::TOO_MANY_REQUESTS if error_code == "organization_usage_limit_exceeded" => {
+            OpenAiApplicationError::new(
+                OpenAiErrorCode::OrganizationUsageLimitExceeded,
+                "È stato raggiunto il limite di utilizzo assegnato all'organizzazione OpenAI.",
+                false,
+            )
+        }
         StatusCode::TOO_MANY_REQUESTS
             if category.contains("quota")
                 || category.contains("billing")
@@ -936,9 +973,34 @@ mod tests {
 
     #[test]
     fn classifies_quota_separately_from_rate_limits() {
+        let billing_cases = [
+            (
+                "credit_balance_exhausted",
+                OpenAiErrorCode::CreditBalanceExhausted,
+            ),
+            (
+                "organization_spend_limit_exceeded",
+                OpenAiErrorCode::OrganizationSpendLimitExceeded,
+            ),
+            (
+                "project_spend_limit_exceeded",
+                OpenAiErrorCode::ProjectSpendLimitExceeded,
+            ),
+            (
+                "organization_usage_limit_exceeded",
+                OpenAiErrorCode::OrganizationUsageLimitExceeded,
+            ),
+        ];
+        for (code, expected) in billing_cases {
+            let classified = classify_http_error(
+                StatusCode::TOO_MANY_REQUESTS,
+                &json!({"error": {"code": code, "type": "insufficient_quota"}}),
+            );
+            assert_eq!(classified.code, expected);
+        }
         let quota = classify_http_error(
             StatusCode::TOO_MANY_REQUESTS,
-            &json!({"error": {"code": "insufficient_quota"}}),
+            &json!({"error": {"type": "insufficient_quota"}}),
         );
         let rate = classify_http_error(
             StatusCode::TOO_MANY_REQUESTS,

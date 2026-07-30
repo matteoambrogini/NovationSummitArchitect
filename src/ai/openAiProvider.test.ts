@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/core";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { getSetting } from "../domain/patchUi";
-import { OpenAiPatchProvider } from "./openAiProvider";
+import { OpenAiPatchProvider, OpenAiProviderError } from "./openAiProvider";
 
 vi.mock("@tauri-apps/api/core", () => ({ invoke: vi.fn() }));
 
@@ -93,5 +93,44 @@ describe("OpenAI provider validation and repair", () => {
     expect(getSetting(result.proposal, "filter.frequency", "single")?.value).not.toBe(999);
     expect(result.insight.partial).toBe(true);
     expect(result.insight.warnings.join(" ")).toMatch(/solo le impostazioni locali valide/i);
+  });
+
+  it.each([
+    [
+      "credit_balance_exhausted",
+      "Il credito prepagato dell'organizzazione OpenAI è esaurito.",
+    ],
+    [
+      "organization_spend_limit_exceeded",
+      "È stato raggiunto il limite di spesa dell'organizzazione OpenAI.",
+    ],
+    [
+      "project_spend_limit_exceeded",
+      "È stato raggiunto il limite di spesa del progetto OpenAI.",
+    ],
+    [
+      "organization_usage_limit_exceeded",
+      "È stato raggiunto il limite di utilizzo assegnato all'organizzazione OpenAI.",
+    ],
+  ] as const)("localizes the billing error %s", async (code, message) => {
+    vi.mocked(invoke).mockRejectedValueOnce({
+      code,
+      message: "Provider billing error",
+      retryable: false,
+      status: 429,
+    });
+
+    const generation = new OpenAiPatchProvider().generate({
+      description: "Pluck brillante e breve",
+      mode: "text",
+    });
+
+    await expect(generation).rejects.toEqual(
+      expect.objectContaining<Partial<OpenAiProviderError>>({
+        code,
+        message,
+        retryable: false,
+      }),
+    );
   });
 });

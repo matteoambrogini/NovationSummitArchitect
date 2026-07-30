@@ -53,6 +53,12 @@ function localizedMessage(code: OpenAiErrorCode, fallback: string) {
     authentication: "La configurazione OpenAI non è autenticata.",
     permission_denied: "Il progetto OpenAI non autorizza questa operazione.",
     rate_limit: "Limite di richieste OpenAI raggiunto. Attendi e riprova.",
+    credit_balance_exhausted: "Il credito prepagato dell'organizzazione OpenAI è esaurito.",
+    organization_spend_limit_exceeded:
+      "È stato raggiunto il limite di spesa dell'organizzazione OpenAI.",
+    project_spend_limit_exceeded: "È stato raggiunto il limite di spesa del progetto OpenAI.",
+    organization_usage_limit_exceeded:
+      "È stato raggiunto il limite di utilizzo assegnato all'organizzazione OpenAI.",
     insufficient_quota: "Quota o credito OpenAI non sufficienti.",
     model_unavailable: "Il modello OpenAI configurato non è disponibile.",
     network_failure: "Impossibile raggiungere OpenAI. Controlla la connessione.",
